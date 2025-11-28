@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 export const metadata = {
   title: "Cornerstone",
   description: "Build Your Server, Your Way.",
+  keywords: ["Cornerstone", "Foundation", "Server", "Home Server", "Modular Server", "Aluminum Server", "Compact Server", "Seamless Server", "Build Your Server", "Your Way", "Stackable", "Modular", "Aluminum", "Compact", "Seamless", "Build Your Server", "Your Way", "Stackable", "Modular", "Aluminum", "Compact", "Seamless"],
 };
 
 export default function RootLayout({ children }) {
