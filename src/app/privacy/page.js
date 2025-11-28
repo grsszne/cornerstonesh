@@ -145,8 +145,7 @@ export default function PrivacyPage() {
                   If you have any questions about this Privacy Policy, please contact us at:
                 </p>
                 <p className="mt-4 p-4 border border-black dark:border-white">
-                  Email: privacy@cornerstone.com<br />
-                  Address: [Your Business Address]
+                  Email: cornerstone@cornerstone.sh<br />
                 </p>
               </section>
             </div>

@@ -97,6 +97,12 @@ export default function Footer() {
                       Reddit
                     </a>
                   </li>
+                  <li>
+                    <a href="mailto:cornerstone@cornerstone.sh" className="hover:opacity-70 transition-opacity">
+                      cornerstone@cornerstone.sh
+                    </a>
+                  </li>
+
                 </ul>
               </div>
               <div>
