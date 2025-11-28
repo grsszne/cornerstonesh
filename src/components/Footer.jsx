@@ -61,12 +61,12 @@ export default function Footer() {
                 </h4>
                 <ul className="space-y-3 font-mono text-sm">
                   <li>
-                    <Link href="#" className="hover:opacity-70 transition-opacity">
+                    <Link href="/privacy" className="hover:opacity-70 transition-opacity">
                       Privacy
                     </Link>
                   </li>
                   <li>
-                    <Link href="#" className="hover:opacity-70 transition-opacity">
+                    <Link href="/terms" className="hover:opacity-70 transition-opacity">
                       Terms
                     </Link>
                   </li>
@@ -81,7 +81,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Cornerstone. All rights reserved.
           </p>
           <p className="font-mono text-xs uppercase">
-            Designed in California.
+            Designed with Love.
           </p>
         </div>
       </div>
