@@ -86,7 +86,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="absolute top-0 right-0 pointer-events-none">
-        <AsciiArt width={300} height={30} numCircles={25}/>
+        <AsciiArt width={300} height={40} numCircles={65}/>
       </div>
     </footer>
   );

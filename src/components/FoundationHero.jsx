@@ -7,7 +7,7 @@ export default function FoundationHero() {
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="space-y-2">
           <h2 className="text-sm md:text-base font-mono uppercase tracking-widest mb-4">
-            The Cornerstone Foundation
+          Cornerstone &gt; Foundation
           </h2>
           <h1 className="text-[12vw] leading-[0.8] font-medium tracking-tighter break-words">
             Build Your

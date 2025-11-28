@@ -12,20 +12,29 @@ export default function PrivacyPage() {
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-black text-black dark:text-white pt-20 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-12">
-            <Link 
-              href="/" 
-              className="inline-flex items-center text-sm font-mono hover:opacity-70 transition-opacity mb-8"
-            >
-              &lt; Back to Home
-            </Link>
-            
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Privacy Policy
-            </h1>
-            <p className="font-mono text-sm text-black/60 dark:text-white/60 mb-12">
-              Last Updated: November 27, 2025
-            </p>
+            <div className="py-12 relative border border-black/10 dark:border-white/10">
+              {/* Diagonal lines background - only behind text content */}
+              <div 
+                className="absolute inset-0 opacity-[0.03] dark:opacity-[0.08] pointer-events-none"
+                style={{
+                  backgroundImage: 'repeating-linear-gradient(315deg, transparent, transparent 20px, currentColor 20px, currentColor 21px)',
+                }}
+              />
+              
+              <div className="relative z-10 p-8 md:p-12">
+                <Link 
+                  href="/" 
+                  className="inline-flex items-center text-sm font-mono hover:opacity-70 transition-opacity mb-8"
+                >
+                  &lt; Back to Home
+                </Link>
+                
+                <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
+                  Privacy Policy
+                </h1>
+                <p className="font-mono text-sm text-black/60 dark:text-white/60 mb-12">
+                  Last Updated: November 27, 2025
+                </p>
 
             <div className="space-y-8 font-mono text-sm leading-relaxed">
               <section>
@@ -141,6 +150,7 @@ export default function PrivacyPage() {
                   Address: [Your Business Address]
                 </p>
               </section>
+            </div>
             </div>
           </div>
         </div>

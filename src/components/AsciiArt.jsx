@@ -6,7 +6,7 @@ export default function AsciiArt({ width = 80, height = 24, numCircles = 8 }) {
   const [art, setArt] = useState([]);
 
   useEffect(() => {
-    const chars = " .....~~~~==cesrnto*$#%";
+    const chars = "  .  .. .......~~~~==cesrnto*$#%";
     
     // Pre-generate circles with squared radius for faster distance checks
     const circles = [];
@@ -83,7 +83,7 @@ export default function AsciiArt({ width = 80, height = 24, numCircles = 8 }) {
   }, [width, height, numCircles]);
 
   return (
-    <div className="font-mono text-xs leading-none whitespace-pre overflow-hidden opacity-10 dark:opacity-20 select-none pointer-events-none" aria-hidden="true">
+    <div className="font-mono text-xs leading-none whitespace-pre overflow-hidden opacity-[15%] dark:opacity-20 select-none pointer-events-none" aria-hidden="true">
       {art}
     </div>
   );
