@@ -86,7 +86,7 @@ export default function Footer() {
             </Link>
           </p>
           <p className="font-mono text-xs uppercase">
-            Designed for Us.
+            Designed for You.
           </p>
         </div>
       </div>
