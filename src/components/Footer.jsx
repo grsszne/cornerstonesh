@@ -1,9 +1,42 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import AsciiArt from "./AsciiArt";
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle"); // idle, loading, success, error
+  const [message, setMessage] = useState("");
+
+  const subscribe = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      
+      const data = await res.json();
+      
+      if (res.ok) {
+        setStatus("success");
+        setMessage("Thanks for subscribing!");
+        setEmail("");
+      } else {
+        setStatus("error");
+        setMessage(data.error || "Something went wrong.");
+      }
+    } catch (error) {
+      setStatus("error");
+      setMessage("Failed to subscribe. Please try again.");
+    }
+  };
+
   return (
     <footer className="bg-white dark:bg-black text-black dark:text-white border-t border-black dark:border-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 relative z-10">
@@ -16,17 +49,28 @@ export default function Footer() {
             <p className="font-mono text-sm max-w-md">
               Join the newsletter for updates on the Foundation launch and future modules.
             </p>
-            <form className="flex flex-col sm:flex-row gap-4" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="ENTER EMAIL"
-                className="flex-1 bg-transparent border border-black dark:border-white px-4 py-3 font-mono text-sm placeholder:text-black/50 dark:placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white rounded-none"
-              />
+            <form className="flex flex-col sm:flex-row gap-4" onSubmit={subscribe}>
+              <div className="flex-1">
+                <input
+                  type="email"
+                  placeholder="ENTER EMAIL"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={status === "loading" || status === "success"}
+                  className="w-full bg-transparent border border-black dark:border-white px-4 py-3 font-mono text-sm placeholder:text-black/50 dark:placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white rounded-none disabled:opacity-50"
+                />
+                {message && (
+                  <p className={`mt-2 font-mono text-xs ${status === "error" ? "text-red-500" : "text-green-500"}`}>
+                    {message}
+                  </p>
+                )}
+              </div>
               <button
                 type="submit"
-                className="bg-black text-white dark:bg-white dark:text-black px-8 py-3 font-mono text-sm font-medium uppercase tracking-wider border border-black dark:border-white hover:bg-orange-500 hover:border-orange-500 dark:hover:bg-orange-500 dark:hover:border-orange-500 transition-colors"
+                disabled={status === "loading" || status === "success"}
+                className="bg-black text-white dark:bg-white dark:text-black px-8 py-3 font-mono text-sm font-medium uppercase tracking-wider border border-black dark:border-white hover:bg-orange-500 hover:border-orange-500 dark:hover:bg-orange-500 dark:hover:border-orange-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed h-[46px]"
               >
-                Subscribe
+                {status === "loading" ? "..." : status === "success" ? "Joined" : "Subscribe"}
               </button>
             </form>
           </div>
