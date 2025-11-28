@@ -60,7 +60,7 @@ export default function Footer() {
                   className="w-full bg-transparent border border-black dark:border-white px-4 py-3 font-mono text-sm placeholder:text-black/50 dark:placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white rounded-none disabled:opacity-50"
                 />
                 {message && (
-                  <p className={`mt-2 bg-inherit font-mono text-xs ${status === "error" ? "text-red-500" : "text-green-500"}`}>
+                  <p className={`mt-2 bg-inherit dark:bg-black/50 bg-white/50 font-mono text-xs ${status === "error" ? "text-red-500" : "text-green-500"}`}>
                     {message}
                   </p>
                 )}
