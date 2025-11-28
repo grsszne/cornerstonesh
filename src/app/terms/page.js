@@ -9,7 +9,6 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <>
-      <Navigation />
       <main className="min-h-screen bg-white dark:bg-black text-black dark:text-white pt-20 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="py-12 relative border border-black/10 dark:border-white/10 overflow-hidden">

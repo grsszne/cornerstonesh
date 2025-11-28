@@ -16,7 +16,7 @@ export default function Navigation() {
   }, []);
 
   const navLinks = [
-    { name: "Foundation", href: "#foundation" },
+    { name: "Foundation", href: "/foundation" },
     { name: "Story", href: "#story" },
     { name: "Specs", href: "#specs" },
   ];

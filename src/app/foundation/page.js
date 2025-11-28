@@ -12,7 +12,6 @@ export const metadata = {
 export default function FoundationPage() {
   return (
     <>
-      <Navigation />
       <main className="min-h-screen bg-white dark:bg-black text-black dark:text-white pt-20">
         {/* Hero Section */}
         <section className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -83,7 +82,7 @@ export default function FoundationPage() {
               <div className="md:col-span-1 row-span-1 bg-white dark:bg-black border border-black/10 dark:border-white/10 p-8 rounded-3xl flex flex-col justify-end">
                 <h3 className="text-xl font-medium mb-2">CNC Aluminum</h3>
                 <p className="text-black/60 dark:text-white/60 font-mono text-sm">
-                  Milled from 6061-T6 aluminum. Structural rigidity protecting your data. Passive heat transfer via chassis.
+                  Milled from 6061-T6 aluminum. Structural rigidity protecting your data. Active cooling across modules.
                 </p>
               </div>
 
@@ -129,7 +128,7 @@ export default function FoundationPage() {
                 <h3 className="text-2xl font-medium">Build Quality</h3>
                 <p className="font-mono text-sm opacity-80 leading-relaxed">
                   <strong className="block mb-2 text-orange-500">vs. Plastic Enclosures</strong>
-                  Precision CNC-milled 6061-T6 aluminum. Passive heat dissipation. A server that looks as good as it performs, designed to be displayed, not hidden.
+                  Precision CNC-milled 6061-T6 aluminum. Active heat dissipation. A server that looks as good as it performs, designed to be displayed, not hidden.
                 </p>
               </div>
             </div>
