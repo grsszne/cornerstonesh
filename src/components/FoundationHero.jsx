@@ -33,7 +33,7 @@ export default function FoundationHero() {
               Pre-order Now
             </Link>
             <Link
-              href="#learn-more"
+              href="/foundation"
               className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-transparent text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors duration-300"
             >
               Learn More

@@ -80,8 +80,13 @@ export default function Footer() {
           <p className="font-mono text-xs uppercase">
             &copy; {new Date().getFullYear()} Cornerstone. All rights reserved.
           </p>
+          <p className="font-mono text-xs">
+            <Link href="/" className="hover:opacity-70 transition-opacity">
+              https://cornerstone.sh
+            </Link>
+          </p>
           <p className="font-mono text-xs uppercase">
-            Designed with Love.
+            Designed for You.
           </p>
         </div>
       </div>

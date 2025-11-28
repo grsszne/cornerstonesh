@@ -6,7 +6,7 @@ export default function AsciiArt({ width = 80, height = 24, numCircles = 8 }) {
   const [art, setArt] = useState([]);
 
   useEffect(() => {
-    const chars = "  .  .. .......~~~~==cesrnto*$#%";
+    const chars = "  .  .. .......~~~~==cornerstone*$#%";
     
     // Pre-generate circles with squared radius for faster distance checks
     const circles = [];
@@ -54,13 +54,13 @@ export default function AsciiArt({ width = 80, height = 24, numCircles = 8 }) {
         }
         
         // Calculate density (only sqrt when needed)
-        const dist = Math.sqrt(minDistSquared);
+        const dist = Math.sqrt(Math.sqrt(minDistSquared)) * 2;
         const normalizedDist = dist / nearestCircle.radius;
         let density = Math.max(0, 1 - normalizedDist);
         
         // Apply pre-calculated edge fade
         const edgeFade = Math.min(edgeFadeX[x], edgeY);
-        const fadeFactor = Math.pow(Math.min(edgeFade * 2, 1), 0.8);
+        const fadeFactor = Math.pow(Math.min(edgeFade * 4, 1), .2);
         density *= fadeFactor;
         
         const index = Math.floor(density * chars.length);
