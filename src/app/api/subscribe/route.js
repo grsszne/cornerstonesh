@@ -10,7 +10,7 @@ export async function POST(request) {
   const API_KEY = process.env.MAILERLITE_API_KEY;
 
   if (!API_KEY) {
-    return NextResponse.json({ error: 'MailerLite API key not found' }, { status: 500 });
+    return NextResponse.json({ error: 'Error processing email subscription.' }, { status: 500 });
   }
 
   try {

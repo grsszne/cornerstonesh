@@ -79,11 +79,20 @@ export default function FoundationPage() {
               </div>
 
               {/* Small Feature - Chassis */}
-              <div className="md:col-span-1 row-span-1 bg-white dark:bg-black border border-black/10 dark:border-white/10 p-8 rounded-3xl flex flex-col justify-end">
-                <h3 className="text-xl font-medium mb-2">CNC Aluminum</h3>
-                <p className="text-black/60 dark:text-white/60 font-mono text-sm">
-                  Milled from 6061-T6 aluminum. Structural rigidity protecting your data. Active cooling across modules.
-                </p>
+              <div className="md:col-span-1 row-span-1 bg-white dark:bg-black border border-black/10 dark:border-white/10 p-8 rounded-3xl flex flex-col justify-end relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
+                   <img 
+                    src="/img/corner.png" 
+                    alt="CNC Aluminum Detail" 
+                    className="absolute top-0 right-0 w-[120%] h-auto object-contain opacity-90 dark:opacity-80"
+                   />
+                </div>
+                <div className="relative z-10 bg-white/80 backdrop-blur-md  dark:bg-black/80">
+                  <h3 className="text-xl font-medium mb-2">CNC Aluminum</h3>
+                  <p className="text-black/60 dark:text-white/60 font-mono text-sm">
+                    Milled from 6061-T6 aluminum. Structural rigidity protecting your data. Active cooling across modules.
+                  </p>
+                </div>
               </div>
 
               {/* Small Feature - Compute */}
