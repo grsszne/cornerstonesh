@@ -22,7 +22,7 @@ export default function FoundationHero() {
         <div className="mt-12 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
           <div className="max-w-lg">
             <p className="text-lg md:text-xl font-mono leading-relaxed">
-              The modular home server system built for you. Start with the essentials, then expand your storage, networking, and compute as you grow.
+              Meet <a href="/foundation" className="underline decoration-orange-500 decoration-2">Foundation</a>: the modular home server system built for you. Start with the essentials, then expand your storage, networking, and compute as you grow.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 md:justify-end">

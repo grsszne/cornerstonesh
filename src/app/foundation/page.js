@@ -6,6 +6,7 @@ import FoundationBuilder from "@/components/FoundationBuilder";
 import TelemetryCard from "@/components/TelemetryCard";
 import { TelemetryProvider } from "@/components/TelemetryContext";
 import FadeIn from "@/components/FadeIn";
+import ScrollIndicator from "@/components/ScrollIndicator";
 
 export const metadata = {
   title: "Foundation - Cornerstone",
@@ -40,6 +41,213 @@ export default function FoundationPage() {
                 Pre-order Now
               </Link>
             </div>
+          </div>
+          
+          <ScrollIndicator />
+        </section>
+
+
+        {/* What is a Home Server? - Educational Section */}
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black border-b border-black/10 dark:border-white/10">
+          <div className="max-w-7xl mx-auto">
+            <FadeIn>
+              <div className="mb-20 max-w-3xl">
+                <h2 className="text-4xl md:text-6xl font-medium tracking-tighter mb-8">
+                  It's a computer that <span className="text-orange-500">works for you.</span>
+                </h2>
+                <p className="text-xl md:text-2xl font-mono opacity-70 leading-relaxed">
+                  Think of it like iCloud or Google Drive, but physically sitting in your home. You own the box, you own the data, and no one can take it away or charge you a monthly fee.
+                </p>
+              </div>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <FadeIn delay={0.1}>
+                <div className="group">
+                  <div className="font-mono text-xs text-orange-500 mb-4 uppercase tracking-widest">01 / Storage</div>
+                  <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">Like iCloud, but yours.</h3>
+                  <p className="font-mono text-sm opacity-60 leading-relaxed">
+                    Back up every photo, video, and document from your phone automatically. But instead of paying Apple or Google every month, you store it on your own drives, forever.
+                  </p>
+                </div>
+              </FadeIn>
+
+              <FadeIn delay={0.2}>
+                <div className="group">
+                  <div className="font-mono text-xs text-orange-500 mb-4 uppercase tracking-widest">02 / Automation</div>
+                  <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">A 24/7 Digital Butler.</h3>
+                  <p className="font-mono text-sm opacity-60 leading-relaxed">
+                    It never sleeps. It can block ads on your whole network, download your favorite shows automatically, or manage your smart home devices without sending data to the cloud.
+                  </p>
+                </div>
+              </FadeIn>
+
+              <FadeIn delay={0.3}>
+                <div className="group">
+                  <div className="font-mono text-xs text-orange-500 mb-4 uppercase tracking-widest">03 / Media</div>
+                  <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">Your Private Netflix.</h3>
+                  <p className="font-mono text-sm opacity-60 leading-relaxed">
+                    Stream your own collection of movies and music to your TV, phone, or tablet. Highest quality, no buffering, and titles never "leave the platform" because you own them.
+                  </p>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+
+        {/* Who is Foundation for? - User Personas */}
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-black text-white dark:bg-white dark:text-black border-b border-white/10 dark:border-black/10">
+          <div className="max-w-7xl mx-auto">
+            <FadeIn>
+              <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-16 text-center">
+                Built for <span className="text-orange-500">Purpose.</span>
+              </h2>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Persona 1: The Creator */}
+              <FadeIn delay={0.1}>
+                <div className="border border-white/20 dark:border-black/20 p-8 rounded-2xl h-full flex flex-col hover:border-orange-500 transition-colors duration-300 font-mono group">
+                  <div className="mb-8">
+                    <div className="text-xs text-orange-500 uppercase tracking-widest mb-2">01 / Ingest</div>
+                    <h3 className="text-2xl font-medium group-hover:text-orange-500 transition-colors">The Creator</h3>
+                  </div>
+                  
+                  <div className="space-y-8 flex-1">
+                    <div>
+                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Need</div>
+                      <ul className="text-sm opacity-80 space-y-3 leading-relaxed">
+                        <li className="flex gap-3"><span className="text-orange-500">→</span> Rapid footage offloading</li>
+                        <li className="flex gap-3"><span className="text-orange-500">→</span> High-speed 2.5GbE workflow</li>
+                        <li className="flex gap-3"><span className="text-orange-500">→</span> Zero monthly cloud fees</li>
+                      </ul>
+                    </div>
+
+                    <div className="pt-6 border-t border-white/10 dark:border-black/10">
+                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Build</div>
+                      <div className="space-y-2 text-sm font-medium">
+                        <div className="flex justify-between">
+                          <span className="opacity-60">RAM</span>
+                          <span>16GB LPDDR5</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-60">Base Storage</span>
+                          <span>1TB NVMe</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-60">Expansion</span>
+                          <span>4x 4TB (16TB Total)</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-60">Modules</span>
+                          <span className="text-orange-500">SD Card IO + 2.5GbE</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Persona 2: The Privacy Advocate */}
+              <FadeIn delay={0.2}>
+                <div className="border border-white/20 dark:border-black/20 p-8 rounded-2xl h-full flex flex-col hover:border-orange-500 transition-colors duration-300 font-mono group">
+                  <div className="mb-8">
+                    <div className="text-xs text-orange-500 uppercase tracking-widest mb-2">02 / Sovereignty</div>
+                    <h3 className="text-2xl font-medium group-hover:text-orange-500 transition-colors">The Advocate</h3>
+                  </div>
+                  
+                  <div className="space-y-8 flex-1">
+                    <div>
+                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Need</div>
+                      <ul className="text-sm opacity-80 space-y-3 leading-relaxed">
+                        <li className="flex gap-3"><span className="text-orange-500">→</span> Complete data ownership</li>
+                        <li className="flex gap-3"><span className="text-orange-500">→</span> Power outage protection</li>
+                        <li className="flex gap-3"><span className="text-orange-500">→</span> Self-hosted services</li>
+                      </ul>
+                    </div>
+
+                    <div className="pt-6 border-t border-white/10 dark:border-black/10">
+                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Build</div>
+                      <div className="space-y-2 text-sm font-medium">
+                        <div className="flex justify-between">
+                          <span className="opacity-60">RAM</span>
+                          <span>4GB LPDDR5</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-60">Base Storage</span>
+                          <span>512GB NVMe</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-60">Expansion</span>
+                          <span>2x 2TB (RAID 1)</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-60">Modules</span>
+                          <span className="text-orange-500">UPS Backup</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Persona 3: The Developer */}
+              <FadeIn delay={0.3}>
+                <div className="border border-white/20 dark:border-black/20 p-8 rounded-2xl h-full flex flex-col hover:border-orange-500 transition-colors duration-300 font-mono group">
+                  <div className="mb-8">
+                    <div className="text-xs text-orange-500 uppercase tracking-widest mb-2">03 / Hacking</div>
+                    <h3 className="text-2xl font-medium group-hover:text-orange-500 transition-colors">The Developer</h3>
+                  </div>
+                  
+                  <div className="space-y-8 flex-1">
+                    <div>
+                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Need</div>
+                      <ul className="text-sm opacity-80 space-y-3 leading-relaxed">
+                        <li className="flex gap-3"><span className="text-orange-500">→</span> Docker & K8s environment</li>
+                        <li className="flex gap-3"><span className="text-orange-500">→</span> Hardware experimentation</li>
+                        <li className="flex gap-3"><span className="text-orange-500">→</span> Custom automation</li>
+                      </ul>
+                    </div>
+
+                    <div className="pt-6 border-t border-white/10 dark:border-black/10">
+                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Build</div>
+                      <div className="space-y-2 text-sm font-medium">
+                        <div className="flex justify-between">
+                          <span className="opacity-60">RAM</span>
+                          <span>16GB LPDDR5</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-60">Base Storage</span>
+                          <span>512GB NVMe</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-60">Expansion</span>
+                          <span>1x 1TB (Lab Storage)</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-60">Modules</span>
+                          <span className="text-orange-500">GPIO Revealer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+            
+            {/* Hardware Guide CTA */}
+            <FadeIn delay={0.4}>
+              <div className="mt-16 text-center">
+                <p className="text-sm font-mono opacity-50 mb-4">Not sure what specs you need?</p>
+                <Link
+                  href="/foundation/guide"
+                  className="inline-flex items-center justify-center px-6 py-3 text-sm font-mono font-medium uppercase tracking-wider bg-transparent text-white dark:text-black border border-white/20 dark:border-black/20 hover:border-orange-500 hover:text-orange-500 transition-colors duration-300"
+                >
+                  View Hardware Guide →
+                </Link>
+              </div>
+            </FadeIn>
           </div>
         </section>
 

@@ -69,9 +69,17 @@ export default function FoundationBuilder() {
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-zinc-900/50">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-16 text-center">
-          Build Your Foundation.
-        </h2>
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-4">
+            Build Your Foundation.
+          </h2>
+          <p className="text-sm font-mono opacity-50">
+            Not sure what specs you need?{" "}
+            <Link href="/foundation/guide" className="text-orange-500 hover:underline">
+              View Hardware Guide →
+            </Link>
+          </p>
+        </div>
 
         <div className="bg-white dark:bg-black border border-black/10 dark:border-white/10 rounded-3xl p-6 md:p-12 shadow-2xl shadow-black/5 dark:shadow-white/5 overflow-hidden relative">
           
