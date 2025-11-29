@@ -266,7 +266,7 @@ export default function FoundationBuilder() {
                 <div className="flex justify-between items-end mb-8">
                   <div className="space-y-1">
                     <span className="block font-mono text-xs uppercase tracking-widest opacity-60">Estimated Total</span>
-                    <span className="block text-sm opacity-50">Additional shipping may apply</span>
+                    <span className="block text-sm opacity-50">Additional shipping charges may apply.</span>
                   </div>
                   <div className="text-right">
                     <span className="block text-4xl font-medium tracking-tight">${totalPrice}</span>
