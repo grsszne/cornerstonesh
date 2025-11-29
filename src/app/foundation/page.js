@@ -165,10 +165,10 @@ export default function FoundationPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
                 <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-6">
-                  Matter Native.
+                Smart Home Integration
                 </h2>
                 <p className="text-xl font-mono opacity-70 mb-10 leading-relaxed">
-                  Your server shouldn't be a black box. Foundation integrates directly with your smart home, exposing real-time telemetry and control to your favorite platforms.
+                  Your server shouldn't be a black box. Foundation integrates directly with your smart home, exposing real-time telemetry and control to your favorite platforms via Matter.
                 </p>
                 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
