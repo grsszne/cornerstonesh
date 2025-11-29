@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AsciiArt from "@/components/AsciiArt";
 import FoundationBuilder from "@/components/FoundationBuilder";
+import TelemetryCard from "@/components/TelemetryCard";
 
 export const metadata = {
   title: "Foundation - Cornerstone",
@@ -172,24 +173,32 @@ export default function FoundationPage() {
                 </p>
                 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  {[
-                    { label: "Fan Speed", value: "800 RPM", icon: "❆" },
-                    { label: "CPU Temp", value: "42°C", icon: "🌡" },
-                    { label: "Power Draw", value: "12W", icon: "⚡" },
-                    { label: "Network", value: "1.2 Gbps", icon: "🌐" },
-                    { label: "Humidity", value: "45%", icon: "💧" },
-                    { label: "Air Quality", value: "Good", icon: "🍃" },
-                    { label: "Storage", value: "Healthy", icon: "💾" },
-                    { label: "Uptime", value: "24d 3h", icon: "⏱" },
-                  ].map((stat) => (
-                    <div key={stat.label} className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
-                      <div className="text-orange-500 text-xl mb-2">{stat.icon}</div>
-                      <div>
-                        <div className="text-lg font-bold font-mono tracking-tight">{stat.value}</div>
-                        <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">{stat.label}</div>
-                      </div>
+                  <TelemetryCard label="Fan Speed" baseValue={800} unit=" RPM" icon="❆" range={0.05} />
+                  <TelemetryCard label="CPU Temp" baseValue={42} unit="°C" icon="🌡" range={0.08} />
+                  <TelemetryCard label="Power Draw" baseValue={12} unit="W" icon="⚡" range={0.15} />
+                  <TelemetryCard label="Network" baseValue={1.2} unit=" Gbps" icon="🌐" range={0.2} />
+                  <TelemetryCard label="Humidity" baseValue={45} unit="%" icon="💧" range={0.1} />
+                  <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
+                    <div className="text-orange-500 text-xl mb-2">🍃</div>
+                    <div>
+                      <div className="text-lg font-bold font-mono tracking-tight">Good</div>
+                      <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Air Quality</div>
                     </div>
-                  ))}
+                  </div>
+                  <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
+                    <div className="text-orange-500 text-xl mb-2">💾</div>
+                    <div>
+                      <div className="text-lg font-bold font-mono tracking-tight">Healthy</div>
+                      <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Storage</div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
+                    <div className="text-orange-500 text-xl mb-2">⏱</div>
+                    <div>
+                      <div className="text-lg font-bold font-mono tracking-tight">24d 3h</div>
+                      <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Uptime</div>
+                    </div>
+                  </div>
                 </div>
               </div>
               
