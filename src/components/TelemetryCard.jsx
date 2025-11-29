@@ -30,10 +30,16 @@ export default function TelemetryCard({ label, metricKey, unit, icon }) {
     // Clear canvas
     ctx.clearRect(0, 0, width, height);
 
-    // Calculate min/max for scaling
+    // Calculate min/max for scaling with padding
     const min = Math.min(...history);
     const max = Math.max(...history);
     const range = max - min || 1; // Avoid division by zero
+    
+    // Add 20% padding to top and bottom
+    const padding = range * 0.2;
+    const paddedMin = min - padding;
+    const paddedMax = max + padding;
+    const paddedRange = paddedMax - paddedMin;
 
     // Draw line
     ctx.beginPath();
@@ -42,7 +48,7 @@ export default function TelemetryCard({ label, metricKey, unit, icon }) {
 
     history.forEach((value, index) => {
       const x = (index / (maxHistoryLength - 1)) * width;
-      const y = height - ((value - min) / range) * height;
+      const y = height - ((value - paddedMin) / paddedRange) * height;
       
       if (index === 0) {
         ctx.moveTo(x, y);
