@@ -107,38 +107,109 @@ export default function FoundationPage() {
         </section>
 
         {/* The Cornerstone Difference */}
-        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-black text-white dark:bg-white dark:text-black">
+        <section className="py-32 px-4 sm:px-6 lg:px-8 bg-black text-white dark:bg-white dark:text-black overflow-hidden">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-16 text-center">
-              The Cornerstone Difference
-            </h2>
+            <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+              <h2 className="text-4xl md:text-7xl font-medium tracking-tighter max-w-2xl">
+                Why we built <span className="text-orange-500">Foundation.</span>
+              </h2>
+              <p className="font-mono text-sm md:text-base opacity-60 max-w-md mb-2">
+                We were tired of choosing between underpowered toys and ugly enterprise gear. So we made a third option.
+              </p>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              <div className="space-y-6">
-                <div className="h-px w-full bg-orange-500 mb-8"></div>
-                <h3 className="text-2xl font-medium">Accessibility</h3>
-                <p className="font-mono text-sm opacity-80 leading-relaxed">
-                  <strong className="block mb-2 text-orange-500">vs. DIY Home Server</strong>
-                  No 3D printing, no cable management nightmares, no hardware sourcing headaches. We've done the engineering so you can focus on your software.
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  id: "01",
+                  title: "Accessibility",
+                  vs: "DIY Home Server",
+                  desc: "No 3D printing, no cable management nightmares, no hardware sourcing headaches. We've done the engineering so you can focus on your software."
+                },
+                {
+                  id: "02",
+                  title: "Modularity",
+                  vs: "Traditional NAS",
+                  desc: "Don't get locked into a fixed number of bays or ports. The Foundation grows with you. Add networking, compute, or storage modules via the Mortimer interface."
+                },
+                {
+                  id: "03",
+                  title: "Build Quality",
+                  vs: "Plastic Enclosures",
+                  desc: "Precision CNC-milled 6061-T6 aluminum. Active heat dissipation. A server that looks as good as it performs, designed to be displayed, not hidden."
+                }
+              ].map((item) => (
+                <div key={item.id} className="group relative border-t border-white/20 dark:border-black/20 pt-8 hover:border-orange-500 transition-colors duration-500">
+                  <div className="font-mono text-xs text-orange-500 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute -top-2.5 bg-black dark:bg-white px-2">
+                    POINT {item.id}
+                  </div>
+                  <div className="text-6xl font-medium opacity-20 mb-8 group-hover:opacity-100 group-hover:text-orange-500 transition-all duration-500">
+                    {item.id}
+                  </div>
+                  <h3 className="text-3xl font-medium mb-2">{item.title}</h3>
+                  <div className="font-mono text-xs uppercase tracking-widest opacity-50 mb-6">
+                    vs. {item.vs}
+                  </div>
+                  <p className="font-mono text-sm opacity-70 leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Matter Native Section */}
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black border-t border-black/10 dark:border-white/10">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-6">
+                  Matter Native.
+                </h2>
+                <p className="text-xl font-mono opacity-70 mb-10 leading-relaxed">
+                  Your server shouldn't be a black box. Foundation integrates directly with your smart home, exposing real-time telemetry and control to your favorite platforms.
                 </p>
+                
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {[
+                    { label: "Fan Speed", value: "800 RPM", icon: "❆" },
+                    { label: "CPU Temp", value: "42°C", icon: "🌡" },
+                    { label: "Power", value: "12W", icon: "⚡" },
+                    { label: "Network", value: "1.2 Gbps", icon: "🌐" },
+                    { label: "Humidity", value: "45%", icon: "💧" },
+                    { label: "Air Quality", value: "Good", icon: "🍃" },
+                    { label: "Storage", value: "Healthy", icon: "💾" },
+                    { label: "Uptime", value: "24d 3h", icon: "⏱" },
+                  ].map((stat) => (
+                    <div key={stat.label} className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
+                      <div className="text-orange-500 text-xl mb-2">{stat.icon}</div>
+                      <div>
+                        <div className="text-lg font-bold font-mono tracking-tight">{stat.value}</div>
+                        <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">{stat.label}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-
-              <div className="space-y-6">
-                <div className="h-px w-full bg-orange-500 mb-8"></div>
-                <h3 className="text-2xl font-medium">Modularity</h3>
-                <p className="font-mono text-sm opacity-80 leading-relaxed">
-                  <strong className="block mb-2 text-orange-500">vs. Traditional NAS</strong>
-                  Don't get locked into a fixed number of bays or ports. The Foundation grows with you. Add networking, compute, or storage modules via the Mortimer interface.
-                </p>
-              </div>
-
-              <div className="space-y-6">
-                <div className="h-px w-full bg-orange-500 mb-8"></div>
-                <h3 className="text-2xl font-medium">Build Quality</h3>
-                <p className="font-mono text-sm opacity-80 leading-relaxed">
-                  <strong className="block mb-2 text-orange-500">vs. Plastic Enclosures</strong>
-                  Precision CNC-milled 6061-T6 aluminum. Active heat dissipation. A server that looks as good as it performs, designed to be displayed, not hidden.
-                </p>
+              
+              <div className="bg-gray-50 dark:bg-zinc-900 rounded-3xl p-8 border border-black/10 dark:border-white/10 aspect-square flex items-center justify-center relative overflow-hidden group">
+                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+                  <AsciiArt width={80} height={80} numCircles={40} />
+                </div>
+                <div className="relative z-10 text-center space-y-6">
+                  <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-white dark:bg-black border border-black/10 dark:border-white/10 shadow-2xl shadow-orange-500/20">
+                    <svg className="w-12 h-12 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="font-medium text-lg">Smart Home Bridge</div>
+                    <div className="font-mono text-xs uppercase tracking-widest opacity-60">
+                      Works with<br/>HomeKit • Google • Alexa
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
