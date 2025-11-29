@@ -111,7 +111,7 @@ export default function FoundationPage() {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
               <h2 className="text-4xl md:text-7xl font-medium tracking-tighter max-w-2xl">
-                Why we built <span className="text-orange-500">Foundation.</span>
+                Why choose <span className="text-orange-500">Foundation</span>?
               </h2>
               <p className="font-mono text-sm md:text-base opacity-60 max-w-md mb-2">
                 We were tired of choosing between underpowered toys and ugly enterprise gear. So we made a third option.
@@ -129,7 +129,7 @@ export default function FoundationPage() {
                 {
                   id: "02",
                   title: "Modularity",
-                  vs: "Traditional NAS",
+                  vs: "Traditional Consumer NAS",
                   desc: "Don't get locked into a fixed number of bays or ports. The Foundation grows with you. Add networking, compute, or storage modules via the Mortimer interface."
                 },
                 {
@@ -175,7 +175,7 @@ export default function FoundationPage() {
                   {[
                     { label: "Fan Speed", value: "800 RPM", icon: "❆" },
                     { label: "CPU Temp", value: "42°C", icon: "🌡" },
-                    { label: "Power", value: "12W", icon: "⚡" },
+                    { label: "Power Draw", value: "12W", icon: "⚡" },
                     { label: "Network", value: "1.2 Gbps", icon: "🌐" },
                     { label: "Humidity", value: "45%", icon: "💧" },
                     { label: "Air Quality", value: "Good", icon: "🍃" },
@@ -206,7 +206,7 @@ export default function FoundationPage() {
                   <div className="space-y-2">
                     <div className="font-medium text-lg">Smart Home Bridge</div>
                     <div className="font-mono text-xs uppercase tracking-widest opacity-60">
-                      Works with<br/>HomeKit • Google • Alexa
+                      Works with<br/>Apple Homekit • Google • Alexa
                     </div>
                   </div>
                 </div>
