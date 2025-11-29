@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import AsciiArt from "@/components/AsciiArt";
 import FoundationBuilder from "@/components/FoundationBuilder";
 import TelemetryCard from "@/components/TelemetryCard";
+import { TelemetryProvider } from "@/components/TelemetryContext";
 
 export const metadata = {
   title: "Foundation - Cornerstone",
@@ -172,34 +173,36 @@ export default function FoundationPage() {
                   Your server shouldn't be a black box. Foundation integrates directly with your smart home, exposing real-time telemetry and control to your favorite platforms via Matter.
                 </p>
                 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  <TelemetryCard label="Fan Speed" baseValue={800} unit=" RPM" icon="❆" range={0.05} />
-                  <TelemetryCard label="CPU Temp" baseValue={42} unit="°C" icon="🌡" range={0.08} />
-                  <TelemetryCard label="Power Draw" baseValue={12} unit="W" icon="⚡" range={0.15} />
-                  <TelemetryCard label="Network" baseValue={1.2} unit=" Gbps" icon="🌐" range={0.2} />
-                  <TelemetryCard label="Humidity" baseValue={45} unit="%" icon="💧" range={0.1} />
-                  <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
-                    <div className="text-orange-500 text-xl mb-2">🍃</div>
-                    <div>
-                      <div className="text-lg font-bold font-mono tracking-tight">Good</div>
-                      <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Air Quality</div>
+                <TelemetryProvider>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <TelemetryCard label="Fan Speed" metricKey="fanSpeed" unit=" RPM" icon="❆" />
+                    <TelemetryCard label="CPU Temp" metricKey="cpuTemp" unit="°C" icon="🌡" />
+                    <TelemetryCard label="Power Draw" metricKey="powerDraw" unit="W" icon="⚡" />
+                    <TelemetryCard label="Network" metricKey="network" unit=" Gbps" icon="🌐" />
+                    <TelemetryCard label="Humidity" metricKey="humidity" unit="%" icon="💧" />
+                    <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
+                      <div className="text-orange-500 text-xl mb-2">🍃</div>
+                      <div>
+                        <div className="text-lg font-bold font-mono tracking-tight">Good</div>
+                        <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Air Quality</div>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
+                      <div className="text-orange-500 text-xl mb-2">💾</div>
+                      <div>
+                        <div className="text-lg font-bold font-mono tracking-tight">Healthy</div>
+                        <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Storage</div>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
+                      <div className="text-orange-500 text-xl mb-2">⏱</div>
+                      <div>
+                        <div className="text-lg font-bold font-mono tracking-tight">24d 3h</div>
+                        <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Uptime</div>
+                      </div>
                     </div>
                   </div>
-                  <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
-                    <div className="text-orange-500 text-xl mb-2">💾</div>
-                    <div>
-                      <div className="text-lg font-bold font-mono tracking-tight">Healthy</div>
-                      <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Storage</div>
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
-                    <div className="text-orange-500 text-xl mb-2">⏱</div>
-                    <div>
-                      <div className="text-lg font-bold font-mono tracking-tight">24d 3h</div>
-                      <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Uptime</div>
-                    </div>
-                  </div>
-                </div>
+                </TelemetryProvider>
               </div>
               
               <div className="bg-gray-50 dark:bg-zinc-900 rounded-3xl p-8 border border-black/10 dark:border-white/10 aspect-square flex items-center justify-center relative overflow-hidden group">
