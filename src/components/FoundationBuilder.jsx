@@ -41,7 +41,7 @@ export default function FoundationBuilder() {
   
   // Calculate visualizer props based on stack height
   const stackHeight = 50 + (expansionModules.length * 15);
-  const stackCircles = 30 + (expansionModules.length * 10);
+  const stackCircles = 2 + (expansionModules.length * 10);
 
   // Filter out "None" for the individual module selectors
   const MODULE_OPTIONS = EXPANSION_OPTIONS.filter(opt => opt.label !== "None");
@@ -83,8 +83,8 @@ export default function FoundationBuilder() {
                 <div className={`absolute inset-0 transition-opacity duration-500 ${hasExpansion ? 'opacity-30' : 'opacity-20'}`}>
                   {/* Dynamic ASCII Art based on stack height */}
                   <AsciiArt 
-                    width={60} 
-                    height={stackHeight} 
+                    width={125} 
+                    height={125} 
                     numCircles={stackCircles} 
                   />
                 </div>

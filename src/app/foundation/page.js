@@ -217,7 +217,7 @@ export default function FoundationPage() {
               
               <div className="bg-gray-50 dark:bg-zinc-900 rounded-3xl p-8 border border-black/10 dark:border-white/10 aspect-square flex items-center justify-center relative overflow-hidden group">
                 <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
-                  <AsciiArt width={150} height={150} numCircles={100} />
+                  <AsciiArt width={125} height={125} numCircles={100} />
                 </div>
                 <div className="relative z-10 text-center space-y-6">
                   <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-white dark:bg-black border border-black/10 dark:border-white/10 shadow-2xl shadow-orange-500/20">
