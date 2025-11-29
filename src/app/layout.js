@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import {Analytics} from "@vercel/analytics/next";
 
 export const metadata = {
   title: "Cornerstone",
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
           {children}
         </div>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

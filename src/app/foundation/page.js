@@ -30,7 +30,7 @@ export default function FoundationPage() {
               Foundation
             </h1>
             <p className="text-xl md:text-3xl font-mono text-black/60 dark:text-white/60 max-w-2xl mx-auto leading-relaxed">
-              A compact, modular, seamless home server.
+              Your compact, modular, seamless home server.
             </p>
             <div className="pt-8">
               <Link
