@@ -88,9 +88,9 @@ export default function FoundationPage() {
                    />
                 </div>
                 <div className="relative z-10 bg-white/80 backdrop-blur-md  dark:bg-black/80">
-                  <h3 className="text-xl font-medium mb-2">CNC Aluminum</h3>
+                  <h3 className="text-xl font-medium mb-2">Machined Aluminum</h3>
                   <p className="text-black/60 dark:text-white/60 font-mono text-sm">
-                    Milled from 6061-T6 aluminum. Structural rigidity protecting your data. Active cooling across modules.
+                    CNC milled from 6061-T6 aluminum. Structural rigidity protecting your data. Active cooling across modules.
                   </p>
                 </div>
               </div>
