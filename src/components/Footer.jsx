@@ -57,7 +57,7 @@ export default function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={status === "loading" || status === "success"}
-                  className="w-full bg-transparent border border-black dark:border-white px-4 py-3 font-mono text-sm placeholder:text-black/50 dark:placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white rounded-none disabled:opacity-50"
+                  className="w-full bg-white/80 backdrop-blur-md dark:bg-black/80 border border-black dark:border-white px-4 py-3 font-mono text-sm placeholder:text-black/50 dark:placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white rounded-none disabled:opacity-50"
                 />
                 {message && (
                   <p className={`mt-2 bg-inherit dark:bg-black/50 bg-white/50 font-mono text-xs ${status === "error" ? "text-red-500" : "text-green-500"}`}>
