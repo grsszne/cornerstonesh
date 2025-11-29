@@ -5,6 +5,7 @@ import AsciiArt from "@/components/AsciiArt";
 import FoundationBuilder from "@/components/FoundationBuilder";
 import TelemetryCard from "@/components/TelemetryCard";
 import { TelemetryProvider } from "@/components/TelemetryContext";
+import FadeIn from "@/components/FadeIn";
 
 export const metadata = {
   title: "Foundation - Cornerstone",
@@ -45,82 +46,89 @@ export default function FoundationPage() {
         {/* Bento Grid Features */}
         <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-zinc-900/50">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-16 text-center">
-              Designed for <span className="text-orange-500">You.</span>
-            </h2>
+            <FadeIn>
+              <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-16 text-center">
+                Designed for <span className="text-orange-500">You.</span>
+              </h2>
+            </FadeIn>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 auto-rows-[400px]">
-              {/* Large Feature - Storage */}
-              <div className="md:col-span-2 row-span-1 bg-white dark:bg-black border border-black/10 dark:border-white/10 p-8 md:p-12 rounded-3xl relative overflow-hidden group">
-                <div className="relative z-10 h-full flex flex-col justify-between">
+            <FadeIn delay={0.2}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 auto-rows-[400px]">
+                {/* Large Feature - Storage */}
+                <div className="md:col-span-2 row-span-1 bg-white dark:bg-black border border-black/10 dark:border-white/10 p-8 md:p-12 rounded-3xl relative overflow-hidden group">
+                  <div className="relative z-10 h-full flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-2xl md:text-3xl font-medium mb-4">6x SATA SSDs</h3>
+                      <p className="text-black/60 dark:text-white/60 font-mono text-sm md:text-base max-w-md">
+                        Massive storage density in a 3.5" footprint. Zero-cable backplane architecture for reliability. Optimized airflow path across all drives.
+                      </p>
+                    </div>
+                    <div className="w-full h-48 bg-gray-100 dark:bg-zinc-900 rounded-2xl mt-8 border border-dashed border-black/20 dark:border-white/20 flex items-center justify-center">
+                      <span className="font-mono text-xs uppercase tracking-widest opacity-50">Drive Sled Visualization</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tall Feature - Mortimer Interface */}
+                <div className="md:col-span-1 row-span-1 md:row-span-2 bg-black text-white dark:bg-white dark:text-black p-8 md:p-12 rounded-3xl relative overflow-hidden flex flex-col justify-between">
                   <div>
-                    <h3 className="text-2xl md:text-3xl font-medium mb-4">6x SATA SSDs</h3>
-                    <p className="text-black/60 dark:text-white/60 font-mono text-sm md:text-base max-w-md">
-                      Massive storage density in a 3.5" footprint. Zero-cable backplane architecture for reliability. Optimized airflow path across all drives.
+                    <h3 className="text-2xl md:text-3xl font-medium mb-4">Mortimer Interface</h3>
+                    <p className="opacity-70 font-mono text-sm">
+                      Our custom modular standard. Expand with networking modules, AI accelerators, or displays. 
+                      <br/><br/>
+                      Includes PWR+, I2C discovery, and presence detection.
                     </p>
                   </div>
-                  <div className="w-full h-48 bg-gray-100 dark:bg-zinc-900 rounded-2xl mt-8 border border-dashed border-black/20 dark:border-white/20 flex items-center justify-center">
-                    <span className="font-mono text-xs uppercase tracking-widest opacity-50">Drive Sled Visualization</span>
+                  <div className="mt-8 flex-1 relative">
+                     <AsciiArt width={40} height={60} numCircles={15} />
                   </div>
                 </div>
-              </div>
 
-              {/* Tall Feature - Mortimer Interface */}
-              <div className="md:col-span-1 row-span-1 md:row-span-2 bg-black text-white dark:bg-white dark:text-black p-8 md:p-12 rounded-3xl relative overflow-hidden flex flex-col justify-between">
-                <div>
-                  <h3 className="text-2xl md:text-3xl font-medium mb-4">Mortimer Interface</h3>
-                  <p className="opacity-70 font-mono text-sm">
-                    Our custom modular standard. Expand with networking modules, AI accelerators, or displays. 
-                    <br/><br/>
-                    Includes PWR+, I2C discovery, and presence detection.
-                  </p>
+                {/* Small Feature - Chassis */}
+                <div className="md:col-span-1 row-span-1 bg-white dark:bg-black border border-black/10 dark:border-white/10 p-8 rounded-3xl flex flex-col justify-end relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
+                     <img 
+                      src="/img/corner.png" 
+                      alt="CNC Aluminum Detail" 
+                      className="absolute top-0 right-0 w-[120%] h-auto object-contain opacity-90 dark:opacity-80"
+                     />
+                  </div>
+                  <div className="relative z-10 bg-white/80 backdrop-blur-md  dark:bg-black/80">
+                    <h3 className="text-xl font-medium mb-2">Machined Aluminum</h3>
+                    <p className="text-black/60 dark:text-white/60 font-mono text-sm">
+                      CNC milled from 6061-T6 aluminum. Structural rigidity protecting your data. Active cooling across modules.
+                    </p>
+                  </div>
                 </div>
-                <div className="mt-8 flex-1 relative">
-                   <AsciiArt width={40} height={60} numCircles={15} />
-                </div>
-              </div>
 
-              {/* Small Feature - Chassis */}
-              <div className="md:col-span-1 row-span-1 bg-white dark:bg-black border border-black/10 dark:border-white/10 p-8 rounded-3xl flex flex-col justify-end relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
-                   <img 
-                    src="/img/corner.png" 
-                    alt="CNC Aluminum Detail" 
-                    className="absolute top-0 right-0 w-[120%] h-auto object-contain opacity-90 dark:opacity-80"
-                   />
-                </div>
-                <div className="relative z-10 bg-white/80 backdrop-blur-md  dark:bg-black/80">
-                  <h3 className="text-xl font-medium mb-2">Machined Aluminum</h3>
-                  <p className="text-black/60 dark:text-white/60 font-mono text-sm">
-                    CNC milled from 6061-T6 aluminum. Structural rigidity protecting your data. Active cooling across modules.
+                {/* Small Feature - Compute */}
+                <div className="md:col-span-1 row-span-1 bg-orange-500 text-white p-8 rounded-3xl flex flex-col justify-end">
+                  <h3 className="text-xl font-medium mb-2">Quad-Core Power</h3>
+                  <p className="opacity-90 font-mono text-sm">
+                    Broadcom BCM2712 Cortex-A76 @ 2.4GHz. LPDDR5 Memory. PCIe Gen 3 expansion.
                   </p>
                 </div>
               </div>
-
-              {/* Small Feature - Compute */}
-              <div className="md:col-span-1 row-span-1 bg-orange-500 text-white p-8 rounded-3xl flex flex-col justify-end">
-                <h3 className="text-xl font-medium mb-2">Quad-Core Power</h3>
-                <p className="opacity-90 font-mono text-sm">
-                  Broadcom BCM2712 Cortex-A76 @ 2.4GHz. LPDDR5 Memory. PCIe Gen 3 expansion.
-                </p>
-              </div>
-            </div>
+            </FadeIn>
           </div>
         </section>
 
         {/* The Cornerstone Difference */}
         <section className="py-32 px-4 sm:px-6 lg:px-8 bg-black text-white dark:bg-white dark:text-black overflow-hidden">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
-              <h2 className="text-4xl md:text-7xl font-medium tracking-tighter max-w-2xl">
-                Why choose <span className="text-orange-500">Foundation</span>?
-              </h2>
-              <p className="font-mono text-sm md:text-base opacity-60 max-w-md mb-2">
-                We were tired of choosing between underpowered toys and ugly enterprise gear. So we made a third option.
-              </p>
-            </div>
+            <FadeIn>
+              <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+                <h2 className="text-4xl md:text-7xl font-medium tracking-tighter max-w-2xl">
+                  Why choose <span className="text-orange-500">Foundation</span>?
+                </h2>
+                <p className="font-mono text-sm md:text-base opacity-60 max-w-md mb-2">
+                  We were tired of choosing between underpowered toys and ugly enterprise gear. So we made a third option.
+                </p>
+              </div>
+            </FadeIn>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <FadeIn delay={0.2}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
                   id: "01",
@@ -158,13 +166,15 @@ export default function FoundationPage() {
                 </div>
               ))}
             </div>
+            </FadeIn>
           </div>
         </section>
 
         {/* Matter Native Section */}
         <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black border-t border-black/10 dark:border-white/10">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <FadeIn>
+            <div className="max-w-7xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
                 <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-6">
                 Smart Home Integration
@@ -178,7 +188,7 @@ export default function FoundationPage() {
                     <TelemetryCard label="Fan Speed" metricKey="fanSpeed" unit=" RPM" icon="❆" />
                     <TelemetryCard label="CPU Temp" metricKey="cpuTemp" unit="°C" icon="🌡" />
                     <TelemetryCard label="Power Draw" metricKey="powerDraw" unit="W" icon="⚡" />
-                    <TelemetryCard label="Network" metricKey="network" unit=" Gbps" icon="🌐" />
+                    <TelemetryCard label="Network Activity" metricKey="network" unit=" Gbps" icon="🌐" />
                     <TelemetryCard label="Humidity" metricKey="humidity" unit="%" icon="💧" />
                     <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
                       <div className="text-orange-500 text-xl mb-2">🍃</div>
@@ -225,6 +235,7 @@ export default function FoundationPage() {
               </div>
             </div>
           </div>
+          </FadeIn>
         </section>
 
         {/* Build Your Foundation UI */}
