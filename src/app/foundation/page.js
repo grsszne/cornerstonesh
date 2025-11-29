@@ -101,7 +101,7 @@ export default function FoundationPage() {
           <div className="max-w-7xl mx-auto">
             <FadeIn>
               <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-16 text-center">
-                Built for <span className="text-orange-500">Purpose.</span>
+                Built with <span className="text-orange-500">Purpose.</span>
               </h2>
             </FadeIn>
 
