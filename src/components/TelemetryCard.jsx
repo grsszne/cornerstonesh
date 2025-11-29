@@ -9,16 +9,26 @@ export default function TelemetryCard({ label, metricKey, unit, icon }) {
   const [history, setHistory] = useState([displayValue]);
   const canvasRef = useRef(null);
   const maxHistoryLength = 20;
+  const animationRef = useRef(null);
+  const lastUpdateTime = useRef(Date.now());
+  const scrollOffset = useRef(0);
 
   // Update history when value changes
   useEffect(() => {
     setHistory(prev => {
+      // Only add new value if it's different from the last one
+      if (prev.length > 0 && prev[prev.length - 1] === displayValue) {
+        return prev;
+      }
       const updated = [...prev, displayValue];
       return updated.slice(-maxHistoryLength);
     });
+    lastUpdateTime.current = Date.now();
+    // Reset scroll offset when new value arrives
+    scrollOffset.current = 0;
   }, [displayValue]);
 
-  // Draw sparkline
+  // Draw sparkline with smooth animation
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || history.length < 2) return;
@@ -27,44 +37,105 @@ export default function TelemetryCard({ label, metricKey, unit, icon }) {
     const width = canvas.width;
     const height = canvas.height;
 
-    // Clear canvas
-    ctx.clearRect(0, 0, width, height);
+    const animate = () => {
+      // Clear canvas
+      ctx.clearRect(0, 0, width, height);
 
-    // Calculate min/max for scaling with padding
-    const min = Math.min(...history);
-    const max = Math.max(...history);
-    const range = max - min || 1; // Avoid division by zero
-    
-    // Add 20% padding to top and bottom
-    const padding = range * 0.2;
-    const paddedMin = min - padding;
-    const paddedMax = max + padding;
-    const paddedRange = paddedMax - paddedMin;
-
-    // Draw line
-    ctx.beginPath();
-    ctx.strokeStyle = 'rgba(249, 115, 22, 0.3)'; // Orange with transparency
-    ctx.lineWidth = 1.5;
-
-    history.forEach((value, index) => {
-      const x = (index / (maxHistoryLength - 1)) * width;
-      const y = height - ((value - paddedMin) / paddedRange) * height;
+      // Calculate min/max for scaling with padding
+      const min = Math.min(...history);
+      const max = Math.max(...history);
+      const range = max - min || 1;
       
-      if (index === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
+      // Add 20% padding to top and bottom
+      const padding = range * 0.2;
+      const paddedMin = min - padding;
+      const paddedMax = max + padding;
+      const paddedRange = paddedMax - paddedMin;
+
+      // Calculate interpolation progress (0-1) based on time since last update
+      const timeSinceUpdate = Date.now() - lastUpdateTime.current;
+      const interpolationDuration = 800; // Match the telemetry update interval
+      const progress = Math.min(timeSinceUpdate / interpolationDuration, 1);
+
+      // Update scroll offset for smooth horizontal movement
+      scrollOffset.current = progress;
+
+      // Create interpolated history for smooth animation
+      const interpolatedHistory = [...history];
+      if (progress < 1 && history.length >= 2) {
+        // Interpolate the last value
+        const prevValue = history[history.length - 2];
+        const currentValue = history[history.length - 1];
+        interpolatedHistory[history.length - 1] = prevValue + (currentValue - prevValue) * progress;
       }
-    });
 
-    ctx.stroke();
+      // Calculate point spacing
+      const pointSpacing = width / (maxHistoryLength - 1);
+      const horizontalOffset = scrollOffset.current * pointSpacing;
 
-    // Draw filled area
-    ctx.lineTo(width, height);
-    ctx.lineTo(0, height);
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(249, 115, 22, 0.05)';
-    ctx.fill();
+      // Convert values to points with horizontal scroll offset
+      const points = interpolatedHistory.map((value, index) => ({
+        x: (index / (maxHistoryLength - 1)) * width - horizontalOffset,
+        y: height - ((value - paddedMin) / paddedRange) * height
+      }));
+
+      // Add an extra interpolated point on the right if we're mid-transition
+      if (progress < 1 && history.length >= 2) {
+        const lastValue = interpolatedHistory[interpolatedHistory.length - 1];
+        points.push({
+          x: width,
+          y: height - ((lastValue - paddedMin) / paddedRange) * height
+        });
+      }
+
+      // Draw smooth curve using quadratic bezier curves
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(249, 115, 22, 0.3)';
+      ctx.lineWidth = 1.5;
+
+      // Filter points that are visible on canvas
+      const visiblePoints = points.filter(p => p.x >= -10 && p.x <= width + 10);
+      
+      if (visiblePoints.length > 0) {
+        // Start at first visible point
+        ctx.moveTo(visiblePoints[0].x, visiblePoints[0].y);
+
+        // Draw smooth curve through points
+        for (let i = 0; i < visiblePoints.length - 1; i++) {
+          const current = visiblePoints[i];
+          const next = visiblePoints[i + 1];
+          
+          // Calculate control point for smooth curve
+          const controlX = (current.x + next.x) / 2;
+          const controlY = (current.y + next.y) / 2;
+          
+          ctx.quadraticCurveTo(current.x, current.y, controlX, controlY);
+        }
+        
+        // Draw to last point
+        const lastPoint = visiblePoints[visiblePoints.length - 1];
+        ctx.lineTo(lastPoint.x, lastPoint.y);
+        ctx.stroke();
+
+        // Draw filled area
+        ctx.lineTo(lastPoint.x, height);
+        ctx.lineTo(visiblePoints[0].x, height);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(249, 115, 22, 0.05)';
+        ctx.fill();
+      }
+
+      // Continue animation
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
   }, [history]);
 
   return (
