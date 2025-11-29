@@ -3,15 +3,32 @@
 import { useState, useEffect, useRef } from "react";
 import { useTelemetry } from "./TelemetryContext";
 
+// Generate initial history for smooth startup
+const generateInitialHistory = (metricKey, currentValue) => {
+  const history = [];
+  const count = 20;
+  
+  for (let i = 0; i < count; i++) {
+    // Generate values with small variations around current value
+    const variation = (Math.random() - 0.5) * 0.1; // ±5% variation
+    const value = currentValue * (1 + variation);
+    history.push(value);
+  }
+  
+  return history;
+};
+
 export default function TelemetryCard({ label, metricKey, unit, icon }) {
   const metrics = useTelemetry();
   const displayValue = metrics[metricKey];
-  const [history, setHistory] = useState([displayValue]);
+  const [history, setHistory] = useState(() => generateInitialHistory(metricKey, displayValue));
   const canvasRef = useRef(null);
   const maxHistoryLength = 20;
   const animationRef = useRef(null);
   const lastUpdateTime = useRef(Date.now());
   const scrollOffset = useRef(0);
+  const smoothMin = useRef(displayValue * 0.95);
+  const smoothMax = useRef(displayValue * 1.05);
 
   // Update history when value changes
   useEffect(() => {
@@ -41,15 +58,21 @@ export default function TelemetryCard({ label, metricKey, unit, icon }) {
       // Clear canvas
       ctx.clearRect(0, 0, width, height);
 
-      // Calculate min/max for scaling with padding
-      const min = Math.min(...history);
-      const max = Math.max(...history);
-      const range = max - min || 1;
+      // Calculate actual min/max from history
+      const actualMin = Math.min(...history);
+      const actualMax = Math.max(...history);
+      
+      // Smoothly interpolate towards actual min/max (exponential smoothing)
+      const smoothingFactor = 0.1;
+      smoothMin.current = smoothMin.current + (actualMin - smoothMin.current) * smoothingFactor;
+      smoothMax.current = smoothMax.current + (actualMax - smoothMax.current) * smoothingFactor;
+      
+      const range = smoothMax.current - smoothMin.current || 1;
       
       // Add 20% padding to top and bottom
       const padding = range * 0.2;
-      const paddedMin = min - padding;
-      const paddedMax = max + padding;
+      const paddedMin = smoothMin.current - padding;
+      const paddedMax = smoothMax.current + padding;
       const paddedRange = paddedMax - paddedMin;
 
       // Calculate interpolation progress (0-1) based on time since last update

@@ -22,25 +22,48 @@ export function TelemetryProvider({ children }) {
         const newCpuLoad = Math.max(0.2, Math.min(0.8, prev.cpuLoad + cpuLoadChange));
         
         // CPU temp correlates with CPU load (with some lag/smoothing)
-        const targetTemp = 38 + (newCpuLoad * 20); // 38-58°C range
-        const cpuTemp = prev.cpuTemp + (targetTemp - prev.cpuTemp) * 0.3;
+        // Increased range: 35-65°C
+        const targetTemp = 35 + (newCpuLoad * 30);
+        let cpuTemp = prev.cpuTemp + (targetTemp - prev.cpuTemp) * 0.3;
+        // Ensure temperature always changes by at least 0.1°C
+        if (Math.abs(cpuTemp - prev.cpuTemp) < 0.1) {
+          cpuTemp = prev.cpuTemp + (Math.random() > 0.5 ? 0.1 : -0.1);
+        }
         
         // Fan speed responds to temperature
-        const targetFanSpeed = 600 + (cpuTemp - 38) * 20; // 600-1000 RPM range
-        const fanSpeed = prev.fanSpeed + (targetFanSpeed - prev.fanSpeed) * 0.25;
+        const targetFanSpeed = 600 + (cpuTemp - 35) * 13.33; // 600-1000 RPM range
+        let fanSpeed = prev.fanSpeed + (targetFanSpeed - prev.fanSpeed) * 0.25;
+        // Ensure fan speed always changes by at least 1 RPM
+        if (Math.abs(fanSpeed - prev.fanSpeed) < 1) {
+          fanSpeed = prev.fanSpeed + (Math.random() > 0.5 ? 1 : -1);
+        }
         
         // Power draw correlates with CPU load and fan speed
         const basePower = 8 + (newCpuLoad * 10); // 8-18W from CPU
         const fanPower = (fanSpeed - 600) / 400 * 2; // 0-2W from fan
-        const powerDraw = basePower + fanPower + (Math.random() - 0.5) * 0.5;
+        let powerDraw = basePower + fanPower + (Math.random() - 0.5) * 0.5;
+        // Ensure power draw always changes by at least 0.1W
+        if (Math.abs(powerDraw - prev.powerDraw) < 0.1) {
+          powerDraw = prev.powerDraw + (Math.random() > 0.5 ? 0.1 : -0.1);
+        }
         
         // Network has independent smooth variation
         const networkChange = (Math.random() - 0.5) * 0.15;
-        const network = Math.max(0.8, Math.min(2.0, prev.network + networkChange));
+        let network = Math.max(0.8, Math.min(2.0, prev.network + networkChange));
+        // Ensure network always changes by at least 0.1 Gbps
+        if (Math.abs(network - prev.network) < 0.1) {
+          network = prev.network + (Math.random() > 0.5 ? 0.1 : -0.1);
+          network = Math.max(0.8, Math.min(2.0, network));
+        }
         
         // Humidity has very slow, smooth variation
         const humidityChange = (Math.random() - 0.5) * 0.3;
-        const humidity = Math.max(40, Math.min(50, prev.humidity + humidityChange));
+        let humidity = Math.max(40, Math.min(50, prev.humidity + humidityChange));
+        // Ensure humidity always changes by at least 1%
+        if (Math.abs(humidity - prev.humidity) < 1) {
+          humidity = prev.humidity + (Math.random() > 0.5 ? 1 : -1);
+          humidity = Math.max(40, Math.min(50, humidity));
+        }
 
         return {
           cpuLoad: newCpuLoad,
