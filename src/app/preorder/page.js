@@ -57,8 +57,8 @@ export default function PreorderPage() {
                   Production Status
                 </h1>
                 <p className="font-mono text-sm md:text-base opacity-70 leading-relaxed max-w-md">
-                  We are currently in the final stages of validation for the Foundation chassis and Mortimer interface. Pre-orders are not yet open to the general public.
-                  In the meantime join the waitlist or follow our <a href="/devlog" className="underline decoration-orange-500 hover:text-orange-500 decoration-2">devlog</a> for updates. 
+                  We are currently in the design stages of Foundation. Currently, pre-orders are not open to the general public.
+                  In the meantime, join the waitlist or follow our <a href="/devlog" className="underline decoration-orange-500 hover:text-orange-500 decoration-2">devlog</a> for updates. 
                 </p>
               </div>
             </div>
