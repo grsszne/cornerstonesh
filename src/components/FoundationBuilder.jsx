@@ -528,16 +528,8 @@ export default function FoundationBuilder() {
                                     }
                                 });
                                 
-                                // Encode to Base64
-                                const bytes = new Uint8Array([
-                                    (val >>> 24) & 255,
-                                    (val >>> 16) & 255,
-                                    (val >>> 8) & 255,
-                                    val & 255
-                                ]);
-                                let binary = '';
-                                bytes.forEach(b => binary += String.fromCharCode(b));
-                                return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+                                // Encode to Base36
+                                return val.toString(36).toUpperCase();
                             })()}
                             className="flex-1 bg-gray-100 dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-lg px-3 py-2 font-mono text-xs text-opacity-60 truncate"
                         />
@@ -573,15 +565,11 @@ export default function FoundationBuilder() {
                             onClick={() => {
                                 try {
                                     const input = document.getElementById('load-config-input');
-                                    let key = input.value.replace(/-/g, '+').replace(/_/g, '/');
-                                    // Add padding back if needed
-                                    while (key.length % 4) key += '=';
-                                    
-                                    const binary = atob(key);
-                                    let val = 0;
-                                    for (let i = 0; i < 4; i++) {
-                                        val = (val << 8) | binary.charCodeAt(i);
-                                    }
+                                    const key = input.value.trim();
+                                    if (!key) return;
+
+                                    const val = parseInt(key, 36);
+                                    if (isNaN(val)) throw new Error("Invalid key");
                                     
                                     // Unpack
                                     // Memory
