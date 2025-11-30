@@ -65,7 +65,6 @@ export default function FoundationBuilder() {
 
   const basePrice = 299;
   
-  // Calculate total price
   const storagePrice = storageModules.reduce((sum, mod) => sum + mod.price, 0);
   const peripheralPrice = peripheralModules.reduce((sum, mod) => sum + mod.price, 0);
   const roofPrice = roof.price + (roofFan ? ROOF_FAN_PRICE : 0);
@@ -74,7 +73,6 @@ export default function FoundationBuilder() {
   const totalModules = storageModules.length + peripheralModules.length;
   const hasExpansion = totalModules > 0;
   
-  // Calculate visualizer props based on stack height
   const stackHeight = 50 + (totalModules * 15);
   const stackCircles = 2 + (totalModules * 10);
 
@@ -125,11 +123,9 @@ export default function FoundationBuilder() {
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
-            {/* Left Column: Visualizer */}
             <div className="lg:col-span-5 space-y-8 sticky top-8">
               <div className="aspect-square bg-gray-100 dark:bg-zinc-900 rounded-2xl border border-dashed border-black/20 dark:border-white/20 flex items-center justify-center relative overflow-hidden group transition-all duration-500">
                 <div className={`absolute inset-0 transition-opacity duration-500 ${hasExpansion ? 'opacity-30' : 'opacity-20'}`}>
-                  {/* Dynamic ASCII Art based on stack height */}
                   <AsciiArt 
                     width={125} 
                     height={125} 
@@ -147,7 +143,6 @@ export default function FoundationBuilder() {
                 </div>
               </div>
 
-              {/* Summary List */}
               <div className="space-y-4 font-mono text-sm border-t border-black/10 dark:border-white/10 pt-6">
                 <div className="flex justify-between">
                   <span className="opacity-60">Core</span>
@@ -162,7 +157,6 @@ export default function FoundationBuilder() {
                   <span className={baseStorage.price > 0 ? "text-orange-500" : ""}>{baseStorage.label} NVMe</span>
                 </div>
                 
-                {/* Storage Summary */}
                 {storageModules.length > 0 && (
                   <div className="border-t border-black/5 dark:border-white/5 pt-2 mt-2">
                     <span className="block opacity-60 mb-2">Storage Stack</span>
@@ -177,7 +171,6 @@ export default function FoundationBuilder() {
                   </div>
                 )}
 
-                {/* Peripheral Summary */}
                 {peripheralModules.length > 0 && (
                   <div className="border-t border-black/5 dark:border-white/5 pt-2 mt-2">
                     <span className="block opacity-60 mb-2">Peripherals</span>
@@ -192,7 +185,6 @@ export default function FoundationBuilder() {
                   </div>
                 )}
 
-                {/* Roof Summary */}
                 <div className="border-t border-black/5 dark:border-white/5 pt-2 mt-2">
                    <div className="flex justify-between">
                     <span className="opacity-60">Roof</span>
@@ -208,10 +200,8 @@ export default function FoundationBuilder() {
               </div>
             </div>
 
-            {/* Right Column: Configurator */}
             <div className="lg:col-span-7 space-y-10">
               
-              {/* Memory Selector */}
               <div className="space-y-4">
                 <div className="flex justify-between items-end">
                   <label className="text-xl font-medium">Memory</label>
@@ -240,7 +230,6 @@ export default function FoundationBuilder() {
                 </p>
               </div>
 
-              {/* Base Storage Selector */}
               <div className="space-y-4">
                 <div className="flex justify-between items-end">
                   <label className="text-xl font-medium">Base Storage</label>
@@ -269,7 +258,6 @@ export default function FoundationBuilder() {
                 </p>
               </div>
 
-              {/* Storage Expansion Section */}
               <div className="space-y-6 pt-6 border-t border-black/10 dark:border-white/10">
                 <button 
                   onClick={() => toggleSection('storage')}
@@ -460,7 +448,6 @@ export default function FoundationBuilder() {
                 )}
               </div>
 
-              {/* Total & CTA */}
               <div className="pt-8 border-t border-black/10 dark:border-white/10">
                 <div className="flex justify-between items-end mb-8">
                   <div className="space-y-1">
@@ -557,7 +544,7 @@ export default function FoundationBuilder() {
                     <div className="flex gap-2">
                         <input 
                             type="text" 
-                            placeholder="Paste configuration key..."
+                            placeholder="Paste configuration key... (No case sensitivity)" 
                             id="load-config-input"
                             className="flex-1 bg-white dark:bg-black border border-black/10 dark:border-white/10 rounded-lg px-3 py-2 font-mono text-xs"
                         />
