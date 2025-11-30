@@ -274,8 +274,8 @@ export default function FoundationBuilder() {
                   </div>
                 </div>
                 <Link
-                  href="/#preorder"
-                  className="block w-full py-5 text-center text-lg font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white hover:border-orange-500 transition-all duration-300 rounded-2xl"
+                  href="/preorder"
+                  className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-300 rounded-full w-full sm:w-auto"
                 >
                   Reserve Configuration
                 </Link>

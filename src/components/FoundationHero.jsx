@@ -27,7 +27,7 @@ export default function FoundationHero() {
           </div>
           <div className="flex flex-col sm:flex-row gap-4 md:justify-end">
             <Link
-              href="#preorder"
+              href="/preorder"
               className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black border border-black dark:border-white hover:bg-orange-500 hover:border-orange-500 dark:hover:bg-orange-500 dark:hover:border-orange-500 transition-colors duration-300"
             >
               Pre-order Now

@@ -17,8 +17,9 @@ export default function Navigation() {
 
   const navLinks = [
     { name: "Foundation", href: "/foundation" },
-    { name: "Story", href: "#story" },
-    { name: "Specs", href: "#specs" },
+    { name: "Devlog", href: "/devlog" },
+    { name: "Story", href: "/#story" },
+    { name: "Specs", href: "/foundation#specs" },
   ];
 
   return (
@@ -54,7 +55,7 @@ export default function Navigation() {
                 </Link>
               ))}
               <Link
-                href="#buy"
+                href="/preorder"
                 className="bg-black hover:bg-orange-500 hover:text-white hover:border-orange-500 border border-black dark:bg-white dark:text-black dark:hover:bg-orange-500 dark:hover:text-white dark:hover:border-orange-500 dark:border-white text-white text-xs px-3 py-1.5 rounded-full font-[500] font-mono transition-colors"
               >
                 Buy
@@ -109,7 +110,7 @@ export default function Navigation() {
             ))}
             <div className="pt-4">
               <Link
-                href="#buy"
+                href="/preorder"
                 className="block w-full text-center bg-black hover:bg-orange-500 hover:text-white hover:border-orange-500 border border-black dark:bg-white dark:text-black dark:hover:bg-orange-500 dark:hover:text-white dark:hover:border-orange-500 dark:border-white text-white px-4 py-2 rounded-full font-medium font-mono transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >

@@ -35,7 +35,7 @@ export default function FoundationPage() {
             </p>
             <div className="pt-8">
               <Link
-                href="/#preorder"
+                href="/preorder"
                 className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-orange-500 text-white border border-orange-500 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-black dark:hover:border-white transition-all duration-300 rounded-full"
               >
                 Pre-order Now
@@ -565,7 +565,7 @@ export default function FoundationPage() {
             </p>
             <div className="pt-8">
               <Link
-                href="/#preorder"
+                href="/preorder"
                 className="inline-flex items-center justify-center px-12 py-5 text-lg font-mono font-medium uppercase tracking-wider bg-orange-500 text-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white transition-all duration-300 rounded-full"
               >
                 Reserve Yours
