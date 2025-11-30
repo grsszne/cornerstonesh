@@ -55,7 +55,7 @@ export default function GuidePage() {
                   <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">What It's Like</div>
                     <p className="text-sm opacity-80 leading-relaxed">
-                      Drinking from a standard straw. It's perfectly fine for most tasks.
+                      Drinking from a standard straw. It's perfectly fine for most tasks. Most home networks and devices are only able to handle 1GbE, so 1GbE is more than enough for almost all users and general storage needs.
                     </p>
                   </div>
 
