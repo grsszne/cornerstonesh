@@ -335,7 +335,7 @@ export default function FoundationBuilder() {
                     )}
                     
                     <p className="text-xs opacity-50 font-mono">
-                      Add up to 6 NVMe storage modules for massive capacity.
+                      Add up to 6 SSD storage modules for massive capacity.
                     </p>
                   </div>
                 )}
