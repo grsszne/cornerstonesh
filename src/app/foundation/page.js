@@ -322,7 +322,7 @@ export default function FoundationPage() {
         </section>
 
         {/* The Cornerstone Difference */}
-        <section className="py-32 px-4 sm:px-6 lg:px-8 bg-black text-white dark:bg-white dark:text-black overflow-hidden">
+        <section id="story" className="py-32 px-4 sm:px-6 lg:px-8 bg-black text-white dark:bg-white dark:text-black overflow-hidden">
           <div className="max-w-7xl mx-auto">
             <FadeIn>
               <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
@@ -450,7 +450,7 @@ export default function FoundationPage() {
         <FoundationBuilder />
 
         {/* Technical Specs */}
-        <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <section id="specs" className="py-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-16 border-b border-black/10 dark:border-white/10 pb-8">
               Technical Specifications
