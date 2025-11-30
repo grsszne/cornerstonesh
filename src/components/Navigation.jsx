@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +17,37 @@ export default function Navigation() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Handle smooth scrolling to hash anchors with nav offset
+  useEffect(() => {
+    const handleHashScroll = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        setTimeout(() => {
+          const element = document.querySelector(hash);
+          if (element) {
+            const navHeight = 56; // h-14 = 56px
+            // Get the element's top position relative to the document
+            const elementTop = element.offsetTop;
+            // Scroll so the element starts right below the nav bar
+            const offsetPosition = elementTop - navHeight;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }, 300);
+      }
+    };
+
+    // Handle initial hash on page load
+    handleHashScroll();
+
+    // Handle hash changes
+    window.addEventListener('hashchange', handleHashScroll);
+    return () => window.removeEventListener('hashchange', handleHashScroll);
+  }, [pathname]);
 
   const navLinks = [
     { name: "Foundation", href: "/foundation" },
@@ -45,15 +79,61 @@ export default function Navigation() {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex space-x-8 items-center">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="text-xs font-[500] font-mono text-black dark:text-white hover:opacity-70 transition-opacity"
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isHashLink = link.href.includes('#');
+                const [path, hash] = isHashLink ? link.href.split('#') : [link.href, null];
+                
+                return isHashLink ? (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (pathname === path) {
+                        // Already on the page, just scroll
+                        const element = document.getElementById(hash);
+                        if (element) {
+                          const navHeight = 56; // h-14 = 56px
+                          const elementTop = element.offsetTop;
+                          const offsetPosition = elementTop - navHeight;
+
+                          window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                          });
+                        }
+                      } else {
+                        // Navigate to the page first, then scroll after load
+                        router.push(link.href);
+                        setTimeout(() => {
+                          const element = document.getElementById(hash);
+                          if (element) {
+                            const navHeight = 56;
+                            const elementTop = element.offsetTop;
+                            const offsetPosition = elementTop - navHeight;
+
+                            window.scrollTo({
+                              top: offsetPosition,
+                              behavior: 'smooth'
+                            });
+                          }
+                        }, 500);
+                      }
+                    }}
+                    className="text-xs font-[500] font-mono text-black dark:text-white hover:opacity-70 transition-opacity"
+                  >
+                    {link.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className="text-xs font-[500] font-mono text-black dark:text-white hover:opacity-70 transition-opacity"
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
               <Link
                 href="/preorder"
                 className="bg-black hover:bg-orange-500 hover:text-white hover:border-orange-500 border border-black dark:bg-white dark:text-black dark:hover:bg-orange-500 dark:hover:text-white dark:hover:border-orange-500 dark:border-white text-white text-xs px-3 py-1.5 rounded-full font-[500] font-mono transition-colors"
@@ -98,16 +178,65 @@ export default function Navigation() {
           }`}
         >
           <div className="px-4 pt-2 pb-6 space-y-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="block px-3 py-2 text-base font-medium font-mono text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black rounded-none"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isHashLink = link.href.includes('#');
+              const [path, hash] = isHashLink ? link.href.split('#') : [link.href, null];
+              
+              return isHashLink ? (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsMobileMenuOpen(false);
+                    if (pathname === path) {
+                      // Already on the page, just scroll
+                      setTimeout(() => {
+                        const element = document.getElementById(hash);
+                        if (element) {
+                          const navHeight = 56;
+                          const elementTop = element.offsetTop;
+                          const offsetPosition = elementTop - navHeight;
+
+                          window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                          });
+                        }
+                      }, 100);
+                    } else {
+                      // Navigate to the page first, then scroll after load
+                      router.push(link.href);
+                      setTimeout(() => {
+                        const element = document.getElementById(hash);
+                        if (element) {
+                          const navHeight = 56;
+                          const elementTop = element.offsetTop;
+                          const offsetPosition = elementTop - navHeight;
+
+                          window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                          });
+                        }
+                      }, 500);
+                    }
+                  }}
+                  className="block px-3 py-2 text-base font-medium font-mono text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black rounded-none"
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="block px-3 py-2 text-base font-medium font-mono text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black rounded-none"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
             <div className="pt-4">
               <Link
                 href="/preorder"

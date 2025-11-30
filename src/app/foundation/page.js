@@ -322,7 +322,7 @@ export default function FoundationPage() {
         </section>
 
         {/* The Cornerstone Difference */}
-        <section id="story" className="py-32 px-4 sm:px-6 lg:px-8 bg-black text-white dark:bg-white dark:text-black overflow-hidden">
+        <section id="story" className="min-h-screen flex flex-col justify-center py-32 px-4 sm:px-6 lg:px-8 bg-white dark:bg-white text-black dark:text-black overflow-hidden">
           <div className="max-w-7xl mx-auto">
             <FadeIn>
               <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
@@ -357,8 +357,8 @@ export default function FoundationPage() {
                   desc: "Precision CNC-milled 6061-T6 aluminum. Active heat dissipation. A server that looks as good as it performs, designed to be displayed, not hidden."
                 }
               ].map((item) => (
-                <div key={item.id} className="group relative border-t border-white/20 dark:border-black/20 pt-8 hover:border-orange-500 transition-colors duration-500">
-                  <div className="font-mono text-xs text-orange-500 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute -top-2.5 bg-black dark:bg-white px-2">
+                <div key={item.id} className="group relative border-t border-black/20 dark:border-black/20 pt-8 hover:border-orange-500 transition-colors duration-500">
+                  <div className="font-mono text-xs text-orange-500 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute -top-2.5 bg-white dark:bg-white px-2">
                     POINT {item.id}
                   </div>
                   <div className="text-6xl font-medium opacity-20 mb-8 group-hover:opacity-100 group-hover:text-orange-500 transition-all duration-500">
