@@ -470,7 +470,7 @@ export default function FoundationPage() {
                   </div>
                   <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
                     <span>Memory</span>
-                    <span>LPDDR4 (4GB, 8GB, 16GB options)</span>
+                    <span>LPDDR4 (4GB, 8GB, 16GB)</span>
                   </div>
                   <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
                     <span>Base Storage</span>
@@ -514,7 +514,7 @@ export default function FoundationPage() {
                   </div>
                   <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
                     <span>Expansion</span>
-                    <span>Mortimer Modular Interface</span>
+                    <span>Mortimer Interface</span>
                   </div>
                 </div>
               </div>
@@ -542,7 +542,7 @@ export default function FoundationPage() {
                 <div className="md:col-span-2 space-y-4">
                   <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
                     <span>OS</span>
-                    <span>Cornerstone OS (Pi OS based)</span>
+                    <span>Cornerstone OS</span>
                   </div>
                   <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
                     <span>Management</span>
