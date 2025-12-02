@@ -96,20 +96,20 @@ export default function TeachPage() {
                   3. The Proposal
                 </h2>
                 <p className="mb-4">
-                  We are not building "3D Snake." We are not building a "to-do list.". Just look around on this website and see how frankly incredible it is
+                  We are not building "3D Snake." We are not building a "to-do list.". Just look around on this website and see how frankly incredible it is if i do say so myself.
                 </p>
                 <p className="mb-4">
-                  We are building <span className="text-orange-500">Cornerstone</span>, a hardware company. Our flagship product is the <span className="text-orange-500">Foundation</span>: a modular, stackable, aluminum-encased home server system designed for the post-cloud era. We think we could raise a significant amount of money for this project based on the success of other (and i think inferior) projects on kickstarter who make home servers or nas devices
+                  We are building <span className="text-orange-500">Cornerstone</span>, a hardware company. Our flagship product is the <span className="text-orange-500">Foundation</span>: a modular, stackable, aluminum-encased home server system designed for a time where many people want to be independent of third party clouds and saas's. We think we could raise a significant amount of money for this project based on the success of other (and i think inferior) projects on kickstarter who make home servers or nas devices
                 </p>
                 
                 <div className="space-y-8 mt-8">
                   <div>
                     <h3 className="text-lg font-bold mb-2 text-orange-500">The Architecture</h3>
                     <p className="opacity-80 mb-4">
-                      The Foundation is not a repackaged PC. It is a full stack engineering effort centered around the <span className="text-orange-500">Raspberry Pi Compute Module 5 (CM5)</span>. E.g., we have to implement all the IO, PCI, USB controllers, SATA controllers, 1Gbe - 10Gbe controllers, etc. from scratch.
+                      The Foundation is not a repackaged PC. It is a full stack effort centered around the <span className="text-orange-500">Raspberry Pi Compute Module 5 (CM5)</span>. E.g., we have to implement all the IO, PCI, USB controllers, SATA controllers, 1Gbe - 10Gbe controllers, etc. from scratch.
                     </p>
                     <ul className="list-disc list-inside opacity-80 space-y-2 ml-2">
-                      <li><span className="font-bold">Compute:</span> Powered by the Broadcom BCM2712 Quad-core Cortex-A76 processor clocked at 2.4GHz, delivering desktop-class performance in a sub-5W power envelope.</li>
+                      <li><span className="font-bold">Compute:</span> Powered by the Broadcom BCM2712 Quad-core Cortex-A76 processor clocked at 2.4GHz, delivering desktop-class performance in a sub-5W power envelope. we will provide memory options from 4 to 16GB</li>
                       <li><span className="font-bold">Storage Fabric:</span> We have engineered a custom <span className="font-bold">Zero-Cable Backplane</span>. Unlike traditional servers that rely on a mess of SATA cables, our drives slot directly into a rigid PCB backbone. This supports up to 6x SATA SSDs with optimized airflow channels.</li>
                       <li><span className="font-bold">The 72 Pin Interface:</span> This is our proprietary expansion standard. It utilizes a custom pinout carrying PCIe Gen 2, I2C for module discovery, and high-current power rails. This allows users to stack modules—like 2.5GbE networking, AI accelerators, or UPS battery backups—without tools or drivers.</li>
                     </ul>
@@ -118,7 +118,7 @@ export default function TeachPage() {
                   <div>
                     <h3 className="text-lg font-bold mb-2 text-orange-500">The Physicality</h3>
                     <p className="opacity-80">
-                      The chassis is CNC-milled from a solid block of <span className="font-bold">6061-T6 Aluminum</span>. It measures exactly 3.5" x 3.5" (89mm), matching the footprint of the drives it houses. The case itself acts as a passive thermal mass, dissipating heat from the NVMe drives and compute module, allowing for silent operation.
+                      The chassis is CNC-milled from a solid block of <span className="font-bold">6061-T6 Aluminum</span>. It measures exactly 3.5" x 3.5" (89mm), Allowing for the use of 2.5" drives (which are more like 3 and a few inches wide). The case itself acts as a passive thermal mass, dissipating heat from the NVMe drives and compute module. There is also a fan in the bottom module to help with airflow throughout the entire stack.
                     </p>
                   </div>
 
