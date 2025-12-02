@@ -49,7 +49,7 @@ export default function TeachPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-orange-500 underline-offset-4">
-                  2. The Parties (The "Dream Team")
+                  2. You know who we are but you don't know what we're doing
                 </h2>
                 <p className="mb-6">
                   We have already divided responsibilities to ensure we can work asynchronously without blocking each other:
@@ -125,7 +125,7 @@ export default function TeachPage() {
                   <div>
                     <h3 className="text-lg font-bold mb-2 text-orange-500">The Software</h3>
                     <p className="opacity-80">
-                      Hardware is useless without control. We are developing <span className="font-bold">CornerstoneOS</span>, a custom Debian-based distribution. It features a Matter-native telemetry bridge, allowing the server to expose its health stats (CPU temp, fan speed, storage usage) directly to Apple HomeKit and Google Home.
+                      Hardware is useless without control. We are developing <span className="font-bold">CornerstoneOS</span>, a custom series of containerized services running on top of a<span className="font-bold">Debian</span> distro. The containers will include Kernel interfaces for direct hardware control, Next.js for web interfaces, NAS and other home server interfaces, and a Matter-native telemetry bridge, allowing the server to expose its health stats (CPU temp, fan speed, storage usage) directly to Apple HomeKit and Google Home.
                     </p>
                   </div>
                 </div>
@@ -148,17 +148,21 @@ export default function TeachPage() {
                   <div className="border border-black/10 dark:border-white/10 p-6 rounded-xl">
                     <h3 className="font-bold mb-2 text-orange-500">Software Repositories</h3>
                     <p className="opacity-80 mb-4">
-                      Our code is open source and active. You can verify our commit history today:
+                      Currently, our <a href="https://cornerstone.sh" target="_blank" className="hover:text-orange-500 underline decoration-dotted underline-offset-4">public website</a>'s repository is public. It's repository can be seen here:
                     </p>
                     <ul className="space-y-2 text-xs">
                       <li>
-                        <a href="https://github.com/grsszne/cornerstonesh" target="_blank" className="hover:text-orange-500 underline decoration-dotted underline-offset-4">
+                        <a href="https://github.com/grsszne/cornerstonesh/commits/" target="_blank" className="hover:text-orange-500 underline decoration-dotted underline-offset-4">
                           github.com/grsszne/cornerstonesh
                         </a>
                         <span className="block opacity-50 mt-1">The public-facing marketing site and documentation hub.</span>
                       </li>
                       <li>
-                        <a href="https://github.com/grsszne/cornerstoneos" target="_blank" className="hover:text-orange-500 underline decoration-dotted underline-offset-4">
+
+                    <p className="opacity-80 mb-4">
+                      Our firmware and os layer is currently private. It can be seen here. We can give you access if you want to help us.
+                    </p>
+                        <a href="https://github.com/grsszne/cornerstoneos/commits/" target="_blank" className="hover:text-orange-500 underline decoration-dotted underline-offset-4">
                           github.com/grsszne/cornerstoneos
                         </a>
                         <span className="block opacity-50 mt-1">The custom firmware and OS layer for the CM5.</span>
@@ -209,29 +213,11 @@ export default function TeachPage() {
                 </div>
               </section>
 
-              <section>
-                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-orange-500 underline-offset-4">
-                  7. The "No-Fail" Guarantee
-                </h2>
-                <p className="mb-4">
-                  We understand that approving a cross-class group is a risk for you. What if we slack off? What if we blame the schedule?
-                </p>
-                <p className="mb-4">
-                  To mitigate this risk, we offer the following <span className="font-bold">Unilateral Guarantee of Performance</span>:
-                </p>
-                <div className="p-6 border-2 border-dashed border-orange-500 rounded-xl bg-orange-50 dark:bg-orange-950/20">
-                  <p className="italic text-center text-lg">
-                    "If The Syndicate fails to deliver a functional prototype by the deadline, we hereby agree to accept a full letter grade deduction AND we will personally buy the entire class pizza."
-                  </p>
-                </div>
-                <p className="mt-4 text-xs opacity-50 text-center">
-                  *Pizza toppings subject to budget constraints.
-                </p>
-              </section>
+
 
               <section>
                 <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-orange-500 underline-offset-4">
-                  8. Execution
+                  7. Execution
                 </h2>
                 <p className="mb-8">
                   Signed digitally on this day, {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}.
