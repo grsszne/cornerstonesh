@@ -434,8 +434,8 @@ export default function FoundationBuilder() {
                         `}
                     >
                         <div className="flex flex-col items-start">
-                            <span className="font-bold font-mono text-sm">Active Cooling Fan</span>
-                            <span className="text-xs opacity-60 text-left">Improves convection and thermals</span>
+                            <span className="font-bold font-mono text-sm">Additional Cooling Fan</span>
+                            <span className="text-xs opacity-60 text-left">Improves convection and thermals by expelling heat from the top of the stack.</span>
                         </div>
                         <div className="flex items-center gap-3">
                              <span className="text-xs font-mono opacity-70">+{ROOF_FAN_PRICE}</span>

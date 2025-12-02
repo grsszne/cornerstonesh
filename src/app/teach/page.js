@@ -27,10 +27,10 @@ export default function TeachPage() {
             </Link>
             
             <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
-              Project Protocol: <span className="text-orange-500">Cornerstone</span>
+              <span className="text-orange-500">Cornerstone</span>
             </h1>
             <p className="font-mono text-sm text-black/60 dark:text-white/60 mb-12 uppercase tracking-widest">
-              Doc Ref: ISP-OVERRIDE-REQ-001 • Status: PENDING APPROVAL
+              We made this super secret page on our highly advanced website just for you, Teach. 
             </p>
 
             <div className="space-y-12 font-mono text-sm leading-relaxed">
