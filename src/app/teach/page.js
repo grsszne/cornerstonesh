@@ -30,7 +30,7 @@ export default function TeachPage() {
               <span className="text-orange-500">Cornerstone</span>
             </h1>
             <p className="font-mono text-sm text-black/60 dark:text-white/60 mb-12 uppercase tracking-widest">
-              We made this super secret page on our highly advanced website just for you, Teach. 
+              We made this super secret page on our highly advanced website just for you, Teach. I write this from a hotspot in my car before school.
             </p>
 
             <div className="space-y-12 font-mono text-sm leading-relaxed">
@@ -40,10 +40,10 @@ export default function TeachPage() {
                   1. The Request
                 </h2>
                 <p className="mb-4 text-lg font-medium">
-                  We are asking for permission to form a cross-class Independent Study Project (ISP) team.
+                  We are asking for permission to form a cross-class ISP team.
                 </p>
                 <p className="mb-4">
-                  We know the rule: teams usually have to be in the same class period. We are asking for an exception because our project, <span className="font-bold">Cornerstone</span>, is too complex to be built by a random assortment of students. It requires a specific combination of hardware, software, and operational skills that only the three of us—Zane, Edgar, and Timi—can provide together.
+                  We know the rule: teams usually have to be in the same class period. We are asking for an exception because our project, <span className="font-bold">Cornerstone</span>, is too awesome and incredible to be built by a random assortment of students. It needs a specific combination of hardware, software, and operational skills that only the three of us (Zane, Edgar, and Timi) can provide together.
                 </p>
               </section>
 
@@ -56,7 +56,7 @@ export default function TeachPage() {
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-4 border border-black/20 dark:border-white/20 rounded-lg flex flex-col h-full">
-                    <div className="text-orange-500 font-bold mb-1">OPERATIVE 01</div>
+                    <div className="text-orange-500 font-bold mb-1">01</div>
                     <div className="text-xl font-bold mb-2">Zane</div>
                     <div className="opacity-60 text-xs mb-2 font-bold">Role: Engineering Lead</div>
                     <ul className="list-disc list-inside text-xs opacity-80 space-y-1">
@@ -67,7 +67,7 @@ export default function TeachPage() {
                     </ul>
                   </div>
                   <div className="p-4 border border-black/20 dark:border-white/20 rounded-lg flex flex-col h-full">
-                    <div className="text-orange-500 font-bold mb-1">OPERATIVE 02</div>
+                    <div className="text-orange-500 font-bold mb-1">02</div>
                     <div className="text-xl font-bold mb-2">Edgar</div>
                     <div className="opacity-60 text-xs mb-2 font-bold">Role: Software Lead</div>
                     <ul className="list-disc list-inside text-xs opacity-80 space-y-1">
@@ -78,7 +78,7 @@ export default function TeachPage() {
                     </ul>
                   </div>
                   <div className="p-4 border border-black/20 dark:border-white/20 rounded-lg flex flex-col h-full">
-                    <div className="text-orange-500 font-bold mb-1">OPERATIVE 03</div>
+                    <div className="text-orange-500 font-bold mb-1">03</div>
                     <div className="text-xl font-bold mb-2">Timi</div>
                     <div className="opacity-60 text-xs mb-2 font-bold">Role: Operations & QA</div>
                     <ul className="list-disc list-inside text-xs opacity-80 space-y-1">
@@ -96,22 +96,22 @@ export default function TeachPage() {
                   3. The Proposal
                 </h2>
                 <p className="mb-4">
-                  We are not building "3D Snake." We are not building a "to-do list."
+                  We are not building "3D Snake." We are not building a "to-do list.". Just look around on this website and see how frankly incredible it is
                 </p>
                 <p className="mb-4">
-                  We are building <span className="font-bold">Cornerstone</span>, a hardware company. Our flagship product is the <span className="font-bold">Foundation</span>: a modular, stackable, aluminum-encased home server system designed for the post-cloud era.
+                  We are building <span className="text-orange-500">Cornerstone</span>, a hardware company. Our flagship product is the <span className="text-orange-500">Foundation</span>: a modular, stackable, aluminum-encased home server system designed for the post-cloud era. We think we could raise a significant amount of money for this project based on the success of other (and i think inferior) projects on kickstarter who make home servers or nas devices
                 </p>
                 
                 <div className="space-y-8 mt-8">
                   <div>
                     <h3 className="text-lg font-bold mb-2 text-orange-500">The Architecture</h3>
                     <p className="opacity-80 mb-4">
-                      The Foundation is not a repackaged PC. It is a ground-up engineering effort centered around the <span className="font-bold">Raspberry Pi Compute Module 5 (CM5)</span>.
+                      The Foundation is not a repackaged PC. It is a full stack engineering effort centered around the <span className="text-orange-500">Raspberry Pi Compute Module 5 (CM5)</span>. E.g., we have to implement all the IO, PCI, USB controllers, SATA controllers, 1Gbe - 10Gbe controllers, etc. from scratch.
                     </p>
                     <ul className="list-disc list-inside opacity-80 space-y-2 ml-2">
                       <li><span className="font-bold">Compute:</span> Powered by the Broadcom BCM2712 Quad-core Cortex-A76 processor clocked at 2.4GHz, delivering desktop-class performance in a sub-5W power envelope.</li>
                       <li><span className="font-bold">Storage Fabric:</span> We have engineered a custom <span className="font-bold">Zero-Cable Backplane</span>. Unlike traditional servers that rely on a mess of SATA cables, our drives slot directly into a rigid PCB backbone. This supports up to 6x SATA SSDs with optimized airflow channels.</li>
-                      <li><span className="font-bold">The Mortimer Interface:</span> This is our proprietary expansion standard. It utilizes a custom pinout carrying PCIe Gen 2, I2C for module discovery, and high-current power rails. This allows users to stack modules—like 2.5GbE networking, AI accelerators, or UPS battery backups—without tools or drivers.</li>
+                      <li><span className="font-bold">The 72 Pin Interface:</span> This is our proprietary expansion standard. It utilizes a custom pinout carrying PCIe Gen 2, I2C for module discovery, and high-current power rails. This allows users to stack modules—like 2.5GbE networking, AI accelerators, or UPS battery backups—without tools or drivers.</li>
                     </ul>
                   </div>
                   
