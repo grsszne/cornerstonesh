@@ -220,7 +220,7 @@ export default function TeachPage() {
                   7. Execution
                 </h2>
                 <p className="mb-8">
-                  Signed digitally on this day, {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}.
+                  Signed (digitally) on this day, {"1 December 2025"}.
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
