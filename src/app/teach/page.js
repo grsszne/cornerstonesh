@@ -136,13 +136,13 @@ export default function TeachPage() {
                   4. Current Status (We Are Already Building)
                 </h2>
                 <p className="mb-4">
-                  This is not just an idea. We have already begun significant engineering work to prove our commitment.
+                  We have already begun significant engineering work to prove our commitment. If it is indicative of how passionate I and Timi are about this project, we had to see Edgar 4 times during break.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="border border-black/10 dark:border-white/10 p-6 rounded-xl">
                     <h3 className="font-bold mb-2 text-orange-500">Hardware (CAD/EDA)</h3>
                     <p className="opacity-80 mb-4">
-                      We are currently iterating on the aluminum chassis design in CAD, optimizing for thermal mass and manufacturability. The PCB backplane schematics are being finalized for the first prototype run.
+                      We are currently iterating on the aluminum chassis design in CAD, optimizing for thermal mass and manufacturability. The PCB backplane schematics are being finalized for the first prototype run. The CM5 PCBs are currently being designed.
                     </p>
                   </div>
                   <div className="border border-black/10 dark:border-white/10 p-6 rounded-xl">
@@ -160,7 +160,7 @@ export default function TeachPage() {
                       <li>
 
                     <p className="opacity-80 mb-4">
-                      Our firmware and os layer is currently private. It can be seen here. We can give you access if you want to help us.
+                      Our firmware and os layer is currently private. It can be seen here. We can give you access if you want. I just don't know if you've opened github in any private matter in the past 3 years.
                     </p>
                         <a href="https://github.com/grsszne/cornerstoneos/commits/" target="_blank" className="hover:text-orange-500 underline decoration-dotted underline-offset-4">
                           github.com/grsszne/cornerstoneos
@@ -182,11 +182,8 @@ export default function TeachPage() {
                 <p className="mb-4">
                   However, the complexity of this project <em>requires</em> this specific configuration of talent.
                 </p>
-                <p className="mb-4">
-                  A standard in-class group is formed by proximity. Our group is formed by necessity. Zane possesses the rare firmware/PCB skillset required to route the backplane. Edgar has the full-stack web experience to build the dashboard. Timi has the operational discipline to manage the supply chain and QA.
-                </p>
                 <p>
-                  To force us into different groups would be to dilute three potential "A+" projects into three "B-" projects. We are willing to document our cross-class collaboration via GitHub commits, Slack logs, and rigorous Kanban board updates to prove that our output exceeds that of any co-located team.
+                  To force us into different groups would be to dilute three potential "A+" projects into three "B-" projects. We are willing to document our cross-class collaboration via GitHub commits, Slack logs, and Kanban board updates to prove that our output exceeds that of any co-located team.
                 </p>
               </section>
 
@@ -195,7 +192,7 @@ export default function TeachPage() {
                   6. The Deliverables
                 </h2>
                 <p className="mb-4">
-                  By the end of the semester, we will deliver:
+                  By the end of the year, we will deliver:
                 </p>
                 <div className="space-y-4">
                   <div className="flex gap-4 items-start">
@@ -209,6 +206,11 @@ export default function TeachPage() {
                   <div className="flex gap-4 items-start">
                     <div className="border border-black dark:border-white px-2 py-1 text-xs font-bold rounded">DOCUMENTATION</div>
                     <p>A comprehensive engineering log (see /devlog) documenting every failure and success.</p>
+                  </div>
+
+                  <div className="flex gap-4 items-start">
+                    <div className="border border-black dark:border-white px-2 py-1 text-xs font-bold rounded">MONEY</div>
+                    <p>I wouldnt really mind if he raised upwards of 100 grand..... hmmm ... great look for you to brag to the teacher people, too. Or bible.</p>
                   </div>
                 </div>
               </section>
@@ -225,15 +227,12 @@ export default function TeachPage() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   <div className="border-t border-black dark:border-white pt-4">
-                    <div className="font-script text-2xl mb-2 text-orange-500">Zane</div>
                     <div className="text-xs uppercase tracking-widest opacity-50">Zane</div>
                   </div>
                   <div className="border-t border-black dark:border-white pt-4">
-                    <div className="font-script text-2xl mb-2 text-orange-500">Timi</div>
                     <div className="text-xs uppercase tracking-widest opacity-50">Timi</div>
                   </div>
                   <div className="border-t border-black dark:border-white pt-4">
-                    <div className="font-script text-2xl mb-2 text-orange-500">Edgar</div>
                     <div className="text-xs uppercase tracking-widest opacity-50">Edgar</div>
                   </div>
                 </div>
