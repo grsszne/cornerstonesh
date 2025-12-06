@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Please, Teach we need this",
+  title: "Project Protocol - Cornerstone",
   description: "Formal Request for Cross-Class ISP Authorization",
 };
 
