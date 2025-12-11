@@ -29,26 +29,15 @@ const MODULE_OPTIONS = [
   { id: "gpio", label: "GPIO", price: 20, score: 15, type: "gpio", color: "pink", description: "GPIO Revealer Module for developers" },
 ];
 
-const ROOF_OPTIONS = [
-  { label: "None", price: 0, id: "none" },
-  { label: "Bare Aluminum", price: 0, id: "bare" },
-  { label: "Nightlight", price: 40, id: "light" },
-  { label: "SD Reader", price: 40, id: "sd" },
-  { label: "Nightlight + SD", price: 70, id: "both" },
-];
-
-const ROOF_FAN_PRICE = 20;
 const NUM_BAYS = 7;
 
 export default function FoundationBuilder() {
   const [memory, setMemory] = useState(MEMORY_OPTIONS[0]);
   const [baseStorage, setBaseStorage] = useState(BASE_STORAGE_OPTIONS[0]);
 
-  // Bays state - array of 7 slots, each can hold a module or null
+  // Bays state - dynamic array, starts with 1 slot
+  const [visibleSlots, setVisibleSlots] = useState(1);
   const [bays, setBays] = useState(Array(NUM_BAYS).fill(null));
-
-  const [roof, setRoof] = useState(ROOF_OPTIONS[1]); // Default to Bare Aluminum
-  const [roofFan, setRoofFan] = useState(false);
 
   // UI State
   const [copied, setCopied] = useState(false);
@@ -56,9 +45,9 @@ export default function FoundationBuilder() {
   const [dragOverBay, setDragOverBay] = useState(null);
   const [draggedBayIndex, setDraggedBayIndex] = useState(null);
   const [deleteZoneHover, setDeleteZoneHover] = useState(false);
+  const [selectedModule, setSelectedModule] = useState(null);
   const [collapsed, setCollapsed] = useState({
-    modules: false,
-    roof: false
+    modules: false
   });
 
   const toggleSection = (section) => {
@@ -79,14 +68,30 @@ export default function FoundationBuilder() {
   const basePrice = 299;
 
   const bayPrice = bays.reduce((sum, mod) => sum + (mod?.price || 0), 0);
-  const roofPrice = roof.price + (roofFan ? ROOF_FAN_PRICE : 0);
-  const totalPrice = basePrice + memory.price + baseStorage.price + bayPrice + roofPrice;
+  const totalPrice = basePrice + memory.price + baseStorage.price + bayPrice;
 
   const occupiedBays = bays.filter(b => b !== null).length;
   const hasExpansion = occupiedBays > 0;
 
   const stackHeight = 50 + (occupiedBays * 15);
   const stackCircles = 2 + (occupiedBays * 10);
+
+  // Add/remove visible slots
+  const addSlot = () => {
+    if (visibleSlots < NUM_BAYS) {
+      setVisibleSlots(visibleSlots + 1);
+    }
+  };
+
+  const removeSlot = () => {
+    if (visibleSlots > 1) {
+      // Clear the last slot if it has a module
+      const newBays = [...bays];
+      newBays[visibleSlots - 1] = null;
+      setBays(newBays);
+      setVisibleSlots(visibleSlots - 1);
+    }
+  };
 
   // Drag handlers for module options
   const handleDragStart = (e, module) => {
@@ -241,19 +246,6 @@ export default function FoundationBuilder() {
                     </div>
                   </div>
                 )}
-
-                <div className="border-t border-black/5 dark:border-white/5 pt-2 mt-2">
-                  <div className="flex justify-between">
-                    <span className="opacity-60">Roof</span>
-                    <span className={roof.price > 0 ? "text-orange-500" : ""}>{roof.label}</span>
-                  </div>
-                  {roofFan && (
-                    <div className="flex justify-between pl-2 border-l-2 border-orange-500/20 mt-1">
-                      <span>Cooling</span>
-                      <span className="text-orange-500">Active Fan</span>
-                    </div>
-                  )}
-                </div>
               </div>
             </div>
 
@@ -347,18 +339,26 @@ export default function FoundationBuilder() {
                       <div className="flex flex-wrap gap-2">
                         {MODULE_OPTIONS.map((module) => {
                           const isAtLimit = module.maxCount && getModuleCount(module.id) >= module.maxCount;
+                          const isSelected = selectedModule?.id === module.id;
                           return (
                             <div
                               key={module.id}
                               draggable={!isAtLimit}
                               onDragStart={(e) => handleDragStart(e, module)}
                               onDragEnd={handleDragEnd}
+                              onClick={() => {
+                                if (!isAtLimit) {
+                                  setSelectedModule(isSelected ? null : module);
+                                }
+                              }}
                               className={`
                                 px-3 py-2 rounded-lg border font-mono text-xs transition-all duration-200
                                 flex items-center gap-2 select-none
                                 ${isAtLimit
                                   ? 'opacity-40 cursor-not-allowed border-black/10 dark:border-white/10 bg-gray-100 dark:bg-zinc-800'
-                                  : `cursor-grab active:cursor-grabbing ${getModuleColorClass(module, 'border')} ${getModuleColorClass(module, 'bg')}/10 hover:${getModuleColorClass(module, 'bg')}/20`
+                                  : isSelected
+                                    ? `cursor-pointer ring-2 ring-offset-2 ${getModuleColorClass(module, 'border')} ${getModuleColorClass(module, 'bg')}/20 ring-offset-white dark:ring-offset-black ${getModuleColorClass(module, 'border').replace('border-', 'ring-')}`
+                                    : `cursor-pointer ${getModuleColorClass(module, 'border')} ${getModuleColorClass(module, 'bg')}/10 hover:${getModuleColorClass(module, 'bg')}/20`
                                 }
                               `}
                               title={module.description || module.label}
@@ -367,30 +367,67 @@ export default function FoundationBuilder() {
                               <span className="font-medium">{module.label}</span>
                               <span className="opacity-60">+${module.price}</span>
                               {isAtLimit && <span className="text-[9px] text-red-500">(max)</span>}
+                              {isSelected && <span className="text-[9px] opacity-70">✓</span>}
                             </div>
                           );
                         })}
                       </div>
                     </div>
 
-                    {/* Bay Slots - 7 vertical columns */}
+                    {/* Bay Slots - Dynamic columns based on visibleSlots */}
                     <div className="space-y-3">
-                      <span className="font-mono text-xs opacity-60 uppercase tracking-wider block">Drop Zones</span>
-                      <div className="grid grid-cols-7 gap-2">
-                        {bays.map((bay, index) => (
+                      <div className="flex justify-between items-center">
+                        <span className="font-mono text-xs opacity-60 uppercase tracking-wider">Drop Zones</span>
+                        <div className="flex items-center gap-2">
+                          {visibleSlots > 1 && (
+                            <button
+                              onClick={removeSlot}
+                              className="w-6 h-6 rounded-full border border-red-500/50 text-red-500 flex items-center justify-center text-sm hover:bg-red-500/10 transition-colors"
+                              title="Remove last slot"
+                            >
+                              −
+                            </button>
+                          )}
+                          <span className="font-mono text-[10px] opacity-50">{visibleSlots}/{NUM_BAYS}</span>
+                          {visibleSlots < NUM_BAYS && (
+                            <button
+                              onClick={addSlot}
+                              className="w-6 h-6 rounded-full border border-orange-500 text-orange-500 flex items-center justify-center text-sm hover:bg-orange-500/10 transition-colors"
+                              title="Add slot"
+                            >
+                              +
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                      <div className={`grid gap-2`} style={{ gridTemplateColumns: `repeat(${visibleSlots}, 1fr)` }}>
+                        {bays.slice(0, visibleSlots).map((bay, index) => (
                           <div
                             key={index}
                             onDragOver={(e) => handleDragOver(e, index)}
                             onDragLeave={handleDragLeave}
                             onDrop={(e) => handleDrop(e, index)}
+                            onClick={() => {
+                              if (!bay && selectedModule && canAddModule(selectedModule)) {
+                                const newBays = [...bays];
+                                newBays[index] = { ...selectedModule, instanceId: Date.now() };
+                                setBays(newBays);
+                                // Clear selection if module is at limit after placing
+                                if (selectedModule.maxCount && getModuleCount(selectedModule.id) + 1 >= selectedModule.maxCount) {
+                                  setSelectedModule(null);
+                                }
+                              }
+                            }}
                             className={`
-                              relative aspect-[1/2] min-h-[140px] rounded-xl border-2 transition-all duration-200
+                              relative h-[120px] rounded-xl border-2 transition-all duration-200
                               flex flex-col items-center justify-center text-center
                               ${bay
                                 ? `${getModuleColorClass(bay, 'border')} ${getModuleColorClass(bay, 'bg')}/10`
-                                : dragOverBay === index
-                                  ? 'border-orange-500 bg-orange-500/10 border-solid scale-[1.02]'
-                                  : 'border-dashed border-black/20 dark:border-white/20 hover:border-black/40 dark:hover:border-white/40'
+                                : selectedModule && !bay
+                                  ? 'border-dashed border-orange-500 bg-orange-500/5 cursor-pointer hover:bg-orange-500/10 hover:scale-[1.02]'
+                                  : dragOverBay === index
+                                    ? 'border-orange-500 bg-orange-500/10 border-solid scale-[1.02]'
+                                    : 'border-dashed border-black/20 dark:border-white/20 hover:border-black/40 dark:hover:border-white/40'
                               }
                             `}
                           >
@@ -450,67 +487,6 @@ export default function FoundationBuilder() {
                 )}
               </div>
 
-              {/* Roof Configuration */}
-              <div className="space-y-6 pt-6 border-t border-black/10 dark:border-white/10">
-                <button
-                  onClick={() => toggleSection('roof')}
-                  className="w-full flex justify-between items-center group"
-                >
-                  <div className="flex items-end gap-4">
-                    <label className="text-xl font-medium cursor-pointer">Roof Configuration</label>
-                    <span className="font-mono text-xs text-orange-500 uppercase tracking-wider">Top Cap</span>
-                  </div>
-                  <span className={`transform transition-transform duration-200 ${collapsed.roof ? 'rotate-180' : ''}`}>
-                    ▼
-                  </span>
-                </button>
-
-                {!collapsed.roof && (
-                  <div className="space-y-6 animate-in fade-in slide-in-from-top-2 duration-200">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                      {ROOF_OPTIONS.map((opt) => (
-                        <button
-                          key={opt.id}
-                          onClick={() => setRoof(opt)}
-                          className={`
-                            relative border rounded-xl py-3 px-2 text-center font-mono text-xs transition-all duration-200
-                            flex flex-col items-center justify-center gap-1 h-20
-                            ${roof.id === opt.id
-                              ? 'border-orange-500 bg-orange-500/5 text-orange-500 ring-1 ring-orange-500 shadow-lg shadow-orange-500/10 scale-[1.02]'
-                              : 'border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30 hover:bg-black/5 dark:hover:bg-white/5'}
-                          `}
-                        >
-                          <span className="font-bold leading-tight">{opt.label}</span>
-                          {opt.price > 0 && <span className="text-[9px] opacity-70">+{opt.price}</span>}
-                        </button>
-                      ))}
-                    </div>
-
-                    {/* Roof Fan Toggle */}
-                    <button
-                      onClick={() => setRoofFan(!roofFan)}
-                      className={`
-                            w-full flex items-center justify-between p-4 rounded-xl border transition-all duration-200
-                            ${roofFan
-                          ? 'border-orange-500 bg-orange-500/5 text-orange-500 ring-1 ring-orange-500'
-                          : 'border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30'}
-                        `}
-                    >
-                      <div className="flex flex-col items-start">
-                        <span className="font-bold font-mono text-sm">Additional Cooling Fan</span>
-                        <span className="text-xs opacity-60 text-left">Improves convection and thermals by expelling heat from the top of the stack.</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs font-mono opacity-70">+{ROOF_FAN_PRICE}</span>
-                        <div className={`w-10 h-6 rounded-full relative transition-colors duration-200 ${roofFan ? 'bg-orange-500' : 'bg-gray-200 dark:bg-zinc-800'}`}>
-                          <div className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200 ${roofFan ? 'translate-x-4' : 'translate-x-0'}`} />
-                        </div>
-                      </div>
-                    </button>
-                  </div>
-                )}
-              </div>
-
               {/* Price and CTA */}
               <div className="pt-8 border-t border-black/10 dark:border-white/10">
                 <div className="flex justify-between items-end mb-8">
@@ -546,7 +522,7 @@ export default function FoundationBuilder() {
                       readOnly
                       value={(() => {
                         // Bit Packing Logic
-                        // Memory (2 bits) | Base Storage (2 bits) | Roof (3 bits) | Fan (1 bit) | Bays (7 slots * 4 bits each = 28 bits)
+                        // Memory (2 bits) | Base Storage (2 bits) | VisibleSlots (3 bits) | Bays (7 slots * 4 bits each = 28 bits)
                         let val = BigInt(0);
 
                         // Memory: 0-2
@@ -555,17 +531,14 @@ export default function FoundationBuilder() {
                         // Base Storage: 0-2
                         val |= BigInt(BASE_STORAGE_OPTIONS.findIndex(o => o.label === baseStorage.label)) << BigInt(2);
 
-                        // Roof: 0-4
-                        val |= BigInt(ROOF_OPTIONS.findIndex(o => o.id === roof.id)) << BigInt(4);
-
-                        // Fan: 0-1
-                        if (roofFan) val |= BigInt(1) << BigInt(7);
+                        // VisibleSlots: 1-7 (stored as 0-6)
+                        val |= BigInt(visibleSlots - 1) << BigInt(4);
 
                         // Bays: 7 slots * 4 bits each (0-15, where 0=empty, 1-9=module types)
                         bays.forEach((bay, i) => {
                           if (bay) {
                             const moduleIdx = MODULE_OPTIONS.findIndex(o => o.id === bay.id) + 1; // +1 because 0 is empty
-                            val |= BigInt(moduleIdx) << BigInt(8 + (i * 4));
+                            val |= BigInt(moduleIdx) << BigInt(7 + (i * 4));
                           }
                         });
 
@@ -621,17 +594,14 @@ export default function FoundationBuilder() {
                           const storeIdx = Number((val >> BigInt(2)) & BigInt(0x3));
                           if (BASE_STORAGE_OPTIONS[storeIdx]) setBaseStorage(BASE_STORAGE_OPTIONS[storeIdx]);
 
-                          // Roof
-                          const roofIdx = Number((val >> BigInt(4)) & BigInt(0x7));
-                          if (ROOF_OPTIONS[roofIdx]) setRoof(ROOF_OPTIONS[roofIdx]);
-
-                          // Fan
-                          setRoofFan(Boolean((val >> BigInt(7)) & BigInt(0x1)));
+                          // VisibleSlots
+                          const slotsVal = Number((val >> BigInt(4)) & BigInt(0x7)) + 1;
+                          setVisibleSlots(Math.min(Math.max(slotsVal, 1), NUM_BAYS));
 
                           // Bays
                           const newBays = [];
                           for (let i = 0; i < NUM_BAYS; i++) {
-                            const moduleIdx = Number((val >> BigInt(8 + (i * 4))) & BigInt(0xF));
+                            const moduleIdx = Number((val >> BigInt(7 + (i * 4))) & BigInt(0xF));
                             if (moduleIdx > 0 && MODULE_OPTIONS[moduleIdx - 1]) {
                               newBays.push({ ...MODULE_OPTIONS[moduleIdx - 1], instanceId: Date.now() + i });
                             } else {
