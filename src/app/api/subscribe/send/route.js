@@ -41,6 +41,7 @@ async function handleSendEmail(request) {
       subject = 'Message from Cornerstone',
       html = '<p>Hello {{first_name}},</p><p>This is a test message from Cornerstone.</p><p><a href="{{unsubscribe_url}}">Unsubscribe</a></p>',
       from = 'Cornerstone <cornerstone@cornerstone.sh>',
+      replyTo = 'cornerstonecomputingservices@gmail.com',
       segmentFilter = null // Optional: filter by custom property (e.g., {segment: 'newsletter'})
     } = body;
 
@@ -94,6 +95,7 @@ async function handleSendEmail(request) {
       const { data, error } = await resend.emails.send({
         from: from,
         to: [contact.email],
+        replyTo: replyTo,
         subject: personalizedSubject,
         html: personalizedHtml,
       });
