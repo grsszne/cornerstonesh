@@ -71,9 +71,11 @@ export default function Navigation() {
             <div className="flex-shrink-0 flex items-center">
               <Link
                 href="/"
-                className="text-lg font-[500] tracking-tight text-black dark:text-white hover:opacity-70 transition-opacity"
+                className="flex items-center gap-2 hover:opacity-70 transition-opacity"
               >
-                Cornerstone
+                <span className="text-lg font-[500] tracking-tight text-black dark:text-white">
+                  Cornerstone
+                </span>
               </Link>
             </div>
 

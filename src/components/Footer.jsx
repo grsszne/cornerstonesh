@@ -126,18 +126,23 @@ export default function Footer() {
           </div>
 
 
-        <div className="mt-12 pt-8 border-t border-black dark:border-white flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="font-mono text-xs uppercase">
-            &copy; {new Date().getFullYear()} Cornerstone. All rights reserved.
-          </p>
-          <p className="font-mono text-xs">
-            <Link href="/" className="hover:opacity-70 transition-opacity">
-              https://cornerstone.sh
-            </Link>
-          </p>
-          <p className="font-mono text-xs uppercase">
-            Designed for You.
-          </p>
+        <div className="mt-12 pt-8 border-t border-black dark:border-white">
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-xl font-[500] tracking-tight">Cornerstone</span>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="font-mono text-xs uppercase">
+              &copy; {new Date().getFullYear()} Cornerstone. All rights reserved.
+            </p>
+            <p className="font-mono text-xs">
+              <Link href="/" className="hover:opacity-70 transition-opacity">
+                https://cornerstone.sh
+              </Link>
+            </p>
+            <p className="font-mono text-xs uppercase">
+              Designed for You.
+            </p>
+          </div>
         </div>
       </div>
       <div className="absolute top-0 right-0 pointer-events-none">

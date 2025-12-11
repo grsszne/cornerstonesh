@@ -41,7 +41,7 @@ export default function PreorderPage() {
       <div className="flex-grow flex flex-col justify-center px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <div className="max-w-2xl mx-auto w-full">
-            
+
             {/* Header / Status Block */}
             <div className="border border-black dark:border-white mb-12">
               <div className="grid grid-cols-2 border-b border-black dark:border-white">
