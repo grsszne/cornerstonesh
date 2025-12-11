@@ -105,7 +105,7 @@ async function handleSendEmail(request) {
       }
 
       // Wait 600ms between emails to stay under 2 requests/second rate limit
-      await new Promise(resolve => setTimeout(resolve, 600));
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
     return NextResponse.json({
