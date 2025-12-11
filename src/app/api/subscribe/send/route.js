@@ -7,7 +7,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 /**
  * Personalizes email content by replacing template variables
  * @param {string} content - The email HTML content
- * @param {object} contact - Contact data (email, firstName, lastName, properties)
+ * @param {object} contact - Contact data (email, first_name, last_name, properties)
  * @param {string} baseUrl - Base URL for unsubscribe link
  * @returns {string} - Personalized HTML content
  */
@@ -15,8 +15,8 @@ function personalizeEmail(content, contact, baseUrl) {
   let personalized = content;
 
   // Replace standard variables
-  personalized = personalized.replace(/\{\{first_name\}\}/gi, contact.firstName || 'there');
-  personalized = personalized.replace(/\{\{last_name\}\}/gi, contact.lastName || '');
+  personalized = personalized.replace(/\{\{first_name\}\}/gi, contact.first_name || 'there');
+  personalized = personalized.replace(/\{\{last_name\}\}/gi, contact.last_name || '');
   personalized = personalized.replace(/\{\{email\}\}/gi, contact.email || '');
 
   // Replace custom property variables if they exist
@@ -41,8 +41,7 @@ async function handleSendEmail(request) {
       subject = 'Message from Cornerstone',
       html = '<p>Hello {{first_name}},</p><p>This is a test message from Cornerstone.</p><p><a href="{{unsubscribe_url}}">Unsubscribe</a></p>',
       from = 'Cornerstone <cornerstone@cornerstone.sh>',
-      segmentFilter = null, // Optional: filter by custom property (e.g., {segment: 'newsletter'})
-      batchSize = 10 // Send in batches to avoid rate limits
+      segmentFilter = null // Optional: filter by custom property (e.g., {segment: 'newsletter'})
     } = body;
 
     // Get base URL for unsubscribe links
@@ -84,39 +83,29 @@ async function handleSendEmail(request) {
     const results = [];
     const errors = [];
 
-    // Process in batches to avoid overwhelming the API
-    for (let i = 0; i < contacts.length; i += batchSize) {
-      const batch = contacts.slice(i, i + batchSize);
+    // Process emails sequentially with delay to respect rate limits (2 req/sec)
+    for (const contact of contacts) {
+      const personalizedHtml = personalizeEmail(html, contact, baseUrl);
+      const personalizedSubject = subject
+        .replace(/\{\{first_name\}\}/gi, contact.first_name || 'there')
+        .replace(/\{\{last_name\}\}/gi, contact.last_name || '')
+        .replace(/\{\{email\}\}/gi, contact.email || '');
 
-      const batchPromises = batch.map(async (contact) => {
-        const personalizedHtml = personalizeEmail(html, contact, baseUrl);
-        const personalizedSubject = subject
-          .replace(/\{\{first_name\}\}/gi, contact.firstName || 'there')
-          .replace(/\{\{last_name\}\}/gi, contact.lastName || '')
-          .replace(/\{\{email\}\}/gi, contact.email || '');
-
-        const { data, error } = await resend.emails.send({
-          from: from,
-          to: [contact.email],
-          subject: personalizedSubject,
-          html: personalizedHtml,
-        });
-
-        if (error) {
-          errors.push({ email: contact.email, error: error.message });
-          return null;
-        }
-
-        return { email: contact.email, id: data.id };
+      const { data, error } = await resend.emails.send({
+        from: from,
+        to: [contact.email],
+        subject: personalizedSubject,
+        html: personalizedHtml,
       });
 
-      const batchResults = await Promise.all(batchPromises);
-      results.push(...batchResults.filter(r => r !== null));
-
-      // Small delay between batches to avoid rate limiting
-      if (i + batchSize < contacts.length) {
-        await new Promise(resolve => setTimeout(resolve, 100));
+      if (error) {
+        errors.push({ email: contact.email, error: error.message });
+      } else {
+        results.push({ email: contact.email, id: data.id });
       }
+
+      // Wait 600ms between emails to stay under 2 requests/second rate limit
+      await new Promise(resolve => setTimeout(resolve, 600));
     }
 
     return NextResponse.json({
