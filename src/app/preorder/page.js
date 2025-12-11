@@ -24,7 +24,7 @@ export default function PreorderPage() {
 
       if (res.ok) {
         setStatus("success");
-        setMessage("REGISTERED");
+        setMessage("REGISTERED - CHECK_INBOX");
         setEmail("");
       } else {
         setStatus("error");

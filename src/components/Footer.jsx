@@ -25,7 +25,7 @@ export default function Footer() {
       
       if (res.ok) {
         setStatus("success");
-        setMessage("Thanks for subscribing!");
+        setMessage("Thanks for subscribing! You should receive an email in your inbox shortly.");
         setEmail("");
       } else {
         setStatus("error");
