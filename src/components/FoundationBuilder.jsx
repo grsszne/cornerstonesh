@@ -17,16 +17,45 @@ const BASE_STORAGE_OPTIONS = [
 ];
 
 // Module options available for drag and drop
+// Module options available for drag and drop
+const MODULE_CATEGORIES = {
+  storage: {
+    label: "Storage",
+    description: "High-speed NVMe & SATA storage for your data.",
+    modules: [
+        { id: "storage-256", label: "256GB SSD", price: 40, score: 10, type: "storage", color: "orange" },
+        { id: "storage-512", label: "512GB SSD", price: 70, score: 20, type: "storage", color: "orange" },
+        { id: "storage-1tb", label: "1TB SSD", price: 120, score: 40, type: "storage", color: "orange" },
+        { id: "storage-2tb", label: "2TB SSD", price: 200, score: 60, type: "storage", color: "orange" },
+        { id: "storage-4tb", label: "4TB SSD", price: 350, score: 100, type: "storage", color: "orange" },
+    ]
+  },
+  connectivity: {
+    label: "Connectivity",
+    description: "Expand your network and peripheral connections.",
+    modules: [
+        { id: "ethernet", label: "2.5GbE", price: 50, score: 25, type: "ethernet", color: "green", description: "2.5 Gigabit Ethernet adapter", maxCount: 1 },
+        { id: "usb-c", label: "USB-C 3.0", price: 35, score: 20, type: "usb", color: "blue", description: "Single-port USB-C 3.0 expansion" },
+        { id: "usb-a", label: "USB-A 3.0", price: 30, score: 15, type: "usb", color: "blue", description: "Single-port USB-A 3.0 expansion" },
+        { id: "sd-reader", label: "Dual SD", price: 40, score: 20, type: "reader", color: "yellow", description: "Dual UHS-II SD / Micro SD Reader" },
+    ]
+  },
+  utility: {
+    label: "Utility",
+    description: "Power protection and hardware development tools.",
+    modules: [
+        { id: "ups", label: "UPS", price: 60, score: 30, type: "ups", color: "purple", description: "Uninterruptible Power Supply" },
+        { id: "gpio", label: "GPIO", price: 20, score: 15, type: "gpio", color: "pink", description: "GPIO Revealer Module for developers" },
+        { id: "nightlight", label: "Nightlight", price: 25, score: 5, type: "light", color: "cyan", description: "Dimmable ambient LED module" },
+    ]
+  }
+};
+
+// Flattened for easy lookup
 const MODULE_OPTIONS = [
-  { id: "storage-256", label: "256GB SSD", price: 40, score: 10, type: "storage", color: "orange" },
-  { id: "storage-512", label: "512GB SSD", price: 70, score: 20, type: "storage", color: "orange" },
-  { id: "storage-1tb", label: "1TB SSD", price: 120, score: 40, type: "storage", color: "orange" },
-  { id: "storage-2tb", label: "2TB SSD", price: 200, score: 60, type: "storage", color: "orange" },
-  { id: "storage-4tb", label: "4TB SSD", price: 350, score: 100, type: "storage", color: "orange" },
-  { id: "usb-hub", label: "USB Hub", price: 35, score: 15, type: "usb", color: "blue", description: "4-port USB 3.0 hub expansion" },
-  { id: "ethernet", label: "2.5GbE", price: 50, score: 25, type: "ethernet", color: "green", description: "2.5 Gigabit Ethernet adapter", maxCount: 1 },
-  { id: "ups", label: "UPS", price: 60, score: 30, type: "ups", color: "purple", description: "Uninterruptible Power Supply" },
-  { id: "gpio", label: "GPIO", price: 20, score: 15, type: "gpio", color: "pink", description: "GPIO Revealer Module for developers" },
+  ...MODULE_CATEGORIES.storage.modules,
+  ...MODULE_CATEGORIES.connectivity.modules,
+  ...MODULE_CATEGORIES.utility.modules
 ];
 
 const NUM_BAYS = 7;
@@ -35,8 +64,7 @@ export default function FoundationBuilder() {
   const [memory, setMemory] = useState(MEMORY_OPTIONS[0]);
   const [baseStorage, setBaseStorage] = useState(BASE_STORAGE_OPTIONS[0]);
 
-  // Bays state - dynamic array, starts with 1 slot
-  const [visibleSlots, setVisibleSlots] = useState(1);
+  // Bays state - fixed 7 slots
   const [bays, setBays] = useState(Array(NUM_BAYS).fill(null));
 
   // UI State
@@ -46,6 +74,8 @@ export default function FoundationBuilder() {
   const [draggedBayIndex, setDraggedBayIndex] = useState(null);
   const [deleteZoneHover, setDeleteZoneHover] = useState(false);
   const [selectedModule, setSelectedModule] = useState(null);
+  const [hoveredModule, setHoveredModule] = useState(null);
+  const [selectedBayIndex, setSelectedBayIndex] = useState(null);
   const [collapsed, setCollapsed] = useState({
     modules: false
   });
@@ -76,22 +106,7 @@ export default function FoundationBuilder() {
   const stackHeight = 50 + (occupiedBays * 15);
   const stackCircles = 2 + (occupiedBays * 10);
 
-  // Add/remove visible slots
-  const addSlot = () => {
-    if (visibleSlots < NUM_BAYS) {
-      setVisibleSlots(visibleSlots + 1);
-    }
-  };
 
-  const removeSlot = () => {
-    if (visibleSlots > 1) {
-      // Clear the last slot if it has a module
-      const newBays = [...bays];
-      newBays[visibleSlots - 1] = null;
-      setBays(newBays);
-      setVisibleSlots(visibleSlots - 1);
-    }
-  };
 
   // Drag handlers for module options
   const handleDragStart = (e, module) => {
@@ -136,6 +151,7 @@ export default function FoundationBuilder() {
     }
     setDraggedModule(null);
     setDragOverBay(null);
+    setSelectedModule(null); // Lose focus after placement
   };
 
   // Delete zone handlers
@@ -175,6 +191,8 @@ export default function FoundationBuilder() {
       green: { bg: "bg-green-500", border: "border-green-500", text: "text-green-500" },
       purple: { bg: "bg-purple-500", border: "border-purple-500", text: "text-purple-500" },
       pink: { bg: "bg-pink-500", border: "border-pink-500", text: "text-pink-500" },
+      yellow: { bg: "bg-yellow-500", border: "border-yellow-500", text: "text-yellow-500" },
+      cyan: { bg: "bg-cyan-500", border: "border-cyan-500", text: "text-cyan-500" },
     };
     return colors[module.color]?.[variant] || colors.orange[variant];
   };
@@ -330,78 +348,117 @@ export default function FoundationBuilder() {
                 {!collapsed.modules && (
                   <div className="space-y-6 animate-in fade-in slide-in-from-top-2 duration-200">
 
-                    {/* Module Options - Draggable */}
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="font-mono text-xs opacity-60 uppercase tracking-wider">Available Modules</span>
-                        <span className="font-mono text-[10px] opacity-40">Drag to bays below</span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {MODULE_OPTIONS.map((module) => {
-                          const isAtLimit = module.maxCount && getModuleCount(module.id) >= module.maxCount;
-                          const isSelected = selectedModule?.id === module.id;
-                          return (
-                            <div
-                              key={module.id}
-                              draggable={!isAtLimit}
-                              onDragStart={(e) => handleDragStart(e, module)}
-                              onDragEnd={handleDragEnd}
-                              onClick={() => {
-                                if (!isAtLimit) {
-                                  setSelectedModule(isSelected ? null : module);
-                                }
-                              }}
-                              className={`
-                                px-3 py-2 rounded-lg border font-mono text-xs transition-all duration-200
-                                flex items-center gap-2 select-none
-                                ${isAtLimit
-                                  ? 'opacity-40 cursor-not-allowed border-black/10 dark:border-white/10 bg-gray-100 dark:bg-zinc-800'
-                                  : isSelected
-                                    ? `cursor-pointer ring-2 ring-offset-2 ${getModuleColorClass(module, 'border')} ${getModuleColorClass(module, 'bg')}/20 ring-offset-white dark:ring-offset-black ${getModuleColorClass(module, 'border').replace('border-', 'ring-')}`
-                                    : `cursor-pointer ${getModuleColorClass(module, 'border')} ${getModuleColorClass(module, 'bg')}/10 hover:${getModuleColorClass(module, 'bg')}/20`
-                                }
-                              `}
-                              title={module.description || module.label}
-                            >
-                              <span className={`w-2 h-2 rounded-full ${getModuleColorClass(module, 'bg')}`}></span>
-                              <span className="font-medium">{module.label}</span>
-                              <span className="opacity-60">+${module.price}</span>
-                              {isAtLimit && <span className="text-[9px] text-red-500">(max)</span>}
-                              {isSelected && <span className="text-[9px] opacity-70">✓</span>}
+                      {/* Dynamic Module Header & Details */}
+                      <div className="h-16 flex items-center px-4 bg-white dark:bg-zinc-900 rounded-xl border border-black/5 dark:border-white/5 shadow-sm transition-all duration-300 relative overflow-hidden">
+                        {hoveredModule || selectedModule ? (
+                             (() => {
+                                 const mod = hoveredModule || selectedModule;
+                                 return (
+                                    <div className="flex items-center gap-4 w-full animate-in fade-in slide-in-from-bottom-2 duration-300 absolute inset-0 px-4">
+                                        <div className={`w-10 h-10 rounded-full ${getModuleColorClass(mod, 'bg')} flex items-center justify-center text-white shadow-sm ring-4 ring-white dark:ring-zinc-900`}>
+                                            <span className="text-sm font-medium">
+                                                {mod.type === 'ethernet' ? 'Net' : mod.type === 'usb' ? 'USB' : mod.label[0]}
+                                            </span>
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex justify-between items-baseline mb-0.5">
+                                                <h4 className="font-medium text-sm text-black dark:text-white truncate pr-2">{mod.label}</h4>
+                                                <span className="font-mono text-xs text-orange-500 whitespace-nowrap">+${mod.price}</span>
+                                            </div>
+                                            <p className="text-xs text-black/60 dark:text-white/60 font-sans leading-tight truncate">{mod.description}</p>
+                                        </div>
+                                    </div>
+                                 );
+                             })()
+                        ) : (
+                            <div className="flex items-center justify-between w-full animate-in fade-in slide-in-from-top-2 duration-300 absolute inset-0 px-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-black/40 dark:text-white/40">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-medium text-black dark:text-white">Expansion Modules</h3>
+                                        <p className="text-xs text-black/40 dark:text-white/40">Drag & drop to configure</p>
+                                    </div>
+                                </div>
+                                <div className="flex -space-x-1">
+                                    {Object.values(MODULE_CATEGORIES).flatMap(c => c.modules).slice(0, 4).map((m, i) => (
+                                        <div key={i} className={`w-6 h-6 rounded-full border-2 border-white dark:border-zinc-900 ${getModuleColorClass(m, 'bg')}`} title={m.label} />
+                                    ))}
+                                    <div className="w-6 h-6 rounded-full border-2 border-white dark:border-zinc-900 bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-[10px] font-medium text-black/40 dark:text-white/40">
+                                        +
+                                    </div>
+                                </div>
                             </div>
-                          );
-                        })}
+                        )}
                       </div>
-                    </div>
 
+                        <div className="space-y-6">
+                          {Object.entries(MODULE_CATEGORIES).map(([key, category]) => (
+                              <div key={key} className="space-y-3">
+                                  <div className="px-1">
+                                      <h4 className="text-sm font-medium">{category.label}</h4>
+                                      <p className="text-[10px] opacity-60 font-mono">{category.description}</p>
+                                  </div>
+                                  <div className="flex flex-wrap gap-3 p-4 bg-gray-50 dark:bg-zinc-900/50 rounded-xl border border-black/5 dark:border-white/5">
+                                      {category.modules.map((module) => {
+                                      const isAtLimit = module.maxCount && getModuleCount(module.id) >= module.maxCount;
+                                      const isSelected = selectedModule?.id === module.id;
+                                      return (
+                                          <div
+                                          key={module.id}
+                                          draggable={!isAtLimit}
+                                          onDragStart={(e) => handleDragStart(e, module)}
+                                          onDragEnd={handleDragEnd}
+                                          onMouseEnter={() => setHoveredModule(module)}
+                                          onMouseLeave={() => setHoveredModule(null)}
+                                          onClick={() => {
+                                              if (!isAtLimit) {
+                                              setSelectedModule(isSelected ? null : module);
+                                              setSelectedBayIndex(null); // Deselect bay if selecting module
+                                              }
+                                          }}
+                                          className={`
+                                              px-3 py-2 rounded-lg border font-mono text-xs transition-all duration-200
+                                              flex items-center gap-2 select-none
+                                              ${isAtLimit
+                                              ? 'opacity-40 cursor-not-allowed border-black/10 dark:border-white/10 bg-gray-100 dark:bg-zinc-800'
+                                              : isSelected
+                                                  ? `cursor-pointer ring-2 ring-offset-2 ${getModuleColorClass(module, 'border')} ${getModuleColorClass(module, 'bg')}/20 ring-offset-white dark:ring-offset-black ${getModuleColorClass(module, 'border').replace('border-', 'ring-')}`
+                                                  : `cursor-pointer ${getModuleColorClass(module, 'border')} ${getModuleColorClass(module, 'bg')}/10 hover:${getModuleColorClass(module, 'bg')}/20`
+                                              }
+                                          `}
+                                          title={module.description || module.label}
+                                          >
+                                          <span className={`w-2 h-2 rounded-full ${getModuleColorClass(module, 'bg')}`}></span>
+                                          <span className="font-medium">{module.label}</span>
+                                          <span className="opacity-60">+${module.price}</span>
+                                          {isAtLimit && <span className="text-[9px] text-red-500">(max)</span>}
+                                          {isSelected && <span className="text-[9px] opacity-70">✓</span>}
+                                          </div>
+                                      );
+                                      })}
+                                  </div>
+                              </div>
+                          ))}
+                        </div>
+                      </div>
+                )}
                     {/* Bay Slots - Dynamic columns based on visibleSlots */}
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
-                        <span className="font-mono text-xs opacity-60 uppercase tracking-wider">Drop Zones</span>
                         <div className="flex items-center gap-2">
-                          {visibleSlots > 1 && (
-                            <button
-                              onClick={removeSlot}
-                              className="w-6 h-6 rounded-full border border-red-500/50 text-red-500 flex items-center justify-center text-sm hover:bg-red-500/10 transition-colors"
-                              title="Remove last slot"
-                            >
-                              −
-                            </button>
-                          )}
-                          <span className="font-mono text-[10px] opacity-50">{visibleSlots}/{NUM_BAYS}</span>
-                          {visibleSlots < NUM_BAYS && (
-                            <button
-                              onClick={addSlot}
-                              className="w-6 h-6 rounded-full border border-orange-500 text-orange-500 flex items-center justify-center text-sm hover:bg-orange-500/10 transition-colors"
-                              title="Add slot"
-                            >
-                              +
-                            </button>
-                          )}
+                            <span className="font-mono text-xs opacity-60 uppercase tracking-wider">Universal Bays</span>
+                            <span className="text-[10px] bg-orange-500/10 text-orange-500 px-1.5 py-0.5 rounded border border-orange-500/20 font-mono">
+                                Any Module
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-[10px] opacity-50">7/7 Universal Bays Available</span>
                         </div>
                       </div>
-                      <div className={`grid gap-2`} style={{ gridTemplateColumns: `repeat(${visibleSlots}, 1fr)` }}>
-                        {bays.slice(0, visibleSlots).map((bay, index) => (
+                      <div className={`grid grid-cols-2 md:grid-cols-4 gap-3`}>
+                        {bays.map((bay, index) => (
                           <div
                             key={index}
                             onDragOver={(e) => handleDragOver(e, index)}
@@ -415,14 +472,23 @@ export default function FoundationBuilder() {
                                 // Clear selection if module is at limit after placing
                                 if (selectedModule.maxCount && getModuleCount(selectedModule.id) + 1 >= selectedModule.maxCount) {
                                   setSelectedModule(null);
+                                } else {
+                                    // Lose focus after placement regardless of limit
+                                    setSelectedModule(null);
                                 }
+                              } else if (bay) {
+                                  // Select the bay for potential deletion
+                                  setSelectedBayIndex(selectedBayIndex === index ? null : index);
+                                  setSelectedModule(null); // Deselect module list if selecting bay
                               }
                             }}
                             className={`
                               relative h-[120px] rounded-xl border-2 transition-all duration-200
                               flex flex-col items-center justify-center text-center
                               ${bay
-                                ? `${getModuleColorClass(bay, 'border')} ${getModuleColorClass(bay, 'bg')}/10`
+                                ? selectedBayIndex === index
+                                    ? `border-red-500 bg-red-500/10 scale-[1.02] shadow-lg shadow-red-500/10` // Selected for deletion
+                                    : `${getModuleColorClass(bay, 'border')} ${getModuleColorClass(bay, 'bg')}/10`
                                 : selectedModule && !bay
                                   ? 'border-dashed border-orange-500 bg-orange-500/5 cursor-pointer hover:bg-orange-500/10 hover:scale-[1.02]'
                                   : dragOverBay === index
@@ -466,25 +532,36 @@ export default function FoundationBuilder() {
                       className={`
                         py-4 rounded-xl border-2 border-dashed transition-all duration-200
                         flex items-center justify-center gap-2 font-mono text-sm
-                        ${draggedBayIndex !== null
+                        ${draggedBayIndex !== null || selectedBayIndex !== null
                           ? deleteZoneHover
-                            ? 'border-red-500 bg-red-500/20 text-red-500 scale-[1.02]'
-                            : 'border-red-500/50 bg-red-500/5 text-red-500/70'
+                            ? 'border-red-500 bg-red-500/20 text-red-500 scale-[1.02] cursor-pointer'
+                            : 'border-red-500/50 bg-red-500/5 text-red-500/70 cursor-pointer'
                           : 'border-black/10 dark:border-white/10 text-black/20 dark:text-white/20'
                         }
                       `}
+                      onClick={() => {
+                        if (selectedBayIndex !== null) {
+                            removeFromBay(selectedBayIndex);
+                            setSelectedBayIndex(null);
+                        }
+                      }}
                     >
                       <span className="text-lg">🗑️</span>
                       <span className="uppercase tracking-wider text-xs">
-                        {draggedBayIndex !== null ? 'Drop here to remove' : 'Drag module here to delete'}
+                        {draggedBayIndex !== null 
+                            ? 'Drop here to remove' 
+                            : selectedBayIndex !== null 
+                                ? 'Tap here to remove selected'
+                                : 'Drag module here to delete'
+                        }
                       </span>
                     </div>
 
                     <p className="text-xs opacity-50 font-mono">
                       Drag modules into bays. Drag from bays to the trash to remove. Ethernet limited to 1.
                     </p>
-                  </div>
-                )}
+
+
               </div>
 
               {/* Price and CTA */}
@@ -531,8 +608,8 @@ export default function FoundationBuilder() {
                         // Base Storage: 0-2
                         val |= BigInt(BASE_STORAGE_OPTIONS.findIndex(o => o.label === baseStorage.label)) << BigInt(2);
 
-                        // VisibleSlots: 1-7 (stored as 0-6)
-                        val |= BigInt(visibleSlots - 1) << BigInt(4);
+                        // VisibleSlots: 1-7 (stored as 0-6). ALWAYS 7 now.
+                        val |= BigInt(7 - 1) << BigInt(4);
 
                         // Bays: 7 slots * 4 bits each (0-15, where 0=empty, 1-9=module types)
                         bays.forEach((bay, i) => {
@@ -596,7 +673,7 @@ export default function FoundationBuilder() {
 
                           // VisibleSlots
                           const slotsVal = Number((val >> BigInt(4)) & BigInt(0x7)) + 1;
-                          setVisibleSlots(Math.min(Math.max(slotsVal, 1), NUM_BAYS));
+                        // setVisibleSlots(Math.min(Math.max(slotsVal, 1), NUM_BAYS)); // Deprecated visibleSlots
 
                           // Bays
                           const newBays = [];

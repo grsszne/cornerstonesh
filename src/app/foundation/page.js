@@ -266,13 +266,13 @@ export default function FoundationPage() {
                 <div className="md:col-span-2 row-span-1 bg-white dark:bg-black border border-black/10 dark:border-white/10 p-8 md:p-12 rounded-3xl relative overflow-hidden group">
                   <div className="relative z-10 h-full flex flex-col justify-between">
                     <div>
-                      <h3 className="text-2xl md:text-3xl font-medium mb-4">6x SATA SSDs</h3>
+                      <h3 className="text-2xl md:text-3xl font-medium mb-4">7x Universal Bays</h3>
                       <p className="text-black/60 dark:text-white/60 font-mono text-sm md:text-base max-w-md">
-                        Massive storage density in a 3.5" footprint. Zero-cable backplane architecture for reliability. Optimized airflow path across all drives.
+                        Modular expansion for 3.5" footprint. Zero-cable backplane architecture. Supports standard SSDs, 2.5GbE Networking, AI Accelerators, and UPS modules.
                       </p>
                     </div>
                     <div className="w-full h-48 bg-gray-100 dark:bg-zinc-900 rounded-2xl mt-8 border border-dashed border-black/20 dark:border-white/20 flex items-center justify-center">
-                      <span className="font-mono text-xs uppercase tracking-widest opacity-50">Drive Sled Visualization</span>
+                      <span className="font-mono text-xs uppercase tracking-widest opacity-50">Module Sled Visualization</span>
                     </div>
                   </div>
                 </div>
@@ -484,19 +484,19 @@ export default function FoundationPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-sm uppercase tracking-widest opacity-50">Storage</div>
+                <div className="text-sm uppercase tracking-widest opacity-50">Universal Expansion</div>
                 <div className="md:col-span-2 space-y-4">
                   <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
-                    <span>Drive Bays</span>
-                    <span>6x SATA SSD Internal Mounts</span>
+                    <span>Module Slots</span>
+                    <span>7x Universal Bay Internal Mounts</span>
                   </div>
                   <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
-                    <span>Expansion Modules</span>
+                    <span>Storage Support</span>
                     <span>Supports 256GB - 4TB per drive</span>
                   </div>
                   <div className="flex justify-between border-b border-black/10 dark:border-white/10 pb-2">
                     <span>Architecture</span>
-                    <span>Zero-cable backplane</span>
+                    <span>Zero-cable Mortimer backplane</span>
                   </div>
                 </div>
               </div>
