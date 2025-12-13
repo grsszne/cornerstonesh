@@ -357,72 +357,168 @@ function LogsView() {
 
 function TerminalView() {
    const [lines, setLines] = useState([
-       { text: "# zane @ Zanes-MacBook-Air in ~/Desktop/cornerstoneos/backend/src [23:33:28]", color: "text-blue-400" },
-       { text: "$", color: "text-orange-500" },
-       { text: "# zane @ Zanes-MacBook-Air in ~/Desktop/cornerstoneos/backend/src on git:main o [23:33:28]", color: "text-blue-400" },
-       { text: "$ ping google", color: "text-white" },
+       { text: "Linux foundation 6.1.0-rpi7-rpi-v8 #1 SMP PREEMPT Debian 1:6.1.21-1+rpt1 (2025-10-24) aarch64", color: "text-white/60" },
+       { text: "", type: "break" },
+       { text: "The programs included with the Debian GNU/Linux system are free software;", color: "text-white/60" },
+       { text: "the exact distribution terms for each program are described in the", color: "text-white/60" },
+       { text: "individual files in /usr/share/doc/*/copyright.", color: "text-white/60" },
+       { text: "", type: "break" },
+       { text: "zane@foundation:~$", color: "text-green-500", suffix: " " }, // Prompt start
    ]);
 
    useEffect(() => {
-       const initialDelay = 1000;
+       const initialDelay = 800;
        
-       const pingSequence = [
-           { text: "", type: "break" }, 
-           { text: "# zane @ Zanes-MacBook-Air in ~/Desktop/cornerstoneos/backend/src on git:main o [23:33:35] C:130", color: "text-blue-400" },
-           { text: "$ ping cornerstone.sh", color: "text-white", typing: true },
-           { text: "PING cornerstone.sh (216.198.79.1): 56 data bytes", delay: 800 },
-           { text: "64 bytes from 216.198.79.1: icmp_seq=0 ttl=247 time=8.149 ms", delay: 1200 },
-           { text: "64 bytes from 216.198.79.1: icmp_seq=1 ttl=247 time=9.916 ms", delay: 2200 },
-           { text: "64 bytes from 216.198.79.1: icmp_seq=2 ttl=247 time=10.083 ms", delay: 3200 },
-           { text: "64 bytes from 216.198.79.1: icmp_seq=3 ttl=247 time=8.803 ms", delay: 4200 },
-           { text: "64 bytes from 216.198.79.1: icmp_seq=4 ttl=247 time=9.825 ms", delay: 5200 },
+       const commands = [
+           { 
+               cmd: "docker ps", 
+               output: [
+                   "CONTAINER ID   IMAGE                    COMMAND                  CREATED        STATUS        PORTS                                       NAMES",
+                   "a1b2c3d4e5f6   homeassistant/home-assistant   \"/init\"                  2 weeks ago    Up 2 weeks    0.0.0.0:8123->8123/tcp                      homeassistant",
+                   "f5e4d3c2b1a0   plexinc/pms-docker             \"/init\"                  2 weeks ago    Up 2 weeks    0.0.0.0:32400->32400/tcp                    plex",
+                   "9a8b7c6d5e4f   pihole/pihole                  \"/s6-init\"               2 weeks ago    Up 2 weeks    0.0.0.0:53->53/tcp, 0.0.0.0:80->80/tcp      pihole"
+               ]
+           },
+           {
+               cmd: "free -h",
+               output: [
+                   "               total        used        free      shared  buff/cache   available",
+                   "Mem:           7.6Gi       1.2Gi       2.1Gi       121Mi       4.3Gi       6.2Gi",
+                   "Swap:          1.0Gi          0B       1.0Gi"
+               ]
+           },
+           {
+               cmd: "uptime",
+               output: [" 11:42:01 up 14 days,  3:22,  1 user,  load average: 0.12, 0.08, 0.05"]
+           },
+           {
+               cmd: "git pull",
+               output: [
+                   "remote: Enumerating objects: 15, done.",
+                   "remote: Counting objects: 100% (15/15), done.",
+                   "remote: Compressing objects: 100% (4/4), done.",
+                   "Unpacking objects: 100% (15/15), 4.21 KiB | 2.15 MiB/s, done.",
+                   "From github.com:cornerstone/foundation",
+                   "   8a2b3c...9d8e7f  main       -> origin/main",
+                   "Updating 8a2b3c...9d8e7f",
+                   "Fast-forward",
+                   " src/components/Dashboard.jsx | 45 +++++++++++++++++++++++++++",
+                   " 1 file changed, 45 insertions(+)"
+               ]
+           },
+           {
+               cmd: "tail -n 5 /var/log/syslog",
+               output: [
+                   "Dec 13 11:30:01 foundation CRON[1234]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)",
+                   "Dec 13 11:35:42 foundation systemd[1]: Starting Daily apt upgrade and clean activities...",
+                   "Dec 13 11:35:44 foundation systemd[1]: apt-daily-upgrade.service: Succeeded.",
+                   "Dec 13 11:35:44 foundation systemd[1]: Finished Daily apt upgrade and clean activities.",
+                   "Dec 13 11:40:01 foundation CRON[1356]: (root) CMD (   [ -x /opt/rsync_backup.sh ] && /opt/rsync_backup.sh)"
+               ]
+           },
+           {
+               cmd: "ls -la",
+               output: [
+                   "total 48",
+                   "drwxr-xr-x 6 zane zane 4096 Dec 12 09:21 .",
+                   "drwxr-xr-x 3 root root 4096 Oct 24 10:00 ..",
+                   "-rw------- 1 zane zane 1234 Dec 13 08:00 .bash_history",
+                   "-rw-r--r-- 1 zane zane  220 Oct 24 10:00 .bash_logout",
+                   "-rw-r--r-- 1 zane zane 3526 Oct 24 10:00 .bashrc",
+                   "drwxr-xr-x 3 zane zane 4096 Nov 01 14:22 .config",
+                   "drwxr-xr-x 2 zane zane 4096 Dec 10 11:15 docker-compose",
+                   "-rw-r--r-- 1 zane zane  807 Oct 24 10:00 .profile"
+               ]
+           }
        ];
 
-       let timeouts = [];
-       let accDelay = initialDelay;
+       let isMounted = true;
 
-       pingSequence.forEach((step) => {
-           if (step.typing) {
-             accDelay += 500;
-             timeouts.push(setTimeout(() => {
-                 setLines(prev => [...prev, { text: step.text, color: step.color }]);
-             }, accDelay));
-           } else {
-             accDelay += step.delay || 100;
-             timeouts.push(setTimeout(() => {
-                 setLines(prev => [...prev, { text: step.text, color: "text-white/80" }]);
-             }, accDelay));
+       const typeCommand = async (text) => {
+           for (let i = 0; i < text.length; i++) {
+               if (!isMounted) return;
+               await new Promise(r => setTimeout(r, Math.random() * 50 + 30)); // Random typing speed equivalent to 30-80ms
+               setLines(prev => {
+                   const newLines = [...prev];
+                   // Append char to the last line (which is the active prompt)
+                   const lastLine = newLines[newLines.length - 1];
+                   newLines[newLines.length - 1] = { 
+                       ...lastLine, 
+                       text: lastLine.text + text[i],
+                       color: "text-white" // Ensure typing color is white
+                   };
+                   return newLines;
+               });
            }
-       });
+       };
 
-       return () => timeouts.forEach(clearTimeout);
+       const runTerminal = async () => {
+           // Initial start delay
+           await new Promise(r => setTimeout(r, initialDelay));
+
+           while (isMounted) {
+               // Pick a random command
+               const randomCommand = commands[Math.floor(Math.random() * commands.length)];
+               
+               // Type the command
+               await typeCommand(randomCommand.cmd);
+               
+               // Delay before execution (simulating enter key/processing)
+               await new Promise(r => setTimeout(r, 400));
+               
+               if (!isMounted) return;
+
+               // Show output
+               // Add output lines
+               setLines(prev => [
+                   ...prev,
+                   ...randomCommand.output.map(line => ({ text: line, color: "text-white/80" })),
+                   { text: "", type: "break" }, // Spacer
+                   { text: "zane@foundation:~$ ", color: "text-green-500", suffix: "" } // New Prompt
+               ]);
+
+               // Wait before starting next command
+               await new Promise(r => setTimeout(r, Math.random() * 2000 + 1000));
+           }
+       };
+
+       runTerminal();
+
+       return () => { isMounted = false; };
    }, []);
 
+   const containerRef = useRef(null);
+   useEffect(() => {
+       if (containerRef.current) {
+           containerRef.current.scrollTop = containerRef.current.scrollHeight;
+       }
+   }, [lines]);
+
    return (
-      <div className="p-6 h-full font-mono text-[11px] md:text-xs text-white/80 bg-[#0A0A0A] overflow-y-auto custom-scrollbar">
+      <div ref={containerRef} className="p-6 h-full font-mono text-[11px] md:text-xs text-white/80 bg-[#0A0A0A] overflow-y-auto custom-scrollbar">
          {lines.map((line, i) => (
             <div key={i} className={`whitespace-pre-wrap mb-1 break-all ${line.color || "text-white/80"}`}>
                 {line.text}
+                {i === lines.length - 1 && (
+                    <motion.span 
+                       animate={{ opacity: [1, 1, 0, 0] }}
+                       transition={{ 
+                         duration: 1, 
+                         repeat: Infinity, 
+                         times: [0, 0.5, 0.5, 1],
+                         ease: "linear" 
+                       }}
+                       className="w-2 h-4 bg-white/50 inline-block align-middle ml-1"
+                    />
+                )}
             </div>
          ))}
-         <div className="flex items-center">
-            <motion.div 
-               animate={{ opacity: [1, 1, 0, 0] }}
-               transition={{ 
-                 duration: 1, 
-                 repeat: Infinity, 
-                 times: [0, 0.5, 0.5, 1],
-                 ease: "linear" 
-               }}
-               className="w-2 h-4 bg-orange-500"
-            />
-         </div>
          
          <div className="mt-12 pt-4 border-t border-white/10 text-white/30 text-[10px]">
-             <div>TERMINAL INSTRUCTIONS</div>
+             <div>TERMINAL SESSION: SSH</div>
              <ul className="list-disc pl-4 mt-2 space-y-1">
-                 <li>This is a real shell running on the server</li>
-                 <li>Full bash/zsh command support</li>
+                 <li>Connected to foundation.local (192.168.1.100)</li>
+                 <li>Port 22 (SSH)</li>
              </ul>
          </div>
       </div>
@@ -470,20 +566,20 @@ export default function CornerstoneOS() {
 
          <FadeIn delay={0.2}>
             {/* Desktop Environment Container */}
-            <div className="relative w-full h-[700px] md:h-[900px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black select-none">
+            <div className="relative w-full h-[700px] md:h-[900px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black select-none flex flex-col">
                
                {/* Realistic Wallpaper */}
                <div className="absolute inset-0 bg-black">
                    <img 
                        src="https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-                       className="w-full h-full object-cover"
+                       className="w-full h-full object-cover opacity-80"
                        alt="Wallpaper" 
                    />
-                   <div className="absolute inset-0 bg-black/10" /> 
+                   <div className="absolute inset-0 bg-black/20" /> 
                </div>
 
                {/* macOS-like Menu Bar */}
-               <div className="relative z-20 h-8 bg-black/20 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-4 text-[13px] font-medium text-white shadow-sm">
+               <div className="relative z-20 h-8 bg-black/40 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-4 text-[13px] font-medium text-white shadow-sm shrink-0">
                   <div className="flex items-center gap-5">
                      <span className="text-base"></span>
                      <span className="font-bold">Safari</span>
@@ -629,32 +725,100 @@ export default function CornerstoneOS() {
                         initial={{ y: 100 }}
                         animate={{ y: 0 }}
                         transition={{ delay: 0.8, type: "spring", stiffness: 100, damping: 20 }}
-                        className="absolute bottom-6 h-14 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl flex items-center gap-3 px-3 mx-auto shadow-2xl z-30"
+                        className="absolute bottom-6 h-16 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl flex items-center gap-3 mb-4 px-4 mx-auto shadow-2xl z-30"
                     >
-                        {/* Fake App Icons with tooltips/hover effect implied */}
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-[#007AFF] to-[#0055BB] shadow-lg flex items-center justify-center text-white text-xl">
-                             <div className="text-2xl pt-1">☺</div>
-                        </div>
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white to-gray-200 shadow-lg flex items-center justify-center relative overflow-hidden">
-                             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-                             <div className="text-blue-500 font-bold text-xs transform -rotate-45">S</div>
-                        </div>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Finder_Icon_macOS_Tahoe.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Finder" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Safari_browser_logo.svg/2057px-Safari_browser_logo.svg.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Safari" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/1024px-Apple_Music_icon.svg.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Music" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1200px-Visual_Studio_Code_1.35_icon.svg.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="VS Code" />
+                        <img src="https://github.com/kicad.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200 rounded-lg" alt="KiCad" />
                         
-                        <div className="w-10 h-10 rounded-xl bg-[#1e1e1e] shadow-lg flex items-center justify-center border border-white/10 relative">
-                           <div className="w-4 h-4 rounded-full border-2 border-orange-500"></div>
-                        </div>
+                        <div className="w-px h-10 bg-white/10 mx-1"></div>
                         
-                        <div className="w-px h-8 bg-white/10 mx-1"></div>
-                        
-                        <div className="w-10 h-10 rounded-xl bg-[#222] shadow-lg flex items-center justify-center text-white font-mono text-[10px] border border-white/10">
-                            Create
-                        </div>
-                        <div className="w-10 h-10 rounded-xl bg-white shadow-lg flex items-center justify-center text-black text-xs">
-                           <div className="w-6 h-1 bg-black rounded-full"></div>
-                        </div>
-                         {/* Active Dot */}
-                        <div className="absolute -bottom-1 left-[111px] w-1 h-1 bg-white/80 rounded-full shadow-[0_0_5px_rgba(255,255,255,0.8)]"></div>
+                        <img src="https://upload.wikimedia.org/wikipedia/en/2/23/System_Preferences_icon.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Settings" />
+
+                         {/* Active Dot under Safari since we are in a browser frame */}
+                        <div className="absolute bottom-1 left-[70px] w-1 h-1 bg-white/80 rounded-full shadow-[0_0_5px_rgba(255,255,255,0.8)]"></div>
                     </motion.div>
+               </div>
+            </div>
+         </FadeIn>
+
+         {/* Security & Open Source Section */}
+         <FadeIn delay={0.4} className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Open Source Card */}
+            <div className="group relative overflow-hidden rounded-2xl bg-[#0A0A0A] border border-white/10 p-8 h-[320px] flex flex-col justify-between hover:border-white/20 transition-colors">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  
+                  <div className="relative z-10">
+                     <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mb-6 text-white group-hover:scale-110 transition-transform duration-500">
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                     </div>
+                     <h3 className="text-2xl font-medium text-white mb-3">Truly Open Source.</h3>
+                     <p className="text-white/60 font-mono text-sm leading-relaxed">
+                        No black boxes. Verify the code yourself on GitHub. We believe trust is earned through transparency, not promises.
+                     </p>
+                  </div>
+                  
+                  <div className="relative z-10 flex items-center gap-2 text-white/40 text-xs font-mono group-hover:text-white transition-colors cursor-pointer w-fit">
+                     <span>VIEW REPOSITORY</span>
+                     <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                  </div>
+            </div>
+
+            {/* Security Card */}
+            <div className="group relative overflow-hidden rounded-2xl bg-[#0A0A0A] border border-white/10 p-8 h-[320px] flex flex-col justify-between hover:border-white/20 transition-colors">
+               <div className="absolute inset-0 bg-gradient-to-bl from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+               
+               {/* Background Animated Lock */}
+               <div className="absolute -top-6 -right-6 text-white/[0.03] group-hover:text-white/[0.05] transition-colors">
+                   <motion.div
+                       animate={{ 
+                           rotate: [0, 10, 0],
+                           scale: [1, 1.05, 1]
+                       }}
+                       transition={{ 
+                           duration: 5, 
+                           repeat: Infinity, 
+                           ease: "easeInOut" 
+                       }}
+                   >
+                       <svg viewBox="0 0 24 24" fill="currentColor" className="w-64 h-64">
+                           <path d="M12 2C9.243 2 7 4.243 7 7v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7c0-2.757-2.243-5-5-5zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7zm4 10.723V20h-2v-2.277a1.993 1.993 0 0 1 .567-3.677A2.001 2.001 0 0 1 14 16a1.99 1.99 0 0 1-1 1.723z" />
+                       </svg>
+                   </motion.div>
+               </div>
+
+               <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mb-6 text-green-500 group-hover:text-green-400 transition-colors">
+                     <motion.svg 
+                        className="w-6 h-6" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                        initial={false}
+                        whileHover={{ scale: 1.1 }}
+                     >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                     </motion.svg>
+                  </div>
+                  <h3 className="text-2xl font-medium text-white mb-3">Uncompromising security.</h3>
+                  <p className="text-white/60 font-mono text-sm leading-relaxed max-w-[95%]">
+                     Cornerstone is designed with a privacy-first architecture. Your data never leaves your local network, giving you the convenience of the cloud, without the compromise.
+                  </p>
+               </div>
+               
+               <div className="relative z-10 grid grid-cols-2 gap-4">
+                  <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider text-green-500 bg-green-500/10 px-3 py-1.5 rounded border border-green-500/20 w-fit">
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      Privacy Focused
+                  </div>
+                  <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1.5 rounded border border-blue-500/20 w-fit">
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                      Local Network
+                  </div>
                </div>
             </div>
          </FadeIn>
