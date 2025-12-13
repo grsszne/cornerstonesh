@@ -646,10 +646,10 @@ export default function CornerstoneOS() {
                        </div>
 
                        {/* Main Content (The Web App) */}
-                       <div className="flex-1 flex flex-col md:flex-row bg-black overflow-hidden relative">
+                       <div className="flex-1 flex flex-col md:flex-row bg-black overflow-hidden relative min-h-0">
                        
                            {/* Sidebar */}
-                           <div className="w-full md:w-64 bg-[#0A0A0A] border-r border-white/5 flex flex-col pt-6 pb-6 relative">
+                           <div className="w-full md:w-64 bg-[#0A0A0A] border-r border-white/5 flex flex-col pt-6 pb-6 relative shrink-0">
                               {/* Header/Logo Area */}
                               <div className="px-6 mb-8 mt-2">
                                  <div className="flex items-center gap-2">
@@ -660,7 +660,7 @@ export default function CornerstoneOS() {
                               </div>
 
                               {/* Nav */}
-                              <div className="flex-1 px-4 space-y-0.5">
+                              <div className="flex-1 px-4 space-y-0.5 overflow-y-auto custom-scrollbar">
                                  {Object.keys(views).map(tab => (
                                     <button
                                        key={tab}
@@ -677,7 +677,7 @@ export default function CornerstoneOS() {
                               </div>
 
                               {/* Bottom User Profile */}
-                              <div className="px-6 pt-6 border-t border-white/5">
+                              <div className="px-6 pt-6 border-t border-white/5 mt-auto">
                                  <div className="bg-white/5 rounded-lg p-3 flex items-center gap-3">
                                      <div className="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-[10px] font-bold text-white">N</div>
                                      <div>
@@ -692,9 +692,9 @@ export default function CornerstoneOS() {
                            </div>
 
                            {/* Main Content Area */}
-                           <div className="flex-1 flex flex-col bg-black overflow-hidden relative">
+                           <div className="flex-1 flex flex-col bg-black overflow-hidden relative min-h-0">
                               {/* Top Bar */}
-                              <div className="h-16 border-b border-white/5 flex items-center justify-between px-8 bg-[#0A0A0A]">
+                              <div className="h-16 border-b border-white/5 flex items-center justify-between px-8 bg-[#0A0A0A] shrink-0">
                                  <h2 className="text-lg font-medium text-white tracking-wide">{activeTab}</h2>
                                  <div className="hidden md:flex gap-8 text-[10px] font-mono text-white/40">
                                     <div>
@@ -709,7 +709,7 @@ export default function CornerstoneOS() {
                               </div>
 
                               {/* View Container */}
-                              <div className="flex-1 overflow-hidden relative bg-black">
+                              <div className="flex-1 overflow-hidden relative bg-black min-h-0">
                                  <motion.div 
                                     key={activeTab}
                                     initial={{ opacity: 0 }}
@@ -727,13 +727,14 @@ export default function CornerstoneOS() {
 
                     {/* Dock */}
                     <motion.div 
-                        initial={{ y: 100, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
+                        initial={{ y: 100, opacity: 0, x: "-50%" }}
+                        animate={{ y: 0, opacity: 1, x: "-50%" }}
                         transition={{ delay: 0.8, type: "spring", stiffness: 100, damping: 20 }}
-                        className="absolute bottom-6 h-16 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl flex items-center gap-3 px-4 mx-auto shadow-2xl z-30"
+                        className="absolute bottom-6 left-1/2 h-16 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl flex items-center gap-3 px-4 shadow-2xl z-50 origin-center"
                     >
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Finder_Icon_macOS_Tahoe.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Finder" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Safari_browser_logo.svg/2057px-Safari_browser_logo.svg.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Safari" />
+                        <img src="https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/firefox-app-icon.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200 p-0.5" alt="Firefox" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/1024px-Apple_Music_icon.svg.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Music" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1200px-Visual_Studio_Code_1.35_icon.svg.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="VS Code" />
                         <img src="https://github.com/kicad.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200 rounded-lg" alt="KiCad" />
