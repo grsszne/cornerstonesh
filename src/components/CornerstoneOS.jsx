@@ -429,6 +429,31 @@ function TerminalView() {
                    "drwxr-xr-x 2 zane zane 4096 Dec 10 11:15 docker-compose",
                    "-rw-r--r-- 1 zane zane  807 Oct 24 10:00 .profile"
                ]
+           },
+           {
+               cmd: "neofetch",
+               output: [
+                   "Foundation",
+                   "OS: Debian GNU/Linux 12 (bookworm)"
+               ]
+           },
+           {
+               cmd: "ping cornerstone.sh",
+               output: [
+                "PING cornerstone.sh (34.121.172.232) 56(84) bytes of data.",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=1 ttl=53 time=123 ms",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=2 ttl=53 time=124 ms",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=3 ttl=53 time=125 ms",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=4 ttl=53 time=126 ms",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=5 ttl=53 time=127 ms",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=6 ttl=53 time=128 ms",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=7 ttl=53 time=129 ms",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=8 ttl=53 time=130 ms",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=9 ttl=53 time=131 ms",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=10 ttl=53 time=132 ms",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=11 ttl=53 time=133 ms",
+                "64 bytes from cornerstone.sh (34.121.172.232): icmp_seq=12 ttl=53 time=134 ms",
+               ]
            }
        ];
 
@@ -499,20 +524,21 @@ function TerminalView() {
          {lines.map((line, i) => (
             <div key={i} className={`whitespace-pre-wrap mb-1 break-all ${line.color || "text-white/80"}`}>
                 {line.text}
-                {i === lines.length - 1 && (
-                    <motion.span 
-                       animate={{ opacity: [1, 1, 0, 0] }}
-                       transition={{ 
-                         duration: 1, 
-                         repeat: Infinity, 
-                         times: [0, 0.5, 0.5, 1],
-                         ease: "linear" 
-                       }}
-                       className="w-2 h-4 bg-white/50 inline-block align-middle ml-1"
-                    />
-                )}
             </div>
          ))}
+         {/* Blinking Cursor always at the end */}
+         <div className="inline-block">
+            <motion.div 
+               animate={{ opacity: [1, 1, 0, 0] }}
+               transition={{ 
+                 duration: 1, 
+                 repeat: Infinity, 
+                 times: [0, 0.5, 0.5, 1],
+                 ease: "linear" 
+               }}
+               className="w-2 h-4 bg-white/50 inline-block align-middle ml-1"
+            />
+         </div>
          
          <div className="mt-12 pt-4 border-t border-white/10 text-white/30 text-[10px]">
              <div>TERMINAL SESSION: SSH</div>
@@ -566,16 +592,24 @@ export default function CornerstoneOS() {
 
          <FadeIn delay={0.2}>
             {/* Desktop Environment Container */}
-            <div className="relative w-full h-[700px] md:h-[900px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black select-none flex flex-col">
+            <div className="relative w-full h-[700px] md:h-[900px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black select-none">
                
                {/* Realistic Wallpaper */}
-               <div className="absolute inset-0 bg-black">
+               <div className="absolute inset-0 bg-white dark:bg-black transition-colors duration-500">
+                   {/* Dark Mode Wallpaper */}
                    <img 
                        src="https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-                       className="w-full h-full object-cover opacity-80"
-                       alt="Wallpaper" 
+                       className="w-full h-full object-cover opacity-80 hidden dark:block"
+                       alt="Wallpaper Dark" 
                    />
-                   <div className="absolute inset-0 bg-black/20" /> 
+                   <div className="absolute inset-0 bg-black/20 hidden dark:block" /> 
+
+                    {/* Light Mode Wallpaper */}
+                   <img 
+                       src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2264&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                       className="w-full h-full object-cover opacity-90 dark:hidden"
+                       alt="Wallpaper Light" 
+                   />
                </div>
 
                {/* macOS-like Menu Bar */}
@@ -583,7 +617,7 @@ export default function CornerstoneOS() {
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
-                  className="relative z-20 h-8 bg-black/40 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-4 text-[13px] font-medium text-white shadow-sm shrink-0"
+                  className="relative z-20 h-8 bg-white/40 dark:bg-black/40 backdrop-blur-md border-b border-black/5 dark:border-white/5 flex items-center justify-between px-4 text-[13px] font-medium text-black dark:text-white shadow-sm shrink-0 transition-colors duration-300"
                >
                   <div className="flex items-center gap-5">
                      <span className="text-base"></span>
@@ -606,13 +640,13 @@ export default function CornerstoneOS() {
                   </div>
                </motion.div>
 
-               {/* The Window Container - Centered on Desktop */}
-               <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-4 md:p-12 pb-28">
+               {/* The Window Container - Fixed Layout */}
+               <div className="relative z-10 w-full h-full">
                     <motion.div 
                         initial={{ scale: 0.95, opacity: 0, y: 20 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-                        className="w-full h-full max-w-[1248px] bg-[#1e1e1e] rounded-xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.6)] border border-white/10 flex flex-col ring-1 ring-white/5"
+                        className="absolute inset-4 md:inset-12 md:bottom-28 bottom-24 bg-[#1e1e1e] rounded-xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.6)] border border-white/10 flex flex-col ring-1 ring-white/5"
                     >
                        {/* Safari Toolbar */}
                        <div className="h-10 bg-[#323232] border-b border-black flex items-center px-4 gap-4 shrink-0">
@@ -660,7 +694,7 @@ export default function CornerstoneOS() {
                               </div>
 
                               {/* Nav */}
-                              <div className="flex-1 px-4 space-y-0.5 overflow-y-auto custom-scrollbar">
+                              <div className="flex-1 px-4 space-y-0.5">
                                  {Object.keys(views).map(tab => (
                                     <button
                                        key={tab}
@@ -677,7 +711,7 @@ export default function CornerstoneOS() {
                               </div>
 
                               {/* Bottom User Profile */}
-                              <div className="px-6 pt-6 border-t border-white/5 mt-auto">
+                              <div className="px-6 pt-6 border-t border-white/5">
                                  <div className="bg-white/5 rounded-lg p-3 flex items-center gap-3">
                                      <div className="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-[10px] font-bold text-white">N</div>
                                      <div>
@@ -730,11 +764,10 @@ export default function CornerstoneOS() {
                         initial={{ y: 100, opacity: 0, x: "-50%" }}
                         animate={{ y: 0, opacity: 1, x: "-50%" }}
                         transition={{ delay: 0.8, type: "spring", stiffness: 100, damping: 20 }}
-                        className="absolute bottom-6 left-1/2 h-16 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl flex items-center gap-3 px-4 shadow-2xl z-50 origin-center"
+                        className="absolute bottom-6 left-1/2 h-16 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl flex items-center gap-3 px-4 mx-auto shadow-2xl z-50 origin-center"
                     >
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Finder_Icon_macOS_Tahoe.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Finder" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Safari_browser_logo.svg/2057px-Safari_browser_logo.svg.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Safari" />
-                        <img src="https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/firefox-app-icon.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200 p-0.5" alt="Firefox" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/1024px-Apple_Music_icon.svg.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Music" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1200px-Visual_Studio_Code_1.35_icon.svg.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="VS Code" />
                         <img src="https://github.com/kicad.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200 rounded-lg" alt="KiCad" />
@@ -764,7 +797,7 @@ export default function CornerstoneOS() {
                      </div>
                      <h3 className="text-2xl font-medium text-white mb-3">Truly Open Source.</h3>
                      <p className="text-white/60 font-mono text-sm leading-relaxed">
-                        No black boxes. Verify the code yourself on GitHub. We believe trust is earned through transparency, not promises.
+                        No black boxes. Verify the code yourself on GitHub. Trust is earned through transparency, not promises.
                      </p>
                   </div>
                   
