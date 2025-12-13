@@ -524,21 +524,20 @@ function TerminalView() {
          {lines.map((line, i) => (
             <div key={i} className={`whitespace-pre-wrap mb-1 break-all ${line.color || "text-white/80"}`}>
                 {line.text}
+                {i === lines.length - 1 && (
+                    <motion.span 
+                       animate={{ opacity: [1, 1, 0, 0] }}
+                       transition={{ 
+                         duration: 1, 
+                         repeat: Infinity, 
+                         times: [0, 0.5, 0.5, 1],
+                         ease: "linear" 
+                       }}
+                       className="w-2 h-4 bg-white/50 inline-block align-middle ml-0.5"
+                    />
+                )}
             </div>
          ))}
-         {/* Blinking Cursor always at the end */}
-         <div className="inline-block">
-            <motion.div 
-               animate={{ opacity: [1, 1, 0, 0] }}
-               transition={{ 
-                 duration: 1, 
-                 repeat: Infinity, 
-                 times: [0, 0.5, 0.5, 1],
-                 ease: "linear" 
-               }}
-               className="w-2 h-4 bg-white/50 inline-block align-middle ml-1"
-            />
-         </div>
          
          <div className="mt-12 pt-4 border-t border-white/10 text-white/30 text-[10px]">
              <div>TERMINAL SESSION: SSH</div>
@@ -583,7 +582,7 @@ export default function CornerstoneOS() {
       <div className="max-w-7xl mx-auto">
         <FadeIn className="mb-20 text-center">
             <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
-               Server-grade software.
+               An interface that gives you control.
             </h2>
             <p className="text-lg text-black/60 dark:text-white/60 font-mono">
                The control you expect from a server. The polish you expect from us.
@@ -595,7 +594,12 @@ export default function CornerstoneOS() {
             <div className="relative w-full h-[700px] md:h-[900px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black select-none">
                
                {/* Realistic Wallpaper */}
-               <div className="absolute inset-0 bg-white dark:bg-black transition-colors duration-500">
+               <motion.div 
+                   initial={{ opacity: 0 }}
+                   animate={{ opacity: 1 }}
+                   transition={{ duration: 1, ease: "easeOut" }}
+                   className="absolute inset-0 bg-white dark:bg-black transition-colors duration-500"
+               >
                    {/* Dark Mode Wallpaper */}
                    <img 
                        src="https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
@@ -610,13 +614,13 @@ export default function CornerstoneOS() {
                        className="w-full h-full object-cover opacity-90 dark:hidden"
                        alt="Wallpaper Light" 
                    />
-               </div>
+               </motion.div>
 
                {/* macOS-like Menu Bar */}
                <motion.div 
-                  initial={{ y: -20, opacity: 0 }}
+                  initial={{ y: -10, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+                  transition={{ delay: 0.3, duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
                   className="relative z-20 h-8 bg-white/40 dark:bg-black/40 backdrop-blur-md border-b border-black/5 dark:border-white/5 flex items-center justify-between px-4 text-[13px] font-medium text-black dark:text-white shadow-sm shrink-0 transition-colors duration-300"
                >
                   <div className="flex items-center gap-5">
@@ -761,9 +765,9 @@ export default function CornerstoneOS() {
 
                     {/* Dock */}
                     <motion.div 
-                        initial={{ y: 100, opacity: 0, x: "-50%" }}
+                        initial={{ y: 60, opacity: 0, x: "-50%" }}
                         animate={{ y: 0, opacity: 1, x: "-50%" }}
-                        transition={{ delay: 0.8, type: "spring", stiffness: 100, damping: 20 }}
+                        transition={{ delay: 0.5, type: "spring", stiffness: 80, damping: 18 }}
                         className="absolute bottom-6 left-1/2 h-16 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl flex items-center gap-3 px-4 mx-auto shadow-2xl z-50 origin-center"
                     >
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Finder_Icon_macOS_Tahoe.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Finder" />
