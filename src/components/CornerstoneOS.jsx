@@ -579,7 +579,12 @@ export default function CornerstoneOS() {
                </div>
 
                {/* macOS-like Menu Bar */}
-               <div className="relative z-20 h-8 bg-black/40 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-4 text-[13px] font-medium text-white shadow-sm shrink-0">
+               <motion.div 
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+                  className="relative z-20 h-8 bg-black/40 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-4 text-[13px] font-medium text-white shadow-sm shrink-0"
+               >
                   <div className="flex items-center gap-5">
                      <span className="text-base"></span>
                      <span className="font-bold">Safari</span>
@@ -599,7 +604,7 @@ export default function CornerstoneOS() {
                       <span className="hidden sm:inline">{formatDate(date)}</span>
                       <span>{formatTime(date)}</span>
                   </div>
-               </div>
+               </motion.div>
 
                {/* The Window Container - Centered on Desktop */}
                <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-4 md:p-12 pb-28">
@@ -722,10 +727,10 @@ export default function CornerstoneOS() {
 
                     {/* Dock */}
                     <motion.div 
-                        initial={{ y: 100 }}
-                        animate={{ y: 0 }}
+                        initial={{ y: 100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.8, type: "spring", stiffness: 100, damping: 20 }}
-                        className="absolute bottom-6 h-16 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl flex items-center gap-3 mb-4 px-4 mx-auto shadow-2xl z-30"
+                        className="absolute bottom-6 h-16 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl flex items-center gap-3 px-4 mx-auto shadow-2xl z-30"
                     >
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Finder_Icon_macOS_Tahoe.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Finder" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Safari_browser_logo.svg/2057px-Safari_browser_logo.svg.png" className="w-10 h-10 hover:-translate-y-2 transition-transform duration-200" alt="Safari" />
