@@ -8,6 +8,7 @@ import { TelemetryProvider } from "@/components/TelemetryContext";
 import FadeIn from "@/components/FadeIn";
 import ScrollIndicator from "@/components/ScrollIndicator";
 
+import CornerstoneOS from "@/components/CornerstoneOS";
 export const metadata = {
   title: "Foundation - Cornerstone",
   description: "The modular home server system built for you.",
@@ -446,132 +447,140 @@ export default function FoundationPage() {
           </FadeIn>
         </section>
 
+
         {/* Build Your Foundation UI */}
         <FoundationBuilder />
 
+        {/* --- CORNERSTONE OS --- */}
+        <CornerstoneOS />
+
         {/* Technical Specs */}
         <section id="specs" className="py-24 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-16 border-b border-black/10 dark:border-white/10 pb-8">
-              Technical Specifications
-            </h2>
+          <FadeIn>
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-16 border-b border-black/10 dark:border-white/10 pb-8">
+                Technical Specifications
+              </h2>
 
-            <div className="space-y-12 font-mono">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-sm uppercase tracking-widest opacity-50">Core Compute</div>
-                <div className="md:col-span-2 space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Module</span>
-                    <span className="sm:text-right">Raspberry Pi CM5</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Processor</span>
-                    <span className="sm:text-right">Broadcom BCM2712 Quad-core A76 @ 2.4GHz</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Memory</span>
-                    <span className="sm:text-right">LPDDR4 (4GB, 8GB, 16GB)</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Base Storage</span>
-                    <span className="sm:text-right">256GB, 512GB, 1TB NVMe</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Wireless</span>
-                    <span className="sm:text-right">Wi-Fi 6 / Bluetooth 5.x (Optional)</span>
+              <div className="space-y-12 font-mono">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="text-sm uppercase tracking-widest opacity-50">Core Compute</div>
+                  <div className="md:col-span-2 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Module</span>
+                      <span className="sm:text-right">Raspberry Pi CM5</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Processor</span>
+                      <span className="sm:text-right">Broadcom BCM2712 Quad-core A76 @ 2.4GHz</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Memory</span>
+                      <span className="sm:text-right">LPDDR4 (4GB, 8GB, 16GB)</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Base Storage</span>
+                      <span className="sm:text-right">256GB, 512GB, 1TB NVMe</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Wireless</span>
+                      <span className="sm:text-right">Wi-Fi 6 / Bluetooth 5.x (Optional)</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-sm uppercase tracking-widest opacity-50">Universal Expansion</div>
-                <div className="md:col-span-2 space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Module Slots</span>
-                    <span className="sm:text-right">7x Universal Bay Internal Mounts</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Storage Support</span>
-                    <span className="sm:text-right">Supports 256GB - 4TB per drive</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Architecture</span>
-                    <span className="sm:text-right">Zero-cable Mortimer backplane</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="text-sm uppercase tracking-widest opacity-50">Universal Expansion</div>
+                  <div className="md:col-span-2 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Module Slots</span>
+                      <span className="sm:text-right">7x Universal Bay Internal Mounts</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Storage Support</span>
+                      <span className="sm:text-right">Supports 256GB - 4TB per drive</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Architecture</span>
+                      <span className="sm:text-right">Zero-cable Mortimer backplane</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-sm uppercase tracking-widest opacity-50">I/O & Connectivity</div>
-                <div className="md:col-span-2 space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Ethernet</span>
-                    <span className="sm:text-right">1 Gbps (Standard) / 2.5 Gbps (Optional Module)</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">USB</span>
-                    <span className="sm:text-right">USB-C PD (Power), USB-A (Peripherals)</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Expansion</span>
-                    <span className="sm:text-right">Mortimer Interface</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="text-sm uppercase tracking-widest opacity-50">I/O & Connectivity</div>
+                  <div className="md:col-span-2 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Ethernet</span>
+                      <span className="sm:text-right">1 Gbps (Standard) / 2.5 Gbps (Optional Module)</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">USB</span>
+                      <span className="sm:text-right">USB-C PD (Power), USB-A (Peripherals)</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Expansion</span>
+                      <span className="sm:text-right">Mortimer Interface</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-sm uppercase tracking-widest opacity-50">Physical</div>
-                <div className="md:col-span-2 space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Dimensions</span>
-                    <span className="sm:text-right">3.5" x 3.5" (≈ 89mm x 89mm)</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Material</span>
-                    <span className="sm:text-right">CNC-milled 6061-T6 Aluminum</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Finish</span>
-                    <span className="sm:text-right">Black or Natural Anodized</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="text-sm uppercase tracking-widest opacity-50">Physical</div>
+                  <div className="md:col-span-2 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Dimensions</span>
+                      <span className="sm:text-right">3.5" x 3.5" (≈ 89mm x 89mm)</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Material</span>
+                      <span className="sm:text-right">CNC-milled 6061-T6 Aluminum</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Finish</span>
+                      <span className="sm:text-right">Black or Natural Anodized</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-sm uppercase tracking-widest opacity-50">Software</div>
-                <div className="md:col-span-2 space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">OS</span>
-                    <span className="sm:text-right">Cornerstone OS</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                    <span className="opacity-70 sm:opacity-100">Management</span>
-                    <span className="sm:text-right">Custom Web UI, OpenMediaVault</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="text-sm uppercase tracking-widest opacity-50">Software</div>
+                  <div className="md:col-span-2 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">OS</span>
+                      <span className="sm:text-right">Cornerstone OS</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
+                      <span className="opacity-70 sm:opacity-100">Management</span>
+                      <span className="sm:text-right">Custom Web UI, OpenMediaVault</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </FadeIn>
         </section>
 
         {/* CTA */}
         <section className="py-24 px-4 sm:px-6 lg:px-8 bg-black text-white dark:bg-white dark:text-black text-center">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-4xl md:text-6xl font-medium tracking-tight">
-              Ready to build?
-            </h2>
-            <p className="text-xl font-mono opacity-70">
-              Join the future of home computing.
-            </p>
-            <div className="pt-8">
-              <Link
-                href="/preorder"
-                className="inline-flex items-center justify-center px-12 py-5 text-lg font-mono font-medium uppercase tracking-wider bg-orange-500 text-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white transition-all duration-300 rounded-full"
-              >
-                Reserve Yours
-              </Link>
+          <FadeIn>
+            <div className="max-w-3xl mx-auto space-y-8">
+              <h2 className="text-4xl md:text-6xl font-medium tracking-tight">
+                Ready to build?
+              </h2>
+              <p className="text-xl font-mono opacity-70">
+                Join the future of home computing.
+              </p>
+              <div className="pt-8">
+                <Link
+                  href="/preorder"
+                  className="inline-flex items-center justify-center px-12 py-5 text-lg font-mono font-medium uppercase tracking-wider bg-orange-500 text-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white transition-all duration-300 rounded-full"
+                >
+                  Reserve Yours
+                </Link>
+              </div>
             </div>
-          </div>
+          </FadeIn>
         </section>
       </main>
     </>
