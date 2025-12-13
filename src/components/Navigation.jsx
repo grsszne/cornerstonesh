@@ -61,7 +61,7 @@ export default function Navigation() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled || isMobileMenuOpen
-            ? "bg-white/80 backdrop-blur-md border-b border-black dark:bg-black/80 dark:border-white"
+            ? "bg-white/80 backdrop-blur-sm shadow-lg/3  dark:bg-black/80 "
             : "bg-transparent"
         }`}
       >
