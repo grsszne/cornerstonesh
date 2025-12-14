@@ -7,6 +7,8 @@ import TelemetryCard from "@/components/TelemetryCard";
 import { TelemetryProvider } from "@/components/TelemetryContext";
 import FadeIn from "@/components/FadeIn";
 import ScrollIndicator from "@/components/ScrollIndicator";
+import InteractiveCard from "@/components/InteractiveCard";
+import BayConfigurator from "@/components/BayConfigurator";
 
 import CornerstoneOS from "@/components/CornerstoneOS";
 export const metadata = {
@@ -20,12 +22,15 @@ export default function FoundationPage() {
       <main className="min-h-screen bg-white dark:bg-black text-black dark:text-white pt-20">
         {/* Hero Section */}
         <section className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05]"
-            style={{
-              backgroundImage: 'radial-gradient(circle at center, currentColor 1px, transparent 1px)',
-              backgroundSize: '40px 40px'
-            }}
-          />
+          {/* Large Animated ASCII Background - MORE VISIBLE */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.04] dark:opacity-[0.08]">
+            <AsciiArt width={250} height={150} numCircles={80} />
+          </div>
+
+          {/* Secondary ASCII Layer for Depth */}
+          <div className="absolute top-1/4 left-0 pointer-events-none opacity-[0.06] dark:opacity-[0.10]">
+            <AsciiArt width={150} height={100} numCircles={40} />
+          </div>
 
           <div className="relative z-10 text-center max-w-5xl mx-auto space-y-8">
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-medium tracking-tighter">
@@ -37,9 +42,9 @@ export default function FoundationPage() {
             <div className="pt-8">
               <Link
                 href="/preorder"
-                className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-orange-500 text-white border border-orange-500 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-black dark:hover:border-white transition-all duration-300 rounded-full"
+                className="btn-shine lift-on-hover group inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-orange-500 text-white border-2 border-orange-500 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-black dark:hover:border-white transition-all duration-300 rounded-full relative overflow-hidden shadow-lg hover:shadow-2xl"
               >
-                Pre-order Now
+                <span className="relative z-10">Pre-order Now</span>
               </Link>
             </div>
           </div>
@@ -97,52 +102,87 @@ export default function FoundationPage() {
         </section>
 
 
-        {/* Who is Foundation for? - User Personas */}
-        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-black text-white dark:bg-white dark:text-black border-b border-white/10 dark:border-black/10">
-          <div className="max-w-7xl mx-auto">
+        {/* Who is Foundation for? - System Configurations */}
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-zinc-950 text-white relative overflow-hidden">
+          {/* Grid background */}
+          <div className="absolute inset-0 opacity-[0.02]" style={{
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+            backgroundSize: '50px 50px'
+          }}></div>
+
+          <div className="max-w-7xl mx-auto relative z-10">
             <FadeIn>
-              <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-16 text-center">
-                Built with <span className="text-orange-500">Purpose.</span>
-              </h2>
+              <div className="mb-20">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-px w-12 bg-orange-500"></div>
+                  <span className="font-mono text-xs uppercase tracking-[0.3em] text-orange-500">Use Cases</span>
+                </div>
+                <h2 className="text-4xl md:text-6xl font-medium tracking-tight text-white">
+                  Built for <span className="text-orange-500">You</span>
+                </h2>
+              </div>
             </FadeIn>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Persona 1: The Creator */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Configuration 1: Creator */}
               <FadeIn delay={0.1}>
-                <div className="border border-white/20 dark:border-black/20 p-8 rounded-2xl h-full flex flex-col hover:border-orange-500 transition-colors duration-300 font-mono group">
-                  <div className="mb-8">
-                    <div className="text-xs text-orange-500 uppercase tracking-widest mb-2">01 / Ingest</div>
-                    <h3 className="text-2xl font-medium group-hover:text-orange-500 transition-colors">The Creator</h3>
-                  </div>
+                <div className="group relative h-full">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="relative bg-black border border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
-                  <div className="space-y-8 flex-1">
-                    <div>
-                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Need</div>
-                      <ul className="text-sm opacity-80 space-y-3 leading-relaxed">
-                        <li className="flex gap-3"><span className="text-orange-500">→</span> Rapid footage offloading</li>
-                        <li className="flex gap-3"><span className="text-orange-500">→</span> High-speed 2.5GbE workflow</li>
-                        <li className="flex gap-3"><span className="text-orange-500">→</span> Zero monthly cloud fees</li>
-                      </ul>
+                    {/* Header */}
+                    <div className="mb-6 pb-4 border-b border-white/10">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-mono text-xs uppercase tracking-widest text-orange-500">Config_01</span>
+                        <span className="font-mono text-xs text-white/30">INGEST</span>
+                      </div>
+                      <h3 className="text-2xl font-medium text-white group-hover:text-orange-500 transition-colors">
+                        The Creator
+                      </h3>
                     </div>
 
-                    <div className="pt-6 border-t border-white/10 dark:border-black/10">
-                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Build</div>
-                      <div className="space-y-2 text-sm font-medium">
-                        <div className="flex justify-between">
-                          <span className="opacity-60">RAM</span>
-                          <span>16GB LPDDR5</span>
+                    {/* Requirements */}
+                    <div className="mb-6">
+                      <div className="font-mono text-xs uppercase tracking-wider text-white/40 mb-3">Requirements</div>
+                      <div className="space-y-2">
+                        <div className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <span className="text-sm text-white/70 leading-relaxed">Rapid footage offloading</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="opacity-60">Base Storage</span>
-                          <span>1TB NVMe</span>
+                        <div className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <span className="text-sm text-white/70 leading-relaxed">High-speed 2.5GbE workflow</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="opacity-60">Expansion</span>
-                          <span>4x 4TB (16TB Total)</span>
+                        <div className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <span className="text-sm text-white/70 leading-relaxed">Zero monthly cloud fees</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="opacity-60">Modules</span>
-                          <span className="text-orange-500">SD Card IO + 2.5GbE</span>
+                      </div>
+                    </div>
+
+                    {/* Specifications */}
+                    <div className="mt-auto pt-6 border-t border-white/10">
+                      <div className="font-mono text-xs uppercase tracking-wider text-white/40 mb-4">System Spec</div>
+                      <div className="space-y-2.5">
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">MEM</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">16GB LPDDR5</span>
+                        </div>
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">SYS</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">1TB NVMe</span>
+                        </div>
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">EXP</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">4× 4TB (16TB)</span>
+                        </div>
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">MOD</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-orange-500">SD + 2.5GbE</span>
                         </div>
                       </div>
                     </div>
@@ -150,41 +190,64 @@ export default function FoundationPage() {
                 </div>
               </FadeIn>
 
-              {/* Persona 2: The Privacy Advocate */}
+              {/* Configuration 2: Advocate */}
               <FadeIn delay={0.2}>
-                <div className="border border-white/20 dark:border-black/20 p-8 rounded-2xl h-full flex flex-col hover:border-orange-500 transition-colors duration-300 font-mono group">
-                  <div className="mb-8">
-                    <div className="text-xs text-orange-500 uppercase tracking-widest mb-2">02 / Sovereignty</div>
-                    <h3 className="text-2xl font-medium group-hover:text-orange-500 transition-colors">The Advocate</h3>
-                  </div>
+                <div className="group relative h-full">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="relative bg-black border border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
-                  <div className="space-y-8 flex-1">
-                    <div>
-                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Need</div>
-                      <ul className="text-sm opacity-80 space-y-3 leading-relaxed">
-                        <li className="flex gap-3"><span className="text-orange-500">→</span> Complete data ownership</li>
-                        <li className="flex gap-3"><span className="text-orange-500">→</span> Power outage protection</li>
-                        <li className="flex gap-3"><span className="text-orange-500">→</span> Self-hosted services</li>
-                      </ul>
+                    {/* Header */}
+                    <div className="mb-6 pb-4 border-b border-white/10">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-mono text-xs uppercase tracking-widest text-orange-500">Config_02</span>
+                        <span className="font-mono text-xs text-white/30">SOVEREIGNTY</span>
+                      </div>
+                      <h3 className="text-2xl font-medium text-white group-hover:text-orange-500 transition-colors">
+                        The Advocate
+                      </h3>
                     </div>
 
-                    <div className="pt-6 border-t border-white/10 dark:border-black/10">
-                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Build</div>
-                      <div className="space-y-2 text-sm font-medium">
-                        <div className="flex justify-between">
-                          <span className="opacity-60">RAM</span>
-                          <span>4GB LPDDR5</span>
+                    {/* Requirements */}
+                    <div className="mb-6">
+                      <div className="font-mono text-xs uppercase tracking-wider text-white/40 mb-3">Requirements</div>
+                      <div className="space-y-2">
+                        <div className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <span className="text-sm text-white/70 leading-relaxed">Complete data ownership</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="opacity-60">Base Storage</span>
-                          <span>512GB NVMe</span>
+                        <div className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <span className="text-sm text-white/70 leading-relaxed">Power outage protection</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="opacity-60">Expansion</span>
-                          <span>2x 2TB (RAID 1)</span>
+                        <div className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <span className="text-sm text-white/70 leading-relaxed">Self-hosted services</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="opacity-60">Modules</span>
+                      </div>
+                    </div>
+
+                    {/* Specifications */}
+                    <div className="mt-auto pt-6 border-t border-white/10">
+                      <div className="font-mono text-xs uppercase tracking-wider text-white/40 mb-4">System Spec</div>
+                      <div className="space-y-2.5">
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">MEM</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">4GB LPDDR5</span>
+                        </div>
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">SYS</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">512GB NVMe</span>
+                        </div>
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">EXP</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">2× 2TB RAID1</span>
+                        </div>
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">MOD</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
                           <span className="text-orange-500">UPS Backup</span>
                         </div>
                       </div>
@@ -193,41 +256,64 @@ export default function FoundationPage() {
                 </div>
               </FadeIn>
 
-              {/* Persona 3: The Developer */}
+              {/* Configuration 3: Developer */}
               <FadeIn delay={0.3}>
-                <div className="border border-white/20 dark:border-black/20 p-8 rounded-2xl h-full flex flex-col hover:border-orange-500 transition-colors duration-300 font-mono group">
-                  <div className="mb-8">
-                    <div className="text-xs text-orange-500 uppercase tracking-widest mb-2">03 / Hacking</div>
-                    <h3 className="text-2xl font-medium group-hover:text-orange-500 transition-colors">The Developer</h3>
-                  </div>
+                <div className="group relative h-full">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="relative bg-black border border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
-                  <div className="space-y-8 flex-1">
-                    <div>
-                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Need</div>
-                      <ul className="text-sm opacity-80 space-y-3 leading-relaxed">
-                        <li className="flex gap-3"><span className="text-orange-500">→</span> Docker & K8s environment</li>
-                        <li className="flex gap-3"><span className="text-orange-500">→</span> Hardware experimentation</li>
-                        <li className="flex gap-3"><span className="text-orange-500">→</span> Custom automation</li>
-                      </ul>
+                    {/* Header */}
+                    <div className="mb-6 pb-4 border-b border-white/10">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-mono text-xs uppercase tracking-widest text-orange-500">Config_03</span>
+                        <span className="font-mono text-xs text-white/30">HACKING</span>
+                      </div>
+                      <h3 className="text-2xl font-medium text-white group-hover:text-orange-500 transition-colors">
+                        The Developer
+                      </h3>
                     </div>
 
-                    <div className="pt-6 border-t border-white/10 dark:border-black/10">
-                      <div className="text-xs uppercase opacity-40 mb-3 tracking-wider">The Build</div>
-                      <div className="space-y-2 text-sm font-medium">
-                        <div className="flex justify-between">
-                          <span className="opacity-60">RAM</span>
-                          <span>16GB LPDDR5</span>
+                    {/* Requirements */}
+                    <div className="mb-6">
+                      <div className="font-mono text-xs uppercase tracking-wider text-white/40 mb-3">Requirements</div>
+                      <div className="space-y-2">
+                        <div className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <span className="text-sm text-white/70 leading-relaxed">Docker & K8s environment</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="opacity-60">Base Storage</span>
-                          <span>512GB NVMe</span>
+                        <div className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <span className="text-sm text-white/70 leading-relaxed">Hardware experimentation</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="opacity-60">Expansion</span>
-                          <span>1x 1TB (Lab Storage)</span>
+                        <div className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <span className="text-sm text-white/70 leading-relaxed">Custom automation</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="opacity-60">Modules</span>
+                      </div>
+                    </div>
+
+                    {/* Specifications */}
+                    <div className="mt-auto pt-6 border-t border-white/10">
+                      <div className="font-mono text-xs uppercase tracking-wider text-white/40 mb-4">System Spec</div>
+                      <div className="space-y-2.5">
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">MEM</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">16GB LPDDR5</span>
+                        </div>
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">SYS</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">512GB NVMe</span>
+                        </div>
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">EXP</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">1× 1TB Lab</span>
+                        </div>
+                        <div className="flex items-center justify-between font-mono text-xs">
+                          <span className="text-white/40">MOD</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
                           <span className="text-orange-500">GPIO Revealer</span>
                         </div>
                       </div>
@@ -239,84 +325,194 @@ export default function FoundationPage() {
 
             {/* Hardware Guide CTA */}
             <FadeIn delay={0.4}>
-              <div className="mt-16 text-center">
-                <p className="text-sm font-mono opacity-50 mb-4">Not sure what specs you need?</p>
+              <div className="mt-16 flex items-center justify-center gap-6">
+                <div className="h-px flex-1 bg-white/10 max-w-xs"></div>
                 <Link
                   href="/foundation/guide"
-                  className="inline-flex items-center justify-center px-6 py-3 text-sm font-mono font-medium uppercase tracking-wider bg-transparent text-white dark:text-black border border-white/20 dark:border-black/20 hover:border-orange-500 hover:text-orange-500 transition-colors duration-300"
+                  className="btn-shine lift-on-hover inline-flex items-center justify-center px-6 py-3 text-sm font-mono font-medium uppercase tracking-wider bg-transparent text-white border border-white/20 hover:border-orange-500 hover:text-orange-500 transition-all duration-300"
                 >
                   View Hardware Guide →
                 </Link>
+                <div className="h-px flex-1 bg-white/10 max-w-xs"></div>
               </div>
             </FadeIn>
           </div>
         </section>
 
-        {/* Bento Grid Features */}
-        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-zinc-900/50">
-          <div className="max-w-7xl mx-auto">
+        {/* Bento Grid Features - Technical Noir Design */}
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-black dark:bg-black relative overflow-hidden">
+          {/* Animated grid background */}
+          <div className="absolute inset-0 opacity-[0.03]" style={{
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+            backgroundSize: '50px 50px'
+          }}></div>
+
+          <div className="max-w-7xl mx-auto relative z-10">
             <FadeIn>
-              <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-16 text-center">
-                Designed for <span className="text-orange-500">You.</span>
-              </h2>
+              <div className="mb-20">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-px w-12 bg-orange-500"></div>
+                  <span className="font-mono text-xs uppercase tracking-[0.3em] text-orange-500">Technical Specifications</span>
+                </div>
+                <h2 className="text-4xl md:text-6xl font-medium tracking-tight text-white">
+                  Engineered for <span className="text-orange-500">You</span>
+                </h2>
+              </div>
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 auto-rows-[400px]">
-                {/* Large Feature - Storage */}
-                <div className="md:col-span-2 row-span-1 bg-white dark:bg-black border border-black/10 dark:border-white/10 p-8 md:p-12 rounded-3xl relative overflow-hidden group">
-                  <div className="relative z-10 h-full flex flex-col justify-between">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
+
+                {/* Universal Bays - Large Feature */}
+                <div className="md:col-span-8 group relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
+                  <div className="relative bg-zinc-950 border border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 md:p-10 h-full">
+
+                    <BayConfigurator />
+                  </div>
+                </div>
+
+                {/* Mortimer Interface - Tall Feature */}
+                <div className="md:col-span-4 md:row-span-2 group relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
+                  <div className="relative bg-white border border-black/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
+
+                    <div className="flex flex-col h-full">
+                      <div className="font-mono text-xs uppercase tracking-widest text-orange-500 mb-3">Interface_Protocol.v2</div>
+                      <h3 className="text-3xl md:text-4xl font-medium text-black mb-4 group-hover:text-orange-500 transition-colors duration-300">
+                        Mortimer<br/>Interface
+                      </h3>
+
+                      <p className="text-black/60 font-mono text-sm leading-relaxed mb-8 group-hover:text-black/80 transition-colors">
+                        Proprietary modular standard enabling infinite expansion. PWR+ delivery, I2C discovery bus, presence detection.
+                      </p>
+
+                      {/* Connection diagram */}
+                      <div className="flex-1 relative mt-auto">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="relative w-32 h-32">
+                            {/* Central hub */}
+                            <div className="absolute inset-0 border-2 border-black/20 group-hover:border-orange-500 transition-all duration-500 rotate-45">
+                              <div className="absolute inset-2 bg-orange-500/0 group-hover:bg-orange-500/10 transition-all duration-500"></div>
+                            </div>
+
+                            {/* Connection points */}
+                            {[0, 90, 180, 270].map((rotation, i) => (
+                              <div
+                                key={rotation}
+                                className="absolute top-1/2 left-1/2 w-16 h-0.5 -ml-8 origin-left"
+                                style={{
+                                  transform: `rotate(${rotation}deg)`,
+                                  transition: 'all 500ms',
+                                  transitionDelay: `${i * 100}ms`
+                                }}
+                              >
+                                <div className="w-full h-full bg-black/20 group-hover:bg-orange-500 transition-all duration-500"></div>
+                                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 border border-black/20 group-hover:border-orange-500 group-hover:bg-orange-500/50 transition-all duration-500"></div>
+                              </div>
+                            ))}
+
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-mono text-xs text-black/40 group-hover:text-orange-500 transition-colors">
+                              PWR+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-auto space-y-2 border-t border-black/10 pt-4">
+                        <div className="flex justify-between font-mono text-xs">
+                          <span className="text-black/40">Voltage</span>
+                          <span className="text-black/60 group-hover:text-orange-500 transition-colors">5V / 12V</span>
+                        </div>
+                        <div className="flex justify-between font-mono text-xs">
+                          <span className="text-black/40">Protocol</span>
+                          <span className="text-black/60 group-hover:text-orange-500 transition-colors">I2C + GPIO</span>
+                        </div>
+                        <div className="flex justify-between font-mono text-xs">
+                          <span className="text-black/40">Max Current</span>
+                          <span className="text-black/60 group-hover:text-orange-500 transition-colors">3A per module</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Aluminum Chassis */}
+                <div className="md:col-span-4 group relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
+                  <div className="relative bg-zinc-950 border border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col justify-between">
+
                     <div>
-                      <h3 className="text-2xl md:text-3xl font-medium mb-4">7x Universal Bays</h3>
-                      <p className="text-black/60 dark:text-white/60 font-mono text-sm md:text-base max-w-md">
-                        Modular expansion for 3.5" footprint. Zero-cable backplane architecture. Supports standard SSDs, 2.5GbE Networking, AI Accelerators, and UPS modules.
+                      <div className="font-mono text-xs uppercase tracking-widest text-orange-500 mb-3">Material_Spec.6061-T6</div>
+                      <h3 className="text-2xl md:text-3xl font-medium text-white mb-4 group-hover:text-orange-500 transition-colors duration-300">
+                        Machined<br/>Aluminum
+                      </h3>
+
+                      <p className="text-white/60 font-mono text-sm leading-relaxed group-hover:text-white/80 transition-colors">
+                        CNC-milled aerospace-grade aluminum. Structural rigidity with integrated thermal management.
                       </p>
                     </div>
-                    <div className="w-full h-48 bg-gray-100 dark:bg-zinc-900 rounded-2xl mt-8 border border-dashed border-black/20 dark:border-white/20 flex items-center justify-center">
-                      <span className="font-mono text-xs uppercase tracking-widest opacity-50">Module Sled Visualization</span>
+
+                    <div className="space-y-3 mt-8">
+                      <div className="flex items-center gap-3">
+                        <div className="w-full h-1 bg-white/10 relative overflow-hidden">
+                          <div className="absolute inset-0 bg-orange-500 origin-left scale-x-90 group-hover:scale-x-100 transition-transform duration-700"></div>
+                        </div>
+                        <span className="font-mono text-xs text-white/40 whitespace-nowrap">TENSILE: 310 MPa</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-full h-1 bg-white/10 relative overflow-hidden">
+                          <div className="absolute inset-0 bg-orange-500 origin-left scale-x-75 group-hover:scale-x-100 transition-transform duration-700 delay-75"></div>
+                        </div>
+                        <span className="font-mono text-xs text-white/40 whitespace-nowrap">YIELD: 276 MPa</span>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Tall Feature - Mortimer Interface */}
-                <div className="md:col-span-1 row-span-1 md:row-span-2 bg-black text-white dark:bg-white dark:text-black p-8 md:p-12 rounded-3xl relative overflow-hidden flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-2xl md:text-3xl font-medium mb-4">Mortimer Interface</h3>
-                    <p className="opacity-70 font-mono text-sm">
-                      Our custom modular standard. Expand with networking modules, AI accelerators, or displays.
-                      <br /><br />
-                      Includes PWR+, I2C discovery, and presence detection.
-                    </p>
-                  </div>
-                  <div className="mt-8 flex-1 relative">
-                    <AsciiArt width={40} height={60} numCircles={15} />
+                {/* Compute Power */}
+                <div className="md:col-span-4 group relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-600 to-orange-500"></div>
+                  <div className="absolute inset-0 opacity-10" style={{
+                    backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)',
+                    backgroundSize: '20px 20px'
+                  }}></div>
+
+                  <div className="relative border border-orange-400 group-hover:border-white transition-all duration-500 p-8 h-full flex flex-col justify-between">
+
+                    <div>
+                      <div className="font-mono text-xs uppercase tracking-widest text-white/80 mb-3">Compute_Core.BCM2712</div>
+                      <h3 className="text-2xl md:text-3xl font-medium text-white mb-4 group-hover:scale-105 transition-transform duration-300 origin-top-left">
+                        Quad-Core<br/>ARM
+                      </h3>
+
+                      <p className="text-white/90 font-mono text-sm leading-relaxed">
+                        Broadcom BCM2712<br/>
+                        Cortex-A76 @ 2.4GHz<br/>
+                        LPDDR5 | PCIe Gen 3
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-1">
+                        {[...Array(4)].map((_, i) => (
+                          <div
+                            key={i}
+                            className="w-2 h-8 bg-white/30 group-hover:bg-white transition-all duration-300"
+                            style={{
+                              animationDelay: `${i * 100}ms`,
+                              height: `${(i + 1) * 8}px`
+                            }}
+                          ></div>
+                        ))}
+                      </div>
+                      <span className="font-mono text-xs text-white/60 group-hover:text-white transition-colors ml-2">
+                        4× CORES ACTIVE
+                      </span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Small Feature - Chassis */}
-                <div className="md:col-span-1 row-span-1 bg-white dark:bg-black border border-black/10 dark:border-white/10 p-8 rounded-3xl flex flex-col justify-end relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
-                    <img
-                      src="/img/corner.png"
-                      alt="CNC Aluminum Detail"
-                      className="absolute top-0 right-0 w-[120%] h-auto object-contain opacity-90 dark:opacity-80"
-                    />
-                  </div>
-                  <div className="relative z-10 bg-white/80 backdrop-blur-md  dark:bg-black/80">
-                    <h3 className="text-xl font-medium mb-2">Machined Aluminum</h3>
-                    <p className="text-black/60 dark:text-white/60 font-mono text-sm">
-                      CNC milled from 6061-T6 aluminum. Structural rigidity protecting your data. Active cooling across modules.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Small Feature - Compute */}
-                <div className="md:col-span-1 row-span-1 bg-orange-500 text-white p-8 rounded-3xl flex flex-col justify-end">
-                  <h3 className="text-xl font-medium mb-2">Quad-Core Power</h3>
-                  <p className="opacity-90 font-mono text-sm">
-                    Broadcom BCM2712 Cortex-A76 @ 2.4GHz. LPDDR5 Memory. PCIe Gen 3 expansion.
-                  </p>
-                </div>
               </div>
             </FadeIn>
           </div>
@@ -358,21 +554,21 @@ export default function FoundationPage() {
                     desc: "Precision CNC-milled 6061-T6 aluminum. Active heat dissipation. A server that looks as good as it performs, designed to be displayed, not hidden."
                   }
                 ].map((item) => (
-                  <div key={item.id} className="group relative border-t border-black/20 dark:border-black/20 pt-8 hover:border-orange-500 transition-colors duration-500">
+                  <InteractiveCard key={item.id} className="group relative border-t-2 border-black/20 dark:border-black/20 pt-8 hover:border-orange-500 transition-all duration-500">
                     <div className="font-mono text-xs text-orange-500 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute -top-2.5 bg-white dark:bg-white px-2">
                       POINT {item.id}
                     </div>
                     <div className="text-6xl font-medium opacity-20 mb-8 group-hover:opacity-100 group-hover:text-orange-500 transition-all duration-500">
                       {item.id}
                     </div>
-                    <h3 className="text-3xl font-medium mb-2">{item.title}</h3>
-                    <div className="font-mono text-xs uppercase tracking-widest opacity-50 mb-6">
+                    <h3 className="text-3xl font-medium mb-2 group-hover:text-orange-500 transition-colors">{item.title}</h3>
+                    <div className="font-mono text-xs uppercase tracking-widest opacity-50 mb-6 group-hover:opacity-80 transition-opacity">
                       vs. {item.vs}
                     </div>
-                    <p className="font-mono text-sm opacity-70 leading-relaxed">
+                    <p className="font-mono text-sm opacity-70 leading-relaxed group-hover:opacity-90 transition-opacity">
                       {item.desc}
                     </p>
-                  </div>
+                  </InteractiveCard>
                 ))}
               </div>
             </FadeIn>
@@ -399,49 +595,49 @@ export default function FoundationPage() {
                       <TelemetryCard label="Power Draw" metricKey="powerDraw" unit="W" icon="⚡" />
                       <TelemetryCard label="Network Activity" metricKey="network" unit=" Gbps" icon="🌐" />
                       <TelemetryCard label="Humidity" metricKey="humidity" unit="%" icon="💧" />
-                      <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
-                        <div className="text-orange-500 text-xl mb-2">🍃</div>
+                      <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-orange-500/50 flex flex-col justify-between aspect-square group transition-all">
+                        <div className="text-orange-500 text-xl mb-2 group-hover:scale-110 transition-transform">🍃</div>
                         <div>
-                          <div className="text-lg font-bold font-mono tracking-tight">Good</div>
-                          <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Air Quality</div>
+                          <div className="text-lg font-bold font-mono tracking-tight group-hover:text-orange-500 transition-colors">Good</div>
+                          <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1 group-hover:opacity-80 transition-opacity">Air Quality</div>
                         </div>
-                      </div>
-                      <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
-                        <div className="text-orange-500 text-xl mb-2">💾</div>
+                      </InteractiveCard>
+                      <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-orange-500/50 flex flex-col justify-between aspect-square group transition-all">
+                        <div className="text-orange-500 text-xl mb-2 group-hover:scale-110 transition-transform">💾</div>
                         <div>
-                          <div className="text-lg font-bold font-mono tracking-tight">Healthy</div>
-                          <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Storage</div>
+                          <div className="text-lg font-bold font-mono tracking-tight group-hover:text-orange-500 transition-colors">Healthy</div>
+                          <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1 group-hover:opacity-80 transition-opacity">Storage</div>
                         </div>
-                      </div>
-                      <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square">
-                        <div className="text-orange-500 text-xl mb-2">⏱</div>
+                      </InteractiveCard>
+                      <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-orange-500/50 flex flex-col justify-between aspect-square group transition-all">
+                        <div className="text-orange-500 text-xl mb-2 group-hover:scale-110 transition-transform">⏱</div>
                         <div>
-                          <div className="text-lg font-bold font-mono tracking-tight">24d 3h</div>
-                          <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">Uptime</div>
+                          <div className="text-lg font-bold font-mono tracking-tight group-hover:text-orange-500 transition-colors">24d 3h</div>
+                          <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1 group-hover:opacity-80 transition-opacity">Uptime</div>
                         </div>
-                      </div>
+                      </InteractiveCard>
                     </div>
                   </TelemetryProvider>
                 </div>
 
-                <div className="bg-gray-50 dark:bg-zinc-900 rounded-3xl p-8 border border-black/10 dark:border-white/10 aspect-square flex items-center justify-center relative overflow-hidden group">
-                  <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+                <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 rounded-3xl p-8 border-2 border-black/10 dark:border-white/10 hover:border-orange-500/50 aspect-square flex items-center justify-center relative overflow-hidden group transition-all">
+                  <div className="absolute inset-0 opacity-10 group-hover:opacity-30 transition-opacity duration-500">
                     <AsciiArt width={125} height={125} numCircles={100} />
                   </div>
                   <div className="relative z-10 text-center space-y-6">
-                    <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-white dark:bg-black border border-black/10 dark:border-white/10 shadow-2xl shadow-orange-500/20">
+                    <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-white dark:bg-black border border-black/10 dark:border-white/10 shadow-2xl shadow-orange-500/20 group-hover:shadow-orange-500/40 group-hover:scale-110 transition-all duration-300">
                       <svg className="w-12 h-12 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                     </div>
                     <div className="space-y-2">
-                      <div className="font-medium text-lg">Smart Home Bridge</div>
-                      <div className="font-mono text-xs uppercase tracking-widest opacity-60">
+                      <div className="font-medium text-lg group-hover:text-orange-500 transition-colors">Smart Home Bridge</div>
+                      <div className="font-mono text-xs uppercase tracking-widest opacity-60 group-hover:opacity-80 transition-opacity">
                         Works with<br />Apple Homekit • Google • Alexa
                       </div>
                     </div>
                   </div>
-                </div>
+                </InteractiveCard>
               </div>
             </div>
           </FadeIn>
@@ -574,7 +770,7 @@ export default function FoundationPage() {
               <div className="pt-8">
                 <Link
                   href="/preorder"
-                  className="inline-flex items-center justify-center px-12 py-5 text-lg font-mono font-medium uppercase tracking-wider bg-orange-500 text-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white transition-all duration-300 rounded-full"
+                  className="btn-shine lift-on-hover inline-flex items-center justify-center px-12 py-5 text-lg font-mono font-medium uppercase tracking-wider bg-orange-500 text-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white transition-all duration-300 rounded-full shadow-xl shadow-orange-500/30 hover:shadow-2xl hover:shadow-orange-500/50"
                 >
                   Reserve Yours
                 </Link>

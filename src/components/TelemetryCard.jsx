@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTelemetry } from "./TelemetryContext";
+import InteractiveCard from "./InteractiveCard";
 
 // Generate initial history for smooth startup
 const generateInitialHistory = (metricKey, currentValue) => {
@@ -162,25 +163,25 @@ export default function TelemetryCard({ label, metricKey, unit, icon }) {
   }, [history]);
 
   return (
-    <div className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 flex flex-col justify-between aspect-square relative overflow-hidden">
+    <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-orange-500/50 flex flex-col justify-between aspect-square relative overflow-hidden group transition-all">
       {/* Sparkline background */}
-      <canvas 
+      <canvas
         ref={canvasRef}
         width={200}
         height={200}
-        className="absolute inset-0 w-full h-full opacity-60"
+        className="absolute inset-0 w-full h-full opacity-60 group-hover:opacity-80 transition-opacity"
       />
-      
+
       {/* Content */}
-      <div className="relative z-10 text-orange-500 text-xl mb-2">{icon}</div>
+      <div className="relative z-10 text-orange-500 text-xl mb-2 group-hover:scale-110 transition-transform">{icon}</div>
       <div className="relative z-10">
-        <div className="text-lg font-bold font-mono tracking-tight transition-all duration-300">
+        <div className="text-lg font-bold font-mono tracking-tight transition-all duration-300 group-hover:text-orange-500">
           {displayValue}{unit}
         </div>
-        <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1">
+        <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1 group-hover:opacity-80 transition-opacity">
           {label}
         </div>
       </div>
-    </div>
+    </InteractiveCard>
   );
 }

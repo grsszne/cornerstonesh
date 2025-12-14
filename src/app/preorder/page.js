@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import FadeIn from "@/components/FadeIn";
+import InteractiveCard from "@/components/InteractiveCard";
 
 export default function PreorderPage() {
   const [email, setEmail] = useState("");
@@ -43,9 +44,9 @@ export default function PreorderPage() {
           <div className="max-w-2xl mx-auto w-full">
 
             {/* Header / Status Block */}
-            <div className="border border-black dark:border-white mb-12">
-              <div className="grid grid-cols-2 border-b border-black dark:border-white">
-                <div className="p-4 border-r border-black dark:border-white font-mono text-xs uppercase tracking-widest opacity-60">
+            <InteractiveCard className="border-2 border-black dark:border-white hover:border-orange-500/50 mb-12 group transition-all">
+              <div className="grid grid-cols-2 border-b-2 border-black dark:border-white group-hover:border-orange-500/50 transition-colors">
+                <div className="p-4 border-r-2 border-black dark:border-white group-hover:border-orange-500/50 font-mono text-xs uppercase tracking-widest opacity-60 group-hover:opacity-80 transition-all">
                   Status
                 </div>
                 <div className="p-4 font-mono text-xs uppercase tracking-widest text-orange-500">
@@ -53,15 +54,15 @@ export default function PreorderPage() {
                 </div>
               </div>
               <div className="p-8 md:p-12">
-                <h1 className="text-4xl md:text-6xl font-medium tracking-tighter mb-6">
+                <h1 className="text-4xl md:text-6xl font-medium tracking-tighter mb-6 group-hover:text-orange-500 transition-colors">
                   Production Status
                 </h1>
-                <p className="font-mono text-sm md:text-base opacity-70 leading-relaxed max-w-md">
+                <p className="font-mono text-sm md:text-base opacity-70 group-hover:opacity-90 leading-relaxed max-w-md transition-opacity">
                   We are currently in the design stages of Foundation. Currently, pre-orders are not open to the general public.
-                  In the meantime, join the waitlist or follow our <a href="/devlog" className="underline decoration-orange-500 hover:text-orange-500 decoration-2">devlog</a> for updates. 
+                  In the meantime, join the waitlist or follow our <a href="/devlog" className="underline decoration-orange-500 hover:text-orange-500 decoration-2">devlog</a> for updates.
                 </p>
               </div>
-            </div>
+            </InteractiveCard>
 
             {/* Signup Form */}
             <div className="space-y-6">
@@ -88,7 +89,7 @@ export default function PreorderPage() {
                   <button
                     type="submit"
                     disabled={status === "loading" || status === "success"}
-                    className="bg-black text-white dark:bg-white dark:text-black border border-black dark:border-white px-8 py-4 font-mono text-sm font-medium uppercase tracking-wider hover:bg-orange-500 hover:border-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:border-orange-500 dark:hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed sm:border-l-0"
+                    className="btn-shine lift-on-hover bg-black text-white dark:bg-white dark:text-black border border-black dark:border-white px-8 py-4 font-mono text-sm font-medium uppercase tracking-wider hover:bg-orange-500 hover:border-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:border-orange-500 dark:hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed sm:border-l-0"
                   >
                     {status === "loading" ? "..." : status === "success" ? "Done" : "Notify Me"}
                   </button>
