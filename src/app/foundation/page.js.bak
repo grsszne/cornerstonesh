@@ -201,57 +201,57 @@ export default function FoundationPage() {
                   <div className="relative bg-gray-50 dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
                     {/* Header */}
-                    <div className="mb-6 pb-4 border-b border-black/10 dark:border-white/10">
+                    <div className="mb-6 pb-4 border-b border-white/10">
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-mono text-xs uppercase tracking-widest text-orange-500">Config_02</span>
-                        <span className="font-mono text-xs text-black/30 dark:text-white/30">SOVEREIGNTY</span>
+                        <span className="font-mono text-xs text-white/30">SOVEREIGNTY</span>
                       </div>
-                      <h3 className="text-2xl font-medium text-black dark:text-white group-hover:text-orange-500 transition-colors">
+                      <h3 className="text-2xl font-medium text-white group-hover:text-orange-500 transition-colors">
                         The Advocate
                       </h3>
                     </div>
 
                     {/* Requirements */}
                     <div className="mb-6">
-                      <div className="font-mono text-xs uppercase tracking-wider text-black/40 dark:text-white/40 mb-3">Requirements</div>
+                      <div className="font-mono text-xs uppercase tracking-wider text-white/40 mb-3">Requirements</div>
                       <div className="space-y-2">
                         <div className="flex items-start gap-2">
                           <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
-                          <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Complete data ownership</span>
+                          <span className="text-sm text-white/70 leading-relaxed">Complete data ownership</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
-                          <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Power outage protection</span>
+                          <span className="text-sm text-white/70 leading-relaxed">Power outage protection</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
-                          <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Self-hosted services</span>
+                          <span className="text-sm text-white/70 leading-relaxed">Self-hosted services</span>
                         </div>
                       </div>
                     </div>
 
                     {/* Specifications */}
-                    <div className="mt-auto pt-6 border-t border-black/10 dark:border-white/10">
-                      <div className="font-mono text-xs uppercase tracking-wider text-black/40 dark:text-white/40 mb-4">System Spec</div>
+                    <div className="mt-auto pt-6 border-t border-white/10">
+                      <div className="font-mono text-xs uppercase tracking-wider text-white/40 mb-4">System Spec</div>
                       <div className="space-y-2.5">
                         <div className="flex items-center justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">MEM</span>
-                          <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-black/80 dark:text-white/80">4GB LPDDR5</span>
+                          <span className="text-white/40">MEM</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">4GB LPDDR5</span>
                         </div>
                         <div className="flex items-center justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">SYS</span>
-                          <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-black/80 dark:text-white/80">512GB NVMe</span>
+                          <span className="text-white/40">SYS</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">512GB NVMe</span>
                         </div>
                         <div className="flex items-center justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">EXP</span>
-                          <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-black/80 dark:text-white/80">2× 2TB RAID1</span>
+                          <span className="text-white/40">EXP</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">2× 2TB RAID1</span>
                         </div>
                         <div className="flex items-center justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">MOD</span>
-                          <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
+                          <span className="text-white/40">MOD</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
                           <span className="text-orange-500">UPS Backup</span>
                         </div>
                       </div>
@@ -264,60 +264,60 @@ export default function FoundationPage() {
               <FadeIn delay={0.3}>
                 <div className="group relative h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                  <div className="relative bg-gray-50 dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
+                  <div className="relative bg-black border border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
                     {/* Header */}
-                    <div className="mb-6 pb-4 border-b border-black/10 dark:border-white/10">
+                    <div className="mb-6 pb-4 border-b border-white/10">
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-mono text-xs uppercase tracking-widest text-orange-500">Config_03</span>
-                        <span className="font-mono text-xs text-black/30 dark:text-white/30">HACKING</span>
+                        <span className="font-mono text-xs text-white/30">HACKING</span>
                       </div>
-                      <h3 className="text-2xl font-medium text-black dark:text-white group-hover:text-orange-500 transition-colors">
+                      <h3 className="text-2xl font-medium text-white group-hover:text-orange-500 transition-colors">
                         The Developer
                       </h3>
                     </div>
 
                     {/* Requirements */}
                     <div className="mb-6">
-                      <div className="font-mono text-xs uppercase tracking-wider text-black/40 dark:text-white/40 mb-3">Requirements</div>
+                      <div className="font-mono text-xs uppercase tracking-wider text-white/40 mb-3">Requirements</div>
                       <div className="space-y-2">
                         <div className="flex items-start gap-2">
                           <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
-                          <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Docker & K8s environment</span>
+                          <span className="text-sm text-white/70 leading-relaxed">Docker & K8s environment</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
-                          <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Hardware experimentation</span>
+                          <span className="text-sm text-white/70 leading-relaxed">Hardware experimentation</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
-                          <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Custom automation</span>
+                          <span className="text-sm text-white/70 leading-relaxed">Custom automation</span>
                         </div>
                       </div>
                     </div>
 
                     {/* Specifications */}
-                    <div className="mt-auto pt-6 border-t border-black/10 dark:border-white/10">
-                      <div className="font-mono text-xs uppercase tracking-wider text-black/40 dark:text-white/40 mb-4">System Spec</div>
+                    <div className="mt-auto pt-6 border-t border-white/10">
+                      <div className="font-mono text-xs uppercase tracking-wider text-white/40 mb-4">System Spec</div>
                       <div className="space-y-2.5">
                         <div className="flex items-center justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">MEM</span>
-                          <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-black/80 dark:text-white/80">16GB LPDDR5</span>
+                          <span className="text-white/40">MEM</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">16GB LPDDR5</span>
                         </div>
                         <div className="flex items-center justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">SYS</span>
-                          <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-black/80 dark:text-white/80">512GB NVMe</span>
+                          <span className="text-white/40">SYS</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">512GB NVMe</span>
                         </div>
                         <div className="flex items-center justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">EXP</span>
-                          <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-black/80 dark:text-white/80">1× 1TB Lab</span>
+                          <span className="text-white/40">EXP</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
+                          <span className="text-white/80">1× 1TB Lab</span>
                         </div>
                         <div className="flex items-center justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">MOD</span>
-                          <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
+                          <span className="text-white/40">MOD</span>
+                          <div className="flex-1 mx-3 border-b border-dashed border-white/10"></div>
                           <span className="text-orange-500">GPIO Revealer</span>
                         </div>
                       </div>
@@ -344,14 +344,9 @@ export default function FoundationPage() {
         </section>
 
         {/* Bento Grid Features - Technical Noir Design */}
-        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black text-black dark:text-white relative overflow-hidden">
-          {/* Animated grid background - light mode */}
-          <div className="absolute inset-0 opacity-[0.03] dark:opacity-0" style={{
-            backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)',
-            backgroundSize: '50px 50px'
-          }}></div>
-          {/* Animated grid background - dark mode */}
-          <div className="absolute inset-0 opacity-0 dark:opacity-[0.03]" style={{
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-black dark:bg-black relative overflow-hidden">
+          {/* Animated grid background */}
+          <div className="absolute inset-0 opacity-[0.03]" style={{
             backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
             backgroundSize: '50px 50px'
           }}></div>
@@ -363,7 +358,7 @@ export default function FoundationPage() {
                   <div className="h-px w-12 bg-orange-500"></div>
                   <span className="font-mono text-xs uppercase tracking-[0.3em] text-orange-500">Technical Specifications</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-medium tracking-tight text-black dark:text-white">
+                <h2 className="text-4xl md:text-6xl font-medium tracking-tight text-white">
                   Engineered for <span className="text-orange-500">You</span>
                 </h2>
               </div>
@@ -375,7 +370,7 @@ export default function FoundationPage() {
                 {/* Universal Bays - Large Feature */}
                 <div className="md:col-span-8 group relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
-                  <div className="relative bg-gray-50 dark:bg-zinc-950 border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 md:p-10 h-full">
+                  <div className="relative bg-zinc-950 border border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 md:p-10 h-full">
 
                     <BayConfigurator />
                   </div>
@@ -449,31 +444,31 @@ export default function FoundationPage() {
                 {/* Aluminum Chassis */}
                 <div className="md:col-span-4 group relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
-                  <div className="relative bg-gray-50 dark:bg-zinc-950 border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col justify-between text-black dark:text-white">
+                  <div className="relative bg-black dark:bg-zinc-950 border border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col justify-between text-white">
 
                     <div>
                       <div className="font-mono text-xs uppercase tracking-widest text-orange-500 mb-3">Material_Spec.6061-T6</div>
-                      <h3 className="text-2xl md:text-3xl font-medium text-black dark:text-white mb-4 group-hover:text-orange-500 transition-colors duration-300">
+                      <h3 className="text-2xl md:text-3xl font-medium text-white mb-4 group-hover:text-orange-500 transition-colors duration-300">
                         Machined<br/>Aluminum
                       </h3>
 
-                      <p className="text-black/60 dark:text-white/60 font-mono text-sm leading-relaxed group-hover:text-black/80 dark:group-hover:text-white/80 transition-colors">
+                      <p className="text-white/60 font-mono text-sm leading-relaxed group-hover:text-white/80 transition-colors">
                         CNC-milled aerospace-grade aluminum. Structural rigidity with integrated thermal management.
                       </p>
                     </div>
 
                     <div className="space-y-3 mt-8">
                       <div className="flex items-center gap-3">
-                        <div className="w-full h-1 bg-black/10 dark:bg-white/10 relative overflow-hidden">
+                        <div className="w-full h-1 bg-white/10 relative overflow-hidden">
                           <div className="absolute inset-0 bg-orange-500 origin-left scale-x-90 group-hover:scale-x-100 transition-transform duration-700"></div>
                         </div>
-                        <span className="font-mono text-xs text-black/40 dark:text-white/40 whitespace-nowrap">TENSILE: 310 MPa</span>
+                        <span className="font-mono text-xs text-white/40 whitespace-nowrap">TENSILE: 310 MPa</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <div className="w-full h-1 bg-black/10 dark:bg-white/10 relative overflow-hidden">
+                        <div className="w-full h-1 bg-white/10 relative overflow-hidden">
                           <div className="absolute inset-0 bg-orange-500 origin-left scale-x-75 group-hover:scale-x-100 transition-transform duration-700 delay-75"></div>
                         </div>
-                        <span className="font-mono text-xs text-black/40 dark:text-white/40 whitespace-nowrap">YIELD: 276 MPa</span>
+                        <span className="font-mono text-xs text-white/40 whitespace-nowrap">YIELD: 276 MPa</span>
                       </div>
                     </div>
                   </div>

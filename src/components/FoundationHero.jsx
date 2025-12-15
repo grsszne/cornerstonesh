@@ -21,7 +21,7 @@ export default function FoundationHero() {
     <section className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-16 bg-white dark:bg-black text-black dark:text-white overflow-hidden relative">
       {/* Animated Technical Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Static base grid with animated data pulses */}
+        {/* Static base grid */}
         <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
           <div
             className="absolute inset-0"
@@ -30,19 +30,6 @@ export default function FoundationHero() {
               backgroundSize: '100px 100px'
             }}
           />
-          {/* Animated data pulse overlays on static grid */}
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={`pulse-${i}`}
-              className="absolute w-[100px] h-[100px] border border-orange-500 opacity-0"
-              style={{
-                left: `${(i * 20 + 10)}%`,
-                top: `${(i % 3) * 30 + 15}%`,
-                animation: `gridPulse 4s ease-in-out infinite`,
-                animationDelay: `${i * 0.6}s`
-              }}
-            />
-          ))}
         </div>
 
         {/* Moving grid overlay */}
@@ -54,19 +41,6 @@ export default function FoundationHero() {
             transform: `translate(${mousePosition.x * 0.1}px, ${mousePosition.y * 0.1}px)`
           }}
         />
-
-        <style jsx>{`
-          @keyframes gridPulse {
-            0%, 100% {
-              opacity: 0;
-              transform: scale(1);
-            }
-            50% {
-              opacity: 0.4;
-              transform: scale(1.2);
-            }
-          }
-        `}</style>
 
         {/* Secondary fine grid */}
         <div

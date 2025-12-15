@@ -50,7 +50,7 @@ const MODULE_TYPES = {
   },
   EMPTY: {
     label: "Empty",
-    color: "bg-white/5",
+    color: "bg-black/5 dark:bg-white/5",
     Icon: null,
     abbr: "---"
   }
@@ -140,7 +140,7 @@ export default function BayConfigurator() {
             <div className="font-mono text-xs uppercase tracking-widest text-orange-500 mb-1">
               Configuration_{String(currentConfig + 1).padStart(2, '0')}
             </div>
-            <h4 className="text-xl md:text-2xl font-medium text-white">
+            <h4 className="text-xl md:text-2xl font-medium text-black dark:text-white">
               {config.name}
             </h4>
           </div>
@@ -151,13 +151,13 @@ export default function BayConfigurator() {
                 className={`h-1 transition-all duration-500 ${
                   idx === currentConfig
                     ? 'w-8 bg-orange-500'
-                    : 'w-1 bg-white/20'
+                    : 'w-1 bg-black/20 dark:bg-white/20'
                 }`}
               />
             ))}
           </div>
         </div>
-        <p className={`font-mono text-xs text-white/50 transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+        <p className={`font-mono text-xs text-black/50 dark:text-white/50 transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
           {config.description}
         </p>
       </div>
@@ -173,8 +173,8 @@ export default function BayConfigurator() {
             <div
               className={`absolute inset-0 border transition-all duration-500 ${
                 module === MODULE_TYPES.EMPTY
-                  ? 'border-white/10 bg-white/5'
-                  : 'border-orange-500/50 bg-zinc-900'
+                  ? 'border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5'
+                  : 'border-orange-500/50 bg-gray-100 dark:bg-zinc-900'
               }`}
               style={{
                 transitionDelay: `${i * 50}ms`,
@@ -197,16 +197,16 @@ export default function BayConfigurator() {
                     <module.Icon
                       size={16}
                       weight="duotone"
-                      className="text-white/60 mb-1"
+                      className="text-black/60 dark:text-white/60 mb-1"
                     />
-                    <span className="font-mono text-[7px] md:text-[8px] text-white/60 text-center leading-tight">
+                    <span className="font-mono text-[7px] md:text-[8px] text-black/60 dark:text-white/60 text-center leading-tight">
                       {module.abbr}
                     </span>
                   </>
                 )}
 
                 {/* Bay Number */}
-                <div className="absolute bottom-0.5 right-0.5 font-mono text-[7px] text-white/30">
+                <div className="absolute bottom-0.5 right-0.5 font-mono text-[7px] text-black/30 dark:text-white/30">
                   {String(i + 1).padStart(2, '0')}
                 </div>
               </div>
@@ -231,7 +231,7 @@ export default function BayConfigurator() {
 
       {/* Backplane Connection Visualization */}
       <div className="mt-4 relative">
-        <div className="h-px bg-white/10 relative overflow-hidden">
+        <div className="h-px bg-black/10 dark:bg-white/10 relative overflow-hidden">
           <div
             className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500 to-transparent"
             style={{
@@ -241,25 +241,25 @@ export default function BayConfigurator() {
           />
         </div>
         <div className="mt-2 flex items-center justify-between">
-          <span className="font-mono text-[9px] text-white/30 uppercase tracking-wider">
+          <span className="font-mono text-[9px] text-black/30 dark:text-white/30 uppercase tracking-wider">
             Zero-Cable Backplane
           </span>
           <div className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            <span className="font-mono text-[9px] text-white/30">ACTIVE</span>
+            <span className="font-mono text-[9px] text-black/30 dark:text-white/30">ACTIVE</span>
           </div>
         </div>
       </div>
 
       {/* Legend */}
-      <div className="mt-6 pt-4 border-t border-white/10">
+      <div className="mt-6 pt-4 border-t border-black/10 dark:border-white/10">
         <div className="grid grid-cols-3 gap-x-3 gap-y-2">
           {Object.values(MODULE_TYPES)
             .filter(m => m !== MODULE_TYPES.EMPTY)
             .map((module, idx) => (
               <div key={idx} className="flex items-center gap-1.5">
                 <div className={`w-2 h-2 ${module.color} shrink-0`} />
-                <span className="font-mono text-[9px] text-white/40 truncate">
+                <span className="font-mono text-[9px] text-black/40 dark:text-white/40 truncate">
                   {module.label}
                 </span>
               </div>
