@@ -5,35 +5,42 @@ import Link from "next/link";
 import AsciiArt from "@/components/AsciiArt";
 
 const MEMORY_OPTIONS = [
-  { label: "4GB", price: 0, score: 20 },
-  { label: "8GB", price: 40, score: 40 },
-  { label: "16GB", price: 80, score: 80 },
+  { label: "N100 8GB", price: 0, score: 40, description: "Intel N100 with 8GB LPDDR5X" },
+  { label: "N100 16GB", price: 100, score: 60, description: "Intel N100 with 16GB LPDDR5X" },
+  { label: "N305 16GB", price: 200, score: 80, description: "Intel N305 (8-core) with 16GB LPDDR5X" },
 ];
 
 const BASE_STORAGE_OPTIONS = [
   { label: "256GB", price: 0, score: 10 },
   { label: "512GB", price: 50, score: 20 },
   { label: "1TB", price: 100, score: 40 },
+  { label: "2TB", price: 200, score: 60 },
+  { label: "4TB", price: 400, score: 80 },
+  { label: "8TB", price: 800, score: 100 },
 ];
 
 // Module options available for drag and drop
 const MODULE_CATEGORIES = {
   storage: {
     label: "Storage",
-    description: "High-speed NVMe & SATA storage for your data.",
+    description: "High-speed NVMe storage for your data. PCIe Gen 3.",
     modules: [
-      { id: "storage-256", label: "256GB SSD", price: 40, score: 10, type: "storage", color: "orange" },
-      { id: "storage-512", label: "512GB SSD", price: 70, score: 20, type: "storage", color: "orange" },
-      { id: "storage-1tb", label: "1TB SSD", price: 120, score: 40, type: "storage", color: "orange" },
-      { id: "storage-2tb", label: "2TB SSD", price: 200, score: 60, type: "storage", color: "orange" },
-      { id: "storage-4tb", label: "4TB SSD", price: 350, score: 100, type: "storage", color: "orange" },
+      { id: "storage-256", label: "256GB NVMe", price: 40, score: 10, type: "storage", color: "orange" },
+      { id: "storage-512", label: "512GB NVMe", price: 70, score: 20, type: "storage", color: "orange" },
+      { id: "storage-1tb", label: "1TB NVMe", price: 120, score: 40, type: "storage", color: "orange" },
+      { id: "storage-2tb", label: "2TB NVMe", price: 200, score: 60, type: "storage", color: "orange" },
+      { id: "storage-4tb", label: "4TB NVMe", price: 350, score: 100, type: "storage", color: "orange" },
+      { id: "storage-8tb", label: "8TB NVMe", price: 650, score: 150, type: "storage", color: "orange" },
     ]
   },
   connectivity: {
     label: "Connectivity",
     description: "Expand your network and peripheral connections.",
     modules: [
-      { id: "ethernet", label: "2.5GbE", price: 50, score: 25, type: "ethernet", color: "green", description: "2.5 Gigabit Ethernet adapter", maxCount: 1 },
+      { id: "ethernet-2.5", label: "2.5GbE", price: 50, score: 25, type: "ethernet", color: "green", description: "2.5 Gigabit Ethernet adapter", maxCount: 1 },
+      { id: "ethernet-5", label: "5GbE", price: 100, score: 40, type: "ethernet", color: "emerald", description: "5 Gigabit Ethernet adapter", maxCount: 1 },
+      { id: "ethernet-10", label: "10GbE", price: 200, score: 60, type: "ethernet", color: "teal", description: "10 Gigabit Ethernet adapter", maxCount: 1 },
+      { id: "oculink", label: "Oculink", price: 80, score: 35, type: "oculink", color: "cyan", description: "Oculink PCIe expansion port", maxCount: 1 },
       { id: "usb-c", label: "USB-C 3.0", price: 35, score: 20, type: "usb", color: "blue", description: "Single-port USB-C 3.0 expansion" },
       { id: "usb-a", label: "USB-A 3.0", price: 30, score: 15, type: "usb", color: "blue", description: "Single-port USB-A 3.0 expansion" },
       { id: "sd-reader", label: "Dual SD", price: 40, score: 20, type: "reader", color: "yellow", description: "Dual UHS-II SD / Micro SD Reader" },
@@ -335,12 +342,8 @@ export default function FoundationBuilder() {
 
               <div className="space-y-4 font-mono text-sm border-t border-black/10 dark:border-white/10 pt-6">
                 <div className="flex justify-between">
-                  <span className="opacity-60">Core</span>
-                  <span>Raspberry Pi CM5</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="opacity-60">Memory</span>
-                  <span className={memory.price > 0 ? "text-orange-500" : ""}>{memory.label} LPDDR4</span>
+                  <span className="opacity-60">Processor</span>
+                  <span className={memory.price > 0 ? "text-orange-500" : ""}>{memory.label}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="opacity-60">Base Storage</span>
@@ -379,13 +382,13 @@ export default function FoundationBuilder() {
             {/* Right column - Configuration */}
             <div className="xl:col-span-8 space-y-10">
 
-              {/* Memory Selection */}
+              {/* Processor & Memory Selection */}
               <div className="space-y-4">
                 <div className="flex justify-between items-end">
-                  <label className="text-xl font-medium">Memory</label>
-                  <span className="font-mono text-xs text-orange-500 uppercase tracking-wider">Unified LPDDR4</span>
+                  <label className="text-xl font-medium">Processor & Memory</label>
+                  <span className="font-mono text-xs text-orange-500 uppercase tracking-wider">Unified LPDDR5X</span>
                 </div>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {MEMORY_OPTIONS.map((opt) => (
                     <button
                       key={opt.label}
@@ -399,12 +402,13 @@ export default function FoundationBuilder() {
                       `}
                     >
                       <span className="font-bold text-base">{opt.label}</span>
-                      {opt.price > 0 && <span className="text-[10px] opacity-70">+{opt.price}</span>}
+                      {opt.price > 0 && <span className="text-[10px] opacity-70">+${opt.price}</span>}
+                      {opt.description && <span className="text-[9px] opacity-50 mt-1">{opt.description}</span>}
                     </button>
                   ))}
                 </div>
                 <p className="text-xs opacity-50 font-mono">
-                  Higher memory improves multitasking and container performance.
+                  N100 is a 4-core processor suitable for most home server tasks. N305 is an 8-core processor for demanding workloads and heavy containerization.
                 </p>
               </div>
 
@@ -412,7 +416,7 @@ export default function FoundationBuilder() {
               <div className="space-y-4">
                 <div className="flex justify-between items-end">
                   <label className="text-xl font-medium">Base Storage</label>
-                  <span className="font-mono text-xs text-orange-500 uppercase tracking-wider">CM5 NVMe</span>
+                  <span className="font-mono text-xs text-orange-500 uppercase tracking-wider">System NVMe</span>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   {BASE_STORAGE_OPTIONS.map((opt) => (

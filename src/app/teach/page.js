@@ -106,12 +106,12 @@ export default function TeachPage() {
                   <div>
                     <h3 className="text-lg font-bold mb-2 text-orange-500">The Architecture</h3>
                     <p className="opacity-80 mb-4">
-                      The Foundation is not a repackaged PC. It is a full stack effort centered around the <span className="text-orange-500">Raspberry Pi Compute Module 5 (CM5)</span>. E.g., we have to implement all the IO, PCI, USB controllers, SATA controllers, 1Gbe - 10Gbe controllers, etc. from scratch.
+                      The Foundation is not a repackaged PC. It is a full stack effort centered around Intel x86 compute modules. We have to implement all the IO, PCI, USB controllers, NVMe controllers, 1Gbe - 10Gbe controllers, etc. from scratch.
                     </p>
                     <ul className="list-disc list-inside opacity-80 space-y-2 ml-2">
-                      <li><span className="font-bold">Compute:</span> Powered by the Broadcom BCM2712 Quad-core Cortex-A76 processor clocked at 2.4GHz, delivering desktop-class performance in a sub-5W power envelope. we will provide memory options from 4 to 16GB</li>
-                      <li><span className="font-bold">Storage Fabric:</span> We have engineered a custom <span className="font-bold">Zero-Cable Backplane</span>. Unlike traditional servers that rely on a mess of SATA cables, our drives slot directly into a rigid PCB backbone. This supports up to 6x SATA SSDs with optimized airflow channels.</li>
-                      <li><span className="font-bold">The 72 Pin Interface:</span> This is our proprietary expansion standard. It utilizes a custom pinout carrying PCIe Gen 2, I2C for module discovery, and high-current power rails. This allows users to stack modules—like 2.5GbE networking, AI accelerators, or UPS battery backups—without tools or drivers.</li>
+                      <li><span className="font-bold">Compute:</span> Powered by Intel N100 (4-core) or N305 (8-core) x86 processors up to 3.8GHz, delivering desktop-class performance with exceptional compatibility. Options for 8GB or 16GB LPDDR5X unified memory.</li>
+                      <li><span className="font-bold">Storage Fabric:</span> We have engineered a custom <span className="font-bold">Zero-Cable Backplane</span> using PCIe Gen 3. Unlike traditional servers that rely on a mess of cables, our drives slot directly into a rigid PCB backbone. This supports up to 7x NVMe SSDs (56TB max) with optimized airflow channels.</li>
+                      <li><span className="font-bold">The Mortimer Interface:</span> Our proprietary expansion standard utilizing PCIe Gen 3, I2C for module discovery, and high-current power rails. This allows users to stack modules—like 5GbE/10GbE networking, Oculink ports, or UPS battery backups—without tools or drivers.</li>
                     </ul>
                   </div>
                   
@@ -142,7 +142,7 @@ export default function TeachPage() {
                   <div className="border border-black/10 dark:border-white/10 p-6 rounded-xl">
                     <h3 className="font-bold mb-2 text-orange-500">Hardware (CAD/EDA)</h3>
                     <p className="opacity-80 mb-4">
-                      We are currently iterating on the aluminum chassis design in CAD, optimizing for thermal mass and manufacturability. The PCB backplane schematics are being finalized for the first prototype run. The CM5 PCBs are currently being designed.
+                      We are currently iterating on the aluminum chassis design in CAD, optimizing for thermal mass and manufacturability. The PCB backplane schematics are being finalized for the first prototype run. The compute module integration PCBs are currently being designed.
                     </p>
                   </div>
                   <div className="border border-black/10 dark:border-white/10 p-6 rounded-xl">
@@ -165,7 +165,7 @@ export default function TeachPage() {
                         <a href="https://github.com/grsszne/cornerstoneos/commits/" target="_blank" className="hover:text-orange-500 underline decoration-dotted underline-offset-4">
                           github.com/grsszne/cornerstoneos
                         </a>
-                        <span className="block opacity-50 mt-1">The custom firmware and OS layer for the CM5.</span>
+                        <span className="block opacity-50 mt-1">The custom firmware and OS layer for Foundation.</span>
                       </li>
                     </ul>
                   </div>

@@ -296,8 +296,8 @@ function SystemView() {
                  <div className="text-[10px] uppercase tracking-widest text-white/40 mb-2 font-medium">Hardware</div>
                  <div className="rounded-xl border border-white/5 bg-[#0A0A0A] overflow-hidden divide-y divide-white/5 font-mono text-xs">
                     <div className="flex justify-between p-4"><span className="text-white/30">MODEL</span><span>Foundation Dev Kit</span></div>
-                    <div className="flex justify-between p-4"><span className="text-white/30">PROCESSOR</span><span>Broadcom BCM2712</span></div>
-                    <div className="flex justify-between p-4"><span className="text-white/30">MEMORY</span><span>8GB LPDDR4X-4266</span></div>
+                    <div className="flex justify-between p-4"><span className="text-white/30">PROCESSOR</span><span>Intel N100 (4-core x86)</span></div>
+                    <div className="flex justify-between p-4"><span className="text-white/30">MEMORY</span><span>8GB LPDDR5X-6400</span></div>
                     <div className="flex justify-between p-4"><span className="text-white/30">STORAGE</span><span>512GB NVMe</span></div>
                  </div>
              </div>

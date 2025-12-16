@@ -7,7 +7,8 @@ import {
   Lightning,
   WifiHigh,
   BatteryCharging,
-  SimCard
+  SimCard,
+  Broadcast
 } from "@phosphor-icons/react";
 
 // Module types with their properties
@@ -30,11 +31,29 @@ const MODULE_TYPES = {
     Icon: Lightning,
     abbr: "USC"
   },
-  ETHERNET: {
+  ETHERNET_2_5: {
     label: "2.5GbE",
     color: "bg-green-500",
     Icon: WifiHigh,
     abbr: "2.5G"
+  },
+  ETHERNET_5: {
+    label: "5GbE",
+    color: "bg-emerald-500",
+    Icon: WifiHigh,
+    abbr: "5GbE"
+  },
+  ETHERNET_10: {
+    label: "10GbE",
+    color: "bg-teal-500",
+    Icon: Broadcast,
+    abbr: "10GB"
+  },
+  OCULINK: {
+    label: "Oculink Port",
+    color: "bg-cyan-500",
+    Icon: Lightning,
+    abbr: "OCU"
   },
   UPS: {
     label: "UPS Battery",
@@ -80,19 +99,19 @@ const CONFIGURATIONS = [
       MODULE_TYPES.SD_CARD,
       MODULE_TYPES.USB_C,
       MODULE_TYPES.USB_A,
-      MODULE_TYPES.ETHERNET,
+      MODULE_TYPES.ETHERNET_5,
       MODULE_TYPES.UPS
     ]
   },
   {
     name: "Home Lab",
-    description: "Docker containers + services",
+    description: "Docker containers + high-speed networking",
     bays: [
       MODULE_TYPES.STORAGE,
       MODULE_TYPES.STORAGE,
-      MODULE_TYPES.USB_A,
+      MODULE_TYPES.ETHERNET_10,
       MODULE_TYPES.USB_C,
-      MODULE_TYPES.EMPTY,
+      MODULE_TYPES.OCULINK,
       MODULE_TYPES.EMPTY,
       MODULE_TYPES.EMPTY
     ]

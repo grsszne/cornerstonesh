@@ -169,9 +169,9 @@ export default function FoundationPage() {
                       <div className="font-mono text-xs uppercase tracking-wider text-black/40 dark:text-white/40 mb-4">System Spec</div>
                       <div className="space-y-2.5">
                         <div className="flex items-center justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">MEM</span>
+                          <span className="text-black/40 dark:text-white/40">CPU</span>
                           <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-black/80 dark:text-white/80">16GB LPDDR5</span>
+                          <span className="text-black/80 dark:text-white/80">N100 16GB</span>
                         </div>
                         <div className="flex items-center justify-between font-mono text-xs">
                           <span className="text-black/40 dark:text-white/40">SYS</span>
@@ -186,7 +186,7 @@ export default function FoundationPage() {
                         <div className="flex items-center justify-between font-mono text-xs">
                           <span className="text-black/40 dark:text-white/40">MOD</span>
                           <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-orange-500">SD + 2.5GbE</span>
+                          <span className="text-orange-500">SD + 5GbE</span>
                         </div>
                       </div>
                     </div>
@@ -235,9 +235,9 @@ export default function FoundationPage() {
                       <div className="font-mono text-xs uppercase tracking-wider text-black/40 dark:text-white/40 mb-4">System Spec</div>
                       <div className="space-y-2.5">
                         <div className="flex items-center justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">MEM</span>
+                          <span className="text-black/40 dark:text-white/40">CPU</span>
                           <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-black/80 dark:text-white/80">4GB LPDDR5</span>
+                          <span className="text-black/80 dark:text-white/80">N100 8GB</span>
                         </div>
                         <div className="flex items-center justify-between font-mono text-xs">
                           <span className="text-black/40 dark:text-white/40">SYS</span>
@@ -301,9 +301,9 @@ export default function FoundationPage() {
                       <div className="font-mono text-xs uppercase tracking-wider text-black/40 dark:text-white/40 mb-4">System Spec</div>
                       <div className="space-y-2.5">
                         <div className="flex items-center justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">MEM</span>
+                          <span className="text-black/40 dark:text-white/40">CPU</span>
                           <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-black/80 dark:text-white/80">16GB LPDDR5</span>
+                          <span className="text-black/80 dark:text-white/80">N305 16GB</span>
                         </div>
                         <div className="flex items-center justify-between font-mono text-xs">
                           <span className="text-black/40 dark:text-white/40">SYS</span>
@@ -318,7 +318,7 @@ export default function FoundationPage() {
                         <div className="flex items-center justify-between font-mono text-xs">
                           <span className="text-black/40 dark:text-white/40">MOD</span>
                           <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-orange-500">GPIO Revealer</span>
+                          <span className="text-orange-500">Oculink Port</span>
                         </div>
                       </div>
                     </div>
@@ -490,15 +490,15 @@ export default function FoundationPage() {
                   <div className="relative border border-orange-400 group-hover:border-white transition-all duration-500 p-8 h-full flex flex-col justify-between">
 
                     <div>
-                      <div className="font-mono text-xs uppercase tracking-widest text-white/80 mb-3">Compute_Core.BCM2712</div>
+                      <div className="font-mono text-xs uppercase tracking-widest text-white/80 mb-3">Compute_Core.x86</div>
                       <h3 className="text-2xl md:text-3xl font-medium text-white mb-4 group-hover:scale-105 transition-transform duration-300 origin-top-left">
-                        Quad-Core<br/>ARM
+                        Intel N100<br/>or N305
                       </h3>
 
                       <p className="text-white/90 font-mono text-sm leading-relaxed">
-                        Broadcom BCM2712<br/>
-                        Cortex-A76 @ 2.4GHz<br/>
-                        LPDDR5 | PCIe Gen 3
+                        4-core or 8-core x86<br/>
+                        Up to 3.8GHz Boost<br/>
+                        LPDDR5X | PCIe Gen 3
                       </p>
                     </div>
 
@@ -516,7 +516,7 @@ export default function FoundationPage() {
                         ))}
                       </div>
                       <span className="font-mono text-xs text-white/60 group-hover:text-white transition-colors ml-2">
-                        4× CORES ACTIVE
+                        UP TO 8 CORES
                       </span>
                     </div>
                   </div>
@@ -672,20 +672,20 @@ export default function FoundationPage() {
                   <div className="text-sm uppercase tracking-widest opacity-50">Core Compute</div>
                   <div className="md:col-span-2 space-y-4">
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                      <span className="opacity-70 sm:opacity-100">Module</span>
-                      <span className="sm:text-right">Raspberry Pi CM5</span>
+                      <span className="opacity-70 sm:opacity-100">Processor Options</span>
+                      <span className="sm:text-right">Intel N100 (4-core) / N305 (8-core)</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                      <span className="opacity-70 sm:opacity-100">Processor</span>
-                      <span className="sm:text-right">Broadcom BCM2712 Quad-core A76 @ 2.4GHz</span>
+                      <span className="opacity-70 sm:opacity-100">Clock Speed</span>
+                      <span className="sm:text-right">N100: 3.4GHz / N305: 3.8GHz</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Memory</span>
-                      <span className="sm:text-right">LPDDR4 (4GB, 8GB, 16GB)</span>
+                      <span className="sm:text-right">8GB or 16GB LPDDR5X</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Base Storage</span>
-                      <span className="sm:text-right">256GB, 512GB, 1TB NVMe</span>
+                      <span className="sm:text-right">256GB to 8TB NVMe</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Wireless</span>
@@ -703,7 +703,7 @@ export default function FoundationPage() {
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Storage Support</span>
-                      <span className="sm:text-right">Supports 256GB - 4TB per drive</span>
+                      <span className="sm:text-right">NVMe only, up to 8TB per drive (56TB max)</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Architecture</span>
@@ -717,7 +717,7 @@ export default function FoundationPage() {
                   <div className="md:col-span-2 space-y-4">
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Ethernet</span>
-                      <span className="sm:text-right">1 Gbps (Standard) / 2.5 Gbps (Optional Module)</span>
+                      <span className="sm:text-right">1 Gbps (Standard) / 2.5/5/10 Gbps (Optional Modules)</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">USB</span>
