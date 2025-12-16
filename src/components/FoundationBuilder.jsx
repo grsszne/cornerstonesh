@@ -307,7 +307,7 @@ export default function FoundationBuilder() {
           <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-4">
             Build Your Foundation.
           </h2>
-          <p className="text-sm font-mono opacity-50">
+          <p className="text-sm font-mono">
             Not sure what specs you need?{" "}
             <Link href="/foundation/guide" className="text-orange-500 hover:underline">
               View Hardware Guide →
