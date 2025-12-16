@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   HardDrive,
   Usb,
@@ -8,7 +8,9 @@ import {
   WifiHigh,
   BatteryCharging,
   SimCard,
-  Broadcast
+  Broadcast,
+  CaretLeft,
+  CaretRight
 } from "@phosphor-icons/react";
 
 // Module types with their properties
@@ -134,8 +136,12 @@ const CONFIGURATIONS = [
 export default function BayConfigurator() {
   const [currentConfig, setCurrentConfig] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const pauseTimeoutRef = useRef(null);
 
   useEffect(() => {
+    if (isPaused) return;
+
     const interval = setInterval(() => {
       setIsTransitioning(true);
 
@@ -146,7 +152,45 @@ export default function BayConfigurator() {
     }, 4000);
 
     return () => clearInterval(interval);
+  }, [isPaused]);
+
+  // Cleanup pause timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+      }
+    };
   }, []);
+
+  const handleDotClick = (index) => {
+    // Clear any existing pause timeout
+    if (pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current);
+    }
+
+    // Navigate to clicked configuration
+    setCurrentConfig(index);
+    setIsTransitioning(false);
+
+    // Pause the auto-animation
+    setIsPaused(true);
+
+    // Resume after 30 seconds
+    pauseTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 30000);
+  };
+
+  const handlePrev = () => {
+    const newIndex = currentConfig === 0 ? CONFIGURATIONS.length - 1 : currentConfig - 1;
+    handleDotClick(newIndex);
+  };
+
+  const handleNext = () => {
+    const newIndex = currentConfig === CONFIGURATIONS.length - 1 ? 0 : currentConfig + 1;
+    handleDotClick(newIndex);
+  };
 
   const config = CONFIGURATIONS[currentConfig];
 
@@ -163,17 +207,40 @@ export default function BayConfigurator() {
               {config.name}
             </h4>
           </div>
-          <div className="flex gap-1.5">
-            {CONFIGURATIONS.map((_, idx) => (
-              <div
-                key={idx}
-                className={`h-1 transition-all duration-500 ${
-                  idx === currentConfig
-                    ? 'w-8 bg-orange-500'
-                    : 'w-1 bg-black/20 dark:bg-white/20'
-                }`}
-              />
-            ))}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={handlePrev}
+              className="p-2 text-black/40 dark:text-white/40 hover:text-orange-500 transition-colors cursor-pointer focus:outline-none"
+              aria-label="Previous configuration"
+            >
+              <CaretLeft size={16} weight="bold" />
+            </button>
+
+            <div className="flex items-center -ml-2 -mr-2">
+              {CONFIGURATIONS.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleDotClick(idx)}
+                  className="p-2 group cursor-pointer focus:outline-none"
+                  aria-label={`Go to ${CONFIGURATIONS[idx].name}`}
+                >
+                  <div
+                    className={`h-1.5 transition-all duration-500 rounded-full ${idx === currentConfig
+                      ? 'w-8 bg-orange-500'
+                      : 'w-1.5 bg-black/20 dark:bg-white/20 group-hover:bg-orange-500/50'
+                      }`}
+                  />
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={handleNext}
+              className="p-2 text-black/40 dark:text-white/40 hover:text-orange-500 transition-colors cursor-pointer focus:outline-none"
+              aria-label="Next configuration"
+            >
+              <CaretRight size={16} weight="bold" />
+            </button>
           </div>
         </div>
         <p className={`font-mono text-xs text-black/50 dark:text-white/50 transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
@@ -190,11 +257,10 @@ export default function BayConfigurator() {
           >
             {/* Bay Container */}
             <div
-              className={`absolute inset-0 border transition-all duration-500 ${
-                module === MODULE_TYPES.EMPTY
-                  ? 'border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5'
-                  : 'border-orange-500/50 bg-gray-100 dark:bg-zinc-900'
-              }`}
+              className={`absolute inset-0 border transition-all duration-500 ${module === MODULE_TYPES.EMPTY
+                ? 'border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5'
+                : 'border-orange-500/50 bg-gray-100 dark:bg-zinc-900'
+                }`}
               style={{
                 transitionDelay: `${i * 50}ms`,
                 transform: isTransitioning ? 'scale(0.95)' : 'scale(1)',
