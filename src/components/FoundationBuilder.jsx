@@ -5,9 +5,9 @@ import Link from "next/link";
 import AsciiArt from "@/components/AsciiArt";
 
 const MEMORY_OPTIONS = [
-  { label: "N100 8GB", price: 0, score: 40, description: "Intel N100 with 8GB LPDDR5X" },
-  { label: "N100 16GB", price: 100, score: 60, description: "Intel N100 with 16GB LPDDR5X" },
-  { label: "N305 16GB", price: 200, score: 80, description: "Intel N305 (8-core) with 16GB LPDDR5X" },
+  { label: "Intel N100 8GB", price: 0, score: 40, },
+  { label: "Intel N100 16GB", price: 100, score: 60, },
+  { label: "Intel N305 16GB", price: 200, score: 80, },
 ];
 
 const BASE_STORAGE_OPTIONS = [
@@ -460,51 +460,6 @@ export default function FoundationBuilder() {
 
                 {!collapsed.modules && (
                   <div className="space-y-6 animate-in fade-in slide-in-from-top-2 duration-200">
-
-                    {/* Dynamic Module Header & Details */}
-                    <div className="h-16 flex items-center px-4 bg-white dark:bg-zinc-900 rounded-xl border border-black/5 dark:border-white/5 shadow-sm transition-all duration-300 relative overflow-hidden">
-                      {hoveredModule || selectedModule ? (
-                        (() => {
-                          const mod = hoveredModule || selectedModule;
-                          return (
-                            <div className="flex items-center gap-4 w-full animate-in fade-in slide-in-from-bottom-2 duration-300 absolute inset-0 px-4">
-                              <div className={`w-10 h-10 rounded-full ${getModuleColorClass(mod, 'bg')} flex items-center justify-center text-white shadow-sm ring-4 ring-white dark:ring-zinc-900`}>
-                                <span className="text-sm font-medium">
-                                  {mod.type === 'ethernet' ? 'Net' : mod.type === 'usb' ? 'USB' : mod.label[0]}
-                                </span>
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="flex justify-between items-baseline mb-0.5">
-                                  <h4 className="font-medium text-sm text-black dark:text-white truncate pr-2">{mod.label}</h4>
-                                  <span className="font-mono text-xs text-orange-500 whitespace-nowrap">+${mod.price}</span>
-                                </div>
-                                <p className="text-xs text-black/60 dark:text-white/60 font-sans leading-tight truncate">{mod.description}</p>
-                              </div>
-                            </div>
-                          );
-                        })()
-                      ) : (
-                        <div className="flex items-center justify-between w-full animate-in fade-in slide-in-from-top-2 duration-300 absolute inset-0 px-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-black/40 dark:text-white/40">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                            </div>
-                            <div>
-                              <h3 className="font-medium text-black dark:text-white">Expansion Modules</h3>
-                              <p className="text-xs text-black/40 dark:text-white/40">Drag & drop to configure</p>
-                            </div>
-                          </div>
-                          <div className="flex -space-x-1">
-                            {Object.values(MODULE_CATEGORIES).flatMap(c => c.modules).slice(0, 4).map((m, i) => (
-                              <div key={i} className={`w-6 h-6 rounded-full border-2 border-white dark:border-zinc-900 ${getModuleColorClass(m, 'bg')}`} title={m.label} />
-                            ))}
-                            <div className="w-6 h-6 rounded-full border-2 border-white dark:border-zinc-900 bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-[10px] font-medium text-black/40 dark:text-white/40">
-                              +
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
 
                     <div className="space-y-6">
                       {Object.entries(MODULE_CATEGORIES).map(([key, category]) => (

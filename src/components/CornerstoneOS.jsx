@@ -363,7 +363,7 @@ function TerminalView() {
        { text: "the exact distribution terms for each program are described in the", color: "text-white/60" },
        { text: "individual files in /usr/share/doc/*/copyright.", color: "text-white/60" },
        { text: "", type: "break" },
-       { text: "zane@foundation:~$", color: "text-green-500", suffix: " " }, // Prompt start
+       { text: "jakeh@foundation:~$", color: "text-green-500", suffix: " " }, // Prompt start
    ]);
 
    useEffect(() => {
@@ -420,14 +420,14 @@ function TerminalView() {
                cmd: "ls -la",
                output: [
                    "total 48",
-                   "drwxr-xr-x 6 zane zane 4096 Dec 12 09:21 .",
+                   "drwxr-xr-x 6 jakeh jakeh 4096 Dec 12 09:21 .",
                    "drwxr-xr-x 3 root root 4096 Oct 24 10:00 ..",
-                   "-rw------- 1 zane zane 1234 Dec 13 08:00 .bash_history",
-                   "-rw-r--r-- 1 zane zane  220 Oct 24 10:00 .bash_logout",
-                   "-rw-r--r-- 1 zane zane 3526 Oct 24 10:00 .bashrc",
-                   "drwxr-xr-x 3 zane zane 4096 Nov 01 14:22 .config",
-                   "drwxr-xr-x 2 zane zane 4096 Dec 10 11:15 docker-compose",
-                   "-rw-r--r-- 1 zane zane  807 Oct 24 10:00 .profile"
+                   "-rw------- 1 jakeh jakeh 1234 Dec 13 08:00 .bash_history",
+                   "-rw-r--r-- 1 jakeh jakeh  220 Oct 24 10:00 .bash_logout",
+                   "-rw-r--r-- 1 jakeh jakeh 3526 Oct 24 10:00 .bashrc",
+                   "drwxr-xr-x 3 jakeh jakeh 4096 Nov 01 14:22 .config",
+                   "drwxr-xr-x 2 jakeh jakeh 4096 Dec 10 11:15 docker-compose",
+                   "-rw-r--r-- 1 jakeh jakeh  807 Oct 24 10:00 .profile"
                ]
            },
            {
@@ -499,7 +499,7 @@ function TerminalView() {
                    ...prev,
                    ...randomCommand.output.map(line => ({ text: line, color: "text-white/80" })),
                    { text: "", type: "break" }, // Spacer
-                   { text: "zane@foundation:~$ ", color: "text-green-500", suffix: "" } // New Prompt
+                   { text: "jakeh@foundation:~$ ", color: "text-green-500", suffix: "" } // New Prompt
                ]);
 
                // Wait before starting next command

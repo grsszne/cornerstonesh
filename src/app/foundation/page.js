@@ -58,12 +58,9 @@ export default function FoundationPage() {
           <div className="max-w-7xl mx-auto">
             <FadeIn>
               <div className="mb-20 max-w-3xl">
-                <h2 className="text-4xl md:text-6xl font-medium tracking-tighter mb-8">
+                <h2 className="text-4xl md:text-6xl font-medium tracking-tighter">
                   It's a computer that <span className="text-orange-500">works for you.</span>
                 </h2>
-                <p className="text-xl md:text-2xl font-mono opacity-70 leading-relaxed">
-                  Think of it like iCloud or Google Drive, but physically sitting in your home. You own the box, you own the data, and no one can take it away or charge you a monthly fee.
-                </p>
               </div>
             </FadeIn>
 
@@ -73,7 +70,7 @@ export default function FoundationPage() {
                   <div className="font-mono text-xs text-orange-500 mb-4 uppercase tracking-widest">01 / Storage</div>
                   <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">Like iCloud, but yours.</h3>
                   <p className="font-mono text-sm opacity-60 leading-relaxed">
-                    Back up every photo, video, and document from your phone automatically. But instead of paying Apple or Google every month, you store it on your own drives, forever.
+                    Backup photos, videos, and documents. Your drives, your data, no monthly fees.
                   </p>
                 </div>
               </FadeIn>
@@ -83,7 +80,7 @@ export default function FoundationPage() {
                   <div className="font-mono text-xs text-orange-500 mb-4 uppercase tracking-widest">02 / Automation</div>
                   <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">A 24/7 Digital Butler.</h3>
                   <p className="font-mono text-sm opacity-60 leading-relaxed">
-                    It never sleeps. It can block ads on your whole network, download your favorite shows automatically, or manage your smart home devices without sending data to the cloud.
+                    Always on. Block ads network-wide, auto-download shows, manage smart home without the cloud.
                   </p>
                 </div>
               </FadeIn>
@@ -93,7 +90,7 @@ export default function FoundationPage() {
                   <div className="font-mono text-xs text-orange-500 mb-4 uppercase tracking-widest">03 / Media</div>
                   <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">Your Private Netflix.</h3>
                   <p className="font-mono text-sm opacity-60 leading-relaxed">
-                    Stream your own collection of movies and music to your TV, phone, or tablet. Highest quality, no buffering, and titles never "leave the platform" because you own them.
+                    Stream movies and music to any device. High quality, no buffering, titles never disappear.
                   </p>
                 </div>
               </FadeIn>
