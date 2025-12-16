@@ -650,7 +650,7 @@ export default function FoundationBuilder() {
                     {draggedBayIndex !== null
                       ? 'Drop here to remove'
                       : selectedBayIndices.length > 0
-                        ? `Tap here to remove ${selectedBayIndices.length} selected`
+                        ? `Tap here to remove`
                         : 'Drag module here to delete'
                     }
                   </span>
