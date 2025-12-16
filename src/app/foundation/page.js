@@ -657,7 +657,7 @@ export default function FoundationPage() {
         <CornerstoneOS />
 
         {/* Technical Specs */}
-        <section id="specs" className="py-24 px-4 sm:px-6 lg:px-8">
+        <section id="specs" className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 scroll-mt-20">
           <FadeIn>
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-16 border-b border-black/10 dark:border-white/10 pb-8">
