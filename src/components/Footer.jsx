@@ -83,7 +83,7 @@ export default function Footer() {
                 </h4>
                 <ul className="space-y-3 font-mono text-sm">
                   <li>
-                    <a href="#" className="hover:opacity-70 transition-opacity">
+                    <a href="https://x.com/cornerstone_sh" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
                       Twitter
                     </a>
                   </li>
@@ -93,7 +93,7 @@ export default function Footer() {
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:opacity-70 transition-opacity">
+                    <a href="https://www.reddit.com/user/cornerstone_sh/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
                       Reddit
                     </a>
                   </li>
