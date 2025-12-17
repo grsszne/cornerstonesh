@@ -717,7 +717,7 @@ export default function CornerstoneOS() {
                               {/* Bottom User Profile */}
                               <div className="px-6 pt-6 border-t border-white/5">
                                  <div className="bg-white/5 rounded-lg p-3 flex items-center gap-3">
-                                     <div className="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-[10px] font-bold text-white">N</div>
+                                     <div className="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-[10px] font-bold text-white">JH</div>
                                      <div>
                                         <div className="text-[10px] font-bold text-white uppercase tracking-wider">System Status</div>
                                         <div className="flex items-center gap-1.5 mt-0.5">
