@@ -37,7 +37,7 @@ export default function FoundationPage() {
               Foundation
             </h1>
             <p className="text-xl md:text-3xl font-mono text-black/60 dark:text-white/60 max-w-2xl mx-auto leading-relaxed">
-              Your compact, modular, seamless home server.
+              Your seamless, compact, modular home server.
             </p>
             <div className="pt-8">
               <Link
@@ -378,67 +378,66 @@ export default function FoundationPage() {
                   </div>
                 </div>
 
-                {/* Mortimer Interface - Tall Feature */}
+                {/* Hardware Guide Preview - Tall Feature */}
                 <div className="md:col-span-4 md:row-span-2 group relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
                   <div className="relative bg-white dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
                     <div className="flex flex-col h-full">
-                      <div className="font-mono text-xs uppercase tracking-widest text-orange-500 mb-3">Interface_Protocol.v2</div>
-                      <h3 className="text-3xl md:text-4xl font-medium text-black dark:text-white mb-4 group-hover:text-orange-500 transition-colors duration-300">
-                        Mortimer<br/>Interface
-                      </h3>
+                      <div className="font-mono text-xs uppercase tracking-widest text-orange-500 mb-3">Configuration_Guide</div>
+                      <Link href="/foundation/guide" className="block group/link">
+                        <h3 className="text-3xl md:text-4xl font-medium text-black dark:text-white mb-4 group-hover/link:text-orange-500 transition-colors duration-300">
+                          Hardware<br/>Guide
+                          <svg className="inline-block w-6 h-6 ml-2 opacity-0 group-hover/link:opacity-100 transition-all duration-300 -translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </h3>
+                      </Link>
 
                       <p className="text-black/60 dark:text-white/60 font-mono text-sm leading-relaxed mb-8 group-hover:text-black/80 dark:group-hover:text-white/80 transition-colors">
-                        Proprietary modular standard enabling infinite expansion. PWR+ delivery, I2C discovery bus, presence detection.
+                        Not sure what specs you need? We break it down for you.
                       </p>
 
-                      {/* Connection diagram */}
-                      <div className="flex-1 relative mt-auto">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="relative w-32 h-32">
-                            {/* Central hub */}
-                            <div className="absolute inset-0 border-2 border-black/20 dark:border-white/20 group-hover:border-orange-500 transition-all duration-500 rotate-45">
-                              <div className="absolute inset-2 bg-orange-500/0 group-hover:bg-orange-500/10 transition-all duration-500"></div>
-                            </div>
+                      {/* Quick Stats Grid */}
+                      <div className="flex-1 space-y-15">
+                        {/* Processor */}
+                        <div className="border-l-2 border-orange-500/20 group-hover:border-orange-500 transition-colors duration-300 pl-4">
+                          <div className="font-mono text-sm text-black/40 dark:text-white/40 uppercase tracking-wider mb-3">Processor</div>
+                          <div className="space-y-2">
+                            <div className="text-base font-medium text-black dark:text-white">N100 (4-core) → Basic tasks</div>
+                            <div className="text-base font-medium text-black dark:text-white">N305 (8-core) → Heavy workloads</div>
+                          </div>
+                        </div>
 
-                            {/* Connection points */}
-                            {[0, 90, 180, 270].map((rotation, i) => (
-                              <div
-                                key={rotation}
-                                className="absolute top-1/2 left-1/2 w-16 h-0.5 -ml-8 origin-left"
-                                style={{
-                                  transform: `rotate(${rotation}deg)`,
-                                  transition: 'all 500ms',
-                                  transitionDelay: `${i * 100}ms`
-                                }}
-                              >
-                                <div className="w-full h-full bg-black/20 dark:bg-white/20 group-hover:bg-orange-500 transition-all duration-500"></div>
-                                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 border border-black/20 dark:border-white/20 group-hover:border-orange-500 group-hover:bg-orange-500/50 transition-all duration-500"></div>
-                              </div>
-                            ))}
+                        {/* Network */}
+                        <div className="border-l-2 border-orange-500/20 group-hover:border-orange-500 transition-colors duration-300 pl-4">
+                          <div className="font-mono text-sm text-black/40 dark:text-white/40 uppercase tracking-wider mb-3">Network Speed</div>
+                          <div className="space-y-2">
+                            <div className="text-base font-medium text-black dark:text-white">1GbE → Standard (most users)</div>
+                            <div className="text-base font-medium text-black dark:text-white">10GbE → Pro workflows</div>
+                          </div>
+                        </div>
 
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-mono text-xs text-black/40 dark:text-white/40 group-hover:text-orange-500 transition-colors">
-                              PWR+
-                            </div>
+                        {/* Storage */}
+                        <div className="border-l-2 border-orange-500/20 group-hover:border-orange-500 transition-colors duration-300 pl-4">
+                          <div className="font-mono text-sm text-black/40 dark:text-white/40 uppercase tracking-wider mb-3">Storage</div>
+                          <div className="space-y-2">
+                            <div className="text-base font-medium text-black dark:text-white">256GB → 56TB NVMe</div>
+                            <div className="text-base font-medium text-black dark:text-white">7 modular bays</div>
                           </div>
                         </div>
                       </div>
 
-                      <div className="mt-auto space-y-2 border-t border-black/10 dark:border-white/10 pt-4">
-                        <div className="flex justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">Voltage</span>
-                          <span className="text-black/60 dark:text-white/60 group-hover:text-orange-500 transition-colors">5V / 12V</span>
-                        </div>
-                        <div className="flex justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">Protocol</span>
-                          <span className="text-black/60 dark:text-white/60 group-hover:text-orange-500 transition-colors">I2C + GPIO</span>
-                        </div>
-                        <div className="flex justify-between font-mono text-xs">
-                          <span className="text-black/40 dark:text-white/40">Max Current</span>
-                          <span className="text-black/60 dark:text-white/60 group-hover:text-orange-500 transition-colors">3A per module</span>
-                        </div>
-                      </div>
+                      {/* CTA */}
+                      <Link
+                        href="/foundation/guide"
+                        className="mt-6 flex items-center justify-between px-4 py-3 border border-black/10 dark:border-white/10 group-hover:border-orange-500 group-hover:bg-orange-500/5 transition-all duration-300 font-mono text-xs uppercase tracking-wider text-black dark:text-white group-hover:text-orange-500"
+                      >
+                        <span>View Full Guide</span>
+                        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -551,7 +550,7 @@ export default function FoundationPage() {
                     id: "02",
                     title: "Modularity",
                     vs: "Traditional Consumer NAS",
-                    desc: "Don't get locked into a fixed number of bays or ports. The Foundation grows with you. Add networking, compute, or storage modules via the Mortimer interface."
+                    desc: "Don't get locked into a fixed number of bays or ports. The Foundation grows with you. Add networking, compute, or storage with our modular bay system."
                   },
                   {
                     id: "03",
@@ -695,7 +694,7 @@ export default function FoundationPage() {
                   <div className="text-sm uppercase tracking-widest opacity-50">Universal Expansion</div>
                   <div className="md:col-span-2 space-y-4">
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                      <span className="opacity-70 sm:opacity-100">Module Slots</span>
+                      <span className="opacity-70 sm:opacity-100">Bay Slots</span>
                       <span className="sm:text-right">7x Universal Bay Internal Mounts</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
@@ -714,7 +713,7 @@ export default function FoundationPage() {
                   <div className="md:col-span-2 space-y-4">
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Ethernet</span>
-                      <span className="sm:text-right">1 Gbps (Standard) / 2.5/5/10 Gbps (Optional Modules)</span>
+                      <span className="sm:text-right">1 Gbps (Standard) / 2.5/5/10 Gbps (Optional Bays)</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">USB</span>
@@ -722,7 +721,7 @@ export default function FoundationPage() {
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Expansion</span>
-                      <span className="sm:text-right">Mortimer Interface</span>
+                      <span className="sm:text-right">Modular Bays</span>
                     </div>
                   </div>
                 </div>

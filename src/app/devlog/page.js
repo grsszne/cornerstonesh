@@ -20,7 +20,7 @@ const devlogPosts = [
           We believe in building in public. That means sharing our wins, our failures, and the nitty-gritty engineering details that usually get hidden behind marketing fluff.
         </p>
         <p>
-          Stay tuned for updates on thermal testing, the manufacturing process of our aluminum chassis, and deep dives into the Mortimer interface.
+          Stay tuned for updates on thermal testing, the manufacturing process of our aluminum chassis, and deep dives into the modular bay system.
         </p>
       </>
     ),

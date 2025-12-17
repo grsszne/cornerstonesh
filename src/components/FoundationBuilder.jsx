@@ -441,14 +441,14 @@ export default function FoundationBuilder() {
                 </p>
               </div>
 
-              {/* Expansion Bays Section */}
+              {/* Modular Bays Section */}
               <div className="space-y-6 pt-6 border-t border-black/10 dark:border-white/10">
                 <button
                   onClick={() => toggleSection('modules')}
                   className="w-full flex justify-between items-center group"
                 >
                   <div className="flex items-end gap-4">
-                    <label className="text-xl font-medium cursor-pointer">Expansion Bays</label>
+                    <label className="text-xl font-medium cursor-pointer">Modular Bays</label>
                     <span className="font-mono text-xs text-orange-500 uppercase tracking-wider">
                       {occupiedBays}/{NUM_BAYS} Occupied
                     </span>
@@ -525,15 +525,9 @@ export default function FoundationBuilder() {
                 {/* Bay Slots - Dynamic columns based on visibleSlots */}
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs opacity-60 uppercase tracking-wider">Universal Bays</span>
-                      <span className="text-[10px] bg-orange-500/10 text-orange-500 px-1.5 py-0.5 rounded border border-orange-500/20 font-mono">
-                        Any Module
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-[10px] opacity-50">7/7 Universal Bays Available</span>
-                    </div>
+                    <span className="text-[12px] bg-orange-500/10 text-orange-500 px-1.5 py-0.5 rounded border border-orange-500/20 font-mono">
+                      Universal Bay
+                    </span>
                   </div>
                   <div className={`grid grid-cols-2 md:grid-cols-4 gap-3`}>
                     {bays.map((bay, index) => (
@@ -651,7 +645,7 @@ export default function FoundationBuilder() {
                       ? 'Drop here to remove'
                       : selectedBayIndices.length > 0
                         ? `Tap here to remove`
-                        : 'Drag module here to delete'
+                        : 'Drag bay here to delete'
                     }
                   </span>
                 </div>

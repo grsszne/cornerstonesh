@@ -132,7 +132,7 @@ export default function GuidePage() {
                 Choose Your <span className="text-orange-500">Hardware.</span>
               </h1>
               <p className="text-xl md:text-2xl font-mono opacity-70 leading-relaxed">
-                Not sure what specs you need? We'll break it down in plain English.
+                Not sure what specs you need? We'll break it down for you.
               </p>
             </div>
           </FadeIn>
@@ -448,7 +448,7 @@ export default function GuidePage() {
                     <div>
                       <div className="text-xs font-mono uppercase opacity-40 mb-3">What It's For</div>
                       <p className="text-sm opacity-80 leading-relaxed">
-                        Your operating system, applications, and Docker containers. This is separate from your expansion storage bays.
+                        Your operating system, applications, and Docker containers. This is separate from your modular storage bays.
                       </p>
                     </div>
 
@@ -465,11 +465,11 @@ export default function GuidePage() {
                 </div>
               </FadeIn>
 
-              {/* Expansion Storage */}
+              {/* Modular Storage */}
               <FadeIn delay={0.2}>
                 <div className="border border-black/20 dark:border-white/20 p-8 rounded-2xl hover:border-orange-500 transition-colors duration-300">
                   <div className="mb-6">
-                    <div className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-2">Expansion Bays</div>
+                    <div className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-2">Modular Bays</div>
                     <h3 className="text-3xl font-medium mb-2">Module Storage</h3>
                     <div className="font-mono text-sm opacity-60">Up to 7x NVMe drives</div>
                   </div>
