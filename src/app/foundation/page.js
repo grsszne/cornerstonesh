@@ -532,7 +532,7 @@ export default function FoundationPage() {
                   Why choose <span className="text-orange-500">Foundation</span>?
                 </h2>
                 <p className="font-mono text-sm md:text-base opacity-60 max-w-md mb-2">
-                  We were tired of choosing between underpowered toys and ugly enterprise gear. So we made a third option.
+                  Tired of choosing between underpowered toys and ugly enterprise gear. We made a third option.
                 </p>
               </div>
             </FadeIn>

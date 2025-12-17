@@ -207,27 +207,27 @@ export default function BayConfigurator() {
               {config.name}
             </h4>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5 shrink-0">
             <button
               onClick={handlePrev}
-              className="p-2 text-black/40 dark:text-white/40 hover:text-orange-500 transition-colors cursor-pointer focus:outline-none"
+              className="p-1.5 sm:p-2 text-black/40 dark:text-white/40 hover:text-orange-500 transition-colors cursor-pointer focus:outline-none shrink-0"
               aria-label="Previous configuration"
             >
-              <CaretLeft size={16} weight="bold" />
+              <CaretLeft size={14} weight="bold" className="sm:w-4 sm:h-4" />
             </button>
 
-            <div className="flex items-center -ml-2 -mr-2">
+            <div className="flex items-center gap-0 sm:gap-0.5 mx-0.5 sm:mx-1">
               {CONFIGURATIONS.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleDotClick(idx)}
-                  className="p-2 group cursor-pointer focus:outline-none"
+                  className="p-1 sm:p-1.5 group cursor-pointer focus:outline-none"
                   aria-label={`Go to ${CONFIGURATIONS[idx].name}`}
                 >
                   <div
-                    className={`h-1.5 transition-all duration-500 rounded-full ${idx === currentConfig
-                      ? 'w-8 bg-orange-500'
-                      : 'w-1.5 bg-black/20 dark:bg-white/20 group-hover:bg-orange-500/50'
+                    className={`h-1 sm:h-1.5 transition-all duration-500 rounded-full ${idx === currentConfig
+                      ? 'w-6 sm:w-8 bg-orange-500'
+                      : 'w-1 sm:w-1.5 bg-black/20 dark:bg-white/20 group-hover:bg-orange-500/50'
                       }`}
                   />
                 </button>
@@ -236,10 +236,10 @@ export default function BayConfigurator() {
 
             <button
               onClick={handleNext}
-              className="p-2 text-black/40 dark:text-white/40 hover:text-orange-500 transition-colors cursor-pointer focus:outline-none"
+              className="p-1.5 sm:p-2 text-black/40 dark:text-white/40 hover:text-orange-500 transition-colors cursor-pointer focus:outline-none shrink-0"
               aria-label="Next configuration"
             >
-              <CaretRight size={16} weight="bold" />
+              <CaretRight size={14} weight="bold" className="sm:w-4 sm:h-4" />
             </button>
           </div>
         </div>
