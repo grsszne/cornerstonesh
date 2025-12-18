@@ -163,20 +163,39 @@ export default function GuidePage() {
 
                 <div className="space-y-6">
                   <div>
+                    <div className="text-xs font-mono uppercase opacity-40 mb-3">Technical Specs</div>
+                    <ul className="space-y-1 text-sm opacity-80">
+                      <li className="flex justify-between"><span>TDP:</span><span className="font-mono">6W</span></li>
+                      <li className="flex justify-between"><span>Cache:</span><span className="font-mono">6MB L3</span></li>
+                      <li className="flex justify-between"><span>iGPU:</span><span className="font-mono">Intel UHD 24EU</span></li>
+                      <li className="flex justify-between"><span>Transcode:</span><span className="font-mono">2x 4K streams</span></li>
+                    </ul>
+                  </div>
+
+                  <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">What It's Like</div>
                     <p className="text-sm opacity-80 leading-relaxed">
-                      Perfect for most home server tasks. Handles media streaming, file storage, and light Docker containers with ease.
+                      Perfect for most home server tasks. Handles media streaming, file storage, and light Docker containers with ease. The 6W TDP means silent operation and minimal power draw — expect 8-15W total system power under typical loads.
                     </p>
                   </div>
 
                   <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">Best For</div>
                     <ul className="space-y-2 text-sm opacity-80">
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Plex/Jellyfin media server</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> File storage (NAS)</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Pi-hole / AdGuard</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Plex/Jellyfin (1-2 4K transcodes)</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> File storage (NAS, SMB, NFS)</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Pi-hole / AdGuard / Unbound</li>
                       <li className="flex gap-2"><span className="text-orange-500">→</span> 3-5 light containers</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Nextcloud (personal use)</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Reverse proxy (Nginx, Caddy)</li>
                     </ul>
+                  </div>
+
+                  <div className="pt-4 border-t border-black/10 dark:border-white/10">
+                    <div className="text-xs font-mono uppercase opacity-40 mb-2">Power Estimate</div>
+                    <div className="text-sm font-medium">
+                      Idle: <span className="text-orange-500">~8W</span> | Load: <span className="text-orange-500">~15W</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -193,9 +212,19 @@ export default function GuidePage() {
 
                 <div className="space-y-6">
                   <div>
+                    <div className="text-xs font-mono uppercase opacity-40 mb-3">Technical Specs</div>
+                    <ul className="space-y-1 text-sm opacity-80">
+                      <li className="flex justify-between"><span>TDP:</span><span className="font-mono">6W</span></li>
+                      <li className="flex justify-between"><span>Cache:</span><span className="font-mono">6MB L3</span></li>
+                      <li className="flex justify-between"><span>iGPU:</span><span className="font-mono">Intel UHD 24EU</span></li>
+                      <li className="flex justify-between"><span>Transcode:</span><span className="font-mono">2x 4K streams</span></li>
+                    </ul>
+                  </div>
+
+                  <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">What It's Like</div>
                     <p className="text-sm opacity-80 leading-relaxed">
-                      Same processor as 8GB, but double the RAM. Great for running more containers or VMs simultaneously without slowdowns.
+                      Same processor as 8GB, but double the RAM. Great for running more containers or VMs simultaneously without slowdowns. The extra 8GB lets you run memory-hungry apps like databases, caching layers, and multiple VMs without hitting swap.
                     </p>
                   </div>
 
@@ -203,10 +232,19 @@ export default function GuidePage() {
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">Best For</div>
                     <ul className="space-y-2 text-sm opacity-80">
                       <li className="flex gap-2"><span className="text-orange-500">→</span> 10+ Docker containers</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Virtual machines</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Home Assistant + more</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Development workloads</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> 1-2 lightweight VMs (Proxmox)</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Home Assistant + addons</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Development environments</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> PostgreSQL / MySQL / Redis</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Gitea / GitLab (small teams)</li>
                     </ul>
+                  </div>
+
+                  <div className="pt-4 border-t border-black/10 dark:border-white/10">
+                    <div className="text-xs font-mono uppercase opacity-40 mb-2">Power Estimate</div>
+                    <div className="text-sm font-medium">
+                      Idle: <span className="text-orange-500">~9W</span> | Load: <span className="text-orange-500">~18W</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -223,20 +261,39 @@ export default function GuidePage() {
 
                 <div className="space-y-6">
                   <div>
+                    <div className="text-xs font-mono uppercase opacity-40 mb-3">Technical Specs</div>
+                    <ul className="space-y-1 text-sm opacity-80">
+                      <li className="flex justify-between"><span>TDP:</span><span className="font-mono">15W</span></li>
+                      <li className="flex justify-between"><span>Cache:</span><span className="font-mono">8MB L3</span></li>
+                      <li className="flex justify-between"><span>iGPU:</span><span className="font-mono">Intel UHD 32EU</span></li>
+                      <li className="flex justify-between"><span>Transcode:</span><span className="font-mono">4-5x 4K streams</span></li>
+                    </ul>
+                  </div>
+
+                  <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">What It's Like</div>
                     <p className="text-sm opacity-80 leading-relaxed">
-                      Double the cores, higher clock speed. For power users running Kubernetes clusters, heavy transcoding, or compute-intensive workloads.
+                      Double the cores, higher clock speed, and 33% more cache. For power users running Kubernetes clusters, heavy transcoding, or compute-intensive workloads. The 8 efficiency cores handle parallel tasks excellently while keeping thermals in check.
                     </p>
                   </div>
 
                   <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">Best For</div>
                     <ul className="space-y-2 text-sm opacity-80">
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Kubernetes (K3s/K8s)</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Heavy transcoding</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> 20+ containers</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Multiple VMs</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Kubernetes (K3s/K8s) clusters</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> 4-5 simultaneous 4K transcodes</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> 20+ Docker containers</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> 3-4 concurrent VMs</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> CI/CD pipelines (Jenkins, Drone)</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Machine learning inference</li>
                     </ul>
+                  </div>
+
+                  <div className="pt-4 border-t border-black/10 dark:border-white/10">
+                    <div className="text-xs font-mono uppercase opacity-40 mb-2">Power Estimate</div>
+                    <div className="text-sm font-medium">
+                      Idle: <span className="text-orange-500">~12W</span> | Load: <span className="text-orange-500">~28W</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -278,29 +335,40 @@ export default function GuidePage() {
                   <h3 className="text-3xl font-medium mb-2">1GbE</h3>
                   <div className="font-mono text-sm opacity-60">125 MB/s max</div>
                 </div>
-                
+
                 <div className="space-y-6">
+                  <div>
+                    <div className="text-xs font-mono uppercase opacity-40 mb-3">Technical Details</div>
+                    <ul className="space-y-1 text-sm opacity-80">
+                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">1,000 Mbps</span></li>
+                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~940 Mbps</span></li>
+                      <li className="flex justify-between"><span>Cable:</span><span className="font-mono">Cat5e / Cat6</span></li>
+                    </ul>
+                  </div>
+
                   <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">What It's Like</div>
                     <p className="text-sm opacity-80 leading-relaxed">
-                      Drinking from a standard straw. It's perfectly fine for most tasks. Most home networks and devices are only able to handle 1GbE, so 1GbE is more than enough for almost all users and general storage needs.
+                      The standard for home networks. Handles 4K streaming (25 Mbps) with 40x headroom. Most routers, switches, and devices are 1GbE, making it universally compatible.
                     </p>
                   </div>
 
                   <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">Best For</div>
                     <ul className="space-y-2 text-sm opacity-80">
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Streaming 4K video</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> File browsing</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Web browsing</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Cloud backups</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Streaming 4K video (multiple streams)</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> File browsing & document access</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Photo library access</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Cloud sync & backups</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Standard home networking</li>
                     </ul>
                   </div>
 
                   <div className="pt-4 border-t border-black/10 dark:border-white/10">
-                    <div className="text-xs font-mono uppercase opacity-40 mb-2">Transfer Time Example</div>
-                    <div className="text-sm font-medium">
-                      100GB video file: <span className="text-orange-500">~13 minutes</span>
+                    <div className="text-xs font-mono uppercase opacity-40 mb-2">Transfer Examples</div>
+                    <div className="space-y-1 text-sm font-medium">
+                      <div>100GB video: <span className="text-orange-500">~13 min</span></div>
+                      <div>1TB backup: <span className="text-orange-500">~2.2 hours</span></div>
                     </div>
                   </div>
                 </div>
@@ -315,29 +383,40 @@ export default function GuidePage() {
                   <h3 className="text-3xl font-medium mb-2">2.5GbE</h3>
                   <div className="font-mono text-sm opacity-60">312 MB/s max</div>
                 </div>
-                
+
                 <div className="space-y-6">
+                  <div>
+                    <div className="text-xs font-mono uppercase opacity-40 mb-3">Technical Details</div>
+                    <ul className="space-y-1 text-sm opacity-80">
+                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">2,500 Mbps</span></li>
+                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~2,350 Mbps</span></li>
+                      <li className="flex justify-between"><span>Cable:</span><span className="font-mono">Cat5e / Cat6</span></li>
+                    </ul>
+                  </div>
+
                   <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">What It's Like</div>
                     <p className="text-sm opacity-80 leading-relaxed">
-                      Drinking from a fire hose. 2.5x faster than standard ethernet.
+                      The sweet spot upgrade. Uses existing Cat5e/Cat6 cables but delivers 2.5x the speed. Many newer motherboards and laptops now include 2.5GbE natively.
                     </p>
                   </div>
 
                   <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">Best For</div>
                     <ul className="space-y-2 text-sm opacity-80">
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Video editing workflows</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Video editing (1080p/4K projects)</li>
                       <li className="flex gap-2"><span className="text-orange-500">→</span> Large file transfers</li>
                       <li className="flex gap-2"><span className="text-orange-500">→</span> Camera footage offload</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Multi-user access</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Multi-user home networks</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Time Machine backups</li>
                     </ul>
                   </div>
 
                   <div className="pt-4 border-t border-black/10 dark:border-white/10">
-                    <div className="text-xs font-mono uppercase opacity-40 mb-2">Transfer Time Example</div>
-                    <div className="text-sm font-medium">
-                      100GB video file: <span className="text-orange-500">~5 minutes</span>
+                    <div className="text-xs font-mono uppercase opacity-40 mb-2">Transfer Examples</div>
+                    <div className="space-y-1 text-sm font-medium">
+                      <div>100GB video: <span className="text-orange-500">~5 min</span></div>
+                      <div>1TB backup: <span className="text-orange-500">~53 min</span></div>
                     </div>
                   </div>
                 </div>
@@ -355,9 +434,18 @@ export default function GuidePage() {
 
                 <div className="space-y-6">
                   <div>
+                    <div className="text-xs font-mono uppercase opacity-40 mb-3">Technical Details</div>
+                    <ul className="space-y-1 text-sm opacity-80">
+                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">5,000 Mbps</span></li>
+                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~4,700 Mbps</span></li>
+                      <li className="flex justify-between"><span>Cable:</span><span className="font-mono">Cat6 / Cat6a</span></li>
+                    </ul>
+                  </div>
+
+                  <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">What It's Like</div>
                     <p className="text-sm opacity-80 leading-relaxed">
-                      5x faster than 1GbE. Ideal for professional workflows without breaking the bank.
+                      5x faster than 1GbE while still affordable. Ideal balance of speed and cost for prosumers and small teams working with large media files.
                     </p>
                   </div>
 
@@ -365,16 +453,18 @@ export default function GuidePage() {
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">Best For</div>
                     <ul className="space-y-2 text-sm opacity-80">
                       <li className="flex gap-2"><span className="text-orange-500">→</span> 4K/6K video editing</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Photo RAW workflows</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Fast backups</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Small office/team use</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> RAW photo workflows (50+ MB files)</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Rapid backup & restore</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Small creative teams (2-4 users)</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> VM storage over network</li>
                     </ul>
                   </div>
 
                   <div className="pt-4 border-t border-black/10 dark:border-white/10">
-                    <div className="text-xs font-mono uppercase opacity-40 mb-2">Transfer Time Example</div>
-                    <div className="text-sm font-medium">
-                      100GB video file: <span className="text-orange-500">~2.5 minutes</span>
+                    <div className="text-xs font-mono uppercase opacity-40 mb-2">Transfer Examples</div>
+                    <div className="space-y-1 text-sm font-medium">
+                      <div>100GB video: <span className="text-orange-500">~2.5 min</span></div>
+                      <div>1TB backup: <span className="text-orange-500">~27 min</span></div>
                     </div>
                   </div>
                 </div>
@@ -392,9 +482,18 @@ export default function GuidePage() {
 
                 <div className="space-y-6">
                   <div>
+                    <div className="text-xs font-mono uppercase opacity-40 mb-3">Technical Details</div>
+                    <ul className="space-y-1 text-sm opacity-80">
+                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">10,000 Mbps</span></li>
+                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~9,400 Mbps</span></li>
+                      <li className="flex justify-between"><span>Cable:</span><span className="font-mono">Cat6a / Cat7</span></li>
+                    </ul>
+                  </div>
+
+                  <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">What It's Like</div>
                     <p className="text-sm opacity-80 leading-relaxed">
-                      10x faster than 1GbE. Professional-grade speed for demanding production environments.
+                      Professional-grade speed. Approaches local SSD performance over the network. Essential for production environments where time is money.
                     </p>
                   </div>
 
@@ -402,16 +501,18 @@ export default function GuidePage() {
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">Best For</div>
                     <ul className="space-y-2 text-sm opacity-80">
                       <li className="flex gap-2"><span className="text-orange-500">→</span> 8K video production</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Multiple editors</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> VM/container clusters</li>
-                      <li className="flex gap-2"><span className="text-orange-500">→</span> Data-intensive apps</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Multiple simultaneous editors</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> VM/container cluster storage</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> Database servers & analytics</li>
+                      <li className="flex gap-2"><span className="text-orange-500">→</span> iSCSI / NVMe-oF targets</li>
                     </ul>
                   </div>
 
                   <div className="pt-4 border-t border-black/10 dark:border-white/10">
-                    <div className="text-xs font-mono uppercase opacity-40 mb-2">Transfer Time Example</div>
-                    <div className="text-sm font-medium">
-                      100GB video file: <span className="text-orange-500">~80 seconds</span>
+                    <div className="text-xs font-mono uppercase opacity-40 mb-2">Transfer Examples</div>
+                    <div className="space-y-1 text-sm font-medium">
+                      <div>100GB video: <span className="text-orange-500">~80 sec</span></div>
+                      <div>1TB backup: <span className="text-orange-500">~13 min</span></div>
                     </div>
                   </div>
                 </div>
@@ -441,24 +542,35 @@ export default function GuidePage() {
                   <div className="mb-6">
                     <div className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-2">System Drive</div>
                     <h3 className="text-3xl font-medium mb-2">Base NVMe</h3>
-                    <div className="font-mono text-sm opacity-60">256GB - 8TB</div>
+                    <div className="font-mono text-sm opacity-60">256GB - 8TB PCIe Gen3</div>
                   </div>
 
                   <div className="space-y-6">
                     <div>
+                      <div className="text-xs font-mono uppercase opacity-40 mb-3">Drive Specs</div>
+                      <ul className="space-y-1 text-sm opacity-80">
+                        <li className="flex justify-between"><span>Interface:</span><span className="font-mono">M.2 2280 NVMe</span></li>
+                        <li className="flex justify-between"><span>Read Speed:</span><span className="font-mono">~3,500 MB/s</span></li>
+                        <li className="flex justify-between"><span>Write Speed:</span><span className="font-mono">~3,000 MB/s</span></li>
+                        <li className="flex justify-between"><span>Endurance:</span><span className="font-mono">600+ TBW</span></li>
+                      </ul>
+                    </div>
+
+                    <div>
                       <div className="text-xs font-mono uppercase opacity-40 mb-3">What It's For</div>
                       <p className="text-sm opacity-80 leading-relaxed">
-                        Your operating system, applications, and Docker containers. This is separate from your modular storage bays.
+                        Your operating system, applications, and Docker containers live here. Fast NVMe ensures snappy boot times and responsive container startup. This is separate from your modular storage bays.
                       </p>
                     </div>
 
                     <div>
-                      <div className="text-xs font-mono uppercase opacity-40 mb-3">Recommendations</div>
+                      <div className="text-xs font-mono uppercase opacity-40 mb-3">Size Recommendations</div>
                       <ul className="space-y-2 text-sm opacity-80">
-                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">256GB:</span> Minimal OS + few apps</li>
-                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">512GB:</span> Most users (recommended)</li>
-                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">1TB+:</span> Heavy containerization</li>
-                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">8TB:</span> Maximum capacity option</li>
+                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">256GB:</span> Minimal OS + 3-5 containers</li>
+                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">512GB:</span> Most users — room for 10+ containers</li>
+                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">1TB:</span> Heavy Docker + VM images</li>
+                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">2-4TB:</span> Local databases + container volumes</li>
+                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">8TB:</span> Maximum — all workloads on fast storage</li>
                       </ul>
                     </div>
                   </div>
@@ -471,23 +583,34 @@ export default function GuidePage() {
                   <div className="mb-6">
                     <div className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-2">Modular Bays</div>
                     <h3 className="text-3xl font-medium mb-2">Module Storage</h3>
-                    <div className="font-mono text-sm opacity-60">Up to 7x NVMe drives</div>
+                    <div className="font-mono text-sm opacity-60">Up to 7x NVMe drives (56TB max)</div>
                   </div>
 
                   <div className="space-y-6">
                     <div>
+                      <div className="text-xs font-mono uppercase opacity-40 mb-3">Bay Specs</div>
+                      <ul className="space-y-1 text-sm opacity-80">
+                        <li className="flex justify-between"><span>Bays:</span><span className="font-mono">7x M.2 2280</span></li>
+                        <li className="flex justify-between"><span>Per-bay max:</span><span className="font-mono">8TB each</span></li>
+                        <li className="flex justify-between"><span>Hot-swap:</span><span className="font-mono">Yes</span></li>
+                        <li className="flex justify-between"><span>RAID support:</span><span className="font-mono">Software RAID</span></li>
+                      </ul>
+                    </div>
+
+                    <div>
                       <div className="text-xs font-mono uppercase opacity-40 mb-3">What It's For</div>
                       <p className="text-sm opacity-80 leading-relaxed">
-                        Your media, files, backups, and datasets. Each bay supports up to 8TB, for a maximum of 56TB total.
+                        Your media, files, backups, and datasets. Hot-swappable bays let you expand or swap drives without downtime. Use ZFS, Btrfs, or mdadm for RAID configurations.
                       </p>
                     </div>
 
                     <div>
-                      <div className="text-xs font-mono uppercase opacity-40 mb-3">Common Configurations</div>
+                      <div className="text-xs font-mono uppercase opacity-40 mb-3">Example Configurations</div>
                       <ul className="space-y-2 text-sm opacity-80">
-                        <li className="flex gap-2"><span className="text-orange-500">→</span> 4× 4TB = 16TB media server</li>
-                        <li className="flex gap-2"><span className="text-orange-500">→</span> 2× 2TB RAID1 = 2TB redundant</li>
-                        <li className="flex gap-2"><span className="text-orange-500">→</span> 7× 8TB = 56TB maximum</li>
+                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">2× 2TB mirror:</span> 2TB redundant storage</li>
+                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">4× 4TB RAID5:</span> 12TB with parity</li>
+                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">6× 4TB RAID6:</span> 16TB with 2-disk fault tolerance</li>
+                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">7× 8TB JBOD:</span> 56TB maximum raw</li>
                       </ul>
                     </div>
                   </div>
@@ -500,33 +623,46 @@ export default function GuidePage() {
                 <div className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-3">Storage Guide</div>
                 <h3 className="text-2xl font-medium mb-6">How much storage do you need?</h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                   <div>
                     <div className="font-mono text-sm font-bold mb-2">Light Use (1-4TB)</div>
                     <ul className="space-y-1 text-sm opacity-80">
-                      <li>• Photo backup</li>
+                      <li>• Photo backup (100K+ photos)</li>
                       <li>• Document storage</li>
-                      <li>• Small media library</li>
+                      <li>• Small media library (50-100 HD movies)</li>
+                      <li>• Personal cloud (Nextcloud)</li>
+                      <li>• Home Assistant backups</li>
                     </ul>
                   </div>
 
                   <div>
                     <div className="font-mono text-sm font-bold mb-2">Medium Use (8-16TB)</div>
                     <ul className="space-y-1 text-sm opacity-80">
-                      <li>• 4K movie collection</li>
-                      <li>• Photography RAW files</li>
-                      <li>• Multiple backups</li>
+                      <li>• 4K movie collection (200+ films)</li>
+                      <li>• Photography RAW archives</li>
+                      <li>• Multi-device backups</li>
+                      <li>• Security camera footage</li>
+                      <li>• Music production projects</li>
                     </ul>
                   </div>
 
                   <div>
                     <div className="font-mono text-sm font-bold mb-2">Heavy Use (32-56TB)</div>
                     <ul className="space-y-1 text-sm opacity-80">
-                      <li>• 8K video production</li>
-                      <li>• Complete data hoarding</li>
-                      <li>• Enterprise datasets</li>
+                      <li>• 8K video production & archives</li>
+                      <li>• Complete media libraries</li>
+                      <li>• Machine learning datasets</li>
+                      <li>• Enterprise backups</li>
+                      <li>• Multi-year security footage</li>
                     </ul>
                   </div>
+                </div>
+
+                <div className="pt-6 border-t border-orange-500/20">
+                  <div className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-3">Pro Tip</div>
+                  <p className="text-sm opacity-80">
+                    Plan for 2-3x your current needs. Storage fills up faster than expected, and NVMe prices drop over time. You can always add more drives to empty bays later.
+                  </p>
                 </div>
               </div>
             </FadeIn>
