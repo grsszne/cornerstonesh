@@ -666,7 +666,6 @@ export default function FoundationBuilder() {
                   </div>
                   <div className="text-right">
                     <span className="block text-4xl font-medium tracking-tight">${totalPrice}</span>
-                    <span className="block text-xs text-orange-500 font-mono mt-1">Ready to Ship</span>
                   </div>
                 </div>
                 <Link
