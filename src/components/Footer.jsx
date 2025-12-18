@@ -88,7 +88,7 @@ export default function Footer() {
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.instagram.com/cornerstone.sh/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
+                    <a href="https://www.instagram.com/cornerstone_sh/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
                       Instagram
                     </a>
                   </li>
