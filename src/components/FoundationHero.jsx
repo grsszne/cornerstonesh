@@ -209,7 +209,7 @@ export default function FoundationHero() {
                 <span className="text-orange-500 font-bold">[+]</span> Up to 64TB NVMe Storage
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-orange-500 font-bold">[+]</span> Up to 10GbE Networking
+                <span className="text-orange-500 font-bold">[+]</span> Up to 10G<span className="lowercase">b</span>E Networking
               </li>
               <li className="flex items-center gap-3">
                 <span className="text-orange-500 font-bold">[+]</span> Intel N305 x86 Processor

@@ -176,7 +176,7 @@ export default function TelemetryCard({ label, metricKey, unit, icon }) {
       <div className="relative z-10 text-orange-500 text-xl mb-2 group-hover:scale-110 transition-transform">{icon}</div>
       <div className="relative z-10">
         <div className="text-lg font-bold font-mono tracking-tight transition-all duration-300 group-hover:text-orange-500">
-          {displayValue}{unit}
+          {displayValue}{unit.includes('bps') ? <span> G<span className="lowercase">b</span>ps</span> : unit}
         </div>
         <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1 group-hover:opacity-80 transition-opacity">
           {label}

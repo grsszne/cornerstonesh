@@ -183,7 +183,7 @@ export default function FoundationPage() {
                         <div className="flex items-center justify-between font-mono text-xs">
                           <span className="text-black/40 dark:text-white/40">MOD</span>
                           <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-orange-500">SD + 5GbE</span>
+                          <span className="text-orange-500">SD + 5G<span className="lowercase">b</span>E</span>
                         </div>
                       </div>
                     </div>
@@ -422,7 +422,7 @@ export default function FoundationPage() {
                         <div className="border-l-2 border-orange-500/20 group-hover:border-orange-500 transition-colors duration-300 pl-4">
                           <div className="font-mono text-sm text-black/40 dark:text-white/40 uppercase tracking-wider mb-3">Storage</div>
                           <div className="space-y-2">
-                            <div className="text-base font-medium text-black dark:text-white">256GB → 56TB NVMe</div>
+                            <div className="text-base font-medium text-black dark:text-white">256GB → 64TB NVMe</div>
                             <div className="text-base font-medium text-black dark:text-white">7 modular bays</div>
                           </div>
                         </div>
@@ -699,7 +699,7 @@ export default function FoundationPage() {
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Storage Support</span>
-                      <span className="sm:text-right">NVMe only, up to 8TB per drive (56TB max)</span>
+                      <span className="sm:text-right">NVMe only, up to 8TB per drive (64TB max)</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Architecture</span>
@@ -713,7 +713,7 @@ export default function FoundationPage() {
                   <div className="md:col-span-2 space-y-4">
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Ethernet</span>
-                      <span className="sm:text-right">1 Gbps (Standard) / 2.5/5/10 Gbps (Optional Bays)</span>
+                      <span className="sm:text-right">1 G<span className="lowercase">b</span>ps (Standard) / 2.5/5/10 G<span className="lowercase">b</span>ps (Optional Bays)</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">USB</span>

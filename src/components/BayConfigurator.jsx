@@ -13,6 +13,16 @@ import {
   CaretRight
 } from "@phosphor-icons/react";
 
+// Helper to keep 'b' lowercase in network speed labels (GbE, Gbps, Mbps)
+const formatNetworkLabel = (label) => {
+  if (typeof label !== 'string') return label;
+  if (label.includes('GbE')) {
+    const parts = label.split('GbE');
+    return <>{parts[0]}G<span className="lowercase">b</span>E{parts[1]}</>;
+  }
+  return label;
+};
+
 // Module types with their properties
 const MODULE_TYPES = {
   STORAGE: {
@@ -285,7 +295,7 @@ export default function BayConfigurator() {
                       className="text-black/60 dark:text-white/60 mb-1"
                     />
                     <span className="font-mono text-[7px] md:text-[8px] text-black/60 dark:text-white/60 text-center leading-tight">
-                      {module.abbr}
+                      {formatNetworkLabel(module.abbr)}
                     </span>
                   </>
                 )}
@@ -345,7 +355,7 @@ export default function BayConfigurator() {
               <div key={idx} className="flex items-center gap-1.5">
                 <div className={`w-2 h-2 ${module.color} shrink-0`} />
                 <span className="font-mono text-[9px] text-black/40 dark:text-white/40 truncate">
-                  {module.label}
+                  {formatNetworkLabel(module.label)}
                 </span>
               </div>
             ))}

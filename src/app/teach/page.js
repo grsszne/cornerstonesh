@@ -110,7 +110,7 @@ export default function TeachPage() {
                     </p>
                     <ul className="list-disc list-inside opacity-80 space-y-2 ml-2">
                       <li><span className="font-bold">Compute:</span> Powered by Intel N100 (4-core) or N305 (8-core) x86 processors up to 3.8GHz, delivering desktop-class performance with exceptional compatibility. Options for 8GB or 16GB LPDDR5X unified memory.</li>
-                      <li><span className="font-bold">Storage Fabric:</span> We have engineered a custom <span className="font-bold">Zero-Cable Backplane</span> using PCIe Gen 3. Unlike traditional servers that rely on a mess of cables, our drives slot directly into a rigid PCB backbone. This supports up to 7x NVMe SSDs (56TB max) with optimized airflow channels.</li>
+                      <li><span className="font-bold">Storage Fabric:</span> We have engineered a custom <span className="font-bold">Zero-Cable Backplane</span> using PCIe Gen 3. Unlike traditional servers that rely on a mess of cables, our drives slot directly into a rigid PCB backbone. This supports up to 8x NVMe SSDs (64TB max) with optimized airflow channels.</li>
                       <li><span className="font-bold">Modular Bay System:</span> Our proprietary expansion standard utilizing PCIe Gen 3, I2C for module discovery, and high-current power rails. This allows users to stack modules—like 5GbE/10GbE networking, Oculink ports, or UPS battery backups—without tools or drivers.</li>
                     </ul>
                   </div>

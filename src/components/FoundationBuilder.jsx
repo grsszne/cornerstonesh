@@ -4,6 +4,16 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import AsciiArt from "@/components/AsciiArt";
 
+// Helper to keep 'b' lowercase in network speed labels (GbE, Gbps, Mbps)
+const formatNetworkLabel = (label) => {
+  if (typeof label !== 'string') return label;
+  if (label.includes('GbE')) {
+    const parts = label.split('GbE');
+    return <>{parts[0]}G<span className="lowercase">b</span>E{parts[1]}</>;
+  }
+  return label;
+};
+
 const MEMORY_OPTIONS = [
   { label: "Intel N100 8GB", price: 0, score: 40, },
   { label: "Intel N100 16GB", price: 120, score: 60, },
@@ -584,7 +594,7 @@ export default function FoundationBuilder() {
                           >
                             <div className="flex-1 flex flex-col items-center justify-center">
                               <div className={`w-4 h-4 rounded-full ${getModuleColorClass(bay, 'bg')} mb-2`}></div>
-                              <span className="font-mono text-[10px] font-bold leading-tight">{bay.label}</span>
+                              <span className="font-mono text-[10px] font-bold leading-tight">{formatNetworkLabel(bay.label)}</span>
                               <span className="font-mono text-[9px] opacity-50 mt-1">+${bay.price}</span>
                               {/* Accessory Indicators */}
                               {bay.accessories && bay.accessories.length > 0 && (

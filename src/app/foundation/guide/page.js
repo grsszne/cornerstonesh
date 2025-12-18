@@ -97,18 +97,19 @@ const STORAGE_SIZES = [
     ]
   },
   {
-    size: "56TB",
-    capacity: 56000,
+    size: "64TB",
+    capacity: 64000,
     highlight: true,
     data: [
-      { label: "iPhone photos", value: "~14 million" },
-      { label: "HD movies (2hr)", value: "~14,000" },
-      { label: "4K movies (2hr)", value: "~2,240" },
-      { label: "8K movies (2hr)", value: "~175" },
-      { label: "Enterprise VMs", value: "~700" },
+      { label: "iPhone photos", value: "~16 million" },
+      { label: "HD movies (2hr)", value: "~16,000" },
+      { label: "4K movies (2hr)", value: "~2,560" },
+      { label: "8K movies (2hr)", value: "~200" },
+      { label: "Enterprise VMs", value: "~800" },
     ]
   },
 ];
+
 
 export default function GuidePage() {
   const [currentStorageIndex, setCurrentStorageIndex] = useState(2); // Start at 1TB
@@ -322,7 +323,7 @@ export default function GuidePage() {
               Network Speed
             </h2>
             <p className="text-lg font-mono opacity-60 mb-16 max-w-2xl">
-              From 1GbE to 10GbE — What do you need?
+              From 1G<span className="lowercase">b</span>E to 10G<span className="lowercase">b</span>E — What do you need?
             </p>
           </FadeIn>
 
@@ -340,8 +341,8 @@ export default function GuidePage() {
                   <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">Technical Details</div>
                     <ul className="space-y-1 text-sm opacity-80">
-                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">1,000 Mbps</span></li>
-                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~940 Mbps</span></li>
+                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">1,000 M<span className="lowercase">b</span>ps</span></li>
+                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~940 M<span className="lowercase">b</span>ps</span></li>
                       <li className="flex justify-between"><span>Cable:</span><span className="font-mono">Cat5e / Cat6</span></li>
                     </ul>
                   </div>
@@ -388,8 +389,8 @@ export default function GuidePage() {
                   <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">Technical Details</div>
                     <ul className="space-y-1 text-sm opacity-80">
-                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">2,500 Mbps</span></li>
-                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~2,350 Mbps</span></li>
+                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">2,500 M<span className="lowercase">b</span>ps</span></li>
+                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~2,350 M<span className="lowercase">b</span>ps</span></li>
                       <li className="flex justify-between"><span>Cable:</span><span className="font-mono">Cat5e / Cat6</span></li>
                     </ul>
                   </div>
@@ -436,8 +437,8 @@ export default function GuidePage() {
                   <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">Technical Details</div>
                     <ul className="space-y-1 text-sm opacity-80">
-                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">5,000 Mbps</span></li>
-                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~4,700 Mbps</span></li>
+                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">5,000 M<span className="lowercase">b</span>ps</span></li>
+                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~4,700 M<span className="lowercase">b</span>ps</span></li>
                       <li className="flex justify-between"><span>Cable:</span><span className="font-mono">Cat6 / Cat6a</span></li>
                     </ul>
                   </div>
@@ -484,8 +485,8 @@ export default function GuidePage() {
                   <div>
                     <div className="text-xs font-mono uppercase opacity-40 mb-3">Technical Details</div>
                     <ul className="space-y-1 text-sm opacity-80">
-                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">10,000 Mbps</span></li>
-                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~9,400 Mbps</span></li>
+                      <li className="flex justify-between"><span>Bandwidth:</span><span className="font-mono">10,000 M<span className="lowercase">b</span>ps</span></li>
+                      <li className="flex justify-between"><span>Real-world:</span><span className="font-mono">~9,400 M<span className="lowercase">b</span>ps</span></li>
                       <li className="flex justify-between"><span>Cable:</span><span className="font-mono">Cat6a / Cat7</span></li>
                     </ul>
                   </div>
@@ -583,7 +584,7 @@ export default function GuidePage() {
                   <div className="mb-6">
                     <div className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-2">Modular Bays</div>
                     <h3 className="text-3xl font-medium mb-2">Module Storage</h3>
-                    <div className="font-mono text-sm opacity-60">Up to 7x NVMe drives (56TB max)</div>
+                    <div className="font-mono text-sm opacity-60">Up to 7x NVMe drives (64TB max)</div>
                   </div>
 
                   <div className="space-y-6">
@@ -610,7 +611,7 @@ export default function GuidePage() {
                         <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">2× 2TB mirror:</span> 2TB redundant storage</li>
                         <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">4× 4TB RAID5:</span> 12TB with parity</li>
                         <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">6× 4TB RAID6:</span> 16TB with 2-disk fault tolerance</li>
-                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">7× 8TB JBOD:</span> 56TB maximum raw</li>
+                        <li className="flex gap-2"><span className="text-orange-500">→</span> <span className="font-bold">7× 8TB JBOD:</span> 64TB maximum raw</li>
                       </ul>
                     </div>
                   </div>
@@ -647,7 +648,7 @@ export default function GuidePage() {
                   </div>
 
                   <div>
-                    <div className="font-mono text-sm font-bold mb-2">Heavy Use (32-56TB)</div>
+                    <div className="font-mono text-sm font-bold mb-2">Heavy Use (32-64TB)</div>
                     <ul className="space-y-1 text-sm opacity-80">
                       <li>• 8K video production & archives</li>
                       <li>• Complete media libraries</li>
@@ -695,7 +696,7 @@ export default function GuidePage() {
                   />
                   <div className="flex justify-between mt-2 text-xs font-mono opacity-40">
                     <span>256GB</span>
-                    <span>56TB</span>
+                    <span>64TB</span>
                   </div>
                 </div>
 
