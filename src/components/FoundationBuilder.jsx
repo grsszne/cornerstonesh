@@ -6,14 +6,14 @@ import AsciiArt from "@/components/AsciiArt";
 
 const MEMORY_OPTIONS = [
   { label: "Intel N100 8GB", price: 0, score: 40, },
-  { label: "Intel N100 16GB", price: 100, score: 60, },
-  { label: "Intel N305 16GB", price: 200, score: 80, },
+  { label: "Intel N100 16GB", price: 120, score: 60, },
+  { label: "Intel N305 16GB", price: 220, score: 80, },
 ];
 
 const BASE_STORAGE_OPTIONS = [
   { label: "256GB", price: 0, score: 10 },
-  { label: "512GB", price: 50, score: 20 },
-  { label: "1TB", price: 100, score: 40 },
+  { label: "512GB", price: 100, score: 20 },
+  { label: "1TB", price: 130, score: 40 },
   { label: "2TB", price: 200, score: 60 },
   { label: "4TB", price: 400, score: 80 },
   { label: "8TB", price: 800, score: 100 },
@@ -26,32 +26,32 @@ const MODULE_CATEGORIES = {
     description: "High-speed NVMe storage for your data. PCIe Gen 3.",
     modules: [
       { id: "storage-256", label: "256GB NVMe", price: 40, score: 10, type: "storage", color: "orange" },
-      { id: "storage-512", label: "512GB NVMe", price: 70, score: 20, type: "storage", color: "orange" },
-      { id: "storage-1tb", label: "1TB NVMe", price: 120, score: 40, type: "storage", color: "orange" },
+      { id: "storage-512", label: "512GB NVMe", price: 100, score: 20, type: "storage", color: "orange" },
+      { id: "storage-1tb", label: "1TB NVMe", price: 130, score: 40, type: "storage", color: "orange" },
       { id: "storage-2tb", label: "2TB NVMe", price: 200, score: 60, type: "storage", color: "orange" },
-      { id: "storage-4tb", label: "4TB NVMe", price: 350, score: 100, type: "storage", color: "orange" },
-      { id: "storage-8tb", label: "8TB NVMe", price: 650, score: 150, type: "storage", color: "orange" },
+      { id: "storage-4tb", label: "4TB NVMe", price: 400, score: 100, type: "storage", color: "orange" },
+      { id: "storage-8tb", label: "8TB NVMe", price: 950, score: 150, type: "storage", color: "orange" },
     ]
   },
   connectivity: {
     label: "Connectivity",
     description: "Expand your network and peripheral connections.",
     modules: [
-      { id: "ethernet-2.5", label: "2.5GbE", price: 50, score: 25, type: "ethernet", color: "green", description: "2.5 Gigabit Ethernet adapter", maxCount: 1 },
-      { id: "ethernet-5", label: "5GbE", price: 100, score: 40, type: "ethernet", color: "emerald", description: "5 Gigabit Ethernet adapter", maxCount: 1 },
+      { id: "ethernet-2.5", label: "2.5GbE", price: 80, score: 25, type: "ethernet", color: "green", description: "2.5 Gigabit Ethernet adapter", maxCount: 1 },
+      { id: "ethernet-5", label: "5GbE", price: 120, score: 40, type: "ethernet", color: "emerald", description: "5 Gigabit Ethernet adapter", maxCount: 1 },
       { id: "ethernet-10", label: "10GbE", price: 200, score: 60, type: "ethernet", color: "teal", description: "10 Gigabit Ethernet adapter", maxCount: 1 },
       { id: "oculink", label: "Oculink", price: 80, score: 35, type: "oculink", color: "cyan", description: "Oculink PCIe expansion port", maxCount: 1 },
-      { id: "usb-c", label: "USB-C 3.0", price: 35, score: 20, type: "usb", color: "blue", description: "Single-port USB-C 3.0 expansion" },
-      { id: "usb-a", label: "USB-A 3.0", price: 30, score: 15, type: "usb", color: "blue", description: "Single-port USB-A 3.0 expansion" },
-      { id: "sd-reader", label: "Dual SD", price: 40, score: 20, type: "reader", color: "yellow", description: "Dual UHS-II SD / Micro SD Reader" },
+      { id: "usb-c", label: "USB-C 3.0", price: 60, score: 20, type: "usb", color: "blue", description: "Single-port USB-C 3.0 expansion" },
+      { id: "usb-a", label: "USB-A 3.0", price: 50, score: 15, type: "usb", color: "blue", description: "Single-port USB-A 3.0 expansion" },
+      { id: "sd-reader", label: "Dual SD", price: 60, score: 20, type: "reader", color: "yellow", description: "Dual UHS-II SD / Micro SD Reader" },
     ]
   },
   utility: {
     label: "Utility",
     description: "Power protection and hardware development tools.",
     modules: [
-      { id: "ups", label: "UPS", price: 60, score: 30, type: "ups", color: "purple", description: "Uninterruptible Power Supply" },
-      { id: "gpio", label: "GPIO", price: 20, score: 15, type: "gpio", color: "pink", description: "GPIO Revealer Module for developers" },
+      { id: "ups", label: "UPS", price: 220, score: 30, type: "ups", color: "purple", description: "Uninterruptible Power Supply" },
+      { id: "gpio", label: "GPIO", price: 40, score: 15, type: "gpio", color: "pink", description: "GPIO Revealer Module for developers" },
     ]
   },
   accessories: {
@@ -59,7 +59,7 @@ const MODULE_CATEGORIES = {
     description: "Optional add-ons for your Foundation.",
     modules: [
       { id: "nightlight", label: "Ambient Light", price: 25, score: 5, type: "light", color: "cyan", description: "Dimmable ambient LED module" },
-      { id: "fan", label: "Cooling Fan", price: 15, score: 5, type: "fan", color: "gray", description: "High-performance silent cooling fan" },
+      { id: "fan", label: "Cooling Fan", price: 20, score: 5, type: "fan", color: "gray", description: "High-performance silent cooling fan" },
     ]
   }
 };
