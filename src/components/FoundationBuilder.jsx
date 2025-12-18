@@ -37,10 +37,10 @@ const MODULE_CATEGORIES = {
     label: "Connectivity",
     description: "Expand your network and peripheral connections.",
     modules: [
-      { id: "ethernet-2.5", label: "2.5GbE", price: 80, score: 25, type: "ethernet", color: "green", description: "2.5 Gigabit Ethernet adapter", maxCount: 1 },
-      { id: "ethernet-5", label: "5GbE", price: 120, score: 40, type: "ethernet", color: "emerald", description: "5 Gigabit Ethernet adapter", maxCount: 1 },
-      { id: "ethernet-10", label: "10GbE", price: 200, score: 60, type: "ethernet", color: "teal", description: "10 Gigabit Ethernet adapter", maxCount: 1 },
-      { id: "oculink", label: "Oculink", price: 80, score: 35, type: "oculink", color: "cyan", description: "Oculink PCIe expansion port", maxCount: 1 },
+      { id: "ethernet-2.5", label: "2.5GbE", price: 80, score: 25, type: "ethernet", color: "green", description: "2.5 Gigabit Ethernet adapter" },
+      { id: "ethernet-5", label: "5GbE", price: 120, score: 40, type: "ethernet", color: "emerald", description: "5 Gigabit Ethernet adapter" },
+      { id: "ethernet-10", label: "10GbE", price: 200, score: 60, type: "ethernet", color: "teal", description: "10 Gigabit Ethernet adapter" },
+      { id: "oculink", label: "Oculink", price: 80, score: 35, type: "oculink", color: "cyan", description: "Oculink PCIe expansion port" },
       { id: "usb-c", label: "USB-C 3.0", price: 60, score: 20, type: "usb", color: "blue", description: "Single-port USB-C 3.0 expansion" },
       { id: "usb-a", label: "USB-A 3.0", price: 50, score: 15, type: "usb", color: "blue", description: "Single-port USB-A 3.0 expansion" },
       { id: "sd-reader", label: "Dual SD", price: 60, score: 20, type: "reader", color: "yellow", description: "Dual UHS-II SD / Micro SD Reader" },
@@ -72,7 +72,7 @@ const MODULE_OPTIONS = [
   ...MODULE_CATEGORIES.accessories.modules
 ];
 
-const NUM_BAYS = 7;
+const NUM_BAYS = 8;
 
 export default function FoundationBuilder() {
   const [memory, setMemory] = useState(MEMORY_OPTIONS[0]);
@@ -651,7 +651,7 @@ export default function FoundationBuilder() {
                 </div>
 
                 <p className="text-xs opacity-50 font-mono">
-                  Drag modules into bays. Drag from bays to the trash to remove. Ethernet limited to 1.
+                  Drag modules into bays. Drag from bays to the trash to remove.
                 </p>
 
 

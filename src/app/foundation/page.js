@@ -327,14 +327,14 @@ export default function FoundationPage() {
             {/* Hardware Guide CTA */}
             <FadeIn delay={0.4}>
               <div className="mt-16 flex items-center justify-center gap-6">
-                <div className="h-px flex-1 bg-white/10 max-w-xs"></div>
+                <div className="h-px flex-1 bg-black/10 dark:bg-white/10 max-w-xs"></div>
                 <Link
                   href="/foundation/guide"
-                  className="btn-shine lift-on-hover inline-flex items-center justify-center px-6 py-3 text-sm font-mono font-medium uppercase tracking-wider bg-transparent text-white border border-white/20 hover:border-orange-500 hover:text-orange-500 transition-all duration-300"
+                  className="btn-shine lift-on-hover inline-flex items-center justify-center px-6 py-3 text-sm font-mono font-medium uppercase tracking-wider bg-transparent text-black dark:text-white border border-black/20 dark:border-white/20 hover:border-orange-500 hover:text-orange-500 transition-all duration-300"
                 >
                   View Hardware Guide →
                 </Link>
-                <div className="h-px flex-1 bg-white/10 max-w-xs"></div>
+                <div className="h-px flex-1 bg-black/10 dark:bg-white/10 max-w-xs"></div>
               </div>
             </FadeIn>
           </div>
