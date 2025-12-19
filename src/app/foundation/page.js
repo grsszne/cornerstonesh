@@ -680,7 +680,7 @@ export default function FoundationPage() {
                       <span className="sm:text-right">8GB or 16GB LPDDR5X</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                      <span className="opacity-70 sm:opacity-100">Base Storage</span>
+                      <span className="opacity-70 sm:opacity-100">Boot Storage</span>
                       <span className="sm:text-right">256GB to 8TB NVMe</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
@@ -695,7 +695,7 @@ export default function FoundationPage() {
                   <div className="md:col-span-2 space-y-4">
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Bay Slots</span>
-                      <span className="sm:text-right">7x Universal Bay Internal Mounts</span>
+                      <span className="sm:text-right">8x Universal Bay Internal Mounts</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Storage Support</span>

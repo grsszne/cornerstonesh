@@ -17,13 +17,13 @@ const MEMORY_OPTIONS = [
   { label: "Intel N305 16GB", price: 220, score: 80, },
 ];
 
-const BASE_STORAGE_OPTIONS = [
+const BOOT_STORAGE_OPTIONS = [
   { label: "256GB", price: 0, score: 10 },
   { label: "512GB", price: 100, score: 20 },
   { label: "1TB", price: 130, score: 40 },
   { label: "2TB", price: 200, score: 60 },
   { label: "4TB", price: 400, score: 80 },
-  { label: "8TB", price: 800, score: 100 },
+  { label: "8TB", price: 950, score: 100 },
 ];
 
 // Module options available for drag and drop
@@ -33,7 +33,7 @@ const NUM_BAYS = 8;
 
 export default function FoundationBuilder() {
   const [memory, setMemory] = useState(MEMORY_OPTIONS[0]);
-  const [baseStorage, setBaseStorage] = useState(BASE_STORAGE_OPTIONS[0]);
+  const [bootStorage, setBootStorage] = useState(BOOT_STORAGE_OPTIONS[0]);
   // Removed global accessories state
   // const [accessories, setAccessories] = useState([]); 
 
@@ -81,7 +81,7 @@ export default function FoundationBuilder() {
     return sum + modPrice + accPrice;
   }, 0);
 
-  const totalPrice = basePrice + memory.price + baseStorage.price + bayPrice;
+  const totalPrice = basePrice + memory.price + bootStorage.price + bayPrice;
 
   const occupiedBays = bays.filter(b => b !== null).length;
   const hasExpansion = occupiedBays > 0;
@@ -290,8 +290,8 @@ export default function FoundationBuilder() {
                   <span className={memory.price > 0 ? "text-orange-500" : ""}>{memory.label}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="opacity-60">Base Storage</span>
-                  <span className={baseStorage.price > 0 ? "text-orange-500" : ""}>{baseStorage.label} NVMe</span>
+                  <span className="opacity-60">Boot Storage</span>
+                  <span className={bootStorage.price > 0 ? "text-orange-500" : ""}>{bootStorage.label} NVMe</span>
                 </div>
 
                 {occupiedBays > 0 && (
@@ -356,21 +356,21 @@ export default function FoundationBuilder() {
                 </p>
               </div>
 
-              {/* Base Storage Selection */}
+              {/* Boot Storage Selection */}
               <div className="space-y-4">
                 <div className="flex justify-between items-end">
-                  <label className="text-xl font-medium">Base Storage</label>
+                  <label className="text-xl font-medium">Boot Storage</label>
                   <span className="font-mono text-xs text-orange-500 uppercase tracking-wider">System NVMe</span>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
-                  {BASE_STORAGE_OPTIONS.map((opt) => (
+                  {BOOT_STORAGE_OPTIONS.map((opt) => (
                     <button
                       key={opt.label}
-                      onClick={() => setBaseStorage(opt)}
+                      onClick={() => setBootStorage(opt)}
                       className={`
                         relative border rounded-xl py-4 px-4 text-center font-mono text-sm transition-all duration-200
                         flex flex-col items-center justify-center gap-1
-                        ${baseStorage.label === opt.label
+                        ${bootStorage.label === opt.label
                           ? 'border-orange-500 bg-orange-500/5 text-orange-500 ring-1 ring-orange-500 shadow-lg shadow-orange-500/10 scale-[1.02]'
                           : 'border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30 hover:bg-black/5 dark:hover:bg-white/5'}
                       `}
@@ -635,14 +635,14 @@ export default function FoundationBuilder() {
                       readOnly
                       value={(() => {
                         // Bit Packing Logic
-                        // Memory (2 bits) | Base Storage (2 bits) | VisibleSlots (3 bits) | Bays (7 slots * 4 bits each = 28 bits)
+                        // Memory (2 bits) | Boot Storage (2 bits) | VisibleSlots (3 bits) | Bays (7 slots * 4 bits each = 28 bits)
                         let val = BigInt(0);
 
                         // Memory: 0-2
                         val |= BigInt(MEMORY_OPTIONS.findIndex(o => o.label === memory.label));
 
-                        // Base Storage: 0-2
-                        val |= BigInt(BASE_STORAGE_OPTIONS.findIndex(o => o.label === baseStorage.label)) << BigInt(2);
+                        // Boot Storage: 0-2
+                        val |= BigInt(BOOT_STORAGE_OPTIONS.findIndex(o => o.label === bootStorage.label)) << BigInt(2);
 
                         // VisibleSlots: 1-7 (stored as 0-6). ALWAYS 7 now.
                         val |= BigInt(7 - 1) << BigInt(4);
@@ -717,9 +717,9 @@ export default function FoundationBuilder() {
                           const memIdx = Number(val & BigInt(0x3));
                           if (MEMORY_OPTIONS[memIdx]) setMemory(MEMORY_OPTIONS[memIdx]);
 
-                          // Base Storage
+                          // Boot Storage
                           const storeIdx = Number((val >> BigInt(2)) & BigInt(0x3));
-                          if (BASE_STORAGE_OPTIONS[storeIdx]) setBaseStorage(BASE_STORAGE_OPTIONS[storeIdx]);
+                          if (BOOT_STORAGE_OPTIONS[storeIdx]) setBootStorage(BOOT_STORAGE_OPTIONS[storeIdx]);
 
                           // VisibleSlots - DEPRECATED / CONSTANT
                           // const slotsVal = Number((val >> BigInt(4)) & BigInt(0x7)) + 1;

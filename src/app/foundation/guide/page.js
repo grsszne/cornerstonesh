@@ -537,12 +537,12 @@ export default function GuidePage() {
 
           <div className="space-y-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Base Storage */}
+              {/* Boot Storage */}
               <FadeIn delay={0.1}>
                 <div className="border border-black/20 dark:border-white/20 p-8 rounded-2xl hover:border-orange-500 transition-colors duration-300">
                   <div className="mb-6">
                     <div className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-2">System Drive</div>
-                    <h3 className="text-3xl font-medium mb-2">Base NVMe</h3>
+                    <h3 className="text-3xl font-medium mb-2">Boot NVMe</h3>
                     <div className="font-mono text-sm opacity-60">256GB - 8TB PCIe Gen3</div>
                   </div>
 
@@ -584,7 +584,7 @@ export default function GuidePage() {
                   <div className="mb-6">
                     <div className="font-mono text-xs text-orange-500 uppercase tracking-widest mb-2">Modular Bays</div>
                     <h3 className="text-3xl font-medium mb-2">Module Storage</h3>
-                    <div className="font-mono text-sm opacity-60">Up to 7x NVMe drives (64TB max)</div>
+                    <div className="font-mono text-sm opacity-60">Up to 8x NVMe drives (64TB max)</div>
                   </div>
 
                   <div className="space-y-6">
