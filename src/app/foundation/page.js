@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -9,6 +10,7 @@ import FadeIn from "@/components/FadeIn";
 import ScrollIndicator from "@/components/ScrollIndicator";
 import InteractiveCard from "@/components/InteractiveCard";
 import BayConfigurator from "@/components/BayConfigurator";
+import ScrollToRef from "@/components/ScrollToRef";
 
 import CornerstoneOS from "@/components/CornerstoneOS";
 export const metadata = {
@@ -19,6 +21,9 @@ export const metadata = {
 export default function FoundationPage() {
   return (
     <>
+      <Suspense fallback={null}>
+        <ScrollToRef />
+      </Suspense>
       <main className="min-h-screen bg-white dark:bg-black text-black dark:text-white pt-20">
         {/* Hero Section */}
         <section className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -659,7 +664,9 @@ export default function FoundationPage() {
 
 
         {/* Build Your Foundation UI */}
-        <FoundationBuilder />
+        <Suspense fallback={null}>
+          <FoundationBuilder />
+        </Suspense>
 
         {/* --- CORNERSTONE OS --- */}
         <CornerstoneOS />
@@ -762,6 +769,15 @@ export default function FoundationPage() {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-16 pt-8 border-t border-black/10 dark:border-white/10 text-center">
+                <Link
+                  href="/foundation?ref=builder"
+                  className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-300 rounded-full"
+                >
+                  Add to Build →
+                </Link>
               </div>
             </div>
           </FadeIn>

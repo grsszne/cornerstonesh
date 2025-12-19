@@ -158,7 +158,7 @@ export default function ExpandableModuleCard({ module }) {
                             }}
                         >
                             <Link
-                                href="/foundation"
+                                href={`/foundation?ref=builder&add=${module.id}`}
                                 className={`
                                     w-full block text-center px-6 py-3 rounded-xl font-mono text-sm uppercase tracking-wider
                                     ${getModuleColorClass(module, 'bg')}

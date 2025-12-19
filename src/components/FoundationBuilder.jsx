@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import AsciiArt from "@/components/AsciiArt";
 
@@ -10,6 +11,8 @@ import {
   formatNetworkLabel,
   getModuleColorClass
 } from "@/lib/modules";
+
+const STORAGE_KEY = "foundation-builder-config";
 
 const MEMORY_OPTIONS = [
   { label: "Intel N100 8GB", price: 0, score: 40, },
@@ -32,13 +35,16 @@ const BOOT_STORAGE_OPTIONS = [
 const NUM_BAYS = 8;
 
 export default function FoundationBuilder() {
+  const searchParams = useSearchParams();
+
   const [memory, setMemory] = useState(MEMORY_OPTIONS[0]);
   const [bootStorage, setBootStorage] = useState(BOOT_STORAGE_OPTIONS[0]);
   // Removed global accessories state
-  // const [accessories, setAccessories] = useState([]); 
+  // const [accessories, setAccessories] = useState([]);
 
   // Bays state - fixed 8 slots. Each slot is { ...module, instanceId, accessories: [] }
   const [bays, setBays] = useState(Array(NUM_BAYS).fill(null));
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // UI State
   const [copied, setCopied] = useState(false);
@@ -57,6 +63,75 @@ export default function FoundationBuilder() {
   const toggleSection = (section) => {
     setCollapsed(prev => ({ ...prev, [section]: !prev[section] }));
   };
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const config = JSON.parse(saved);
+        if (config.memory) {
+          const mem = MEMORY_OPTIONS.find(o => o.label === config.memory);
+          if (mem) setMemory(mem);
+        }
+        if (config.bootStorage) {
+          const storage = BOOT_STORAGE_OPTIONS.find(o => o.label === config.bootStorage);
+          if (storage) setBootStorage(storage);
+        }
+        if (config.bays && Array.isArray(config.bays)) {
+          const loadedBays = config.bays.map(bay => {
+            if (!bay) return null;
+            const module = MODULE_OPTIONS.find(m => m.id === bay.id);
+            if (!module) return null;
+            return { ...module, instanceId: bay.instanceId || Date.now(), accessories: bay.accessories || [] };
+          });
+          setBays(loadedBays);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to load config from localStorage", e);
+    }
+    setIsLoaded(true);
+  }, []);
+
+  // Save to localStorage when config changes
+  useEffect(() => {
+    if (!isLoaded) return;
+    try {
+      const config = {
+        memory: memory.label,
+        bootStorage: bootStorage.label,
+        bays: bays.map(bay => bay ? { id: bay.id, instanceId: bay.instanceId, accessories: bay.accessories || [] } : null)
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+    } catch (e) {
+      console.error("Failed to save config to localStorage", e);
+    }
+  }, [memory, bootStorage, bays, isLoaded]);
+
+  // Handle adding module from URL param
+  useEffect(() => {
+    if (!isLoaded) return;
+    const addModuleId = searchParams.get("add");
+    if (addModuleId) {
+      const module = MODULE_OPTIONS.find(m => m.id === addModuleId);
+      if (module) {
+        // Find first empty bay
+        const emptyBayIndex = bays.findIndex(b => b === null);
+        if (emptyBayIndex !== -1) {
+          // Check if module can be added (respects maxCount)
+          const currentCount = bays.filter(b => b?.id === module.id).length;
+          if (!module.maxCount || currentCount < module.maxCount) {
+            const newBays = [...bays];
+            newBays[emptyBayIndex] = { ...module, instanceId: Date.now(), accessories: [] };
+            setBays(newBays);
+          }
+        }
+      }
+      // Clear the URL param after adding
+      window.history.replaceState({}, '', '/foundation?ref=builder');
+    }
+  }, [isLoaded, searchParams]);
 
   // Count modules of each type currently in bays
   const getModuleCount = (moduleId) => {
@@ -476,6 +551,17 @@ export default function FoundationBuilder() {
                     <span className="text-[12px] bg-orange-500/10 text-orange-500 px-1.5 py-0.5 rounded border border-orange-500/20 font-mono">
                       Universal Bay
                     </span>
+                    {occupiedBays > 0 && (
+                      <button
+                        onClick={() => {
+                          setBays(Array(NUM_BAYS).fill(null));
+                          setSelectedBayIndices([]);
+                        }}
+                        className="text-[10px] px-2 py-0.5 rounded border border-red-500/30 text-red-500 hover:bg-red-500/10 font-mono uppercase tracking-wider transition-colors"
+                      >
+                        Clear
+                      </button>
+                    )}
                   </div>
                   <div className={`grid grid-cols-2 md:grid-cols-4 gap-3`}>
                     {bays.map((bay, index) => (
