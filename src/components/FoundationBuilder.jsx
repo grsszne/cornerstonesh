@@ -121,7 +121,13 @@ export default function FoundationBuilder() {
         if (emptyBayIndex !== -1) {
           // Check if module can be added (respects maxCount)
           const currentCount = bays.filter(b => b?.id === module.id).length;
-          if (!module.maxCount || currentCount < module.maxCount) {
+          const hasNetworkingNow = bays.some(b => b?.type === "ethernet");
+          const occupiedBaysNow = bays.filter(b => b !== null).length;
+          // Check networking requirement - must reserve 1 bay for networking if none exists
+          const canAddNonNetworking = hasNetworkingNow || occupiedBaysNow < NUM_BAYS - 1;
+
+          if ((!module.maxCount || currentCount < module.maxCount) &&
+              (module.type === "ethernet" || canAddNonNetworking)) {
             const newBays = [...bays];
             newBays[emptyBayIndex] = { ...module, instanceId: Date.now(), accessories: [] };
             setBays(newBays);
@@ -144,6 +150,13 @@ export default function FoundationBuilder() {
     return getModuleCount(module.id) < module.maxCount;
   };
 
+  // Check if we can add a non-networking module (must reserve 1 bay for networking if none exists)
+  const canAddNonNetworkingModule = () => {
+    if (hasNetworking) return true;
+    // If no networking, reserve at least 1 bay for it
+    return occupiedBays < NUM_BAYS - 1;
+  };
+
   const basePrice = 299;
 
   const bayPrice = bays.reduce((sum, mod) => {
@@ -160,6 +173,7 @@ export default function FoundationBuilder() {
 
   const occupiedBays = bays.filter(b => b !== null).length;
   const hasExpansion = occupiedBays > 0;
+  const hasNetworking = bays.some(b => b?.type === "ethernet");
 
   const stackHeight = 50 + (occupiedBays * 15);
   const stackCircles = 2 + (occupiedBays * 10);
@@ -207,6 +221,12 @@ export default function FoundationBuilder() {
     if (draggedModule && bays[bayIndex] === null && canAddModule(draggedModule)) {
       // Don't allow dropping accessories into empty bays
       if (MODULE_CATEGORIES.accessories.modules.some(m => m.id === draggedModule.id)) {
+        setDraggedModule(null);
+        setDragOverBay(null);
+        return;
+      }
+      // Check networking requirement - must reserve 1 bay for networking if none exists
+      if (draggedModule.type !== "ethernet" && !canAddNonNetworkingModule()) {
         setDraggedModule(null);
         setDragOverBay(null);
         return;
@@ -548,9 +568,16 @@ export default function FoundationBuilder() {
                 {/* Bay Slots - Dynamic columns based on visibleSlots */}
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-[12px] bg-orange-500/10 text-orange-500 px-1.5 py-0.5 rounded border border-orange-500/20 font-mono">
-                      Universal Bay
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[12px] bg-orange-500/10 text-orange-500 px-1.5 py-0.5 rounded border border-orange-500/20 font-mono">
+                        Universal Bay
+                      </span>
+                      {!hasNetworking && (
+                        <span className="text-[10px] bg-red-500/10 text-red-500 px-1.5 py-0.5 rounded border border-red-500/20 font-mono">
+                          Networking Required
+                        </span>
+                      )}
+                    </div>
                     {occupiedBays > 0 && (
                       <button
                         onClick={() => {
@@ -572,8 +599,12 @@ export default function FoundationBuilder() {
                         onDrop={(e) => handleDrop(e, index)}
                         onClick={() => {
                           if (!bay && selectedModule && canAddModule(selectedModule)) {
+                            // Check networking requirement
+                            if (selectedModule.type !== "ethernet" && !canAddNonNetworkingModule()) {
+                              return;
+                            }
                             const newBays = [...bays];
-                            newBays[index] = { ...selectedModule, instanceId: Date.now() };
+                            newBays[index] = { ...selectedModule, instanceId: Date.now(), accessories: [] };
                             setBays(newBays);
                             // Clear selection if module is at limit after placing
                             if (selectedModule.maxCount && getModuleCount(selectedModule.id) + 1 >= selectedModule.maxCount) {
@@ -710,7 +741,8 @@ export default function FoundationBuilder() {
                 </Link>
               </div>
 
-              {/* Configuration Key Section */}
+              {/* Configuration Key Section - Only show when networking is present */}
+              {hasNetworking ? (
               <div className="pt-8 border-t border-black/10 dark:border-white/10 space-y-4">
                 <div className="flex justify-between items-end">
                   <label className="text-sm font-medium opacity-70">Configuration Key</label>
@@ -851,6 +883,13 @@ export default function FoundationBuilder() {
                   </div>
                 </div>
               </div>
+              ) : (
+              <div className="pt-8 border-t border-black/10 dark:border-white/10">
+                <div className="text-center py-6 px-4 rounded-xl border border-dashed border-red-500/30 bg-red-500/5">
+                  <span className="text-sm font-mono text-red-500">Add a networking module (2.5GbE, 5GbE, or 10GbE) to generate a configuration key</span>
+                </div>
+              </div>
+              )}
 
             </div>
           </div>
