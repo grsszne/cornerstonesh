@@ -221,6 +221,15 @@ export default function FoundationHero() {
                 <span className="text-orange-500 font-bold">[+]</span> Up to 3.5 Quadrillion Unique Configurations
               </li>
             </ul>
+
+            <div className="mt-6">
+              <Link
+                href="/foundation/guide"
+                className="inline-flex items-center gap-2 text-sm font-mono text-orange-500 hover:opacity-70 transition-opacity"
+              >
+                <span>→ Hardware guide</span>
+              </Link>
+            </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 md:justify-end">
             <Link

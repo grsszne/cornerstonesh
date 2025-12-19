@@ -1,6 +1,7 @@
 import Link from "next/link";
 import AsciiArt from "@/components/AsciiArt";
-import { MODULE_CATEGORIES, getModuleColorClass, formatNetworkLabel } from "@/lib/modules";
+import { MODULE_CATEGORIES } from "@/lib/modules";
+import ModuleMasonryGrid from "@/components/ModuleMasonryGrid";
 
 export const metadata = {
     title: "Modules - Cornerstone",
@@ -26,10 +27,19 @@ export default function ModulesPage() {
                         <h1 className="text-5xl md:text-7xl font-medium tracking-tighter mb-6">
                             Module <span className="text-orange-500">Ecosystem</span>
                         </h1>
-                        <p className="text-xl font-mono opacity-60 leading-relaxed max-w-2xl">
+                        <p className="text-xl font-mono opacity-60 leading-relaxed max-w-2xl mb-6">
                             Expand your Foundation with our growing ecosystem of snap-in modules.
                             From high-speed storage to specialized connectivity.
                         </p>
+                        <Link
+                            href="/foundation/guide"
+                            className="inline-flex items-center gap-2 text-sm font-mono text-orange-500 hover:opacity-70 transition-opacity"
+                        >
+                            <span>Need help choosing?</span>
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -46,49 +56,7 @@ export default function ModulesPage() {
                             <div className="h-px flex-1 bg-black/10 dark:bg-white/10 ml-8 hidden md:block"></div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {category.modules.map((module) => (
-                                <div
-                                    key={module.id}
-                                    className="group relative bg-gray-50 dark:bg-zinc-900/50 border border-black/5 dark:border-white/5 hover:border-orange-500/50 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/5"
-                                >
-                                    <div className={`absolute top-6 right-6 w-3 h-3 rounded-full ${getModuleColorClass(module, 'bg')}`}></div>
-
-                                    <div className="mb-8">
-                                        <div className="font-mono text-xs uppercase tracking-widest opacity-40 mb-1">
-                                            {module.type}
-                                        </div>
-                                        <h3 className="text-2xl font-medium tracking-tight group-hover:text-orange-500 transition-colors">
-                                            {formatNetworkLabel(module.label)}
-                                        </h3>
-                                    </div>
-
-                                    <div className="space-y-6">
-                                        <p className="font-mono text-sm opacity-70 min-h-[3em]">
-                                            {module.description || `${module.label} module for your Foundation.`}
-                                        </p>
-
-                                        <div className="pt-6 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
-                                            <div className="font-mono text-lg font-medium">
-                                                ${module.price}
-                                            </div>
-                                            <Link
-                                                href="/foundation"
-                                                className={`
-                           px-4 py-2 rounded-lg font-mono text-xs uppercase tracking-wider
-                           ${getModuleColorClass(module, 'bg')}/10 
-                           ${getModuleColorClass(module, 'text')}
-                           hover:${getModuleColorClass(module, 'bg')}/20
-                           transition-colors
-                         `}
-                                            >
-                                                Add to Build
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        <ModuleMasonryGrid modules={category.modules} />
                     </section>
                 ))}
             </div>
@@ -102,12 +70,18 @@ export default function ModulesPage() {
                     <p className="text-xl font-mono opacity-60 max-w-2xl mx-auto">
                         The Foundation roadmap is community-driven. Vote for the next module.
                     </p>
-                    <div className="flex justify-center gap-4">
+                    <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
                         <Link
                             href="/devlog"
                             className="px-8 py-4 bg-black text-white dark:bg-white dark:text-black rounded-full font-mono font-medium hover:opacity-80 transition-opacity"
                         >
                             View Roadmap
+                        </Link>
+                        <Link
+                            href="/foundation/guide"
+                            className="px-8 py-4 bg-transparent border border-black/20 dark:border-white/20 text-black dark:text-white rounded-full font-mono font-medium hover:border-orange-500 transition-colors"
+                        >
+                            Hardware Guide
                         </Link>
                     </div>
                 </div>

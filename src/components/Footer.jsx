@@ -76,7 +76,34 @@ export default function Footer() {
           </div>
 
           {/* Links Section */}
-            <div className="grid grid-cols-2 gap-8 md:gap-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
+              <div>
+                <h4 className="text-sm font-bold uppercase mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                  Resources
+                </h4>
+                <ul className="space-y-3 font-mono text-sm">
+                  <li>
+                    <Link href="/foundation/guide" className="hover:opacity-70 transition-opacity">
+                      Hardware Guide
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/foundation/modules" className="hover:opacity-70 transition-opacity">
+                      Module Catalog
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/foundation" className="hover:opacity-70 transition-opacity">
+                      Build Your Own
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/devlog" className="hover:opacity-70 transition-opacity">
+                      Dev Log
+                    </Link>
+                  </li>
+                </ul>
+              </div>
               <div>
                 <h4 className="text-sm font-bold uppercase mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
                   Socials
