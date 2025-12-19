@@ -205,20 +205,20 @@ export default function FoundationHero() {
             </p>
             
             <ul className="mt-8 space-y-2 font-mono text-sm md:text-base opacity-80">
-              <li className="flex items-center gap-3">
-                <span className="text-orange-500 font-bold">[+]</span> Up to 64TB NVMe Storage
+              <li className="flex items-center ">
+                <span className="text-orange-500 font-bold mr-2">[+]</span> Up to 64TB NVMe Storage
               </li>
-              <li className="flex items-center gap-3">
-                <span className="text-orange-500 font-bold">[+]</span> Up to 10G<span className="lowercase">b</span>E Networking
+              <li className="flex items-center ">
+                <span className="text-orange-500 font-bold mr-2">[+]</span> Up to 10G<span className="lowercase">b</span>E Networking
               </li>
-              <li className="flex items-center gap-3">
-                <span className="text-orange-500 font-bold">[+]</span> Intel N305 x86 Processor
+              <li className="flex items-center ">
+                <span className="text-orange-500 font-bold mr-2">[+]</span> Intel N305 x86 Processor
               </li>
-              <li className="flex items-center gap-3">
-                <span className="text-orange-500 font-bold">[+]</span> PCIe Gen 3 Backplane
+              <li className="flex items-center ">
+                <span className="text-orange-500 font-bold mr-2">[+]</span> PCIe Gen 3 Backplane
               </li>
-              <li className="flex items-center gap-3">
-                <span className="text-orange-500 font-bold">[+]</span> Up to 3.5 Quadrillion Unique Configurations
+              <li className="flex items-center ">
+                <span className="text-orange-500 font-bold mr-2">[+]</span> Up to 3.5 Quadrillion Unique Configurations
               </li>
             </ul>
           </div>
