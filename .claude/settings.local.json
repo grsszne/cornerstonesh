@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npm run dev:*)",
-      "Bash(cmd //c \"taskkill /PID 1756 /F\")"
+      "Bash(cmd //c \"taskkill /PID 1756 /F\")",
+      "Skill(frontend-design)"
     ]
   }
 }
