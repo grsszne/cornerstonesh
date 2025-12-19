@@ -118,9 +118,18 @@ export default function FoundationPage() {
                   <div className="h-px w-12 bg-orange-500"></div>
                   <span className="font-mono text-xs uppercase tracking-[0.3em] text-orange-500">Use Cases</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-medium tracking-tight text-black dark:text-white">
+                <h2 className="text-4xl md:text-6xl font-medium tracking-tight text-black dark:text-white mb-6">
                   Built for <span className="text-orange-500">You</span>
                 </h2>
+                <Link
+                  href="/foundation/guide"
+                  className="inline-flex items-center gap-2 text-sm font-mono text-orange-500 hover:opacity-70 transition-opacity"
+                >
+                  <span>Not sure what specs you need?</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
               </div>
             </FadeIn>
 
