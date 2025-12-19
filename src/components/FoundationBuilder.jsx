@@ -34,11 +34,15 @@ const BOOT_STORAGE_OPTIONS = [
 
 const NUM_BAYS = 8;
 
+// Networking options (from modules.js)
+const NETWORKING_OPTIONS = MODULE_CATEGORIES.networking.modules;
+
 export default function FoundationBuilder() {
   const searchParams = useSearchParams();
 
   const [memory, setMemory] = useState(MEMORY_OPTIONS[0]);
   const [bootStorage, setBootStorage] = useState(BOOT_STORAGE_OPTIONS[0]);
+  const [networking, setNetworking] = useState(null); // null = not selected yet
   // Removed global accessories state
   // const [accessories, setAccessories] = useState([]);
 
@@ -78,6 +82,10 @@ export default function FoundationBuilder() {
           const storage = BOOT_STORAGE_OPTIONS.find(o => o.label === config.bootStorage);
           if (storage) setBootStorage(storage);
         }
+        if (config.networking) {
+          const net = NETWORKING_OPTIONS.find(o => o.id === config.networking);
+          if (net) setNetworking(net);
+        }
         if (config.bays && Array.isArray(config.bays)) {
           const loadedBays = config.bays.map(bay => {
             if (!bay) return null;
@@ -101,36 +109,37 @@ export default function FoundationBuilder() {
       const config = {
         memory: memory.label,
         bootStorage: bootStorage.label,
+        networking: networking?.id || null,
         bays: bays.map(bay => bay ? { id: bay.id, instanceId: bay.instanceId, accessories: bay.accessories || [] } : null)
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
     } catch (e) {
       console.error("Failed to save config to localStorage", e);
     }
-  }, [memory, bootStorage, bays, isLoaded]);
+  }, [memory, bootStorage, networking, bays, isLoaded]);
 
   // Handle adding module from URL param
   useEffect(() => {
     if (!isLoaded) return;
     const addModuleId = searchParams.get("add");
     if (addModuleId) {
-      const module = MODULE_OPTIONS.find(m => m.id === addModuleId);
-      if (module) {
-        // Find first empty bay
-        const emptyBayIndex = bays.findIndex(b => b === null);
-        if (emptyBayIndex !== -1) {
-          // Check if module can be added (respects maxCount)
-          const currentCount = bays.filter(b => b?.id === module.id).length;
-          const hasNetworkingNow = bays.some(b => b?.type === "ethernet");
-          const occupiedBaysNow = bays.filter(b => b !== null).length;
-          // Check networking requirement - must reserve 1 bay for networking if none exists
-          const canAddNonNetworking = hasNetworkingNow || occupiedBaysNow < NUM_BAYS - 1;
-
-          if ((!module.maxCount || currentCount < module.maxCount) &&
-              (module.type === "ethernet" || canAddNonNetworking)) {
-            const newBays = [...bays];
-            newBays[emptyBayIndex] = { ...module, instanceId: Date.now(), accessories: [] };
-            setBays(newBays);
+      // Check if it's a networking module
+      const netModule = NETWORKING_OPTIONS.find(m => m.id === addModuleId);
+      if (netModule) {
+        setNetworking(netModule);
+      } else {
+        const module = MODULE_OPTIONS.find(m => m.id === addModuleId);
+        if (module) {
+          // Find first empty bay
+          const emptyBayIndex = bays.findIndex(b => b === null);
+          if (emptyBayIndex !== -1) {
+            // Check if module can be added (respects maxCount)
+            const currentCount = bays.filter(b => b?.id === module.id).length;
+            if (!module.maxCount || currentCount < module.maxCount) {
+              const newBays = [...bays];
+              newBays[emptyBayIndex] = { ...module, instanceId: Date.now(), accessories: [] };
+              setBays(newBays);
+            }
           }
         }
       }
@@ -150,12 +159,6 @@ export default function FoundationBuilder() {
     return getModuleCount(module.id) < module.maxCount;
   };
 
-  // Check if we can add a non-networking module (must reserve 1 bay for networking if none exists)
-  const canAddNonNetworkingModule = () => {
-    if (hasNetworking) return true;
-    // If no networking, reserve at least 1 bay for it
-    return occupiedBays < NUM_BAYS - 1;
-  };
 
   const basePrice = 299;
 
@@ -169,11 +172,12 @@ export default function FoundationBuilder() {
     return sum + modPrice + accPrice;
   }, 0);
 
-  const totalPrice = basePrice + memory.price + bootStorage.price + bayPrice;
+  const networkingPrice = networking?.price || 0;
+  const totalPrice = basePrice + memory.price + bootStorage.price + networkingPrice + bayPrice;
 
   const occupiedBays = bays.filter(b => b !== null).length;
   const hasExpansion = occupiedBays > 0;
-  const hasNetworking = bays.some(b => b?.type === "ethernet");
+  const hasNetworking = networking !== null;
 
   const stackHeight = 50 + (occupiedBays * 15);
   const stackCircles = 2 + (occupiedBays * 10);
@@ -221,12 +225,6 @@ export default function FoundationBuilder() {
     if (draggedModule && bays[bayIndex] === null && canAddModule(draggedModule)) {
       // Don't allow dropping accessories into empty bays
       if (MODULE_CATEGORIES.accessories.modules.some(m => m.id === draggedModule.id)) {
-        setDraggedModule(null);
-        setDragOverBay(null);
-        return;
-      }
-      // Check networking requirement - must reserve 1 bay for networking if none exists
-      if (draggedModule.type !== "ethernet" && !canAddNonNetworkingModule()) {
         setDraggedModule(null);
         setDragOverBay(null);
         return;
@@ -392,6 +390,12 @@ export default function FoundationBuilder() {
                   <span className="opacity-60">Boot Storage</span>
                   <span className={bootStorage.price > 0 ? "text-orange-500" : ""}>{bootStorage.label} NVMe</span>
                 </div>
+                <div className="flex justify-between">
+                  <span className="opacity-60">Networking</span>
+                  <span className={networking?.price > 0 ? "text-green-500" : networking ? "" : "text-red-500"}>
+                    {networking ? networking.label : "Not Selected"}
+                  </span>
+                </div>
 
                 {occupiedBays > 0 && (
                   <div className="border-t border-black/5 dark:border-white/5 pt-2 mt-2">
@@ -484,6 +488,8 @@ export default function FoundationBuilder() {
                 </p>
               </div>
 
+
+
               {/* Modular Bays Section */}
               <div className="space-y-6 pt-6 border-t border-black/10 dark:border-white/10">
                 <button
@@ -568,16 +574,9 @@ export default function FoundationBuilder() {
                 {/* Bay Slots - Dynamic columns based on visibleSlots */}
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[12px] bg-orange-500/10 text-orange-500 px-1.5 py-0.5 rounded border border-orange-500/20 font-mono">
-                        Universal Bay
-                      </span>
-                      {!hasNetworking && (
-                        <span className="text-[10px] bg-red-500/10 text-red-500 px-1.5 py-0.5 rounded border border-red-500/20 font-mono">
-                          Networking Required
-                        </span>
-                      )}
-                    </div>
+                    <span className="text-[12px] bg-orange-500/10 text-orange-500 px-1.5 py-0.5 rounded border border-orange-500/20 font-mono">
+                      Universal Bay
+                    </span>
                     {occupiedBays > 0 && (
                       <button
                         onClick={() => {
@@ -599,10 +598,6 @@ export default function FoundationBuilder() {
                         onDrop={(e) => handleDrop(e, index)}
                         onClick={() => {
                           if (!bay && selectedModule && canAddModule(selectedModule)) {
-                            // Check networking requirement
-                            if (selectedModule.type !== "ethernet" && !canAddNonNetworkingModule()) {
-                              return;
-                            }
                             const newBays = [...bays];
                             newBays[index] = { ...selectedModule, instanceId: Date.now(), accessories: [] };
                             setBays(newBays);
@@ -742,7 +737,7 @@ export default function FoundationBuilder() {
               </div>
 
               {/* Configuration Key Section - Only show when networking is present */}
-              {hasNetworking ? (
+              {hasNetworking && (
               <div className="pt-8 border-t border-black/10 dark:border-white/10 space-y-4">
                 <div className="flex justify-between items-end">
                   <label className="text-sm font-medium opacity-70">Configuration Key</label>
@@ -757,20 +752,21 @@ export default function FoundationBuilder() {
                       readOnly
                       value={(() => {
                         // Bit Packing Logic
-                        // Memory (2 bits) | Boot Storage (2 bits) | VisibleSlots (3 bits) | Bays (8 slots * 4 bits each = 32 bits)
+                        // Memory (2 bits) | Boot Storage (2 bits) | Networking (3 bits) | Bays (8 slots * 6 bits each)
                         let val = BigInt(0);
 
-                        // Memory: 0-2
+                        // Memory: 2 bits (position 0)
                         val |= BigInt(MEMORY_OPTIONS.findIndex(o => o.label === memory.label));
 
-                        // Boot Storage: 0-2
+                        // Boot Storage: 2 bits (position 2)
                         val |= BigInt(BOOT_STORAGE_OPTIONS.findIndex(o => o.label === bootStorage.label)) << BigInt(2);
 
-                        // VisibleSlots: 1-7 (stored as 0-6). ALWAYS 7 now.
-                        val |= BigInt(7 - 1) << BigInt(4);
+                        // Networking: 3 bits (position 4) - 0 = none, 1-4 = options
+                        const netIdx = networking ? NETWORKING_OPTIONS.findIndex(o => o.id === networking.id) + 1 : 0;
+                        val |= BigInt(netIdx) << BigInt(4);
 
                         // Bays: 8 slots * 6 bits each (4 bits for module type, 2 bits for accessories)
-                        // Total bits per bay = 6. 
+                        // Total bits per bay = 6.
                         // Start bit = 7.
 
                         bays.forEach((bay, i) => {
@@ -843,8 +839,13 @@ export default function FoundationBuilder() {
                           const storeIdx = Number((val >> BigInt(2)) & BigInt(0x3));
                           if (BOOT_STORAGE_OPTIONS[storeIdx]) setBootStorage(BOOT_STORAGE_OPTIONS[storeIdx]);
 
-                          // VisibleSlots - DEPRECATED / CONSTANT
-                          // const slotsVal = Number((val >> BigInt(4)) & BigInt(0x7)) + 1;
+                          // Networking: 3 bits (position 4) - 0 = none, 1-4 = options
+                          const netIdx = Number((val >> BigInt(4)) & BigInt(0x7));
+                          if (netIdx > 0 && NETWORKING_OPTIONS[netIdx - 1]) {
+                            setNetworking(NETWORKING_OPTIONS[netIdx - 1]);
+                          } else {
+                            setNetworking(null);
+                          }
 
                           // Bays
                           const newBays = [];
@@ -881,12 +882,6 @@ export default function FoundationBuilder() {
                       Load
                     </button>
                   </div>
-                </div>
-              </div>
-              ) : (
-              <div className="pt-8 border-t border-black/10 dark:border-white/10">
-                <div className="text-center py-6 px-4 rounded-xl border border-dashed border-red-500/30 bg-red-500/5">
-                  <span className="text-sm font-mono text-red-500">Add a networking module (2.5GbE, 5GbE, or 10GbE) to generate a configuration key</span>
                 </div>
               </div>
               )}

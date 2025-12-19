@@ -3,7 +3,9 @@
     "allow": [
       "Bash(npm run dev:*)",
       "Bash(cmd //c \"taskkill /PID 1756 /F\")",
-      "Skill(frontend-design)"
+      "Skill(frontend-design)",
+      "Bash(taskkill:*)",
+      "Bash(cmd //c \"taskkill /F /PID 19916\")"
     ]
   }
 }

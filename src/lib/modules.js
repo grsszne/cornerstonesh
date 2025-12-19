@@ -126,10 +126,28 @@ export const MODULE_CATEGORIES = {
             },
         ]
     },
-    connectivity: {
-        label: "Connectivity",
-        description: "Expand your network and peripheral connections.",
+    networking: {
+        label: "Networking",
+        description: "Network connectivity options for your Foundation.",
         modules: [
+            {
+                id: "ethernet-1",
+                label: "1GbE",
+                price: 0,
+                score: 10,
+                type: "ethernet",
+                color: "green",
+                description: "1 Gigabit Ethernet adapter with RJ45 connector. Included by default.",
+                specs: [
+                    { label: "Speed", value: "1 Gbps" },
+                    { label: "Interface", value: "PCIe Gen 2 x1" },
+                    { label: "Connector", value: "RJ45" },
+                    { label: "Standards", value: "IEEE 802.3ab" },
+                    { label: "Power", value: "2W" },
+                    { label: "Latency", value: "<1ms" },
+                ],
+                compatibility: ["Foundation v1", "Foundation v2", "Linux", "Windows", "macOS"]
+            },
             {
                 id: "ethernet-2.5",
                 label: "2.5GbE",
@@ -154,7 +172,7 @@ export const MODULE_CATEGORIES = {
                 price: 120,
                 score: 40,
                 type: "ethernet",
-                color: "emerald",
+                color: "green",
                 description: "5 Gigabit Ethernet adapter for high-bandwidth networks.",
                 specs: [
                     { label: "Speed", value: "5 Gbps" },
@@ -172,7 +190,7 @@ export const MODULE_CATEGORIES = {
                 price: 200,
                 score: 60,
                 type: "ethernet",
-                color: "teal",
+                color: "green",
                 description: "10 Gigabit Ethernet for professional networking.",
                 specs: [
                     { label: "Speed", value: "10 Gbps" },
@@ -184,6 +202,30 @@ export const MODULE_CATEGORIES = {
                 ],
                 compatibility: ["Foundation v2", "Linux", "Windows", "macOS"]
             },
+            {
+                id: "wifi-6",
+                label: "Wi-Fi 6",
+                price: 60,
+                score: 30,
+                type: "wifi",
+                color: "green",
+                description: "Wi-Fi 6 (802.11ax) wireless adapter with dual-band support.",
+                specs: [
+                    { label: "Standard", value: "Wi-Fi 6 (802.11ax)" },
+                    { label: "Bands", value: "2.4GHz + 5GHz" },
+                    { label: "Speed", value: "Up to 2.4 Gbps" },
+                    { label: "Interface", value: "M.2 Key E" },
+                    { label: "Antenna", value: "2x2 MIMO" },
+                    { label: "Power", value: "3W" },
+                ],
+                compatibility: ["Foundation v1", "Foundation v2", "Linux", "Windows", "macOS"]
+            },
+        ]
+    },
+    connectivity: {
+        label: "Connectivity",
+        description: "Expand your peripheral connections.",
+        modules: [
             {
                 id: "oculink",
                 label: "Oculink",
@@ -346,6 +388,7 @@ export const MODULE_CATEGORIES = {
 
 export const MODULE_OPTIONS = [
     ...MODULE_CATEGORIES.storage.modules,
+    ...MODULE_CATEGORIES.networking.modules,
     ...MODULE_CATEGORIES.connectivity.modules,
     ...MODULE_CATEGORIES.utility.modules,
     ...MODULE_CATEGORIES.accessories.modules
