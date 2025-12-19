@@ -686,7 +686,7 @@ export default function FoundationPage() {
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Wireless</span>
-                      <span className="sm:text-right">Wi-Fi 6 / Bluetooth 5.x (Optional)</span>
+                      <span className="sm:text-right">Wi-Fi 6</span>
                     </div>
                   </div>
                 </div>

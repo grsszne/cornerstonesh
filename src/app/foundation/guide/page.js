@@ -591,7 +591,7 @@ export default function GuidePage() {
                     <div>
                       <div className="text-xs font-mono uppercase opacity-40 mb-3">Bay Specs</div>
                       <ul className="space-y-1 text-sm opacity-80">
-                        <li className="flex justify-between"><span>Bays:</span><span className="font-mono">7x M.2 2280</span></li>
+                        <li className="flex justify-between"><span>Bays:</span><span className="font-mono">8x M.2 2280</span></li>
                         <li className="flex justify-between"><span>Per-bay max:</span><span className="font-mono">8TB each</span></li>
                         <li className="flex justify-between"><span>Hot-swap:</span><span className="font-mono">Yes</span></li>
                         <li className="flex justify-between"><span>RAID support:</span><span className="font-mono">Software RAID</span></li>

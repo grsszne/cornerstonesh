@@ -432,7 +432,7 @@ export default function FoundationPage() {
                           <div className="font-mono text-sm text-black/40 dark:text-white/40 uppercase tracking-wider mb-3">Storage</div>
                           <div className="space-y-2">
                             <div className="text-base font-medium text-black dark:text-white">256GB → 64TB NVMe</div>
-                            <div className="text-base font-medium text-black dark:text-white">7 modular bays</div>
+                            <div className="text-base font-medium text-black dark:text-white">8 modular bays</div>
                           </div>
                         </div>
                       </div>
@@ -692,10 +692,6 @@ export default function FoundationPage() {
                       <span className="opacity-70 sm:opacity-100">Boot Storage</span>
                       <span className="sm:text-right">256GB to 8TB NVMe</span>
                     </div>
-                    <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
-                      <span className="opacity-70 sm:opacity-100">Wireless</span>
-                      <span className="sm:text-right">Wi-Fi 6 / Bluetooth 5.x (Optional)</span>
-                    </div>
                   </div>
                 </div>
 
@@ -712,7 +708,7 @@ export default function FoundationPage() {
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Architecture</span>
-                      <span className="sm:text-right">Zero-cable Mortimer backplane</span>
+                      <span className="sm:text-right">Zero-cable PCIe backplane</span>
                     </div>
                   </div>
                 </div>

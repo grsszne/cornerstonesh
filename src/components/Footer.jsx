@@ -88,12 +88,7 @@ export default function Footer() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/foundation/modules" className="hover:opacity-70 transition-opacity">
-                      Module Catalog
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/foundation" className="hover:opacity-70 transition-opacity">
+                    <Link href="/foundation#builder" className="hover:opacity-70 transition-opacity">
                       Build Your Own
                     </Link>
                   </li>

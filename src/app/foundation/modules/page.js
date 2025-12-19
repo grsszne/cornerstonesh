@@ -61,32 +61,6 @@ export default function ModulesPage() {
                 ))}
             </div>
 
-            {/* CTA */}
-            <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-zinc-950 border-t border-black/5 dark:border-white/5">
-                <div className="max-w-4xl mx-auto text-center space-y-8">
-                    <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
-                        Don't see what you need?
-                    </h2>
-                    <p className="text-xl font-mono opacity-60 max-w-2xl mx-auto">
-                        The Foundation roadmap is community-driven. Vote for the next module.
-                    </p>
-                    <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-                        <Link
-                            href="/devlog"
-                            className="px-8 py-4 bg-black text-white dark:bg-white dark:text-black rounded-full font-mono font-medium hover:opacity-80 transition-opacity"
-                        >
-                            View Roadmap
-                        </Link>
-                        <Link
-                            href="/foundation/guide"
-                            className="px-8 py-4 bg-transparent border border-black/20 dark:border-white/20 text-black dark:text-white rounded-full font-mono font-medium hover:border-orange-500 transition-colors"
-                        >
-                            Hardware Guide
-                        </Link>
-                    </div>
-                </div>
-            </section>
-
         </main>
     );
 }

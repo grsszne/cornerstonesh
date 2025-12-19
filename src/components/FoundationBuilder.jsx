@@ -37,7 +37,7 @@ export default function FoundationBuilder() {
   // Removed global accessories state
   // const [accessories, setAccessories] = useState([]); 
 
-  // Bays state - fixed 7 slots. Each slot is { ...module, instanceId, accessories: [] }
+  // Bays state - fixed 8 slots. Each slot is { ...module, instanceId, accessories: [] }
   const [bays, setBays] = useState(Array(NUM_BAYS).fill(null));
 
   // UI State
@@ -245,7 +245,7 @@ export default function FoundationBuilder() {
   };
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-zinc-900/50">
+    <section id="builder" className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-zinc-900/50 scroll-mt-20">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-4">
@@ -255,6 +255,10 @@ export default function FoundationBuilder() {
             Not sure what specs you need?{" "}
             <Link href="/foundation/guide" className="text-orange-500 hover:underline">
               View Hardware Guide →
+            </Link>
+            {" "}or{" "}
+            <Link href="/foundation/modules" className="text-orange-500 hover:underline">
+              Browse Modules →
             </Link>
           </p>
         </div>
@@ -635,7 +639,7 @@ export default function FoundationBuilder() {
                       readOnly
                       value={(() => {
                         // Bit Packing Logic
-                        // Memory (2 bits) | Boot Storage (2 bits) | VisibleSlots (3 bits) | Bays (7 slots * 4 bits each = 28 bits)
+                        // Memory (2 bits) | Boot Storage (2 bits) | VisibleSlots (3 bits) | Bays (8 slots * 4 bits each = 32 bits)
                         let val = BigInt(0);
 
                         // Memory: 0-2
@@ -647,7 +651,7 @@ export default function FoundationBuilder() {
                         // VisibleSlots: 1-7 (stored as 0-6). ALWAYS 7 now.
                         val |= BigInt(7 - 1) << BigInt(4);
 
-                        // Bays: 7 slots * 6 bits each (4 bits for module type, 2 bits for accessories)
+                        // Bays: 8 slots * 6 bits each (4 bits for module type, 2 bits for accessories)
                         // Total bits per bay = 6. 
                         // Start bit = 7.
 
