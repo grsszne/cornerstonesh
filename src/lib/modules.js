@@ -128,7 +128,7 @@ export const MODULE_CATEGORIES = {
     },
     networking: {
         label: "Networking",
-        description: "Network connectivity options for your Foundation.",
+        description: "Network connectivity options for your Foundation. Wired Ethernet strongly recommended over wifi for reliable server operation.",
         modules: [
             {
                 id: "ethernet-1",
@@ -137,7 +137,7 @@ export const MODULE_CATEGORIES = {
                 score: 10,
                 type: "ethernet",
                 color: "green",
-                description: "1 Gigabit Ethernet adapter with RJ45 connector. Included by default.",
+                description: "1 Gigabit Ethernet adapter with RJ45 connector. First one included, additional ports $65 each.",
                 specs: [
                     { label: "Speed", value: "1 Gbps" },
                     { label: "Interface", value: "PCIe Gen 2 x1" },
@@ -209,7 +209,7 @@ export const MODULE_CATEGORIES = {
                 score: 30,
                 type: "wifi",
                 color: "green",
-                description: "Wi-Fi 6 (802.11ax) wireless adapter with dual-band support.",
+                description: "Wi-Fi 6 (802.11ax) wireless adapter with dual-band support. Note: Wired connections strongly recommended for server reliability.",
                 specs: [
                     { label: "Standard", value: "Wi-Fi 6 (802.11ax)" },
                     { label: "Bands", value: "2.4GHz + 5GHz" },

@@ -123,28 +123,27 @@ export default function FoundationBuilder() {
     if (!isLoaded) return;
     const addModuleId = searchParams.get("add");
     if (addModuleId) {
-      // Check if it's a networking module
+      // Check if it's a networking module or regular module
       const netModule = NETWORKING_OPTIONS.find(m => m.id === addModuleId);
-      if (netModule) {
-        setNetworking(netModule);
-      } else {
-        const module = MODULE_OPTIONS.find(m => m.id === addModuleId);
-        if (module) {
-          // Find first empty bay
-          const emptyBayIndex = bays.findIndex(b => b === null);
-          if (emptyBayIndex !== -1) {
-            // Check if module can be added (respects maxCount)
-            const currentCount = bays.filter(b => b?.id === module.id).length;
-            if (!module.maxCount || currentCount < module.maxCount) {
-              const newBays = [...bays];
-              newBays[emptyBayIndex] = { ...module, instanceId: Date.now(), accessories: [] };
-              setBays(newBays);
-            }
+      const module = netModule || MODULE_OPTIONS.find(m => m.id === addModuleId);
+
+      if (module) {
+        // Find first empty bay
+        const emptyBayIndex = bays.findIndex(b => b === null);
+        if (emptyBayIndex !== -1) {
+          // Check if module can be added (respects maxCount)
+          const currentCount = bays.filter(b => b?.id === module.id).length;
+          if (!module.maxCount || currentCount < module.maxCount) {
+            const newBays = [...bays];
+            newBays[emptyBayIndex] = { ...module, instanceId: Date.now(), accessories: [] };
+            setBays(newBays);
           }
         }
       }
-      // Clear the URL param after adding
-      window.history.replaceState({}, '', '/foundation?ref=builder');
+      // Clear the add param after adding, but keep ref param for scrolling
+      const ref = searchParams.get("ref");
+      const newUrl = ref ? `/foundation?ref=${ref}` : '/foundation';
+      window.history.replaceState({}, '', newUrl);
     }
   }, [isLoaded, searchParams]);
 
@@ -160,11 +159,22 @@ export default function FoundationBuilder() {
   };
 
 
-  const basePrice = 299;
+  const basePrice = 399;
+
+  // Count 1GbE modules for pricing (first one is free, rest are $65 each)
+  let gigEthCount = 0;
 
   const bayPrice = bays.reduce((sum, mod) => {
     if (!mod) return sum;
-    const modPrice = mod.price || 0;
+
+    let modPrice = mod.price || 0;
+
+    // Special pricing for 1GbE: first one free, $65 for each additional
+    if (mod.id === 'ethernet-1') {
+      gigEthCount++;
+      modPrice = gigEthCount > 1 ? 65 : 0;
+    }
+
     const accPrice = (mod.accessories || []).reduce((accSum, accId) => {
       const accOption = MODULE_CATEGORIES.accessories.modules.find(m => m.id === accId);
       return accSum + (accOption?.price || 0);
@@ -177,7 +187,15 @@ export default function FoundationBuilder() {
 
   const occupiedBays = bays.filter(b => b !== null).length;
   const hasExpansion = occupiedBays > 0;
-  const hasNetworking = networking !== null;
+
+  // Check if there's a networking module in the bays
+  const networkingModuleInBay = bays.find(bay =>
+    bay && NETWORKING_OPTIONS.some(netMod => netMod.id === bay.id)
+  );
+
+  // Determine which networking module to display (bay takes precedence over dedicated networking)
+  const effectiveNetworking = networkingModuleInBay || networking;
+  const hasNetworking = effectiveNetworking !== null;
 
   const stackHeight = 50 + (occupiedBays * 15);
   const stackCircles = 2 + (occupiedBays * 10);
@@ -392,8 +410,8 @@ export default function FoundationBuilder() {
                 </div>
                 <div className="flex justify-between">
                   <span className="opacity-60">Networking</span>
-                  <span className={networking?.price > 0 ? "text-green-500" : networking ? "" : "text-red-500"}>
-                    {networking ? networking.label : "Not Selected"}
+                  <span className={effectiveNetworking?.price > 0 ? "text-green-500" : effectiveNetworking ? "" : "text-red-500"}>
+                    {effectiveNetworking ? effectiveNetworking.label : "Not Selected"}
                   </span>
                 </div>
 
@@ -401,25 +419,43 @@ export default function FoundationBuilder() {
                   <div className="border-t border-black/5 dark:border-white/5 pt-2 mt-2">
                     <span className="block opacity-60 mb-2">Installed Modules</span>
                     <div className="space-y-1">
-                      {bays.map((mod, i) => mod && (
-                        <div key={i} className="space-y-1">
-                          <div className={`flex justify-between pl-2 border-l-2 ${getModuleColorClass(mod, 'border')}/20`}>
-                            <span>Bay {i + 1}</span>
-                            <span className={getModuleColorClass(mod, 'text')}>{mod.label}</span>
-                          </div>
-                          {/* List accessories for this bay */}
-                          {mod.accessories?.map(accId => {
-                            const acc = MODULE_CATEGORIES.accessories.modules.find(m => m.id === accId);
-                            if (!acc) return null;
-                            return (
-                              <div key={accId} className="flex justify-between pl-4 text-xs opacity-70">
-                                <span>+ {acc.label}</span>
-                                <span>${acc.price}</span>
+                      {(() => {
+                        let gigEthDisplayCount = 0;
+                        return bays.map((mod, i) => {
+                          if (!mod) return null;
+
+                          // Calculate display price for 1GbE modules
+                          let displayPrice = mod.price;
+                          if (mod.id === 'ethernet-1') {
+                            gigEthDisplayCount++;
+                            displayPrice = gigEthDisplayCount > 1 ? 65 : 0;
+                          }
+
+                          return (
+                            <div key={i} className="space-y-1">
+                              <div className={`flex justify-between pl-2 border-l-2 ${getModuleColorClass(mod, 'border')}/20`}>
+                                <span>Bay {i + 1}</span>
+                                <span className={getModuleColorClass(mod, 'text')}>
+                                  {mod.label}
+                                  {displayPrice > 0 && ` +$${displayPrice}`}
+                                  {displayPrice === 0 && mod.id === 'ethernet-1' && ' (included)'}
+                                </span>
                               </div>
-                            );
-                          })}
-                        </div>
-                      ))}
+                              {/* List accessories for this bay */}
+                              {mod.accessories?.map(accId => {
+                                const acc = MODULE_CATEGORIES.accessories.modules.find(m => m.id === accId);
+                                if (!acc) return null;
+                                return (
+                                  <div key={accId} className="flex justify-between pl-4 text-xs opacity-70">
+                                    <span>+ {acc.label}</span>
+                                    <span>${acc.price}</span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          );
+                        });
+                      })()}
                     </div>
                   </div>
                 )}
@@ -521,6 +557,19 @@ export default function FoundationBuilder() {
                             {category.modules.map((module) => {
                               const isAtLimit = module.maxCount && getModuleCount(module.id) >= module.maxCount;
                               const isSelected = selectedModule?.id === module.id;
+
+                              // Calculate display price for 1GbE modules
+                              let displayPrice = module.price;
+                              let priceLabel = `+$${displayPrice}`;
+                              if (module.id === 'ethernet-1') {
+                                const gigEthInBays = bays.filter(b => b?.id === 'ethernet-1').length;
+                                if (gigEthInBays === 0) {
+                                  priceLabel = 'included';
+                                } else {
+                                  priceLabel = '+$65';
+                                }
+                              }
+
                               return (
                                 <div
                                   key={module.id}
@@ -557,7 +606,7 @@ export default function FoundationBuilder() {
                                 >
                                   <span className={`w-2 h-2 rounded-full ${getModuleColorClass(module, 'bg')}`}></span>
                                   <span className="font-medium">{module.label}</span>
-                                  <span className="opacity-60">+${module.price}</span>
+                                  <span className="opacity-60">{priceLabel}</span>
                                   {isAtLimit && <span className="text-[9px] text-red-500">(max)</span>}
                                   {key === 'accessories'
                                     ? selectedBayIndices.length > 0 && selectedBayIndices.every(idx => bays[idx]?.accessories?.includes(module.id)) && <span className="text-[9px] opacity-70">✓</span>
@@ -590,62 +639,74 @@ export default function FoundationBuilder() {
                     )}
                   </div>
                   <div className={`grid grid-cols-2 md:grid-cols-4 gap-3`}>
-                    {bays.map((bay, index) => (
-                      <div
-                        key={index}
-                        onDragOver={(e) => handleDragOver(e, index)}
-                        onDragLeave={handleDragLeave}
-                        onDrop={(e) => handleDrop(e, index)}
-                        onClick={() => {
-                          if (!bay && selectedModule && canAddModule(selectedModule)) {
-                            const newBays = [...bays];
-                            newBays[index] = { ...selectedModule, instanceId: Date.now(), accessories: [] };
-                            setBays(newBays);
-                            // Clear selection if module is at limit after placing
-                            if (selectedModule.maxCount && getModuleCount(selectedModule.id) + 1 >= selectedModule.maxCount) {
-                              setSelectedModule(null);
-                            } else {
-                              // Lose focus after placement regardless of limit
-                              setSelectedModule(null);
-                            }
-                          } else if (bay) {
-                            // Toggle selection for multi-select
-                            setSelectedBayIndices(prev => {
-                              if (prev.includes(index)) {
-                                return prev.filter(i => i !== index);
-                              } else {
-                                return [...prev, index];
-                              }
-                            });
-                            setSelectedModule(null); // Deselect module list if selecting bay
-                          }
-                        }}
-                        className={`
-                              relative h-[120px] rounded-xl border-2 transition-all duration-200
-                              flex flex-col items-center justify-center text-center
-                                    ${bay
-                            ? selectedBayIndices.includes(index)
-                              ? `ring-1 ring-orange-500/50 bg-orange-500/5 scale-[1.02] shadow-lg shadow-orange-500/5` // Active Selection (Edit Mode) - Dimmed
-                              : `${getModuleColorClass(bay, 'border')} ${getModuleColorClass(bay, 'bg')}/10`
-                            : selectedModule && !bay
-                              ? 'border-dashed border-orange-500 bg-orange-500/5 cursor-pointer hover:bg-orange-500/10 hover:scale-[1.02]'
-                              : dragOverBay === index
-                                ? 'border-orange-500 bg-orange-500/10 border-solid scale-[1.02]'
-                                : 'border-dashed border-black/20 dark:border-white/20 hover:border-black/40 dark:hover:border-white/40'
-                          }
-                            `}
-                      >
-                        {bay ? (
+                    {(() => {
+                      let gigEthBayCount = 0;
+                      return bays.map((bay, index) => {
+                        // Calculate display price for this bay's module
+                        let bayDisplayPrice = bay?.price || 0;
+                        if (bay?.id === 'ethernet-1') {
+                          gigEthBayCount++;
+                          bayDisplayPrice = gigEthBayCount > 1 ? 65 : 0;
+                        }
+
+                        return (
                           <div
-                            className="p-2 w-full h-full flex flex-col cursor-grab active:cursor-grabbing"
-                            draggable
-                            onDragStart={(e) => handleBayDragStart(e, index)}
-                            onDragEnd={handleDragEnd}
+                            key={index}
+                            onDragOver={(e) => handleDragOver(e, index)}
+                            onDragLeave={handleDragLeave}
+                            onDrop={(e) => handleDrop(e, index)}
+                            onClick={() => {
+                              if (!bay && selectedModule && canAddModule(selectedModule)) {
+                                const newBays = [...bays];
+                                newBays[index] = { ...selectedModule, instanceId: Date.now(), accessories: [] };
+                                setBays(newBays);
+                                // Clear selection if module is at limit after placing
+                                if (selectedModule.maxCount && getModuleCount(selectedModule.id) + 1 >= selectedModule.maxCount) {
+                                  setSelectedModule(null);
+                                } else {
+                                  // Lose focus after placement regardless of limit
+                                  setSelectedModule(null);
+                                }
+                              } else if (bay) {
+                                // Toggle selection for multi-select
+                                setSelectedBayIndices(prev => {
+                                  if (prev.includes(index)) {
+                                    return prev.filter(i => i !== index);
+                                  } else {
+                                    return [...prev, index];
+                                  }
+                                });
+                                setSelectedModule(null); // Deselect module list if selecting bay
+                              }
+                            }}
+                            className={`
+                                  relative h-[120px] rounded-xl border-2 transition-all duration-200
+                                  flex flex-col items-center justify-center text-center
+                                        ${bay
+                                ? selectedBayIndices.includes(index)
+                                  ? `ring-1 ring-orange-500/50 bg-orange-500/5 scale-[1.02] shadow-lg shadow-orange-500/5` // Active Selection (Edit Mode) - Dimmed
+                                  : `${getModuleColorClass(bay, 'border')} ${getModuleColorClass(bay, 'bg')}/10`
+                                : selectedModule && !bay
+                                  ? 'border-dashed border-orange-500 bg-orange-500/5 cursor-pointer hover:bg-orange-500/10 hover:scale-[1.02]'
+                                  : dragOverBay === index
+                                    ? 'border-orange-500 bg-orange-500/10 border-solid scale-[1.02]'
+                                    : 'border-dashed border-black/20 dark:border-white/20 hover:border-black/40 dark:hover:border-white/40'
+                              }
+                                `}
                           >
-                            <div className="flex-1 flex flex-col items-center justify-center">
-                              <div className={`w-4 h-4 rounded-full ${getModuleColorClass(bay, 'bg')} mb-2`}></div>
-                              <span className="font-mono text-[10px] font-bold leading-tight">{formatNetworkLabel(bay.label)}</span>
-                              <span className="font-mono text-[9px] opacity-50 mt-1">+${bay.price}</span>
+                            {bay ? (
+                              <div
+                                className="p-2 w-full h-full flex flex-col cursor-grab active:cursor-grabbing"
+                                draggable
+                                onDragStart={(e) => handleBayDragStart(e, index)}
+                                onDragEnd={handleDragEnd}
+                              >
+                                <div className="flex-1 flex flex-col items-center justify-center">
+                                  <div className={`w-4 h-4 rounded-full ${getModuleColorClass(bay, 'bg')} mb-2`}></div>
+                                  <span className="font-mono text-[10px] font-bold leading-tight">{formatNetworkLabel(bay.label)}</span>
+                                  <span className="font-mono text-[9px] opacity-50 mt-1">
+                                    {bayDisplayPrice === 0 && bay.id === 'ethernet-1' ? 'included' : `+$${bayDisplayPrice}`}
+                                  </span>
                               {/* Accessory Indicators */}
                               {bay.accessories && bay.accessories.length > 0 && (
                                 <div className="flex gap-1 mt-1 justify-center">
@@ -669,7 +730,9 @@ export default function FoundationBuilder() {
                           </div>
                         )}
                       </div>
-                    ))}
+                        );
+                      });
+                    })()}
                   </div>
                 </div>
 
