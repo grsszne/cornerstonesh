@@ -227,24 +227,6 @@ export const MODULE_CATEGORIES = {
         description: "Expand your peripheral connections.",
         modules: [
             {
-                id: "oculink",
-                label: "Oculink",
-                price: 80,
-                score: 35,
-                type: "oculink",
-                color: "cyan",
-                description: "Oculink PCIe expansion for external GPUs.",
-                specs: [
-                    { label: "Interface", value: "PCIe Gen 3 x4" },
-                    { label: "Bandwidth", value: "32 Gbps" },
-                    { label: "Connector", value: "Oculink SFF-8612" },
-                    { label: "Cable Length", value: "Up to 1m" },
-                    { label: "Power Delivery", value: "25W" },
-                    { label: "Hot-Swap", value: "Supported" },
-                ],
-                compatibility: ["Foundation v2", "eGPU Enclosures", "Linux", "Windows"]
-            },
-            {
                 id: "usb-c",
                 label: "USB-C 3.0",
                 price: 60,

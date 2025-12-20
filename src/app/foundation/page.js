@@ -329,7 +329,7 @@ export default function FoundationPage() {
                         <div className="flex items-center justify-between font-mono text-xs">
                           <span className="text-black/40 dark:text-white/40">MOD</span>
                           <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-orange-500">Oculink Port</span>
+                          <span className="text-orange-500">USB-C 3.0</span>
                         </div>
                       </div>
                     </div>

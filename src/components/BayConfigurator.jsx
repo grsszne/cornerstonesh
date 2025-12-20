@@ -61,12 +61,6 @@ const MODULE_TYPES = {
     Icon: Broadcast,
     abbr: "10GB"
   },
-  OCULINK: {
-    label: "Oculink Port",
-    color: "bg-cyan-500",
-    Icon: Lightning,
-    abbr: "OCU"
-  },
   UPS: {
     label: "UPS Battery",
     color: "bg-yellow-500",
@@ -123,7 +117,7 @@ const CONFIGURATIONS = [
       MODULE_TYPES.STORAGE,
       MODULE_TYPES.ETHERNET_10,
       MODULE_TYPES.USB_C,
-      MODULE_TYPES.OCULINK,
+      MODULE_TYPES.UPS,
       MODULE_TYPES.EMPTY,
       MODULE_TYPES.EMPTY
     ]
