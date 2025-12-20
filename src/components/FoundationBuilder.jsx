@@ -118,6 +118,63 @@ export default function FoundationBuilder() {
     }
   }, [memory, bootStorage, networking, bays, isLoaded]);
 
+  // Handle loading configuration from URL params (from configurator via key)
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const configKey = searchParams.get("key");
+
+    if (configKey) {
+      try {
+        const val = BigInt(parseInt(configKey, 36));
+        if (isNaN(Number(val))) throw new Error("Invalid key");
+
+        // Unpack - Memory
+        const memIdx = Number(val & BigInt(0x3));
+        if (MEMORY_OPTIONS[memIdx]) setMemory(MEMORY_OPTIONS[memIdx]);
+
+        // Boot Storage
+        const storeIdx = Number((val >> BigInt(2)) & BigInt(0x3));
+        if (BOOT_STORAGE_OPTIONS[storeIdx]) setBootStorage(BOOT_STORAGE_OPTIONS[storeIdx]);
+
+        // Networking: 3 bits (position 4) - 0 = none, 1-4 = options
+        const netIdx = Number((val >> BigInt(4)) & BigInt(0x7));
+        if (netIdx > 0 && NETWORKING_OPTIONS[netIdx - 1]) {
+          setNetworking(NETWORKING_OPTIONS[netIdx - 1]);
+        } else {
+          setNetworking(null);
+        }
+
+        // Bays
+        const newBays = [];
+        for (let i = 0; i < NUM_BAYS; i++) {
+          const shift = BigInt(7 + (i * 6));
+          const moduleIdx = Number((val >> shift) & BigInt(0xF)); // 4 bits for module
+
+          if (moduleIdx > 0 && MODULE_OPTIONS[moduleIdx - 1]) {
+            // Extract accessories (2 bits after module)
+            const accMask = Number((val >> (shift + BigInt(4))) & BigInt(0x3));
+            const bayAccessories = [];
+            if (accMask & 1) bayAccessories.push('nightlight');
+            if (accMask & 2) bayAccessories.push('fan');
+
+            newBays.push({ ...MODULE_OPTIONS[moduleIdx - 1], instanceId: Date.now() + i, accessories: bayAccessories });
+          } else {
+            newBays.push(null);
+          }
+        }
+        setBays(newBays);
+
+        // Clear the key param after loading, but keep ref for scrolling
+        const ref = searchParams.get("ref");
+        const newUrl = ref ? `/foundation?ref=${ref}` : '/foundation';
+        window.history.replaceState({}, '', newUrl);
+      } catch (e) {
+        console.error("Failed to load config from key", e);
+      }
+    }
+  }, [isLoaded, searchParams]);
+
   // Handle adding module from URL param
   useEffect(() => {
     if (!isLoaded) return;

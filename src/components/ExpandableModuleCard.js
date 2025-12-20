@@ -2,20 +2,39 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { getModuleColorClass, formatNetworkLabel } from '@/lib/modules';
 
 export default function ExpandableModuleCard({ module }) {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div
+        <motion.div
             className={`
                 group relative bg-gray-50 dark:bg-zinc-900/50
                 border border-black/5 dark:border-white/5
-                hover:border-orange-500/50 rounded-2xl overflow-hidden
-                transition-all duration-500 ease-out
-                ${isExpanded ? 'shadow-2xl shadow-orange-500/10 scale-[1.02]' : 'hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/5'}
+                rounded-2xl overflow-hidden
+                ${isExpanded ? 'shadow-2xl shadow-orange-500/10' : ''}
             `}
+            initial={false}
+            animate={
+                isExpanded
+                    ? { scale: 1.02, boxShadow: '0 25px 50px -12px rgba(249, 115, 22, 0.1)' }
+                    : { scale: 1, boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)' }
+            }
+            whileHover={
+                !isExpanded
+                    ? {
+                          y: -8,
+                          borderColor: 'rgba(249, 115, 22, 0.5)',
+                          boxShadow: '0 20px 25px -5px rgba(249, 115, 22, 0.05), 0 10px 10px -5px rgba(249, 115, 22, 0.04)',
+                      }
+                    : {}
+            }
+            transition={{
+                duration: 0.3,
+                ease: [0.4, 0, 0.2, 1],
+            }}
         >
             {/* Collapsed Card Content */}
             <div className="p-6">
@@ -187,6 +206,6 @@ export default function ExpandableModuleCard({ module }) {
                     }
                 }
             `}</style>
-        </div>
+        </motion.div>
     );
 }

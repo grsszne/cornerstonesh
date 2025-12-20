@@ -83,13 +83,18 @@ export default function Footer() {
                 </h4>
                 <ul className="space-y-3 font-mono text-sm">
                   <li>
+                    <Link href="/foundation/configurator" className="hover:opacity-70 transition-opacity">
+                      Build Configurator
+                    </Link>
+                  </li>
+                  <li>
                     <Link href="/foundation/guide" className="hover:opacity-70 transition-opacity">
                       Hardware Guide
                     </Link>
                   </li>
                   <li>
-                    <Link href="/foundation#builder" className="hover:opacity-70 transition-opacity">
-                      Build Your Own
+                    <Link href="/foundation/modules" className="hover:opacity-70 transition-opacity">
+                      Module Catalog
                     </Link>
                   </li>
                   <li>

@@ -2,6 +2,7 @@
 
 import Masonry from 'react-masonry-css';
 import ExpandableModuleCard from './ExpandableModuleCard';
+import FadeIn from './FadeIn';
 
 export default function ModuleMasonryGrid({ modules }) {
     const breakpointColumns = {
@@ -17,8 +18,17 @@ export default function ModuleMasonryGrid({ modules }) {
                 className="masonry-grid"
                 columnClassName="masonry-grid-column"
             >
-                {modules.map((module) => (
-                    <ExpandableModuleCard key={module.id} module={module} />
+                {modules.map((module, idx) => (
+                    <FadeIn
+                        key={module.id}
+                        delay={idx * 0.1}
+                        y={10}
+                        scale={1}
+                        blur={4}
+                        duration={0.5}
+                    >
+                        <ExpandableModuleCard module={module} />
+                    </FadeIn>
                 ))}
             </Masonry>
 
@@ -36,12 +46,6 @@ export default function ModuleMasonryGrid({ modules }) {
 
                 .masonry-grid-column > div {
                     margin-bottom: 24px;
-                    transition: margin-bottom 0.3s ease-in-out;
-                }
-
-                /* Smooth masonry reflow */
-                .masonry-grid-column > * {
-                    will-change: transform;
                 }
             `}</style>
         </>
