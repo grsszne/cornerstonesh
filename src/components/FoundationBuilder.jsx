@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import AsciiArt from "@/components/AsciiArt";
+import { Lightning } from "@phosphor-icons/react";
 
 import {
   MODULE_CATEGORIES,
@@ -32,7 +33,7 @@ const BOOT_STORAGE_OPTIONS = [
 // Module options available for drag and drop
 
 
-const NUM_BAYS = 8;
+const NUM_BAYS = 6;
 
 // Networking options (from modules.js)
 const NETWORKING_OPTIONS = MODULE_CATEGORIES.networking.modules;
@@ -46,7 +47,7 @@ export default function FoundationBuilder() {
   // Removed global accessories state
   // const [accessories, setAccessories] = useState([]);
 
-  // Bays state - fixed 8 slots. Each slot is { ...module, instanceId, accessories: [] }
+  // Bays state - fixed 6 slots. Each slot is { ...module, instanceId, accessories: [] }
   const [bays, setBays] = useState(Array(NUM_BAYS).fill(null));
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -87,12 +88,16 @@ export default function FoundationBuilder() {
           if (net) setNetworking(net);
         }
         if (config.bays && Array.isArray(config.bays)) {
-          const loadedBays = config.bays.map(bay => {
+          const loadedBays = config.bays.slice(0, NUM_BAYS).map(bay => {
             if (!bay) return null;
             const module = MODULE_OPTIONS.find(m => m.id === bay.id);
             if (!module) return null;
             return { ...module, instanceId: bay.instanceId || Date.now(), accessories: bay.accessories || [] };
           });
+          // Pad with nulls if fewer than NUM_BAYS
+          while (loadedBays.length < NUM_BAYS) {
+            loadedBays.push(null);
+          }
           setBays(loadedBays);
         }
       }
@@ -695,7 +700,7 @@ export default function FoundationBuilder() {
                       </button>
                     )}
                   </div>
-                  <div className={`grid grid-cols-2 md:grid-cols-4 gap-3`}>
+                  <div className={`grid grid-cols-2 md:grid-cols-3 gap-3`}>
                     {(() => {
                       let gigEthBayCount = 0;
                       return bays.map((bay, index) => {
@@ -705,6 +710,9 @@ export default function FoundationBuilder() {
                           gigEthBayCount++;
                           bayDisplayPrice = gigEthBayCount > 1 ? 65 : 0;
                         }
+
+                        // Check if this is a highspeed bay (bottom 3 bays: indices 3, 4, 5)
+                        const isHighspeed = index >= 3;
 
                         return (
                           <div
@@ -747,7 +755,9 @@ export default function FoundationBuilder() {
                                   ? 'border-dashed border-orange-500 bg-orange-500/5 cursor-pointer hover:bg-orange-500/10 hover:scale-[1.02]'
                                   : dragOverBay === index
                                     ? 'border-orange-500 bg-orange-500/10 border-solid scale-[1.02]'
-                                    : 'border-dashed border-black/20 dark:border-white/20 hover:border-black/40 dark:hover:border-white/40'
+                                    : isHighspeed
+                                      ? 'border-dashed border-teal-500/40 dark:border-teal-400/40 hover:border-teal-500/60 dark:hover:border-teal-400/60 bg-teal-500/5 dark:bg-teal-400/5'
+                                      : 'border-dashed border-black/20 dark:border-white/20 hover:border-black/40 dark:hover:border-white/40'
                               }
                                 `}
                           >
@@ -783,6 +793,12 @@ export default function FoundationBuilder() {
                         ) : (
                           <div className="p-2">
                             <div className="font-mono text-[10px] opacity-30 uppercase">Bay {index + 1}</div>
+                            {isHighspeed && (
+                              <div className="flex items-center justify-center gap-1 mt-1 opacity-30">
+                                <Lightning size={12} weight="bold" className="text-teal-500 dark:text-teal-400" />
+                                <span className="text-[8px] font-mono text-teal-500 dark:text-teal-400">HIGHSPEED</span>
+                              </div>
+                            )}
                             <div className="text-lg opacity-20 mt-1">+</div>
                           </div>
                         )}
@@ -872,7 +888,7 @@ export default function FoundationBuilder() {
                       readOnly
                       value={(() => {
                         // Bit Packing Logic
-                        // Memory (2 bits) | Boot Storage (2 bits) | Networking (3 bits) | Bays (8 slots * 6 bits each)
+                        // Memory (2 bits) | Boot Storage (2 bits) | Networking (3 bits) | Bays (6 slots * 6 bits each)
                         let val = BigInt(0);
 
                         // Memory: 2 bits (position 0)
@@ -885,7 +901,7 @@ export default function FoundationBuilder() {
                         const netIdx = networking ? NETWORKING_OPTIONS.findIndex(o => o.id === networking.id) + 1 : 0;
                         val |= BigInt(netIdx) << BigInt(4);
 
-                        // Bays: 8 slots * 6 bits each (4 bits for module type, 2 bits for accessories)
+                        // Bays: 6 slots * 6 bits each (4 bits for module type, 2 bits for accessories)
                         // Total bits per bay = 6.
                         // Start bit = 7.
 

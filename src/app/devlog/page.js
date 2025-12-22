@@ -18,7 +18,7 @@ const devlogPosts = [
 
         <h3 className="text-xl font-medium mb-3 mt-6">The Universal Bay Thing</h3>
         <p className="mb-4">
-          Here's the core idea: 8 universal bays that can take whatever you throw at them. Need storage? Grab some NVMe drives (you can max out at 64TB if you're crazy). Need faster networking? Pop in a 10GbE module. WiFi 6? Sure. More USB ports? Yeah. Want to design your own custom module? Go for it. Connectors are PCIe x1 based.
+          Here's the core idea: 6 universal bays (with 3 highspeed) that can take whatever you throw at them. Need storage? Grab some NVMe drives (you can max out at 48TB if you're crazy). Need faster networking? Pop in a 10GbE module. WiFi 6? Sure. More USB ports? Yeah. Want to design your own custom module? Go for it. Connectors are PCIe x1 based.
         </p>
         <p className="mb-4">
           Everything connects through what we're calling the Mortimer backplane—basically a zero-cable PCIe x1 Gen3 setup. No rats nest of SATA cables, no weird power splitters, none of that nonsense. Slide stuff in, it works.

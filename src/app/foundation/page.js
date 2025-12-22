@@ -436,8 +436,8 @@ export default function FoundationPage() {
                         <div className="border-l-2 border-orange-500/20 group-hover:border-orange-500 transition-colors duration-300 pl-4">
                           <div className="font-mono text-sm text-black/40 dark:text-white/40 uppercase tracking-wider mb-3">Storage</div>
                           <div className="space-y-2">
-                            <div className="text-base font-medium text-black dark:text-white">256GB → 64TB NVMe</div>
-                            <div className="text-base font-medium text-black dark:text-white">8 modular bays</div>
+                            <div className="text-base font-medium text-black dark:text-white">256GB → 48TB NVMe</div>
+                            <div className="text-base font-medium text-black dark:text-white">6 modular bays (3 highspeed)</div>
                           </div>
                         </div>
                       </div>
@@ -707,11 +707,11 @@ export default function FoundationPage() {
                   <div className="md:col-span-2 space-y-4">
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Bay Slots</span>
-                      <span className="sm:text-right">8x Universal Bay Internal Mounts</span>
+                      <span className="sm:text-right">6x Universal Bay Internal Mounts (3x Highspeed)</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Storage Support</span>
-                      <span className="sm:text-right">NVMe only, up to 8TB per drive (64TB max)</span>
+                      <span className="sm:text-right">NVMe only, up to 8TB per drive (48TB max)</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between border-b border-black/10 dark:border-white/10 pb-2 gap-1 sm:gap-4">
                       <span className="opacity-70 sm:opacity-100">Architecture</span>
@@ -773,10 +773,10 @@ export default function FoundationPage() {
 
               <div className="mt-16 pt-8 border-t border-black/10 dark:border-white/10 text-center">
                 <Link
-                  href="/foundation?ref=builder"
+                  href="/foundation/configurator"
                   className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-300 rounded-full"
                 >
-                  Add to Build →
+                  Build Your Configuration →
                 </Link>
               </div>
             </div>

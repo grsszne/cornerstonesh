@@ -90,10 +90,9 @@ const CONFIGURATIONS = [
       MODULE_TYPES.STORAGE,
       MODULE_TYPES.STORAGE,
       MODULE_TYPES.STORAGE,
-      MODULE_TYPES.STORAGE,
-      MODULE_TYPES.STORAGE,
-      MODULE_TYPES.EMPTY,
-      MODULE_TYPES.EMPTY
+      MODULE_TYPES.ETHERNET_10,
+      MODULE_TYPES.ETHERNET_10,
+      MODULE_TYPES.ETHERNET_5
     ]
   },
   {
@@ -103,10 +102,9 @@ const CONFIGURATIONS = [
       MODULE_TYPES.STORAGE,
       MODULE_TYPES.STORAGE,
       MODULE_TYPES.SD_CARD,
-      MODULE_TYPES.USB_C,
-      MODULE_TYPES.USB_A,
-      MODULE_TYPES.ETHERNET_5,
-      MODULE_TYPES.UPS
+      MODULE_TYPES.ETHERNET_10,
+      MODULE_TYPES.ETHERNET_10,
+      MODULE_TYPES.ETHERNET_5
     ]
   },
   {
@@ -115,11 +113,10 @@ const CONFIGURATIONS = [
     bays: [
       MODULE_TYPES.STORAGE,
       MODULE_TYPES.STORAGE,
+      MODULE_TYPES.STORAGE,
       MODULE_TYPES.ETHERNET_10,
-      MODULE_TYPES.USB_C,
-      MODULE_TYPES.UPS,
-      MODULE_TYPES.EMPTY,
-      MODULE_TYPES.EMPTY
+      MODULE_TYPES.ETHERNET_10,
+      MODULE_TYPES.ETHERNET_5
     ]
   },
   {
@@ -129,10 +126,9 @@ const CONFIGURATIONS = [
       MODULE_TYPES.STORAGE,
       MODULE_TYPES.STORAGE,
       MODULE_TYPES.STORAGE,
-      MODULE_TYPES.STORAGE,
-      MODULE_TYPES.UPS,
-      MODULE_TYPES.EMPTY,
-      MODULE_TYPES.EMPTY
+      MODULE_TYPES.ETHERNET_10,
+      MODULE_TYPES.ETHERNET_10,
+      MODULE_TYPES.ETHERNET_5
     ]
   }
 ];
@@ -253,7 +249,7 @@ export default function BayConfigurator() {
       </div>
 
       {/* Bay Grid Visualization */}
-      <div className="grid grid-cols-7 gap-2 flex-1">
+      <div className="grid grid-cols-6 gap-2 flex-1">
         {config.bays.map((module, i) => (
           <div
             key={i}
