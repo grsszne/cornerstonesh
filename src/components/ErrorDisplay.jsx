@@ -72,7 +72,7 @@ export default function ErrorDisplay({ code, title, description, action = { labe
                     </div>
 
                     <div className="space-y-4 relative z-20">
-                        <h2 className="text-xl md:text-2xl font-mono text-orange-500">
+                        <h2 className="text-3xl md:text-5xl font-sans font-medium text-black dark:text-white">
                             {title}
                         </h2>
                         <p className="text-lg md:text-xl font-mono leading-relaxed opacity-80 max-w-lg mx-auto">
