@@ -6,7 +6,7 @@ import AsciiArt from "./AsciiArt";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("idle"); // idle, loading, success, error
+  const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
 
   const subscribe = async (e) => {
@@ -25,155 +25,103 @@ export default function Footer() {
       
       if (res.ok) {
         setStatus("success");
-        setMessage("Thanks for subscribing! You should receive an email in your inbox shortly.");
+        setMessage("Subscribed!");
         setEmail("");
       } else {
         setStatus("error");
-        setMessage(data.error || "Something went wrong.");
+        setMessage(data.error || "Error");
       }
     } catch (error) {
       setStatus("error");
-      setMessage("Failed to subscribe. Please try again.");
+      setMessage("Failed");
     }
   };
 
   return (
-    <footer className="bg-white dark:bg-black text-black dark:text-white border-t border-black dark:border-white relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24">
-          {/* Mailing List Section */}
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold tracking-tight font-medium">
-              Stay in the Loop
-            </h3>
-            <p className="font-mono text-sm max-w-md">
-              Join the newsletter for updates on the Foundation launch and future modules.
-            </p>
-            <form className="flex flex-col sm:flex-row gap-4" onSubmit={subscribe}>
-              <div className="flex-1">
-                <input
-                  type="email"
-                  placeholder="ENTER EMAIL"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={status === "loading" || status === "success"}
-                  className="w-full bg-white/80 backdrop-blur-md dark:bg-black/80 border border-black dark:border-white px-4 py-3 font-mono text-sm placeholder:text-black/50 dark:placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-black dark:focus:ring-white rounded-none disabled:opacity-50"
-                />
-                {message && (
-                  <p className={`mt-2 bg-inherit dark:bg-black/50 bg-white/50 font-mono text-xs ${status === "error" ? "text-red-500" : "text-green-500"}`}>
-                    {message}
-                  </p>
-                )}
-              </div>
+    <footer className="font-mono text-sm">
+      {/* Newsletter Section */}
+      <div className="bg-black text-white px-4 py-8 relative overflow-hidden">
+        {/* ASCII Background */}
+        <div className="absolute top-0 right-0 pointer-events-none opacity-10">
+          <AsciiArt width={300} height={60} numCircles={50} />
+        </div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <h2 className="font-sans capitalize font-medium text-xl tracking-tight mb-1">Newsletter</h2>
+              <p className="opacity-60 text-xs">Stay updated on Foundation launch and modules.</p>
+            </div>
+            <form className="flex gap-2" onSubmit={subscribe}>
+              <input
+                type="email"
+                placeholder="EMAIL"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={status === "loading" || status === "success"}
+                className="bg-transparent border border-white px-4 py-2 placeholder:text-white/40 focus:outline-none focus:bg-white/10 disabled:opacity-50 min-w-[200px]"
+              />
               <button
                 type="submit"
                 disabled={status === "loading" || status === "success"}
-                className="bg-black text-white dark:bg-white dark:text-black px-8 py-3 font-mono text-sm font-medium uppercase tracking-wider border border-black dark:border-white hover:bg-orange-500 hover:border-orange-500 dark:hover:bg-orange-500 dark:hover:border-orange-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed h-[46px]"
+                className="bg-white text-black px-6 py-2 font-medium capitalize hover:bg-orange-500 hover:text-white transition-colors disabled:opacity-50"
               >
-                {status === "loading" ? "..." : status === "success" ? "Joined" : "Subscribe"}
+                {status === "success" ? "OK" : "subscribe"}
               </button>
             </form>
           </div>
-
-          {/* Links Section */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
-              <div>
-                <h4 className="text-sm font-bold uppercase mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
-                  Resources
-                </h4>
-                <ul className="space-y-3 font-mono text-sm">
-                  <li>
-                    <Link href="/foundation/configurator" className="hover:opacity-70 transition-opacity">
-                      Build Configurator
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/foundation/guide" className="hover:opacity-70 transition-opacity">
-                      Hardware Guide
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/foundation/modules" className="hover:opacity-70 transition-opacity">
-                      Module Catalog
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/devlog" className="hover:opacity-70 transition-opacity">
-                      Dev Log
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-sm font-bold uppercase mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
-                  Socials
-                </h4>
-                <ul className="space-y-3 font-mono text-sm">
-                  <li>
-                    <a href="https://x.com/cornerstone_sh" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
-                      Twitter
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://www.instagram.com/cornerstone_sh/" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
-                      Instagram
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://www.reddit.com/user/cornerstone_sh/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
-                      Reddit
-                    </a>
-                  </li>
-                  <li>
-                    <a href="mailto:cornerstone@cornerstone.sh" className="hover:opacity-70 transition-opacity">
-                      cornerstone@cornerstone.sh
-                    </a>
-                  </li>
-
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-sm font-bold uppercase mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
-                  Legal
-                </h4>
-                <ul className="space-y-3 font-mono text-sm">
-                  <li>
-                    <Link href="/privacy" className="hover:opacity-70 transition-opacity">
-                      Privacy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/terms" className="hover:opacity-70 transition-opacity">
-                      Terms
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-
-        <div className="mt-12 pt-8 border-t border-black dark:border-white">
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-xl font-[500] tracking-tight">Cornerstone</span>
-          </div>
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="font-mono text-xs uppercase">
-              &copy; {new Date().getFullYear()} Cornerstone. All rights reserved.
+          {message && (
+            <p className={`mt-2 text-xs ${status === "error" ? "text-red-400" : "text-green-400"}`}>
+              {message}
             </p>
-            <p className="font-mono text-xs">
-              <Link href="/" className="hover:opacity-70 transition-opacity">
-                https://cornerstone.sh
-              </Link>
-            </p>
-            <p className="font-mono text-xs uppercase">
-              Designed for You.
-            </p>
-          </div>
+          )}
         </div>
       </div>
-      <div className="absolute top-0 right-0 pointer-events-none">
-        <AsciiArt width={300} height={40} numCircles={65}/>
+
+      {/* Resources Section - Cyan */}
+      <div className="bg-cyan-500 text-black px-4 py-6 border-t border-black">
+        <div className="max-w-7xl mx-auto flex flex-wrap gap-x-8 gap-y-2">
+          <span className="font-bold uppercase w-full md:w-auto">Resources:</span>
+          <Link href="/foundation" className="hover:underline">Foundation</Link>
+          <Link href="/foundation/modules" className="hover:underline">Modules</Link>
+          <Link href="/foundation/configurator" className="hover:underline">Configurator</Link>
+          <Link href="/foundation/guide" className="hover:underline">Guide</Link>
+          <Link href="/devlog" className="hover:underline">Devlog</Link>
+        </div>
+      </div>
+
+      {/* Social Section - Green */}
+      <div className="bg-green-500 text-black px-4 py-6 border-t border-black">
+        <div className="max-w-7xl mx-auto flex flex-wrap gap-x-8 gap-y-2">
+          <span className="font-bold uppercase w-full md:w-auto">Social:</span>
+          <a href="https://x.com/cornerstone_sh" target="_blank" rel="noopener noreferrer" className="hover:underline">Twitter</a>
+          <a href="https://www.instagram.com/cornerstone_sh/" target="_blank" rel="noopener noreferrer" className="hover:underline">Instagram</a>
+          <a href="https://www.reddit.com/user/cornerstone_sh/" target="_blank" rel="noopener noreferrer" className="hover:underline">Reddit</a>
+          <a href="mailto:cornerstone@cornerstone.sh" className="hover:underline">Email</a>
+        </div>
+      </div>
+
+      {/* Legal Section - Purple */}
+      <div className="bg-purple-500 text-white px-4 py-6 border-t border-black">
+        <div className="max-w-7xl mx-auto flex flex-wrap gap-x-8 gap-y-2">
+          <span className="font-bold uppercase w-full md:w-auto">Legal:</span>
+          <Link href="/privacy" className="hover:underline">Privacy</Link>
+          <Link href="/terms" className="hover:underline">Terms</Link>
+          <Link href="/sitemap" className="hover:underline">Sitemap</Link>
+        </div>
+      </div>
+
+      {/* Copyright Section */}
+      <div className="bg-black text-white px-4 py-6 border-t border-white/20">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-xl font-medium tracking-tight">Cornerstone</span>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 text-xs opacity-60">
+            <span>© {new Date().getFullYear()} Cornerstone. All rights reserved.</span>
+            <span className="font-mono uppercase tracking-wider">Designed for You.</span>
+          </div>
+        </div>
       </div>
     </footer>
   );

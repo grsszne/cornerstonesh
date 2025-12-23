@@ -67,4 +67,18 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px rgba(249, 115, 22, 0.15);
   }
+
+  /* Scanline Animation */
+  @keyframes scanline {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+  .animate-scanline {
+    animation: scanline 2s linear infinite;
+  }
 }

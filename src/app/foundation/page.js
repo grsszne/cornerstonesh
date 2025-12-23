@@ -72,7 +72,7 @@ export default function FoundationPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               <FadeIn delay={0.1}>
                 <div className="group">
-                  <div className="font-mono text-xs text-orange-500 mb-4 uppercase tracking-widest">01 / Storage</div>
+                  <div className="font-mono text-xs text-cyan-500 mb-4 uppercase tracking-widest">01 / Storage</div>
                   <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">Like iCloud, but yours.</h3>
                   <p className="font-mono text-sm opacity-60 leading-relaxed">
                     Backup photos, videos, and documents. Your drives, your data, no monthly fees.
@@ -82,7 +82,7 @@ export default function FoundationPage() {
 
               <FadeIn delay={0.2}>
                 <div className="group">
-                  <div className="font-mono text-xs text-orange-500 mb-4 uppercase tracking-widest">02 / Automation</div>
+                  <div className="font-mono text-xs text-green-500 mb-4 uppercase tracking-widest">02 / Automation</div>
                   <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">A 24/7 Digital Butler.</h3>
                   <p className="font-mono text-sm opacity-60 leading-relaxed">
                     Always on. Block ads network-wide, auto-download shows, manage smart home without the cloud.
@@ -92,7 +92,7 @@ export default function FoundationPage() {
 
               <FadeIn delay={0.3}>
                 <div className="group">
-                  <div className="font-mono text-xs text-orange-500 mb-4 uppercase tracking-widest">03 / Media</div>
+                  <div className="font-mono text-xs text-purple-500 mb-4 uppercase tracking-widest">03 / Media</div>
                   <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">Your Private Netflix.</h3>
                   <p className="font-mono text-sm opacity-60 leading-relaxed">
                     Stream movies and music to any device. High quality, no buffering, titles never disappear.
@@ -142,7 +142,7 @@ export default function FoundationPage() {
               {/* Configuration 1: Creator */}
               <FadeIn delay={0.1}>
                 <div className="group relative h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                   <div className="relative bg-gray-50 dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
                     {/* Header */}
@@ -208,7 +208,7 @@ export default function FoundationPage() {
               {/* Configuration 2: Advocate */}
               <FadeIn delay={0.2}>
                 <div className="group relative h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                   <div className="relative bg-gray-50 dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
                     {/* Header */}
@@ -274,7 +274,7 @@ export default function FoundationPage() {
               {/* Configuration 3: Developer */}
               <FadeIn delay={0.3}>
                 <div className="group relative h-full">
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                   <div className="relative bg-gray-50 dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
                     {/* Header */}
@@ -784,7 +784,7 @@ export default function FoundationPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-orange-500 text-white text-center">
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-amber-400 text-black text-center">
           <FadeIn>
             <div className="max-w-3xl mx-auto space-y-8">
               <h2 className="text-4xl md:text-6xl font-medium tracking-tight">
@@ -796,7 +796,7 @@ export default function FoundationPage() {
               <div className="pt-8">
                 <Link
                   href="/preorder"
-                  className="btn-shine lift-on-hover inline-flex items-center justify-center px-12 py-5 text-lg font-mono font-medium uppercase tracking-wider bg-white text-black hover:bg-black hover:text-white dark:bg-black dark:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 rounded-full shadow-xl shadow-black/30 hover:shadow-2xl hover:shadow-black/50"
+                  className="btn-shine lift-on-hover inline-flex items-center justify-center px-12 py-5 text-lg font-mono font-medium uppercase tracking-wider bg-black text-amber-400 hover:bg-white hover:text-black transition-all duration-300 rounded-full shadow-xl shadow-black/30 hover:shadow-2xl hover:shadow-black/50"
                 >
                   Reserve Yours
                 </Link>
