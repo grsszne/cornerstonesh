@@ -31,7 +31,7 @@ export default function ErrorDisplay({ code, title, description, action = { labe
         return () => clearInterval(interval);
     }, []);
     return (
-        <section className="min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 bg-white dark:bg-black text-black dark:text-white overflow-hidden relative selection:bg-orange-500 selection:text-white">
+        <section className="min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 bg-white dark:bg-black text-black dark:text-white overflow-hidden relative selection:bg-cornerstone selection:text-white">
 
             {/* Animated Technical Background */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -39,7 +39,7 @@ export default function ErrorDisplay({ code, title, description, action = { labe
                     <div
                         className="absolute inset-0"
                         style={{
-                            backgroundImage: 'linear-gradient(rgba(249, 115, 22, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(249, 115, 22, 0.3) 1px, transparent 1px)',
+                            backgroundImage: 'linear-gradient(rgba(247, 130, 27, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(247, 130, 27, 0.3) 1px, transparent 1px)',
                             backgroundSize: '100px 100px'
                         }}
                     />
@@ -48,7 +48,7 @@ export default function ErrorDisplay({ code, title, description, action = { labe
                 <div
                     className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
                     style={{
-                        backgroundImage: 'linear-gradient(rgba(249, 115, 22, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(249, 115, 22, 0.3) 1px, transparent 1px)',
+                        backgroundImage: 'linear-gradient(rgba(247, 130, 27, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(247, 130, 27, 0.3) 1px, transparent 1px)',
                         backgroundSize: '100px 100px',
                         transform: `translate(${mousePosition.x * 0.1}px, ${mousePosition.y * 0.1}px)`
                     }}
@@ -58,7 +58,7 @@ export default function ErrorDisplay({ code, title, description, action = { labe
                 <div
                     className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"
                     style={{
-                        background: `linear-gradient(45deg, transparent 48%, rgba(249, 115, 22, 0.4) 49%, rgba(249, 115, 22, 0.4) 51%, transparent 52%)`,
+                        background: `linear-gradient(45deg, transparent 48%, rgba(247, 130, 27, 0.4) 49%, rgba(247, 130, 27, 0.4) 51%, transparent 52%)`,
                         backgroundSize: '150px 150px',
                         transform: `rotate(${mousePosition.x * 0.05}deg) translateX(${mousePosition.x * 0.2}px)`
                     }}
@@ -84,14 +84,14 @@ export default function ErrorDisplay({ code, title, description, action = { labe
                         {action.onClick ? (
                             <button
                                 onClick={action.onClick}
-                                className="btn-shine lift-on-hover inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black border border-black dark:border-white hover:bg-orange-500 hover:border-orange-500 dark:hover:bg-orange-500 dark:hover:border-orange-500 transition-all duration-300 cursor-pointer rounded-full"
+                                className="btn-shine lift-on-hover inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black border border-black dark:border-white hover:bg-cornerstone hover:border-cornerstone dark:hover:bg-cornerstone dark:hover:border-cornerstone transition-all duration-300 cursor-pointer rounded-full"
                             >
                                 {action.label}
                             </button>
                         ) : (
                             <Link
                                 href={action.href}
-                                className="btn-shine lift-on-hover inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black border border-black dark:border-white hover:bg-orange-500 hover:border-orange-500 dark:hover:bg-orange-500 dark:hover:border-orange-500 transition-all duration-300 rounded-full"
+                                className="btn-shine lift-on-hover inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black border border-black dark:border-white hover:bg-cornerstone hover:border-cornerstone dark:hover:bg-cornerstone dark:hover:border-cornerstone transition-all duration-300 rounded-full"
                             >
                                 {action.label}
                             </Link>

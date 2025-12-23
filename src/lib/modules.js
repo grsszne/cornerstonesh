@@ -378,17 +378,18 @@ export const MODULE_OPTIONS = [
 
 export const getModuleColorClass = (module, variant = "bg") => {
     const colors = {
-        orange: { bg: "bg-orange-500", border: "border-orange-500", text: "text-orange-500" },
-        blue: { bg: "bg-blue-500", border: "border-blue-500", text: "text-blue-500" },
+        orange: { bg: "bg-cornerstone", border: "border-cornerstone", text: "text-cornerstone" },
+        blue: { bg: "bg-cyan-500", border: "border-cyan-500", text: "text-cyan-500" },
         green: { bg: "bg-green-500", border: "border-green-500", text: "text-green-500" },
         purple: { bg: "bg-purple-500", border: "border-purple-500", text: "text-purple-500" },
-        pink: { bg: "bg-pink-500", border: "border-pink-500", text: "text-pink-500" },
-        yellow: { bg: "bg-yellow-500", border: "border-yellow-500", text: "text-yellow-500" },
+        pink: { bg: "bg-purple-500", border: "border-purple-500", text: "text-purple-500" },
+        yellow: { bg: "bg-cornerstone", border: "border-cornerstone", text: "text-cornerstone" },
         cyan: { bg: "bg-cyan-500", border: "border-cyan-500", text: "text-cyan-500" },
         gray: { bg: "bg-gray-500", border: "border-gray-500", text: "text-gray-500" },
-        // Adding emerald and teal support as they appear in the data
-        emerald: { bg: "bg-emerald-500", border: "border-emerald-500", text: "text-emerald-500" },
-        teal: { bg: "bg-teal-500", border: "border-teal-500", text: "text-teal-500" },
+        // Map legacy colors to our cohesive palette
+        emerald: { bg: "bg-green-500", border: "border-green-500", text: "text-green-500" },
+        teal: { bg: "bg-cyan-500", border: "border-cyan-500", text: "text-cyan-500" },
+        indigo: { bg: "bg-purple-500", border: "border-purple-500", text: "text-purple-500" },
     };
     return colors[module.color]?.[variant] || colors.orange[variant];
 };

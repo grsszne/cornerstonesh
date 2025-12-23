@@ -114,7 +114,7 @@ export default function TelemetryCard({ label, metricKey, unit, icon }) {
 
       // Draw smooth curve using quadratic bezier curves
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(249, 115, 22, 0.3)';
+      ctx.strokeStyle = 'rgba(247, 130, 27, 0.3)';
       ctx.lineWidth = 1.5;
 
       // Filter points that are visible on canvas
@@ -145,7 +145,7 @@ export default function TelemetryCard({ label, metricKey, unit, icon }) {
         ctx.lineTo(lastPoint.x, height);
         ctx.lineTo(visiblePoints[0].x, height);
         ctx.closePath();
-        ctx.fillStyle = 'rgba(249, 115, 22, 0.05)';
+        ctx.fillStyle = 'rgba(247, 130, 27, 0.05)';
         ctx.fill();
       }
 
@@ -163,7 +163,7 @@ export default function TelemetryCard({ label, metricKey, unit, icon }) {
   }, [history]);
 
   return (
-    <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-orange-500/50 flex flex-col justify-between aspect-square relative overflow-hidden group transition-all">
+    <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-cornerstone/50 flex flex-col justify-between aspect-square relative overflow-hidden group transition-all">
       {/* Sparkline background */}
       <canvas
         ref={canvasRef}
@@ -173,9 +173,9 @@ export default function TelemetryCard({ label, metricKey, unit, icon }) {
       />
 
       {/* Content */}
-      <div className="relative z-10 text-orange-500 text-xl mb-2 group-hover:scale-110 transition-transform">{icon}</div>
+      <div className="relative z-10 text-cornerstone text-xl mb-2 group-hover:scale-110 transition-transform">{icon}</div>
       <div className="relative z-10">
-        <div className="text-lg font-bold font-mono tracking-tight transition-all duration-300 group-hover:text-orange-500">
+        <div className="text-lg font-bold font-mono tracking-tight transition-all duration-300 group-hover:text-cornerstone">
           {displayValue}{unit.includes('bps') ? <span> G<span className="lowercase">b</span>ps</span> : unit}
         </div>
         <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1 group-hover:opacity-80 transition-opacity">

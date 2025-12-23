@@ -43,9 +43,9 @@ const TreeNode = ({ node, isLast, prefix = [] }) => {
 
         {/* Name / Link */}
         {node.path ? (
-            <Link href={node.path} className="flex items-center gap-2 hover:text-orange-500 transition-colors">
+            <Link href={node.path} className="flex items-center gap-2 hover:text-cornerstone transition-colors">
                  <span>{node.name}</span>
-                 <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-orange-500" />
+                 <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-cornerstone" />
             </Link>
         ) : (
             <span className="text-white/80 font-bold">{node.name}</span>
@@ -86,7 +86,7 @@ export default function SitemapTree({ tree }) {
   return (
     <div className="w-full text-white">
         {/* Render Root Node Manually to start tree */}
-        <div className="mb-2 font-bold text-orange-500 text-lg flex items-center gap-2">
+        <div className="mb-2 font-bold text-cornerstone text-lg flex items-center gap-2">
             <span>.</span>
         </div>
         

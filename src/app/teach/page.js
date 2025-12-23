@@ -27,7 +27,7 @@ export default function TeachPage() {
             </Link>
             
             <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
-              <span className="text-orange-500">Cornerstone</span>
+              <span className="text-cornerstone">Cornerstone</span>
             </h1>
             <p className="font-mono text-sm text-black/60 dark:text-white/60 mb-12 uppercase tracking-widest">
               We made this super secret page on our highly advanced website just for you, Teach. I write this from a hotspot in my car before school.
@@ -36,7 +36,7 @@ export default function TeachPage() {
             <div className="space-y-12 font-mono text-sm leading-relaxed">
               
               <section>
-                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-cornerstone underline-offset-4">
                   1. The Request
                 </h2>
                 <p className="mb-4 text-lg font-medium">
@@ -48,15 +48,15 @@ export default function TeachPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-cornerstone underline-offset-4">
                   2. You know who we are but you don't know what we're doing
                 </h2>
                 <p className="mb-6">
                   We have already divided responsibilities to ensure we can work asynchronously without blocking each other:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 border border-black/20 dark:border-white/20 rounded-lg flex flex-col h-full">
-                    <div className="text-orange-500 font-bold mb-1">01</div>
+                  <div className="p-4 border border-black/20 dark:border-white/20 hover:border-cyan-500/50 rounded-lg flex flex-col h-full transition-colors">
+                    <div className="text-cyan-500 font-bold mb-1">01</div>
                     <div className="text-xl font-bold mb-2">Zane</div>
                     <div className="opacity-60 text-xs mb-2 font-bold">Role: Engineering Lead</div>
                     <ul className="list-disc list-inside text-xs opacity-80 space-y-1">
@@ -66,8 +66,8 @@ export default function TeachPage() {
                       <li>Systems Architecture</li>
                     </ul>
                   </div>
-                  <div className="p-4 border border-black/20 dark:border-white/20 rounded-lg flex flex-col h-full">
-                    <div className="text-orange-500 font-bold mb-1">02</div>
+                  <div className="p-4 border border-black/20 dark:border-white/20 hover:border-green-500/50 rounded-lg flex flex-col h-full transition-colors">
+                    <div className="text-green-500 font-bold mb-1">02</div>
                     <div className="text-xl font-bold mb-2">Edgar</div>
                     <div className="opacity-60 text-xs mb-2 font-bold">Role: Software Lead</div>
                     <ul className="list-disc list-inside text-xs opacity-80 space-y-1">
@@ -77,8 +77,8 @@ export default function TeachPage() {
                       <li>Network Telemetry</li>
                     </ul>
                   </div>
-                  <div className="p-4 border border-black/20 dark:border-white/20 rounded-lg flex flex-col h-full">
-                    <div className="text-orange-500 font-bold mb-1">03</div>
+                  <div className="p-4 border border-black/20 dark:border-white/20 hover:border-purple-500/50 rounded-lg flex flex-col h-full transition-colors">
+                    <div className="text-purple-500 font-bold mb-1">03</div>
                     <div className="text-xl font-bold mb-2">Timi</div>
                     <div className="opacity-60 text-xs mb-2 font-bold">Role: Operations & QA</div>
                     <ul className="list-disc list-inside text-xs opacity-80 space-y-1">
@@ -92,38 +92,38 @@ export default function TeachPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-cornerstone underline-offset-4">
                   3. The Proposal
                 </h2>
                 <p className="mb-4">
                   We are not building "3D Snake." We are not building a "to-do list.". Just look around on this website and see how frankly incredible it is if i do say so myself.
                 </p>
                 <p className="mb-4">
-                  We are building <span className="text-orange-500">Cornerstone</span>, a hardware company. Our flagship product is the <span className="text-orange-500">Foundation</span>: a modular, stackable, aluminum-encased home server system designed for a time where many people want to be independent of third party clouds and saas's. We think we could raise a significant amount of money for this project based on the success of other (and i think inferior) projects on kickstarter who make home servers or nas devices
+                  We are building <span className="text-cornerstone">Cornerstone</span>, a hardware company. Our flagship product is the <span className="text-cornerstone">Foundation</span>: a modular, stackable, aluminum-encased home server system designed for a time where many people want to be independent of third party clouds and saas's. We think we could raise a significant amount of money for this project based on the success of other (and i think inferior) projects on kickstarter who make home servers or nas devices
                 </p>
                 
                 <div className="space-y-8 mt-8">
                   <div>
-                    <h3 className="text-lg font-bold mb-2 text-orange-500">The Architecture</h3>
+                    <h3 className="text-lg font-bold mb-2 text-purple-500">The Architecture</h3>
                     <p className="opacity-80 mb-4">
                       The Foundation is not a repackaged PC. It is a full stack effort centered around Intel x86 compute modules. We have to implement all the IO, PCI, USB controllers, NVMe controllers, 1Gbe - 10Gbe controllers, etc. from scratch.
                     </p>
                     <ul className="list-disc list-inside opacity-80 space-y-2 ml-2">
-                      <li><span className="font-bold">Compute:</span> Powered by Intel N100 (4-core) or N305 (8-core) x86 processors up to 3.8GHz, delivering desktop-class performance with exceptional compatibility. Options for 8GB or 16GB LPDDR5X unified memory.</li>
-                      <li><span className="font-bold">Storage Fabric:</span> We have engineered a custom <span className="font-bold">Zero-Cable Backplane</span> using PCIe Gen 3. Unlike traditional servers that rely on a mess of cables, our drives slot directly into a rigid PCB backbone. This supports up to 8x NVMe SSDs (64TB max) with optimized airflow channels.</li>
-                      <li><span className="font-bold">Modular Bay System:</span> Our proprietary expansion standard utilizing PCIe Gen 3, I2C for module discovery, and high-current power rails. This allows users to stack modules—like 5GbE/10GbE networking or UPS battery backups—without tools or drivers.</li>
+                      <li><span className="font-bold text-purple-500">Compute:</span> Powered by Intel N100 (4-core) or N305 (8-core) x86 processors up to 3.8GHz, delivering desktop-class performance with exceptional compatibility. Options for 8GB or 16GB LPDDR5X unified memory.</li>
+                      <li><span className="font-bold text-cyan-500">Storage Fabric:</span> We have engineered a custom <span className="font-bold">Zero-Cable Backplane</span> using PCIe Gen 3. Unlike traditional servers that rely on a mess of cables, our drives slot directly into a rigid PCB backbone. This supports up to 8x NVMe SSDs (64TB max) with optimized airflow channels.</li>
+                      <li><span className="font-bold text-green-500">Modular Bay System:</span> Our proprietary expansion standard utilizing PCIe Gen 3, I2C for module discovery, and high-current power rails. This allows users to stack modules—like 5GbE/10GbE networking or UPS battery backups—without tools or drivers.</li>
                     </ul>
                   </div>
-                  
+
                   <div>
-                    <h3 className="text-lg font-bold mb-2 text-orange-500">The Physicality</h3>
+                    <h3 className="text-lg font-bold mb-2 text-cyan-500">The Physicality</h3>
                     <p className="opacity-80">
                       The chassis is CNC-milled from a solid block of <span className="font-bold">6061-T6 Aluminum</span>. It measures exactly 3.5" x 3.5" (89mm), Allowing for the use of 2.5" drives (which are more like 3 and a few inches wide). The case itself acts as a passive thermal mass, dissipating heat from the NVMe drives and compute module. There is also a fan in the bottom module to help with airflow throughout the entire stack.
                     </p>
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-bold mb-2 text-orange-500">The Software</h3>
+                    <h3 className="text-lg font-bold mb-2 text-green-500">The Software</h3>
                     <p className="opacity-80">
                       Hardware is useless without control. We are developing <span className="font-bold">CornerstoneOS</span>, a custom series of containerized services running on top of a<span className="font-bold">Debian</span> distro. The containers will include Kernel interfaces for direct hardware control, Next.js for web interfaces, NAS and other home server interfaces, and a Matter-native telemetry bridge, allowing the server to expose its health stats (CPU temp, fan speed, storage usage) directly to Apple HomeKit and Google Home.
                     </p>
@@ -132,27 +132,27 @@ export default function TeachPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-cornerstone underline-offset-4">
                   4. Current Status (We Are Already Building)
                 </h2>
                 <p className="mb-4">
                   We have already begun significant engineering work to prove our commitment. If it is indicative of how passionate I and Timi are about this project, we had to see Edgar 4 times during break.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="border border-black/10 dark:border-white/10 p-6 rounded-xl">
-                    <h3 className="font-bold mb-2 text-orange-500">Hardware (CAD/EDA)</h3>
+                  <div className="border border-black/10 dark:border-white/10 hover:border-cyan-500/30 p-6 rounded-xl transition-colors">
+                    <h3 className="font-bold mb-2 text-cyan-500">Hardware (CAD/EDA)</h3>
                     <p className="opacity-80 mb-4">
                       We are currently iterating on the aluminum chassis design in CAD, optimizing for thermal mass and manufacturability. The PCB backplane schematics are being finalized for the first prototype run. The compute module integration PCBs are currently being designed.
                     </p>
                   </div>
-                  <div className="border border-black/10 dark:border-white/10 p-6 rounded-xl">
-                    <h3 className="font-bold mb-2 text-orange-500">Software Repositories</h3>
+                  <div className="border border-black/10 dark:border-white/10 hover:border-green-500/30 p-6 rounded-xl transition-colors">
+                    <h3 className="font-bold mb-2 text-green-500">Software Repositories</h3>
                     <p className="opacity-80 mb-4">
-                      Currently, our <a href="https://cornerstone.sh" target="_blank" className="hover:text-orange-500 underline decoration-dotted underline-offset-4">public website</a>'s repository is public. It's repository can be seen here:
+                      Currently, our <a href="https://cornerstone.sh" target="_blank" className="hover:text-cornerstone underline decoration-dotted underline-offset-4">public website</a>'s repository is public. It's repository can be seen here:
                     </p>
                     <ul className="space-y-2 text-xs">
                       <li>
-                        <a href="https://github.com/grsszne/cornerstonesh/commits/" target="_blank" className="hover:text-orange-500 underline decoration-dotted underline-offset-4">
+                        <a href="https://github.com/grsszne/cornerstonesh/commits/" target="_blank" className="hover:text-cornerstone underline decoration-dotted underline-offset-4">
                           github.com/grsszne/cornerstonesh
                         </a>
                         <span className="block opacity-50 mt-1">The public-facing marketing site and documentation hub.</span>
@@ -162,7 +162,7 @@ export default function TeachPage() {
                     <p className="opacity-80 mb-4">
                       Our firmware and os layer is currently private. It can be seen here. We can give you access if you want. I just don't know if you've opened github in any private matter in the past 3 years.
                     </p>
-                        <a href="https://github.com/grsszne/cornerstoneos/commits/" target="_blank" className="hover:text-orange-500 underline decoration-dotted underline-offset-4">
+                        <a href="https://github.com/grsszne/cornerstoneos/commits/" target="_blank" className="hover:text-cornerstone underline decoration-dotted underline-offset-4">
                           github.com/grsszne/cornerstoneos
                         </a>
                         <span className="block opacity-50 mt-1">The custom firmware and OS layer for Foundation.</span>
@@ -173,7 +173,7 @@ export default function TeachPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-cornerstone underline-offset-4">
                   5. The Exception
                 </h2>
                 <p className="mb-4">
@@ -188,7 +188,7 @@ export default function TeachPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-cornerstone underline-offset-4">
                   6. The Deliverables
                 </h2>
                 <p className="mb-4">
@@ -196,20 +196,20 @@ export default function TeachPage() {
                 </p>
                 <div className="space-y-4">
                   <div className="flex gap-4 items-start">
-                    <div className="bg-orange-500 text-white px-2 py-1 text-xs font-bold rounded">HARDWARE</div>
+                    <div className="bg-cyan-500 text-white px-2 py-1 text-xs font-bold rounded">HARDWARE</div>
                     <p>A functional physical prototype of the Foundation unit, CNC-milled or high-fidelity 3D printed, with working drive bays.</p>
                   </div>
                   <div className="flex gap-4 items-start">
-                    <div className="bg-black dark:bg-white text-white dark:text-black px-2 py-1 text-xs font-bold rounded">SOFTWARE</div>
+                    <div className="bg-green-500 text-white px-2 py-1 text-xs font-bold rounded">SOFTWARE</div>
                     <p>A live, deployed version of CornerstoneOS (the dashboard you are looking at right now) controlling the hardware.</p>
                   </div>
                   <div className="flex gap-4 items-start">
-                    <div className="border border-black dark:border-white px-2 py-1 text-xs font-bold rounded">DOCUMENTATION</div>
+                    <div className="bg-purple-500 text-white px-2 py-1 text-xs font-bold rounded">DOCUMENTATION</div>
                     <p>A comprehensive engineering log (see /devlog) documenting every failure and success.</p>
                   </div>
 
                   <div className="flex gap-4 items-start">
-                    <div className="border border-black dark:border-white px-2 py-1 text-xs font-bold rounded">MONEY</div>
+                    <div className="bg-cornerstone text-white px-2 py-1 text-xs font-bold rounded">MONEY</div>
                     <p>I wouldnt really mind if he raised upwards of 100 grand..... hmmm ... great look for you to brag to the teacher people, too. Or bible.</p>
                   </div>
                 </div>
@@ -218,7 +218,7 @@ export default function TeachPage() {
 
 
               <section>
-                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-6 underline decoration-2 decoration-cornerstone underline-offset-4">
                   7. Execution
                 </h2>
                 <p className="mb-8">

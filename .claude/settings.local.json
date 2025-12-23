@@ -6,7 +6,8 @@
       "Skill(frontend-design)",
       "Bash(taskkill:*)",
       "Bash(cmd //c \"taskkill /F /PID 19916\")",
-      "Bash(claude:*)"
+      "Bash(claude:*)",
+      "Bash(find:*)"
     ]
   }
 }

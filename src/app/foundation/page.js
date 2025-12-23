@@ -47,7 +47,7 @@ export default function FoundationPage() {
             <div className="pt-8">
               <Link
                 href="/preorder"
-                className="btn-shine lift-on-hover group inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-orange-500 text-white border-2 border-orange-500 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-black dark:hover:border-white transition-all duration-300 rounded-full relative overflow-hidden shadow-lg hover:shadow-2xl"
+                className="btn-shine lift-on-hover group inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-cornerstone text-white border-2 border-cornerstone hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:border-black dark:hover:border-white transition-all duration-300 rounded-full relative overflow-hidden shadow-lg hover:shadow-2xl"
               >
                 <span className="relative z-10">Pre-order Now</span>
               </Link>
@@ -64,7 +64,7 @@ export default function FoundationPage() {
             <FadeIn>
               <div className="mb-20 max-w-3xl">
                 <h2 className="text-4xl md:text-6xl font-medium tracking-tighter">
-                  It's a computer that <span className="text-orange-500">works for you.</span>
+                  It's a computer that <span className="text-cornerstone">works for you.</span>
                 </h2>
               </div>
             </FadeIn>
@@ -73,7 +73,7 @@ export default function FoundationPage() {
               <FadeIn delay={0.1}>
                 <div className="group">
                   <div className="font-mono text-xs text-cyan-500 mb-4 uppercase tracking-widest">01 / Storage</div>
-                  <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">Like iCloud, but yours.</h3>
+                  <h3 className="text-2xl font-medium mb-4 group-hover:text-cyan-500 transition-colors">Like iCloud, but yours.</h3>
                   <p className="font-mono text-sm opacity-60 leading-relaxed">
                     Backup photos, videos, and documents. Your drives, your data, no monthly fees.
                   </p>
@@ -83,7 +83,7 @@ export default function FoundationPage() {
               <FadeIn delay={0.2}>
                 <div className="group">
                   <div className="font-mono text-xs text-green-500 mb-4 uppercase tracking-widest">02 / Automation</div>
-                  <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">A 24/7 Digital Butler.</h3>
+                  <h3 className="text-2xl font-medium mb-4 group-hover:text-green-500 transition-colors">A 24/7 Digital Butler.</h3>
                   <p className="font-mono text-sm opacity-60 leading-relaxed">
                     Always on. Block ads network-wide, auto-download shows, manage smart home without the cloud.
                   </p>
@@ -93,7 +93,7 @@ export default function FoundationPage() {
               <FadeIn delay={0.3}>
                 <div className="group">
                   <div className="font-mono text-xs text-purple-500 mb-4 uppercase tracking-widest">03 / Media</div>
-                  <h3 className="text-2xl font-medium mb-4 group-hover:text-orange-500 transition-colors">Your Private Netflix.</h3>
+                  <h3 className="text-2xl font-medium mb-4 group-hover:text-purple-500 transition-colors">Your Private Netflix.</h3>
                   <p className="font-mono text-sm opacity-60 leading-relaxed">
                     Stream movies and music to any device. High quality, no buffering, titles never disappear.
                   </p>
@@ -120,15 +120,15 @@ export default function FoundationPage() {
             <FadeIn>
               <div className="mb-20">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="h-px w-12 bg-orange-500"></div>
-                  <span className="font-mono text-xs uppercase tracking-[0.3em] text-orange-500">Use Cases</span>
+                  <div className="h-px w-12 bg-cornerstone"></div>
+                  <span className="font-mono text-xs uppercase tracking-[0.3em] text-cornerstone">Use Cases</span>
                 </div>
                 <h2 className="text-4xl md:text-6xl font-medium tracking-tight text-black dark:text-white mb-6">
-                  Built for <span className="text-orange-500">You</span>
+                  Built for <span className="text-cornerstone">You</span>
                 </h2>
                 <Link
                   href="/foundation/guide"
-                  className="inline-flex items-center gap-2 text-sm font-mono text-orange-500 hover:opacity-70 transition-opacity"
+                  className="inline-flex items-center gap-2 text-sm font-mono text-cornerstone hover:opacity-70 transition-opacity"
                 >
                   <span>Not sure what specs you need?</span>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -143,15 +143,15 @@ export default function FoundationPage() {
               <FadeIn delay={0.1}>
                 <div className="group relative h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                  <div className="relative bg-gray-50 dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
+                  <div className="relative bg-gray-50 dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-cyan-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
                     {/* Header */}
                     <div className="mb-6 pb-4 border-b border-black/10 dark:border-white/10">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-mono text-xs uppercase tracking-widest text-orange-500">Config_01</span>
+                        <span className="font-mono text-xs uppercase tracking-widest text-cyan-500">Config_01</span>
                         <span className="font-mono text-xs text-black/30 dark:text-white/30">INGEST</span>
                       </div>
-                      <h3 className="text-2xl font-medium text-black dark:text-white group-hover:text-orange-500 transition-colors">
+                      <h3 className="text-2xl font-medium text-black dark:text-white group-hover:text-cyan-500 transition-colors">
                         The Creator
                       </h3>
                     </div>
@@ -161,15 +161,15 @@ export default function FoundationPage() {
                       <div className="font-mono text-xs uppercase tracking-wider text-black/40 dark:text-white/40 mb-3">Requirements</div>
                       <div className="space-y-2">
                         <div className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <div className="w-1 h-1 bg-cyan-500 mt-1.5 shrink-0"></div>
                           <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Rapid footage offloading</span>
                         </div>
                         <div className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <div className="w-1 h-1 bg-cyan-500 mt-1.5 shrink-0"></div>
                           <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">High-speed 2.5GbE workflow</span>
                         </div>
                         <div className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <div className="w-1 h-1 bg-cyan-500 mt-1.5 shrink-0"></div>
                           <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Zero monthly cloud fees</span>
                         </div>
                       </div>
@@ -197,7 +197,7 @@ export default function FoundationPage() {
                         <div className="flex items-center justify-between font-mono text-xs">
                           <span className="text-black/40 dark:text-white/40">MOD</span>
                           <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-orange-500">SD + 5G<span className="lowercase">b</span>E</span>
+                          <span className="text-cornerstone">SD + 5G<span className="lowercase">b</span>E</span>
                         </div>
                       </div>
                     </div>
@@ -209,15 +209,15 @@ export default function FoundationPage() {
               <FadeIn delay={0.2}>
                 <div className="group relative h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                  <div className="relative bg-gray-50 dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
+                  <div className="relative bg-gray-50 dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-green-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
                     {/* Header */}
                     <div className="mb-6 pb-4 border-b border-black/10 dark:border-white/10">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-mono text-xs uppercase tracking-widest text-orange-500">Config_02</span>
+                        <span className="font-mono text-xs uppercase tracking-widest text-green-500">Config_02</span>
                         <span className="font-mono text-xs text-black/30 dark:text-white/30">SOVEREIGNTY</span>
                       </div>
-                      <h3 className="text-2xl font-medium text-black dark:text-white group-hover:text-orange-500 transition-colors">
+                      <h3 className="text-2xl font-medium text-black dark:text-white group-hover:text-green-500 transition-colors">
                         The Advocate
                       </h3>
                     </div>
@@ -227,15 +227,15 @@ export default function FoundationPage() {
                       <div className="font-mono text-xs uppercase tracking-wider text-black/40 dark:text-white/40 mb-3">Requirements</div>
                       <div className="space-y-2">
                         <div className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <div className="w-1 h-1 bg-green-500 mt-1.5 shrink-0"></div>
                           <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Complete data ownership</span>
                         </div>
                         <div className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <div className="w-1 h-1 bg-green-500 mt-1.5 shrink-0"></div>
                           <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Power outage protection</span>
                         </div>
                         <div className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <div className="w-1 h-1 bg-green-500 mt-1.5 shrink-0"></div>
                           <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Self-hosted services</span>
                         </div>
                       </div>
@@ -263,7 +263,7 @@ export default function FoundationPage() {
                         <div className="flex items-center justify-between font-mono text-xs">
                           <span className="text-black/40 dark:text-white/40">MOD</span>
                           <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-orange-500">UPS Backup</span>
+                          <span className="text-cornerstone">UPS Backup</span>
                         </div>
                       </div>
                     </div>
@@ -275,15 +275,15 @@ export default function FoundationPage() {
               <FadeIn delay={0.3}>
                 <div className="group relative h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                  <div className="relative bg-gray-50 dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
+                  <div className="relative bg-gray-50 dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-purple-500/50 transition-all duration-500 p-8 h-full flex flex-col">
 
                     {/* Header */}
                     <div className="mb-6 pb-4 border-b border-black/10 dark:border-white/10">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-mono text-xs uppercase tracking-widest text-orange-500">Config_03</span>
+                        <span className="font-mono text-xs uppercase tracking-widest text-purple-500">Config_03</span>
                         <span className="font-mono text-xs text-black/30 dark:text-white/30">HACKING</span>
                       </div>
-                      <h3 className="text-2xl font-medium text-black dark:text-white group-hover:text-orange-500 transition-colors">
+                      <h3 className="text-2xl font-medium text-black dark:text-white group-hover:text-purple-500 transition-colors">
                         The Developer
                       </h3>
                     </div>
@@ -293,15 +293,15 @@ export default function FoundationPage() {
                       <div className="font-mono text-xs uppercase tracking-wider text-black/40 dark:text-white/40 mb-3">Requirements</div>
                       <div className="space-y-2">
                         <div className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <div className="w-1 h-1 bg-purple-500 mt-1.5 shrink-0"></div>
                           <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Docker & K8s environment</span>
                         </div>
                         <div className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <div className="w-1 h-1 bg-purple-500 mt-1.5 shrink-0"></div>
                           <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Hardware experimentation</span>
                         </div>
                         <div className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-orange-500 mt-1.5 shrink-0"></div>
+                          <div className="w-1 h-1 bg-purple-500 mt-1.5 shrink-0"></div>
                           <span className="text-sm text-black/70 dark:text-white/70 leading-relaxed">Custom automation</span>
                         </div>
                       </div>
@@ -329,7 +329,7 @@ export default function FoundationPage() {
                         <div className="flex items-center justify-between font-mono text-xs">
                           <span className="text-black/40 dark:text-white/40">MOD</span>
                           <div className="flex-1 mx-3 border-b border-dashed border-black/10 dark:border-white/10"></div>
-                          <span className="text-orange-500">USB-C 3.0</span>
+                          <span className="text-cornerstone">USB-C 3.0</span>
                         </div>
                       </div>
                     </div>
@@ -344,7 +344,7 @@ export default function FoundationPage() {
                 <div className="h-px flex-1 bg-black/10 dark:bg-white/10 max-w-xs"></div>
                 <Link
                   href="/foundation/guide"
-                  className="btn-shine lift-on-hover inline-flex items-center justify-center px-6 py-3 text-sm font-mono font-medium uppercase tracking-wider bg-transparent text-black dark:text-white border border-black/20 dark:border-white/20 hover:border-orange-500 hover:text-orange-500 transition-all duration-300"
+                  className="btn-shine lift-on-hover inline-flex items-center justify-center px-6 py-3 text-sm font-mono font-medium uppercase tracking-wider bg-transparent text-black dark:text-white border border-black/20 dark:border-white/20 hover:border-cornerstone hover:text-cornerstone transition-all duration-300"
                 >
                   View Hardware Guide →
                 </Link>
@@ -371,11 +371,11 @@ export default function FoundationPage() {
             <FadeIn>
               <div className="mb-20">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="h-px w-12 bg-orange-500"></div>
-                  <span className="font-mono text-xs uppercase tracking-[0.3em] text-orange-500">Technical Specifications</span>
+                  <div className="h-px w-12 bg-cornerstone"></div>
+                  <span className="font-mono text-xs uppercase tracking-[0.3em] text-cornerstone">Technical Specifications</span>
                 </div>
                 <h2 className="text-4xl md:text-6xl font-medium tracking-tight text-black dark:text-white">
-                  Engineered for <span className="text-orange-500">You</span>
+                  Engineered for <span className="text-cornerstone">You</span>
                 </h2>
               </div>
             </FadeIn>
@@ -385,8 +385,8 @@ export default function FoundationPage() {
 
                 {/* Universal Bays - Large Feature */}
                 <div className="md:col-span-8 group relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
-                  <div className="relative bg-gray-50 dark:bg-zinc-950 border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 md:p-10 h-full">
+                  <div className="absolute inset-0 bg-gradient-to-br from-cornerstone/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
+                  <div className="relative bg-gray-50 dark:bg-zinc-950 border border-black/10 dark:border-white/10 group-hover:border-cornerstone/50 transition-all duration-500 p-8 md:p-10 h-full">
 
                     <BayConfigurator />
                   </div>
@@ -394,13 +394,13 @@ export default function FoundationPage() {
 
                 {/* Hardware Guide Preview - Tall Feature */}
                 <div className="md:col-span-4 md:row-span-2 group relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
-                  <div className="relative bg-white dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col">
+                  <div className="absolute inset-0 bg-gradient-to-br from-cornerstone/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
+                  <div className="relative bg-white dark:bg-black border border-black/10 dark:border-white/10 group-hover:border-cornerstone/50 transition-all duration-500 p-8 h-full flex flex-col">
 
                     <div className="flex flex-col h-full">
-                      <div className="font-mono text-xs uppercase tracking-widest text-orange-500 mb-3">Configuration_Guide</div>
+                      <div className="font-mono text-xs uppercase tracking-widest text-cornerstone mb-3">Configuration_Guide</div>
                       <Link href="/foundation/guide" className="block group/link">
-                        <h3 className="text-3xl md:text-4xl font-medium text-black dark:text-white mb-4 group-hover/link:text-orange-500 transition-colors duration-300">
+                        <h3 className="text-3xl md:text-4xl font-medium text-black dark:text-white mb-4 group-hover/link:text-cornerstone transition-colors duration-300">
                           Hardware<br/>Guide
                           <svg className="inline-block w-6 h-6 ml-2 opacity-0 group-hover/link:opacity-100 transition-all duration-300 -translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -415,7 +415,7 @@ export default function FoundationPage() {
                       {/* Quick Stats Grid */}
                       <div className="flex-1 space-y-15">
                         {/* Processor */}
-                        <div className="border-l-2 border-orange-500/20 group-hover:border-orange-500 transition-colors duration-300 pl-4">
+                        <div className="border-l-2 border-purple-500/20 group-hover:border-purple-500 transition-colors duration-300 pl-4">
                           <div className="font-mono text-sm text-black/40 dark:text-white/40 uppercase tracking-wider mb-3">Processor</div>
                           <div className="space-y-2">
                             <div className="text-base font-medium text-black dark:text-white">N100 (4-core) → Basic tasks</div>
@@ -424,7 +424,7 @@ export default function FoundationPage() {
                         </div>
 
                         {/* Network */}
-                        <div className="border-l-2 border-orange-500/20 group-hover:border-orange-500 transition-colors duration-300 pl-4">
+                        <div className="border-l-2 border-green-500/20 group-hover:border-green-500 transition-colors duration-300 pl-4">
                           <div className="font-mono text-sm text-black/40 dark:text-white/40 uppercase tracking-wider mb-3">Network Speed</div>
                           <div className="space-y-2">
                             <div className="text-base font-medium text-black dark:text-white">1GbE → Standard (most users)</div>
@@ -433,7 +433,7 @@ export default function FoundationPage() {
                         </div>
 
                         {/* Storage */}
-                        <div className="border-l-2 border-orange-500/20 group-hover:border-orange-500 transition-colors duration-300 pl-4">
+                        <div className="border-l-2 border-cyan-500/20 group-hover:border-cyan-500 transition-colors duration-300 pl-4">
                           <div className="font-mono text-sm text-black/40 dark:text-white/40 uppercase tracking-wider mb-3">Storage</div>
                           <div className="space-y-2">
                             <div className="text-base font-medium text-black dark:text-white">256GB → 48TB NVMe</div>
@@ -445,7 +445,7 @@ export default function FoundationPage() {
                       {/* CTA */}
                       <Link
                         href="/foundation/guide"
-                        className="mt-6 flex items-center justify-between px-4 py-3 border border-black/10 dark:border-white/10 group-hover:border-orange-500 group-hover:bg-orange-500/5 transition-all duration-300 font-mono text-xs uppercase tracking-wider text-black dark:text-white group-hover:text-orange-500"
+                        className="mt-6 flex items-center justify-between px-4 py-3 border border-black/10 dark:border-white/10 group-hover:border-cornerstone group-hover:bg-cornerstone/5 transition-all duration-300 font-mono text-xs uppercase tracking-wider text-black dark:text-white group-hover:text-cornerstone"
                       >
                         <span>View Full Guide</span>
                         <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -458,12 +458,12 @@ export default function FoundationPage() {
 
                 {/* Aluminum Chassis */}
                 <div className="md:col-span-4 group relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
-                  <div className="relative bg-gray-50 dark:bg-zinc-950 border border-black/10 dark:border-white/10 group-hover:border-orange-500/50 transition-all duration-500 p-8 h-full flex flex-col justify-between text-black dark:text-white">
+                  <div className="absolute inset-0 bg-gradient-to-br from-cornerstone/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-none"></div>
+                  <div className="relative bg-gray-50 dark:bg-zinc-950 border border-black/10 dark:border-white/10 group-hover:border-cornerstone/50 transition-all duration-500 p-8 h-full flex flex-col justify-between text-black dark:text-white">
 
                     <div>
-                      <div className="font-mono text-xs uppercase tracking-widest text-orange-500 mb-3">Material_Spec.6061-T6</div>
-                      <h3 className="text-2xl md:text-3xl font-medium text-black dark:text-white mb-4 group-hover:text-orange-500 transition-colors duration-300">
+                      <div className="font-mono text-xs uppercase tracking-widest text-cornerstone mb-3">Material_Spec.6061-T6</div>
+                      <h3 className="text-2xl md:text-3xl font-medium text-black dark:text-white mb-4 group-hover:text-cornerstone transition-colors duration-300">
                         Machined<br/>Aluminum
                       </h3>
 
@@ -475,13 +475,13 @@ export default function FoundationPage() {
                     <div className="space-y-3 mt-8">
                       <div className="flex items-center gap-3">
                         <div className="w-full h-1 bg-black/10 dark:bg-white/10 relative overflow-hidden">
-                          <div className="absolute inset-0 bg-orange-500 origin-left scale-x-90 group-hover:scale-x-100 transition-transform duration-700"></div>
+                          <div className="absolute inset-0 bg-cornerstone origin-left scale-x-90 group-hover:scale-x-100 transition-transform duration-700"></div>
                         </div>
                         <span className="font-mono text-xs text-black/40 dark:text-white/40 whitespace-nowrap">TENSILE: 310 MPa</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="w-full h-1 bg-black/10 dark:bg-white/10 relative overflow-hidden">
-                          <div className="absolute inset-0 bg-orange-500 origin-left scale-x-75 group-hover:scale-x-100 transition-transform duration-700 delay-75"></div>
+                          <div className="absolute inset-0 bg-cornerstone origin-left scale-x-75 group-hover:scale-x-100 transition-transform duration-700 delay-75"></div>
                         </div>
                         <span className="font-mono text-xs text-black/40 dark:text-white/40 whitespace-nowrap">YIELD: 276 MPa</span>
                       </div>
@@ -491,13 +491,13 @@ export default function FoundationPage() {
 
                 {/* Compute Power */}
                 <div className="md:col-span-4 group relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-600 to-orange-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-cornerstone to-cornerstone"></div>
                   <div className="absolute inset-0 opacity-10" style={{
                     backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)',
                     backgroundSize: '20px 20px'
                   }}></div>
 
-                  <div className="relative border border-orange-400 group-hover:border-white transition-all duration-500 p-8 h-full flex flex-col justify-between">
+                  <div className="relative border border-cornerstone group-hover:border-white transition-all duration-500 p-8 h-full flex flex-col justify-between">
 
                     <div>
                       <div className="font-mono text-xs uppercase tracking-widest text-white/80 mb-3">Compute_Core.x86</div>
@@ -543,7 +543,7 @@ export default function FoundationPage() {
             <FadeIn>
               <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
                 <h2 className="text-4xl md:text-7xl font-medium tracking-tighter max-w-2xl">
-                  Why choose <span className="text-orange-500">Foundation</span>?
+                  Why choose <span className="text-cornerstone">Foundation</span>?
                 </h2>
                 <p className="font-mono text-sm md:text-base opacity-60 max-w-md mb-2">
                   Tired of choosing between underpowered toys and ugly enterprise gear. We made a third option.
@@ -573,14 +573,14 @@ export default function FoundationPage() {
                     desc: "Precision CNC-milled 6061-T6 aluminum. Active heat dissipation. A server that looks as good as it performs, designed to be displayed, not hidden."
                   }
                 ].map((item) => (
-                  <InteractiveCard key={item.id} className="group relative border-t-2 border-black/20 dark:border-white/20 pt-8 hover:border-orange-500 transition-all duration-500">
-                    <div className="font-mono text-xs text-orange-500 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute -top-2.5 bg-white dark:bg-black px-2">
+                  <InteractiveCard key={item.id} className="group relative border-t-2 border-black/20 dark:border-white/20 pt-8 hover:border-cornerstone transition-all duration-500">
+                    <div className="font-mono text-xs text-cornerstone mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute -top-2.5 bg-white dark:bg-black px-2">
                       POINT {item.id}
                     </div>
-                    <div className="text-6xl font-medium opacity-20 mb-8 group-hover:opacity-100 group-hover:text-orange-500 transition-all duration-500">
+                    <div className="text-6xl font-medium opacity-20 mb-8 group-hover:opacity-100 group-hover:text-cornerstone transition-all duration-500">
                       {item.id}
                     </div>
-                    <h3 className="text-3xl font-medium mb-2 group-hover:text-orange-500 transition-colors">{item.title}</h3>
+                    <h3 className="text-3xl font-medium mb-2 group-hover:text-cornerstone transition-colors">{item.title}</h3>
                     <div className="font-mono text-xs uppercase tracking-widest opacity-50 mb-6 group-hover:opacity-80 transition-opacity">
                       vs. {item.vs}
                     </div>
@@ -614,24 +614,24 @@ export default function FoundationPage() {
                       <TelemetryCard label="Power Draw" metricKey="powerDraw" unit="W" icon="⚡" />
                       <TelemetryCard label="Network Activity" metricKey="network" unit=" Gbps" icon="🌐" />
                       <TelemetryCard label="Humidity" metricKey="humidity" unit="%" icon="💧" />
-                      <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-orange-500/50 flex flex-col justify-between aspect-square group transition-all">
-                        <div className="text-orange-500 text-xl mb-2 group-hover:scale-110 transition-transform">🍃</div>
+                      <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-cornerstone/50 flex flex-col justify-between aspect-square group transition-all">
+                        <div className="text-cornerstone text-xl mb-2 group-hover:scale-110 transition-transform">🍃</div>
                         <div>
-                          <div className="text-lg font-bold font-mono tracking-tight group-hover:text-orange-500 transition-colors">Good</div>
+                          <div className="text-lg font-bold font-mono tracking-tight group-hover:text-cornerstone transition-colors">Good</div>
                           <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1 group-hover:opacity-80 transition-opacity">Air Quality</div>
                         </div>
                       </InteractiveCard>
-                      <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-orange-500/50 flex flex-col justify-between aspect-square group transition-all">
-                        <div className="text-orange-500 text-xl mb-2 group-hover:scale-110 transition-transform">💾</div>
+                      <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-cornerstone/50 flex flex-col justify-between aspect-square group transition-all">
+                        <div className="text-cornerstone text-xl mb-2 group-hover:scale-110 transition-transform">💾</div>
                         <div>
-                          <div className="text-lg font-bold font-mono tracking-tight group-hover:text-orange-500 transition-colors">Healthy</div>
+                          <div className="text-lg font-bold font-mono tracking-tight group-hover:text-cornerstone transition-colors">Healthy</div>
                           <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1 group-hover:opacity-80 transition-opacity">Storage</div>
                         </div>
                       </InteractiveCard>
-                      <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-orange-500/50 flex flex-col justify-between aspect-square group transition-all">
-                        <div className="text-orange-500 text-xl mb-2 group-hover:scale-110 transition-transform">⏱</div>
+                      <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 p-4 rounded-xl border border-black/5 dark:border-white/5 hover:border-cornerstone/50 flex flex-col justify-between aspect-square group transition-all">
+                        <div className="text-cornerstone text-xl mb-2 group-hover:scale-110 transition-transform">⏱</div>
                         <div>
-                          <div className="text-lg font-bold font-mono tracking-tight group-hover:text-orange-500 transition-colors">24d 3h</div>
+                          <div className="text-lg font-bold font-mono tracking-tight group-hover:text-cornerstone transition-colors">24d 3h</div>
                           <div className="text-[10px] uppercase tracking-wider opacity-60 font-mono mt-1 group-hover:opacity-80 transition-opacity">Uptime</div>
                         </div>
                       </InteractiveCard>
@@ -639,18 +639,18 @@ export default function FoundationPage() {
                   </TelemetryProvider>
                 </div>
 
-                <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 rounded-3xl p-8 border-2 border-black/10 dark:border-white/10 hover:border-orange-500/50 aspect-square flex items-center justify-center relative overflow-hidden group transition-all">
+                <InteractiveCard className="bg-gray-50 dark:bg-zinc-900 rounded-3xl p-8 border-2 border-black/10 dark:border-white/10 hover:border-cornerstone/50 aspect-square flex items-center justify-center relative overflow-hidden group transition-all">
                   <div className="absolute inset-0 opacity-10 group-hover:opacity-30 transition-opacity duration-500">
                     <AsciiArt width={125} height={125} numCircles={100} />
                   </div>
                   <div className="relative z-10 text-center space-y-6">
-                    <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-white dark:bg-black border border-black/10 dark:border-white/10 shadow-2xl shadow-orange-500/20 group-hover:shadow-orange-500/40 group-hover:scale-110 transition-all duration-300">
-                      <svg className="w-12 h-12 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-white dark:bg-black border border-black/10 dark:border-white/10 shadow-2xl shadow-cornerstone/20 group-hover:shadow-cornerstone/40 group-hover:scale-110 transition-all duration-300">
+                      <svg className="w-12 h-12 text-cornerstone" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                     </div>
                     <div className="space-y-2">
-                      <div className="font-medium text-lg group-hover:text-orange-500 transition-colors">Smart Home Bridge</div>
+                      <div className="font-medium text-lg group-hover:text-cornerstone transition-colors">Smart Home Bridge</div>
                       <div className="font-mono text-xs uppercase tracking-widest opacity-60 group-hover:opacity-80 transition-opacity">
                         Works with<br />Apple Homekit • Google • Alexa
                       </div>
@@ -774,7 +774,7 @@ export default function FoundationPage() {
               <div className="mt-16 pt-8 border-t border-black/10 dark:border-white/10 text-center">
                 <Link
                   href="/foundation/configurator"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-300 rounded-full"
+                  className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black hover:bg-cornerstone hover:text-white dark:hover:bg-cornerstone dark:hover:text-white transition-all duration-300 rounded-full"
                 >
                   Build Your Configuration →
                 </Link>
@@ -784,19 +784,19 @@ export default function FoundationPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-amber-400 text-black text-center">
+        <section className="py-24 px-4 sm:px-6 lg:px-8 bg-cornerstone text-white text-center">
           <FadeIn>
             <div className="max-w-3xl mx-auto space-y-8">
               <h2 className="text-4xl md:text-6xl font-medium tracking-tight">
                 Ready to build?
               </h2>
-              <p className="text-xl font-mono opacity-70">
+              <p className="text-xl font-mono opacity-90">
                 Join the future of home computing.
               </p>
               <div className="pt-8">
                 <Link
                   href="/preorder"
-                  className="btn-shine lift-on-hover inline-flex items-center justify-center px-12 py-5 text-lg font-mono font-medium uppercase tracking-wider bg-black text-amber-400 hover:bg-white hover:text-black transition-all duration-300 rounded-full shadow-xl shadow-black/30 hover:shadow-2xl hover:shadow-black/50"
+                  className="btn-shine lift-on-hover inline-flex items-center justify-center px-12 py-5 text-lg font-mono font-medium uppercase tracking-wider bg-black text-white hover:bg-white hover:text-black transition-all duration-300 rounded-full shadow-xl shadow-black/30 hover:shadow-2xl hover:shadow-black/50"
                 >
                   Reserve Yours
                 </Link>

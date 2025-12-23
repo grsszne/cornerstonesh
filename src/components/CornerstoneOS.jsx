@@ -39,7 +39,7 @@ function Card({ children, title, className = "", rightContent }) {
 }
 
 // --- Animated Graph Component ---
-function LiveGraph({ color = "#3b82f6", min = 20, max = 80 }) {
+function LiveGraph({ color = "#06b6d4", min = 20, max = 80 }) {
    const [path, setPath] = useState("");
    const [areaPath, setAreaPath] = useState("");
    
@@ -170,11 +170,11 @@ function OverviewView() {
             <div className="text-3xl text-white font-light">0.05 <span className="text-xs text-white/40">MBPS</span></div>
             <div className="flex flex-col gap-1 text-[10px]">
                <span className="flex items-center gap-1 text-green-500">↓ 29.2 Kbps</span>
-               <span className="flex items-center gap-1 text-orange-500">↑ 21.3 Kbps</span>
+               <span className="flex items-center gap-1 text-cornerstone">↑ 21.3 Kbps</span>
             </div>
          </div>
          <div className="flex-1 min-h-0">
-             <LiveGraph color="#f97316" min={5} max={40} />
+             <LiveGraph color="#F7821B" min={5} max={40} />
          </div>
       </Card>
 
@@ -183,7 +183,7 @@ function OverviewView() {
             <div className="text-3xl text-white font-light">25.8 <span className="text-xs text-white/40">%</span></div>
          </div>
          <div className="flex-1 min-h-0">
-             <LiveGraph color="#3b82f6" min={20} max={60} />
+             <LiveGraph color="#06b6d4" min={20} max={60} />
          </div>
       </Card>
 
@@ -206,12 +206,12 @@ function NetworkView() {
          <Card className="h-64" rightContent={
              <div className="flex gap-4 text-[10px] items-center">
                  <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-green-500"/> <span className="text-white/60">1500.0 Kbps</span></div>
-                 <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-orange-500"/> <span className="text-white/60">106.1 Kbps</span></div>
+                 <div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-cornerstone"/> <span className="text-white/60">106.1 Kbps</span></div>
              </div>
          }>
              <div className="text-3xl font-light text-white mb-4">1.58 <span className="text-sm text-white/40">MBPS</span></div>
              <div className="flex-1 min-h-0">
-                 <LiveGraph color="#f97316" min={10} max={90} /> 
+                 <LiveGraph color="#F7821B" min={10} max={90} /> 
              </div>
          </Card>
 
@@ -241,7 +241,7 @@ function NetworkView() {
              
              <Card className="flex-row justify-between items-center py-4">
                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-orange-500/10 rounded flex items-center justify-center text-orange-500 text-[10px] font-bold">EN0</div>
+                    <div className="w-10 h-10 bg-cornerstone/10 rounded flex items-center justify-center text-cornerstone text-[10px] font-bold">EN0</div>
                     <div>
                        <div className="text-white text-sm font-medium">EN0</div>
                        <div className="text-[10px] text-white/40 font-mono">32:7B:43:28:CD:B2</div>
@@ -261,7 +261,7 @@ function NetworkView() {
              </Card>
              <Card className="flex-row justify-between items-center py-4 opacity-50">
                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-orange-500/10 rounded flex items-center justify-center text-orange-500 text-[10px] font-bold">ANP</div>
+                    <div className="w-10 h-10 bg-cornerstone/10 rounded flex items-center justify-center text-cornerstone text-[10px] font-bold">ANP</div>
                     <div>
                        <div className="text-white text-sm font-medium">ANPI1</div>
                        <div className="text-[10px] text-white/40 font-mono">86:34:B7:D9:0F:28</div>
@@ -343,10 +343,10 @@ function LogsView() {
              {logs.map((log, i) => (
                 <div key={i} className="grid grid-cols-12 gap-4 border-b border-white/5 pb-2 last:border-0 hover:bg-white/5 transition-colors p-1 rounded">
                    <div className="col-span-3 text-white/40">{log.time}</div>
-                   <div className={`col-span-1 font-bold ${log.level === 'INFO' ? 'text-green-500' : log.level === 'WARNING' ? 'text-orange-500' : 'text-red-500'}`}>
+                   <div className={`col-span-1 font-bold ${log.level === 'INFO' ? 'text-green-500' : log.level === 'WARNING' ? 'text-cornerstone' : 'text-red-500'}`}>
                       {log.level}
                    </div>
-                   <div className="col-span-2 text-blue-400">{log.src}</div>
+                   <div className="col-span-2 text-cyan-400">{log.src}</div>
                    <div className="col-span-6 text-white/80 whitespace-nowrap overflow-hidden text-ellipsis">{log.msg}</div>
                 </div>
              ))}
@@ -706,7 +706,7 @@ export default function CornerstoneOS() {
                                        className={`w-full text-left px-3 py-2.5 rounded-md text-[11px] font-medium tracking-wide uppercase transition-all flex items-center gap-3 group
                                           ${activeTab === tab ? "bg-white/10 text-white" : "text-white/40 hover:text-white hover:bg-white/5"}`}
                                     >
-                                       <span className={activeTab === tab ? "text-orange-500" : "opacity-30 group-hover:opacity-100 transition-opacity"}>
+                                       <span className={activeTab === tab ? "text-cornerstone" : "opacity-30 group-hover:opacity-100 transition-opacity"}>
                                           {Icons[tab] ? Icons[tab]() : <Icons.System />}
                                        </span>
                                        {tab}
@@ -858,7 +858,7 @@ export default function CornerstoneOS() {
                       <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                       Privacy Focused
                   </div>
-                  <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1.5 rounded border border-blue-500/20 w-fit">
+                  <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-wider text-cyan-400 bg-cyan-500/10 px-3 py-1.5 rounded border border-cyan-500/20 w-fit">
                       <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
                       Local Network
                   </div>

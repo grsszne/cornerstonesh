@@ -68,7 +68,7 @@ export default function AsciiArt({ width = 80, height = 24, numCircles = 8, clas
           const shouldHighlight = index >= 6 && Math.random() > 0.7;
 
           if (shouldHighlight && char !== ' ') {
-            result += `<span class="text-orange-500">${char}</span>`;
+            result += `<span class="text-cornerstone">${char}</span>`;
           } else {
             result += char;
           }

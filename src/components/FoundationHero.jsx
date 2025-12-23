@@ -26,7 +26,7 @@ export default function FoundationHero() {
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: 'linear-gradient(rgba(249, 115, 22, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(249, 115, 22, 0.3) 1px, transparent 1px)',
+              backgroundImage: 'linear-gradient(rgba(247, 130, 27, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(247, 130, 27, 0.3) 1px, transparent 1px)',
               backgroundSize: '100px 100px'
             }}
           />
@@ -36,7 +36,7 @@ export default function FoundationHero() {
         <div
           className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
           style={{
-            backgroundImage: 'linear-gradient(rgba(249, 115, 22, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(249, 115, 22, 0.3) 1px, transparent 1px)',
+            backgroundImage: 'linear-gradient(rgba(247, 130, 27, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(247, 130, 27, 0.3) 1px, transparent 1px)',
             backgroundSize: '100px 100px',
             transform: `translate(${mousePosition.x * 0.1}px, ${mousePosition.y * 0.1}px)`
           }}
@@ -46,7 +46,7 @@ export default function FoundationHero() {
         <div
           className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
           style={{
-            backgroundImage: 'linear-gradient(rgba(249, 115, 22, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(249, 115, 22, 0.2) 1px, transparent 1px)',
+            backgroundImage: 'linear-gradient(rgba(247, 130, 27, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(247, 130, 27, 0.2) 1px, transparent 1px)',
             backgroundSize: '25px 25px',
             transform: `translate(${-mousePosition.x * 0.05}px, ${-mousePosition.y * 0.05}px)`
           }}
@@ -57,85 +57,85 @@ export default function FoundationHero() {
           <defs>
             <pattern id="circuit-pattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
               {/* Main traces */}
-              <line x1="0" y1="50" x2="200" y2="50" stroke="currentColor" strokeWidth="1" className="text-orange-500" />
-              <line x1="0" y1="150" x2="200" y2="150" stroke="currentColor" strokeWidth="1" className="text-orange-500" />
-              <line x1="50" y1="0" x2="50" y2="200" stroke="currentColor" strokeWidth="1" className="text-orange-500" />
-              <line x1="150" y1="0" x2="150" y2="200" stroke="currentColor" strokeWidth="1" className="text-orange-500" />
+              <line x1="0" y1="50" x2="200" y2="50" stroke="currentColor" strokeWidth="1" className="text-cornerstone" />
+              <line x1="0" y1="150" x2="200" y2="150" stroke="currentColor" strokeWidth="1" className="text-cornerstone" />
+              <line x1="50" y1="0" x2="50" y2="200" stroke="currentColor" strokeWidth="1" className="text-cornerstone" />
+              <line x1="150" y1="0" x2="150" y2="200" stroke="currentColor" strokeWidth="1" className="text-cornerstone" />
 
               {/* Diagonal connections */}
-              <line x1="50" y1="50" x2="150" y2="150" stroke="currentColor" strokeWidth="0.5" className="text-orange-500" opacity="0.5" />
-              <line x1="150" y1="50" x2="50" y2="150" stroke="currentColor" strokeWidth="0.5" className="text-orange-500" opacity="0.5" />
+              <line x1="50" y1="50" x2="150" y2="150" stroke="currentColor" strokeWidth="0.5" className="text-cornerstone" opacity="0.5" />
+              <line x1="150" y1="50" x2="50" y2="150" stroke="currentColor" strokeWidth="0.5" className="text-cornerstone" opacity="0.5" />
 
               {/* Corner L-shapes (like circuit bends) */}
-              <path d="M 50 30 L 50 50 L 70 50" stroke="currentColor" strokeWidth="0.5" fill="none" className="text-orange-500" opacity="0.6" />
-              <path d="M 150 130 L 150 150 L 130 150" stroke="currentColor" strokeWidth="0.5" fill="none" className="text-orange-500" opacity="0.6" />
+              <path d="M 50 30 L 50 50 L 70 50" stroke="currentColor" strokeWidth="0.5" fill="none" className="text-cornerstone" opacity="0.6" />
+              <path d="M 150 130 L 150 150 L 130 150" stroke="currentColor" strokeWidth="0.5" fill="none" className="text-cornerstone" opacity="0.6" />
 
               {/* Connection nodes with rings */}
-              <circle cx="50" cy="50" r="3" fill="currentColor" className="text-orange-500" />
-              <circle cx="50" cy="50" r="5" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-orange-500" opacity="0.4" />
+              <circle cx="50" cy="50" r="3" fill="currentColor" className="text-cornerstone" />
+              <circle cx="50" cy="50" r="5" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-cornerstone" opacity="0.4" />
 
-              <circle cx="150" cy="50" r="3" fill="currentColor" className="text-orange-500" />
-              <circle cx="150" cy="50" r="5" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-orange-500" opacity="0.4" />
+              <circle cx="150" cy="50" r="3" fill="currentColor" className="text-cornerstone" />
+              <circle cx="150" cy="50" r="5" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-cornerstone" opacity="0.4" />
 
-              <circle cx="50" cy="150" r="3" fill="currentColor" className="text-orange-500" />
-              <circle cx="50" cy="150" r="5" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-orange-500" opacity="0.4" />
+              <circle cx="50" cy="150" r="3" fill="currentColor" className="text-cornerstone" />
+              <circle cx="50" cy="150" r="5" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-cornerstone" opacity="0.4" />
 
-              <circle cx="150" cy="150" r="3" fill="currentColor" className="text-orange-500" />
-              <circle cx="150" cy="150" r="5" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-orange-500" opacity="0.4" />
+              <circle cx="150" cy="150" r="3" fill="currentColor" className="text-cornerstone" />
+              <circle cx="150" cy="150" r="5" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-cornerstone" opacity="0.4" />
 
               {/* Small connection points */}
-              <circle cx="100" cy="50" r="1.5" fill="currentColor" className="text-orange-500" opacity="0.7" />
-              <circle cx="50" cy="100" r="1.5" fill="currentColor" className="text-orange-500" opacity="0.7" />
-              <circle cx="150" cy="100" r="1.5" fill="currentColor" className="text-orange-500" opacity="0.7" />
-              <circle cx="100" cy="150" r="1.5" fill="currentColor" className="text-orange-500" opacity="0.7" />
+              <circle cx="100" cy="50" r="1.5" fill="currentColor" className="text-cornerstone" opacity="0.7" />
+              <circle cx="50" cy="100" r="1.5" fill="currentColor" className="text-cornerstone" opacity="0.7" />
+              <circle cx="150" cy="100" r="1.5" fill="currentColor" className="text-cornerstone" opacity="0.7" />
+              <circle cx="100" cy="150" r="1.5" fill="currentColor" className="text-cornerstone" opacity="0.7" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#circuit-pattern)" />
         </svg>
 
         {/* Animated data flow lines - horizontal */}
-        <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-20 dark:opacity-30"
+        <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cornerstone to-transparent opacity-20 dark:opacity-30"
           style={{
             transform: `translateY(${mousePosition.y * 0.5}px)`,
             transition: 'transform 0.3s ease-out'
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500 to-transparent animate-pulse" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cornerstone to-transparent animate-pulse" />
         </div>
 
-        <div className="absolute top-2/3 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-20 dark:opacity-30"
+        <div className="absolute top-2/3 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cornerstone to-transparent opacity-20 dark:opacity-30"
           style={{
             transform: `translateY(${-mousePosition.y * 0.3}px)`,
             transition: 'transform 0.3s ease-out'
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500 to-transparent animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cornerstone to-transparent animate-pulse" style={{ animationDelay: '1s' }} />
         </div>
 
         {/* Vertical data traces */}
-        <div className="absolute top-0 bottom-0 left-1/4 w-px bg-gradient-to-b from-transparent via-orange-500 to-transparent opacity-15 dark:opacity-25"
+        <div className="absolute top-0 bottom-0 left-1/4 w-px bg-gradient-to-b from-transparent via-cornerstone to-transparent opacity-15 dark:opacity-25"
           style={{
             transform: `translateX(${mousePosition.x * 0.4}px)`,
             transition: 'transform 0.3s ease-out'
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-500 to-transparent animate-pulse" style={{ animationDelay: '0.5s' }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cornerstone to-transparent animate-pulse" style={{ animationDelay: '0.5s' }} />
         </div>
 
-        <div className="absolute top-0 bottom-0 left-3/4 w-px bg-gradient-to-b from-transparent via-orange-500 to-transparent opacity-15 dark:opacity-25"
+        <div className="absolute top-0 bottom-0 left-3/4 w-px bg-gradient-to-b from-transparent via-cornerstone to-transparent opacity-15 dark:opacity-25"
           style={{
             transform: `translateX(${-mousePosition.x * 0.4}px)`,
             transition: 'transform 0.3s ease-out'
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-500 to-transparent animate-pulse" style={{ animationDelay: '1.5s' }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cornerstone to-transparent animate-pulse" style={{ animationDelay: '1.5s' }} />
         </div>
 
         {/* Floating connection nodes - increased count */}
         {[...Array(15)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-orange-500 opacity-20 dark:opacity-30"
+            className="absolute w-1.5 h-1.5 rounded-full bg-cornerstone opacity-20 dark:opacity-30"
             style={{
               left: `${15 + (i * 6)}%`,
               top: `${25 + (i % 4) * 18}%`,
@@ -159,8 +159,8 @@ export default function FoundationHero() {
               transition: 'transform 0.6s ease-out',
             }}
           >
-            <div className="w-3 h-3 rounded-full bg-orange-500" />
-            <div className="absolute inset-0 w-8 h-8 -translate-x-2.5 -translate-y-2.5 rounded-full border border-orange-500 opacity-30 animate-pulse" style={{ animationDelay: `${i * 0.5}s` }} />
+            <div className="w-3 h-3 rounded-full bg-cornerstone" />
+            <div className="absolute inset-0 w-8 h-8 -translate-x-2.5 -translate-y-2.5 rounded-full border border-cornerstone opacity-30 animate-pulse" style={{ animationDelay: `${i * 0.5}s` }} />
           </div>
         ))}
 
@@ -168,7 +168,7 @@ export default function FoundationHero() {
         <div
           className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04]"
           style={{
-            background: `linear-gradient(45deg, transparent 48%, rgba(249, 115, 22, 0.4) 49%, rgba(249, 115, 22, 0.4) 51%, transparent 52%)`,
+            background: `linear-gradient(45deg, transparent 48%, rgba(247, 130, 27, 0.4) 49%, rgba(247, 130, 27, 0.4) 51%, transparent 52%)`,
             backgroundSize: '150px 150px',
             transform: `rotate(${mousePosition.x * 0.02}deg) translateX(${mousePosition.x * 0.2}px)`
           }}
@@ -193,7 +193,7 @@ export default function FoundationHero() {
             <br />
             Server.
           </h1>
-          <h1 className="text-[12vw] leading-[0.8] font-medium tracking-tighter break-words text-stroke-foreground text-transparent" style={{WebkitTextStroke: '2px rgb(249 115 22)'}}>
+          <h1 className="text-[12vw] leading-[0.8] font-medium tracking-tighter break-words text-stroke-foreground text-transparent" style={{WebkitTextStroke: '2px rgb(247 130 27)'}}>
             Your Way.
           </h1>
         </div>
@@ -201,31 +201,31 @@ export default function FoundationHero() {
         <div className="mt-12 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
           <div className="max-w-lg">
             <p className="text-lg md:text-xl font-mono leading-relaxed">
-              Meet <a href="/foundation" className="underline decoration-orange-500 decoration-2">Foundation</a>: the modular home server system built for you. Start with the essentials, then expand your storage, networking, and compute as you grow.
+              Meet <a href="/foundation" className="underline decoration-cornerstone decoration-2">Foundation</a>: the modular home server system built for you. Start with the essentials, then expand your storage, networking, and compute as you grow.
             </p>
             
             <ul className="mt-8 space-y-2 font-mono text-sm md:text-base opacity-80">
               <li className="flex items-center gap-3">
-                <span className="text-orange-500 font-bold">[+]</span> Up to 64TB NVMe Storage
+                <span className="text-cyan-500 font-bold">[+]</span> Up to 64TB NVMe Storage
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-orange-500 font-bold">[+]</span> Up to 10G<span className="lowercase">b</span>E Networking
+                <span className="text-green-500 font-bold">[+]</span> Up to 10G<span className="lowercase">b</span>E Networking
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-orange-500 font-bold">[+]</span> Intel N305 x86 Processor
+                <span className="text-purple-500 font-bold">[+]</span> Intel N305 x86 Processor
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-orange-500 font-bold">[+]</span> PCIe Gen 3 Backplane
+                <span className="text-cornerstone font-bold">[+]</span> PCIe Gen 3 Backplane
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-orange-500 font-bold">[+]</span> Up to 3.5 Quadrillion Unique Configurations
+                <span className="text-cornerstone font-bold">[+]</span> Up to 3.5 Quadrillion Unique Configurations
               </li>
             </ul>
 
             <div className="mt-6">
               <Link
                 href="/foundation/guide"
-                className="inline-flex items-center gap-2 text-sm font-mono text-orange-500 hover:opacity-70 transition-opacity"
+                className="inline-flex items-center gap-2 text-sm font-mono text-cornerstone hover:opacity-70 transition-opacity"
               >
                 <span>→ Hardware guide</span>
               </Link>
@@ -234,7 +234,7 @@ export default function FoundationHero() {
           <div className="flex flex-col sm:flex-row gap-4 md:justify-end">
             <Link
               href="/preorder"
-              className="btn-shine lift-on-hover inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black border border-black dark:border-white hover:bg-orange-500 hover:border-orange-500 dark:hover:bg-orange-500 dark:hover:border-orange-500 transition-all duration-300"
+              className="btn-shine lift-on-hover inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black border border-black dark:border-white hover:bg-cornerstone hover:border-cornerstone dark:hover:bg-cornerstone dark:hover:border-cornerstone transition-all duration-300"
             >
               Pre-order Now
             </Link>

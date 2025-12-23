@@ -46,7 +46,7 @@ function getConfirmationEmailHTML(firstName) {
               <h1 style="margin: 0 0 10px 0; font-size: 48px; font-weight: 500; line-height: 1; letter-spacing: -2px; color: #000000;">
                 Welcome,
               </h1>
-              <h1 style="margin: 0 0 30px 0; font-size: 48px; font-weight: 500; line-height: 1; letter-spacing: -2px; color: transparent; -webkit-text-stroke: 2px #f97316;">
+              <h1 style="margin: 0 0 30px 0; font-size: 48px; font-weight: 500; line-height: 1; letter-spacing: -2px; color: transparent; -webkit-text-stroke: 2px #F7821B;">
                 ${name}.
               </h1>
 
@@ -91,7 +91,7 @@ function getConfirmationEmailHTML(firstName) {
                 You're receiving this email because you subscribed to updates from Cornerstone.
               </p>
               <p style="margin: 0; font-size: 12px; color: #666666;">
-                <a href="{{unsubscribe_url}}" style="color: #f97316; text-decoration: underline;">Unsubscribe</a> |
+                <a href="{{unsubscribe_url}}" style="color: #F7821B; text-decoration: underline;">Unsubscribe</a> |
                 <a href="https://cornerstone.sh/privacy" style="color: #666666; text-decoration: underline;">Privacy Policy</a> |
                 <a href="https://cornerstone.sh/terms" style="color: #666666; text-decoration: underline;">Terms</a>
               </p>

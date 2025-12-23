@@ -26,10 +26,10 @@ const devlogPosts = [
 
         <h3 className="text-xl font-medium mb-3 mt-6">Why NVMe Everything?</h3>
         <p className="mb-4">
-          We went all-in on NVMe. No spinning hard drives, no SATA SSDs. Just M.2 NVMe drives running at full PCIe Gen3 speed. We're talking 3,500 MB/s reads and 3,000 MB/s writes. At those speeds, your network is the bottleneck, not the drives. Using M.2 form factor SSDs are also better for future proofing. As Samsung supposedly plans to quit making SATA SSDs and Crucial quit making consumer memory and storage, NVME SSDs should remain more accesible as they still remain the standard in most desktops and laptops. Also, you can use your own drives. No need to buy drives from us if you have your own. 
+          We went all-in on <span className="text-cyan-500 font-medium">NVMe</span>. No spinning hard drives, no SATA SSDs. Just M.2 NVMe drives running at full PCIe Gen3 speed. We're talking <span className="text-cyan-500 font-medium">3,500 MB/s reads and 3,000 MB/s writes</span>. At those speeds, your network is the bottleneck, not the drives. Using M.2 form factor SSDs are also better for future proofing. As Samsung supposedly plans to quit making SATA SSDs and Crucial quit making consumer memory and storage, NVME SSDs should remain more accesible as they still remain the standard in most desktops and laptops. Also, you can use your own drives. No need to buy drives from us if you have your own.
         </p>
         <p className="mb-4">
-          Speaking of network: you get 1 Gigabit Ethernet standard (which is fine for most people), but if you're moving huge files around, throw in a 2.5, 5, or 10 Gig module. At 10GbE, you're pushing data faster than most USB drives.
+          Speaking of network: you get <span className="text-green-500 font-medium">1 Gigabit Ethernet</span> standard (which is fine for most people), but if you're moving huge files around, throw in a <span className="text-green-500 font-medium">2.5, 5, or 10 Gig module</span>. At 10GbE, you're pushing data faster than most USB drives.
         </p>
 
         <h3 className="text-xl font-medium mb-3 mt-6">The Chips Inside</h3>
@@ -65,7 +65,7 @@ const devlogPosts = [
         </p>
 
         <p className="mt-6 text-sm opacity-60">
-          Want more details? Check out the <a href="/foundation" className="text-orange-500 hover:underline">full specs</a> or browse the <a href="/foundation/guide" className="text-orange-500 hover:underline">hardware guide</a> to figure out your build.
+          Want more details? Check out the <a href="/foundation" className="text-cornerstone hover:underline">full specs</a> or browse the <a href="/foundation/guide" className="text-cornerstone hover:underline">hardware guide</a> to figure out your build.
         </p>
       </>
     ),
@@ -110,7 +110,7 @@ export default function DevlogPage() {
               Devlog
             </h1>
             <p className="text-xl md:text-2xl font-mono text-black/60 dark:text-white/60 leading-relaxed">
-              Building your <span className="text-orange-500">Foundation</span>.
+              Building your <span className="text-cornerstone">Foundation</span>.
               <br />
               One commit at a time.
             </p>
@@ -120,12 +120,12 @@ export default function DevlogPage() {
         <div className="space-y-2">
           {devlogPosts.map((post, index) => (
             <FadeIn key={post.id} delay={index * 0.05}>
-              <article className="border border-black/10 dark:border-white/10 rounded-lg overflow-hidden hover:border-orange-500/30 transition-colors duration-300">
+              <article className="border border-black/10 dark:border-white/10 rounded-lg overflow-hidden hover:border-cyan-500/30 transition-colors duration-300">
                 <button
                   onClick={() => togglePost(post.id)}
                   className="w-full px-6 py-5 flex items-center gap-6 text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200"
                 >
-                  <time className="font-mono text-sm text-orange-500 uppercase tracking-widest shrink-0 min-w-[110px]">
+                  <time className="font-mono text-sm text-cyan-500 uppercase tracking-widest shrink-0 min-w-[110px]">
                     {post.date}
                   </time>
 
@@ -167,7 +167,7 @@ export default function DevlogPage() {
             </p>
             <Link
               href="/preorder"
-              className="inline-flex items-center justify-center px-8 py-3 text-sm font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-300 rounded-full"
+              className="inline-flex items-center justify-center px-8 py-3 text-sm font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black hover:bg-cornerstone hover:text-white dark:hover:bg-cornerstone dark:hover:text-white transition-all duration-300 rounded-full"
             >
               Join the Waitlist
             </Link>

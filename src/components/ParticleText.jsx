@@ -17,7 +17,7 @@ export default function ParticleText({ text, className = "" }) {
         // Configuration
         const particleDensity = 5;
         const particleSize = 1.5;
-        const color = "rgb(249, 115, 22)"; // Orange-500
+        const color = "rgb(247, 130, 27)"; // Orange-500
         const floatSpeed = 0.5;
         const interactRadius = 80;
         const interactForce = 0.5;
@@ -254,7 +254,7 @@ function CanvasController({ text, className }) {
         // ... config ...
         const particleDensity = 4; // Higher density = more dots
         const particleSize = 1.5;
-        const color = "rgb(249, 115, 22)";
+        const color = "rgb(247, 130, 27)";
         const floatSpeed = 0.5;
         const interactRadius = 80;
         const interactForce = 0.5;

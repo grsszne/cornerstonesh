@@ -21,11 +21,11 @@ export default function ModulesPage() {
                 <div className="max-w-7xl mx-auto relative z-10">
                     <div className="max-w-3xl">
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="h-px w-12 bg-orange-500"></div>
-                            <span className="font-mono text-xs uppercase tracking-[0.3em] text-orange-500">Catalog</span>
+                            <div className="h-px w-12 bg-cornerstone"></div>
+                            <span className="font-mono text-xs uppercase tracking-[0.3em] text-cornerstone">Catalog</span>
                         </div>
                         <h1 className="text-5xl md:text-7xl font-medium tracking-tighter mb-6">
-                            Module <span className="text-orange-500">Ecosystem</span>
+                            Module <span className="text-cornerstone">Ecosystem</span>
                         </h1>
                         <p className="text-xl font-mono opacity-60 leading-relaxed max-w-2xl mb-6">
                             Expand your Foundation with our growing ecosystem of snap-in modules.
@@ -33,7 +33,7 @@ export default function ModulesPage() {
                         </p>
                         <Link
                             href="/foundation/guide"
-                            className="inline-flex items-center gap-2 text-sm font-mono text-orange-500 hover:opacity-70 transition-opacity"
+                            className="inline-flex items-center gap-2 text-sm font-mono text-cornerstone hover:opacity-70 transition-opacity"
                         >
                             <span>Need help choosing?</span>
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

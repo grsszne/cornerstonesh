@@ -37,7 +37,7 @@ export default function TermsPage() {
 
             <div className="space-y-8 font-mono text-sm leading-relaxed">
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   1. Acceptance of Terms
                 </h2>
                 <p>
@@ -46,7 +46,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   2. Products and Services
                 </h2>
                 <p className="mb-4">
@@ -61,7 +61,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   3. Orders and Payment
                 </h2>
                 <p className="mb-4">
@@ -77,7 +77,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   4. Kickstarter Campaign
                 </h2>
                 <p className="mb-4">
@@ -98,7 +98,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   5. Pre-Orders (Post-Campaign)
                 </h2>
                 <p>
@@ -107,7 +107,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   6. Shipping and Delivery
                 </h2>
                 <p className="mb-4">
@@ -122,7 +122,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   7. Returns and Refunds
                 </h2>
                 <p className="mb-4">
@@ -138,7 +138,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   8. Warranty
                 </h2>
                 <p>
@@ -147,7 +147,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   9. Intellectual Property
                 </h2>
                 <p>
@@ -156,7 +156,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   10. User Conduct
                 </h2>
                 <p className="mb-4">
@@ -172,7 +172,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   11. Limitation of Liability
                 </h2>
                 <p>
@@ -181,7 +181,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   12. Indemnification
                 </h2>
                 <p>
@@ -190,7 +190,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   13. Governing Law
                 </h2>
                 <p>
@@ -199,7 +199,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   14. Changes to Terms
                 </h2>
                 <p>
@@ -208,7 +208,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   15. Contact Information
                 </h2>
                 <p>

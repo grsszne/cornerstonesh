@@ -426,11 +426,11 @@ export default function FoundationBuilder() {
           </h2>
           <p className="text-sm font-mono">
             Not sure what specs you need?{" "}
-            <Link href="/foundation/guide" className="text-orange-500 hover:underline">
+            <Link href="/foundation/guide" className="text-cornerstone hover:underline">
               View Hardware Guide →
             </Link>
             {" "}or{" "}
-            <Link href="/foundation/modules" className="text-orange-500 hover:underline">
+            <Link href="/foundation/modules" className="text-cornerstone hover:underline">
               Browse Modules →
             </Link>
           </p>
@@ -464,11 +464,11 @@ export default function FoundationBuilder() {
               <div className="space-y-4 font-mono text-sm border-t border-black/10 dark:border-white/10 pt-6">
                 <div className="flex justify-between">
                   <span className="opacity-60">Processor</span>
-                  <span className={memory.price > 0 ? "text-orange-500" : ""}>{memory.label}</span>
+                  <span className={memory.price > 0 ? "text-cornerstone" : ""}>{memory.label}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="opacity-60">Boot Storage</span>
-                  <span className={bootStorage.price > 0 ? "text-orange-500" : ""}>{bootStorage.label} NVMe</span>
+                  <span className={bootStorage.price > 0 ? "text-cornerstone" : ""}>{bootStorage.label} NVMe</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="opacity-60">Networking</span>
@@ -531,7 +531,7 @@ export default function FoundationBuilder() {
               <div className="space-y-4">
                 <div className="flex justify-between items-end">
                   <label className="text-xl font-medium">Processor & Memory</label>
-                  <span className="font-mono text-xs text-orange-500 uppercase tracking-wider">Unified LPDDR5X</span>
+                  <span className="font-mono text-xs text-cornerstone uppercase tracking-wider">Unified LPDDR5X</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {MEMORY_OPTIONS.map((opt) => (
@@ -542,7 +542,7 @@ export default function FoundationBuilder() {
                         relative border rounded-xl py-4 px-4 text-center font-mono text-sm transition-all duration-200
                         flex flex-col items-center justify-center gap-1
                         ${memory.label === opt.label
-                          ? 'border-orange-500 bg-orange-500/5 text-orange-500 ring-1 ring-orange-500 shadow-lg shadow-orange-500/10 scale-[1.02]'
+                          ? 'border-cornerstone bg-cornerstone/5 text-cornerstone ring-1 ring-cornerstone shadow-lg shadow-cornerstone/10 scale-[1.02]'
                           : 'border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30 hover:bg-black/5 dark:hover:bg-white/5'}
                       `}
                     >
@@ -561,7 +561,7 @@ export default function FoundationBuilder() {
               <div className="space-y-4">
                 <div className="flex justify-between items-end">
                   <label className="text-xl font-medium">Boot Storage</label>
-                  <span className="font-mono text-xs text-orange-500 uppercase tracking-wider">System NVMe</span>
+                  <span className="font-mono text-xs text-cornerstone uppercase tracking-wider">System NVMe</span>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   {BOOT_STORAGE_OPTIONS.map((opt) => (
@@ -572,7 +572,7 @@ export default function FoundationBuilder() {
                         relative border rounded-xl py-4 px-4 text-center font-mono text-sm transition-all duration-200
                         flex flex-col items-center justify-center gap-1
                         ${bootStorage.label === opt.label
-                          ? 'border-orange-500 bg-orange-500/5 text-orange-500 ring-1 ring-orange-500 shadow-lg shadow-orange-500/10 scale-[1.02]'
+                          ? 'border-cornerstone bg-cornerstone/5 text-cornerstone ring-1 ring-cornerstone shadow-lg shadow-cornerstone/10 scale-[1.02]'
                           : 'border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30 hover:bg-black/5 dark:hover:bg-white/5'}
                       `}
                     >
@@ -596,7 +596,7 @@ export default function FoundationBuilder() {
                 >
                   <div className="flex items-end gap-4">
                     <label className="text-xl font-medium cursor-pointer">Modular Bays</label>
-                    <span className="font-mono text-xs text-orange-500 uppercase tracking-wider">
+                    <span className="font-mono text-xs text-cornerstone uppercase tracking-wider">
                       {occupiedBays}/{NUM_BAYS} Occupied
                     </span>
                   </div>
@@ -685,7 +685,7 @@ export default function FoundationBuilder() {
                 {/* Bay Slots - Dynamic columns based on visibleSlots */}
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-[12px] bg-orange-500/10 text-orange-500 px-1.5 py-0.5 rounded border border-orange-500/20 font-mono">
+                    <span className="text-[12px] bg-cornerstone/10 text-cornerstone px-1.5 py-0.5 rounded border border-cornerstone/20 font-mono">
                       Universal Bay
                     </span>
                     {occupiedBays > 0 && (
@@ -749,14 +749,14 @@ export default function FoundationBuilder() {
                                   flex flex-col items-center justify-center text-center
                                         ${bay
                                 ? selectedBayIndices.includes(index)
-                                  ? `ring-1 ring-orange-500/50 bg-orange-500/5 scale-[1.02] shadow-lg shadow-orange-500/5` // Active Selection (Edit Mode) - Dimmed
+                                  ? `ring-1 ring-cornerstone/50 bg-cornerstone/5 scale-[1.02] shadow-lg shadow-cornerstone/5` // Active Selection (Edit Mode) - Dimmed
                                   : `${getModuleColorClass(bay, 'border')} ${getModuleColorClass(bay, 'bg')}/10`
                                 : selectedModule && !bay
-                                  ? 'border-dashed border-orange-500 bg-orange-500/5 cursor-pointer hover:bg-orange-500/10 hover:scale-[1.02]'
+                                  ? 'border-dashed border-cornerstone bg-cornerstone/5 cursor-pointer hover:bg-cornerstone/10 hover:scale-[1.02]'
                                   : dragOverBay === index
-                                    ? 'border-orange-500 bg-orange-500/10 border-solid scale-[1.02]'
+                                    ? 'border-cornerstone bg-cornerstone/10 border-solid scale-[1.02]'
                                     : isHighspeed
-                                      ? 'border-dashed border-teal-500/40 dark:border-teal-400/40 hover:border-teal-500/60 dark:hover:border-teal-400/60 bg-teal-500/5 dark:bg-teal-400/5'
+                                      ? 'border-dashed border-cyan-500/40 dark:border-cyan-400/40 hover:border-cyan-500/60 dark:hover:border-cyan-400/60 bg-cyan-500/5 dark:bg-cyan-400/5'
                                       : 'border-dashed border-black/20 dark:border-white/20 hover:border-black/40 dark:hover:border-white/40'
                               }
                                 `}
@@ -795,8 +795,8 @@ export default function FoundationBuilder() {
                             <div className="font-mono text-[10px] opacity-30 uppercase">Bay {index + 1}</div>
                             {isHighspeed && (
                               <div className="flex items-center justify-center gap-1 mt-1 opacity-30">
-                                <Lightning size={12} weight="bold" className="text-teal-500 dark:text-teal-400" />
-                                <span className="text-[8px] font-mono text-teal-500 dark:text-teal-400">HIGHSPEED</span>
+                                <Lightning size={12} weight="bold" className="text-cyan-500 dark:text-cyan-400" />
+                                <span className="text-[8px] font-mono text-cyan-500 dark:text-cyan-400">HIGHSPEED</span>
                               </div>
                             )}
                             <div className="text-lg opacity-20 mt-1">+</div>
@@ -866,7 +866,7 @@ export default function FoundationBuilder() {
                 </div>
                 <Link
                   href="/preorder"
-                  className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-300 rounded-full w-full sm:w-auto"
+                  className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black hover:bg-cornerstone hover:text-white dark:hover:bg-cornerstone dark:hover:text-white transition-all duration-300 rounded-full w-full sm:w-auto"
                 >
                   Reserve Configuration
                 </Link>
@@ -877,7 +877,7 @@ export default function FoundationBuilder() {
               <div className="pt-8 border-t border-black/10 dark:border-white/10 space-y-4">
                 <div className="flex justify-between items-end">
                   <label className="text-sm font-medium opacity-70">Configuration Key</label>
-                  <span className="font-mono text-[10px] text-orange-500 uppercase tracking-wider">Share or Load</span>
+                  <span className="font-mono text-[10px] text-cornerstone uppercase tracking-wider">Share or Load</span>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4">
@@ -1013,7 +1013,7 @@ export default function FoundationBuilder() {
                           alert("Invalid configuration key");
                         }
                       }}
-                      className="px-4 py-2 border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white rounded-lg font-mono text-xs uppercase tracking-wider transition-colors"
+                      className="px-4 py-2 border border-cornerstone text-cornerstone hover:bg-cornerstone hover:text-white rounded-lg font-mono text-xs uppercase tracking-wider transition-colors"
                     >
                       Load
                     </button>

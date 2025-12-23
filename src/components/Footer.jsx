@@ -38,7 +38,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="font-mono text-sm">
+    <footer className="font-mono text-sm border-t border-black dark:border-white">
       {/* Newsletter Section */}
       <div className="bg-black text-white px-4 py-8 relative overflow-hidden">
         {/* ASCII Background */}
@@ -64,7 +64,7 @@ export default function Footer() {
               <button
                 type="submit"
                 disabled={status === "loading" || status === "success"}
-                className="bg-white uppercase text-black px-6 py-2 font-medium capitalize hover:bg-orange-500 hover:text-white transition-colors disabled:opacity-50"
+                className="bg-white uppercase text-black px-6 py-2 font-medium capitalize hover:bg-cornerstone hover:text-white transition-colors disabled:opacity-50"
               >
                 {status === "success" ? "OK" : "subscribe"}
               </button>

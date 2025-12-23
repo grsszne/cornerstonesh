@@ -27,7 +27,7 @@ const formatNetworkLabel = (label) => {
 const MODULE_TYPES = {
   STORAGE: {
     label: "SSD",
-    color: "bg-blue-500",
+    color: "bg-cyan-500",
     Icon: HardDrive,
     abbr: "SSD"
   },
@@ -39,7 +39,7 @@ const MODULE_TYPES = {
   },
   USB_C: {
     label: "USB-C 3.0",
-    color: "bg-indigo-500",
+    color: "bg-purple-500",
     Icon: Lightning,
     abbr: "USC"
   },
@@ -51,13 +51,13 @@ const MODULE_TYPES = {
   },
   ETHERNET_5: {
     label: "5GbE",
-    color: "bg-emerald-500",
+    color: "bg-green-500",
     Icon: WifiHigh,
     abbr: "5GbE"
   },
   ETHERNET_10: {
     label: "10GbE",
-    color: "bg-teal-500",
+    color: "bg-cyan-500",
     Icon: Broadcast,
     abbr: "10GB"
   },
@@ -69,7 +69,7 @@ const MODULE_TYPES = {
   },
   SD_CARD: {
     label: "SD Card",
-    color: "bg-pink-500",
+    color: "bg-purple-500",
     Icon: SimCard,
     abbr: "SDC"
   },
@@ -200,7 +200,7 @@ export default function BayConfigurator() {
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
           <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
-            <div className="font-mono text-xs uppercase tracking-widest text-orange-500 mb-1">
+            <div className="font-mono text-xs uppercase tracking-widest text-cornerstone mb-1">
               Configuration_{String(currentConfig + 1).padStart(2, '0')}
             </div>
             <h4 className="text-xl md:text-2xl font-medium text-black dark:text-white">
@@ -210,7 +210,7 @@ export default function BayConfigurator() {
           <div className="flex items-center gap-0.5 shrink-0">
             <button
               onClick={handlePrev}
-              className="p-1.5 sm:p-2 text-black/40 dark:text-white/40 hover:text-orange-500 transition-colors cursor-pointer focus:outline-none shrink-0"
+              className="p-1.5 sm:p-2 text-black/40 dark:text-white/40 hover:text-cornerstone transition-colors cursor-pointer focus:outline-none shrink-0"
               aria-label="Previous configuration"
             >
               <CaretLeft size={14} weight="bold" className="sm:w-4 sm:h-4" />
@@ -226,8 +226,8 @@ export default function BayConfigurator() {
                 >
                   <div
                     className={`h-1 sm:h-1.5 transition-all duration-500 rounded-full ${idx === currentConfig
-                      ? 'w-6 sm:w-8 bg-orange-500'
-                      : 'w-1 sm:w-1.5 bg-black/20 dark:bg-white/20 group-hover:bg-orange-500/50'
+                      ? 'w-6 sm:w-8 bg-cornerstone'
+                      : 'w-1 sm:w-1.5 bg-black/20 dark:bg-white/20 group-hover:bg-cornerstone/50'
                       }`}
                   />
                 </button>
@@ -236,7 +236,7 @@ export default function BayConfigurator() {
 
             <button
               onClick={handleNext}
-              className="p-1.5 sm:p-2 text-black/40 dark:text-white/40 hover:text-orange-500 transition-colors cursor-pointer focus:outline-none shrink-0"
+              className="p-1.5 sm:p-2 text-black/40 dark:text-white/40 hover:text-cornerstone transition-colors cursor-pointer focus:outline-none shrink-0"
               aria-label="Next configuration"
             >
               <CaretRight size={14} weight="bold" className="sm:w-4 sm:h-4" />
@@ -259,7 +259,7 @@ export default function BayConfigurator() {
             <div
               className={`absolute inset-0 border transition-all duration-500 ${module === MODULE_TYPES.EMPTY
                 ? 'border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5'
-                : 'border-orange-500/50 bg-gray-100 dark:bg-zinc-900'
+                : 'border-cornerstone/50 bg-gray-100 dark:bg-zinc-900'
                 }`}
               style={{
                 transitionDelay: `${i * 50}ms`,
@@ -297,12 +297,12 @@ export default function BayConfigurator() {
               </div>
 
               {/* Hover Effect Overlay */}
-              <div className="absolute inset-0 bg-orange-500/0 group-hover/bay:bg-orange-500/10 transition-all duration-300 pointer-events-none" />
+              <div className="absolute inset-0 bg-cornerstone/0 group-hover/bay:bg-cornerstone/10 transition-all duration-300 pointer-events-none" />
             </div>
 
             {/* Connection Indicator */}
             {module !== MODULE_TYPES.EMPTY && (
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-px h-2 bg-orange-500/30"
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-px h-2 bg-cornerstone/30"
                 style={{
                   transitionDelay: `${i * 50 + 300}ms`,
                   opacity: isTransitioning ? 0 : 1,
@@ -318,7 +318,7 @@ export default function BayConfigurator() {
       <div className="mt-4 relative">
         <div className="h-px bg-black/10 dark:bg-white/10 relative overflow-hidden">
           <div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500 to-transparent"
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-cornerstone to-transparent"
             style={{
               animation: 'slideRight 3s ease-in-out infinite',
               opacity: 0.5

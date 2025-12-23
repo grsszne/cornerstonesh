@@ -420,11 +420,11 @@ export default function ConfiguratorClient() {
                         <FadeIn>
                             <div className="text-center mb-16">
                                 <div className="inline-flex items-center gap-3 mb-6">
-                                    <div className="h-px w-12 bg-orange-500"></div>
-                                    <span className="font-mono text-xs uppercase tracking-[0.3em] text-orange-500">
+                                    <div className="h-px w-12 bg-cornerstone"></div>
+                                    <span className="font-mono text-xs uppercase tracking-[0.3em] text-cornerstone">
                                         {recommendedConfig.tagline}
                                     </span>
-                                    <div className="h-px w-12 bg-orange-500"></div>
+                                    <div className="h-px w-12 bg-cornerstone"></div>
                                 </div>
                                 <h1 className="text-5xl md:text-7xl font-medium tracking-tighter mb-4">
                                     {recommendedConfig.name}
@@ -440,7 +440,7 @@ export default function ConfiguratorClient() {
                                 {/* Header */}
                                 <div className="mb-8 pb-6 border-b border-black/10 dark:border-white/10">
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="font-mono text-xs uppercase tracking-widest text-orange-500">
+                                        <span className="font-mono text-xs uppercase tracking-widest text-cornerstone">
                                             Recommended Config
                                         </span>
                                         <span className="font-mono text-xs text-black/30 dark:text-white/30">
@@ -457,7 +457,7 @@ export default function ConfiguratorClient() {
                                     <div className="space-y-3">
                                         {recommendedConfig.useCases.map((useCase, idx) => (
                                             <div key={idx} className="flex items-start gap-2">
-                                                <div className="w-1 h-1 bg-orange-500 mt-2 shrink-0"></div>
+                                                <div className="w-1 h-1 bg-cornerstone mt-2 shrink-0"></div>
                                                 <span className="text-sm opacity-70 leading-relaxed">{useCase}</span>
                                             </div>
                                         ))}
@@ -531,7 +531,7 @@ export default function ConfiguratorClient() {
                             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
                                 <Link
                                     href={`/foundation?key=${recommendedConfig.configKey}&ref=builder`}
-                                    className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-orange-500 text-white hover:bg-orange-600 transition-all duration-300 rounded-full shadow-lg hover:shadow-xl"
+                                    className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-cornerstone text-white hover:bg-cornerstone transition-all duration-300 rounded-full shadow-lg hover:shadow-xl"
                                 >
                                     Build This Configuration →
                                 </Link>
@@ -541,7 +541,7 @@ export default function ConfiguratorClient() {
                                         setCurrentStep(0);
                                         setAnswers({});
                                     }}
-                                    className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-transparent text-black dark:text-white border border-black/20 dark:border-white/20 hover:border-orange-500 hover:text-orange-500 transition-all duration-300 rounded-full"
+                                    className="inline-flex items-center justify-center px-8 py-4 text-base font-mono font-medium uppercase tracking-wider bg-transparent text-black dark:text-white border border-black/20 dark:border-white/20 hover:border-cornerstone hover:text-cornerstone transition-all duration-300 rounded-full"
                                 >
                                     Start Over
                                 </button>
@@ -574,7 +574,7 @@ export default function ConfiguratorClient() {
                         </div>
                         <div className="h-1 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
                             <motion.div
-                                className="h-full bg-orange-500"
+                                className="h-full bg-cornerstone"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${progress}%` }}
                                 transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
@@ -614,8 +614,8 @@ export default function ConfiguratorClient() {
                                             className={`
                                                 w-full text-left p-6 rounded-xl border transition-all duration-300
                                                 ${isSelected
-                                                    ? 'border-orange-500 bg-orange-500/5'
-                                                    : 'border-black/10 dark:border-white/10 hover:border-orange-500/50'
+                                                    ? 'border-cornerstone bg-cornerstone/5'
+                                                    : 'border-black/10 dark:border-white/10 hover:border-cornerstone/50'
                                                 }
                                             `}
                                             whileHover={{ scale: 1.01 }}
@@ -625,7 +625,7 @@ export default function ConfiguratorClient() {
                                                 <div className={`
                                                     w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5
                                                     ${isSelected
-                                                        ? 'border-orange-500 bg-orange-500'
+                                                        ? 'border-cornerstone bg-cornerstone'
                                                         : 'border-black/20 dark:border-white/20'
                                                     }
                                                 `}>
@@ -659,7 +659,7 @@ export default function ConfiguratorClient() {
                                         transition-all duration-300 rounded-full
                                         ${currentStep === 0
                                             ? 'opacity-30 cursor-not-allowed'
-                                            : 'hover:text-orange-500'
+                                            : 'hover:text-cornerstone'
                                         }
                                     `}
                                 >
@@ -672,7 +672,7 @@ export default function ConfiguratorClient() {
                                         inline-flex items-center gap-2 px-8 py-4 font-mono text-sm uppercase tracking-wider
                                         transition-all duration-300 rounded-full
                                         ${canProceed()
-                                            ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-lg hover:shadow-xl'
+                                            ? 'bg-cornerstone text-white hover:bg-cornerstone shadow-lg hover:shadow-xl'
                                             : 'bg-black/10 dark:bg-white/10 opacity-30 cursor-not-allowed'
                                         }
                                     `}

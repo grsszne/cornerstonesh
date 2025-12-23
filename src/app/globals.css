@@ -12,6 +12,9 @@
   --color-foreground: var(--foreground);
   --font-sans: 'Overused Grotesk', sans-serif;
   --font-mono: "DM Mono", monospace;
+
+  /* Cornerstone brand orange */
+  --color-cornerstone: #F7821B;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -65,7 +68,7 @@ body {
 
   .lift-on-hover:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(249, 115, 22, 0.15);
+    box-shadow: 0 8px 16px rgba(247, 130, 27, 0.15);
   }
 
   /* Scanline Animation */

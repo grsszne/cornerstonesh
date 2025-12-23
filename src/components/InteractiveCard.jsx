@@ -33,7 +33,7 @@ export default function InteractiveCard({ children, className = "" }) {
         <div
           className="absolute inset-0 pointer-events-none opacity-30 transition-opacity duration-300"
           style={{
-            background: `radial-gradient(circle at ${position.x}% ${position.y}%, rgba(249, 115, 22, 0.15) 0%, transparent 50%)`,
+            background: `radial-gradient(circle at ${position.x}% ${position.y}%, rgba(247, 130, 27, 0.15) 0%, transparent 50%)`,
           }}
         />
       )}

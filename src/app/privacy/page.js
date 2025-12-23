@@ -37,7 +37,7 @@ export default function PrivacyPage() {
 
             <div className="space-y-8 font-mono text-sm leading-relaxed">
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   1. Information We Collect
                 </h2>
                 <p className="mb-4">
@@ -55,7 +55,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   2. How We Use Your Information
                 </h2>
                 <p className="mb-4">
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   3. Information Sharing
                 </h2>
                 <p className="mb-4">
@@ -86,7 +86,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   4. Data Security
                 </h2>
                 <p>
@@ -95,7 +95,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   5. Your Rights
                 </h2>
                 <p className="mb-4">
@@ -111,7 +111,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   6. Cookies and Tracking
                 </h2>
                 <p>
@@ -120,7 +120,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   7. Children's Privacy
                 </h2>
                 <p>
@@ -129,7 +129,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   8. Changes to This Policy
                 </h2>
                 <p>
@@ -138,7 +138,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-orange-500 underline-offset-4">
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   9. Contact Us
                 </h2>
                 <p>
