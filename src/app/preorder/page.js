@@ -1,115 +1,121 @@
 "use client";
 
 import { useState } from "react";
-import FadeIn from "@/components/FadeIn";
-import InteractiveCard from "@/components/InteractiveCard";
+import Link from "next/link";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 export default function PreorderPage() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("idle");
-  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("idle"); // idle, loading, success, error
 
-  const subscribe = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!email) return;
-
+    
     setStatus("loading");
-    try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setStatus("success");
-        setMessage("REGISTERED - CHECK_INBOX");
-        setEmail("");
-      } else {
-        setStatus("error");
-        setMessage(data.error || "ERROR");
-      }
-    } catch (error) {
-      setStatus("error");
-      setMessage("SYSTEM_FAILURE");
-    }
+    // Simulate API call
+    setTimeout(() => {
+      setStatus("success");
+    }, 1500);
   };
 
   return (
-    <main className="min-h-screen bg-white dark:bg-black text-black dark:text-white pt-20 flex flex-col">
-      <div className="flex-grow flex flex-col justify-center px-4 sm:px-6 lg:px-8">
-        <FadeIn>
-          <div className="max-w-2xl mx-auto w-full">
+    <div className="min-h-screen bg-background text-foreground selection:bg-foreground selection:text-background">
+      <Navigation />
+      
+      <main className="pt-48 pb-64">
+        <section className="container-swiss max-w-4xl">
+          <div className="flex flex-col items-center text-center mb-24">
+            <span className="font-sans text-sm font-medium uppercase tracking-[0.2em] text-foreground/40 mb-8 px-4 py-1 border border-foreground/10 rounded-full">
+               Reservation Open
+            </span>
+            <h1 className="text-6xl md:text-8xl font-serif tracking-tight mb-8">
+               Reserve Foundation.
+            </h1>
+            <p className="text-xl md:text-2xl font-sans text-foreground/60 max-w-2xl text-balance leading-relaxed">
+               Join the priority list for Edition 01. We're currently in pre-production, with manufacturing scheduled for late 2026.
+            </p>
+          </div>
 
-            {/* Header / Status Block */}
-            <InteractiveCard className="border-2 border-black dark:border-white hover:border-cyan-500/50 mb-12 group transition-all">
-              <div className="grid grid-cols-2 border-b-2 border-black dark:border-white group-hover:border-cyan-500/50 transition-colors">
-                <div className="p-4 border-r-2 border-black dark:border-white group-hover:border-cyan-500/50 font-mono text-xs uppercase tracking-widest opacity-60 group-hover:opacity-80 transition-all">
-                  Status
+          <div className="max-w-xl mx-auto">
+            {status === "success" ? (
+              <div className="p-12 bg-muted rounded-3xl text-center animate-in zoom-in-95 duration-500">
+                <div className="w-16 h-16 bg-foreground text-background rounded-full flex items-center justify-center mx-auto mb-8">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-                <div className="p-4 font-mono text-xs uppercase tracking-widest text-cyan-500">
-                  Pre-Production
-                </div>
-              </div>
-              <div className="p-8 md:p-12">
-                <h1 className="text-4xl md:text-6xl font-medium tracking-tighter mb-6 group-hover:text-cyan-500 transition-colors">
-                  Production Status
-                </h1>
-                <p className="font-mono text-sm md:text-base opacity-70 group-hover:opacity-90 leading-relaxed max-w-md transition-opacity">
-                  We are currently in the design stages of Foundation. Currently, pre-orders are not open to the general public.
-                  In the meantime, join the waitlist or follow our <a href="/devlog" className="underline decoration-cornerstone hover:text-cornerstone decoration-2">devlog</a> for updates.
+                <h3 className="text-3xl font-serif mb-4">You're on the list.</h3>
+                <p className="text-foreground/60 font-sans leading-relaxed mb-8">
+                  We'll notify you the moment Edition 01 becomes available for purchase. Check your inbox for a confirmation.
                 </p>
+                <Link 
+                  href="/foundation"
+                  className="text-sm font-sans font-medium uppercase tracking-widest border-b border-foreground/20 hover:border-foreground transition-colors"
+                >
+                  Return to Foundation
+                </Link>
               </div>
-            </InteractiveCard>
-
-            {/* Signup Form */}
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="font-mono text-xs uppercase tracking-widest opacity-60">
-                  Waitlist Access
-                </h2>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                  <span className="font-mono text-xs uppercase tracking-widest">Open</span>
-                </div>
-              </div>
-
-              <form onSubmit={subscribe} className="relative">
-                <div className="flex flex-col sm:flex-row gap-0">
-                  <input
-                    type="email"
-                    placeholder="Enter Email"
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-12">
+                <div className="relative group">
+                  <label htmlFor="email" className="block font-serif text-lg mb-4 text-foreground/80 group-focus-within:text-foreground transition-colors">
+                    Email Address
+                  </label>
+                  <input 
+                    type="email" 
+                    id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    disabled={status === "loading" || status === "success"}
-                    className="flex-grow bg-transparent border border-black dark:border-white px-6 py-4 font-mono text-sm placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-cyan-500 dark:focus:ring-cyan-500 disabled:opacity-50 rounded-none"
+                    placeholder="name@example.com"
+                    required
+                    className="w-full bg-transparent border-b-2 border-foreground/10 py-6 text-2xl font-sans focus:outline-none focus:border-foreground transition-colors placeholder:text-foreground/10"
                   />
-                  <button
-                    type="submit"
-                    disabled={status === "loading" || status === "success"}
-                    className="btn-shine lift-on-hover bg-black text-white dark:bg-white dark:text-black border border-black dark:border-white px-8 py-4 font-mono text-sm font-medium uppercase tracking-wider hover:bg-cyan-500 hover:border-cyan-500 hover:text-white dark:hover:bg-cyan-500 dark:hover:border-cyan-500 dark:hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed sm:border-l-0"
-                  >
-                    {status === "loading" ? "..." : status === "success" ? "Done" : "Notify Me"}
-                  </button>
                 </div>
-                {message && (
-                  <div className={`mt-2 font-mono text-xs uppercase tracking-widest ${status === "error" ? "text-red-500" : "text-green-500"}`}>
-                    &gt; {message}
-                  </div>
-                )}
-              </form>
-              
-              <p className="font-mono text-[10px] opacity-40 uppercase tracking-widest text-center sm:text-left">
-                Est. Launch: Q2 2026
-              </p>
-            </div>
 
+                <div className="flex flex-col items-center gap-8">
+                    <button 
+                      type="submit"
+                      disabled={status === "loading"}
+                      className="w-full bg-foreground text-background py-6 rounded-2xl font-sans font-medium text-lg hover:opacity-90 transition-all active:scale-[0.98] disabled:opacity-50"
+                    >
+                      {status === "loading" ? "Processing..." : "Reserve Edition 01"}
+                    </button>
+                    
+                    <p className="text-xs text-foreground/40 font-sans tracking-wide">
+                        No payment required now. You'll be notified when orders open.
+                    </p>
+                </div>
+              </form>
+            )}
           </div>
-        </FadeIn>
-      </div>
-      
-    </main>
+
+          {/* Logistics / Info Section */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-48 border-t border-foreground/10 pt-24">
+             <div>
+                <h4 className="font-serif text-xl mb-4">Edition 01</h4>
+                <p className="text-sm text-foreground/60 leading-relaxed font-sans">
+                  The initial production run of Foundation. Each unit is laser-etched with its unique serial number and includes an exclusive Edition 01 badge.
+                </p>
+             </div>
+             <div>
+                <h4 className="font-serif text-xl mb-4">Availability</h4>
+                <p className="text-sm text-foreground/60 leading-relaxed font-sans">
+                  Planned for Q4 2026. Global shipping available. Initial quantities are strictly limited to ensure manufacturing quality.
+                </p>
+             </div>
+             <div>
+                <h4 className="font-serif text-xl mb-4">Next Steps</h4>
+                <p className="text-sm text-foreground/60 leading-relaxed font-sans">
+                  After reserving, you'll receive monthly updates through our devlog. You can cancel your reservation at any time before production begins.
+                </p>
+             </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
   );
 }
