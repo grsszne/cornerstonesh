@@ -18,7 +18,7 @@ export default function FoundationPage() {
       <main className="min-h-screen bg-background text-foreground pt-32 pb-24">
         
         {/* Hero Section */}
-        <section className="container-swiss mb-32 flex flex-col items-center text-center min-h-screen">
+        <section className="container-swiss mb-32 flex flex-col items-center justify-center text-center min-h-screen">
             <h1 className="text-6xl md:text-8xl font-serif tracking-tight text-foreground mb-8">
               Foundation.
             </h1>
@@ -186,11 +186,17 @@ export default function FoundationPage() {
         <section className="container-swiss mb-32">
              <div className="text-center mb-16">
                  <h2 className="font-serif text-4xl mb-6">Cornerstone OS</h2>
-                 <p className="font-sans text-foreground/70 max-w-xl mx-auto">
+                 <p className="font-sans text-foreground/70 max-w-xl mx-auto mb-6">
                     A calm, dashboard-centric operating system. No terminals required.
                  </p>
+                 <Link
+                    href="/cornerstoneos"
+                    className="inline-block border-b border-foreground text-foreground pb-1 hover:opacity-50 transition-opacity font-sans text-sm"
+                 >
+                    Learn more about CornerstoneOS
+                 </Link>
              </div>
-             {/* 
+             {/*
                 TODO: Refactor CornerstoneOS to abstract/minimalist.
              */}
              <CornerstoneOS />
