@@ -19,17 +19,17 @@ import {
 
 const DETAILED_SCENARIOS = [
   {
-    query: "Photos of Emma from the beach trip",
+    query: "Photos of Edgar and Emma from the beach trip",
     thinking: "Searching Photos... Analyzing faces... Cross-referencing locations...",
     results: [
       { 
         icon: Image, 
         title: "IMG_4521.HEIC", 
-        tags: ["Emma", "Beach", "Sunset"],
+        tags: ["Edgar", "Beach", "Sunset"],
         metadata: [
           { icon: MapPin, value: "Santa Monica, CA" },
           { icon: Clock, value: "Jul 14, 2024 6:42 PM" },
-          { icon: Users, value: "Emma, Jake, You" },
+          { icon: Users, value: "Edgar, Jake, You" },
           { icon: HardDrive, value: "4.2 MB • Local" },
         ]
       },
@@ -46,7 +46,7 @@ const DETAILED_SCENARIOS = [
       { 
         icon: Image, 
         title: "Group_Selfie.jpg", 
-        tags: ["Emma", "Group"],
+        tags: ["Edgar", "Emma", "Group"],
         metadata: [
           { icon: Users, value: "5 people detected" },
           { icon: Clock, value: "Jul 14, 2024 4:12 PM" },
