@@ -147,7 +147,6 @@ export default function CornerstoneOSPage() {
         </section>
 
       </main>
-      <Footer />
     </>
   );
 }
