@@ -81,11 +81,11 @@ export default function FoundationPage() {
                  {[
                     { label: "Processor", value: "Intel N100 / N305" },
                     { label: "Memory", value: "8GB / 16GB LPDDR5X" },
-                    { label: "Storage", value: "1x NVMe (Boot) + 6x SATA (Storage)" },
-                    { label: "Connectivity", value: "2.5GbE LAN, WiFi 6E (Optional)" },
+                    { label: "Storage", value: "1x NVMe (Boot) + 6x Universal Modules" },
+                    { label: "Connectivity", value: "1, 2, 2.5, 5, 10GbE, WiFi 6E modules" },
                     { label: "Dimensions", value: "180mm x 89mm x 89mm" },
                     { label: "Weight", value: "1.2kg (Chassis Only)" },
-                    { label: "Materials", value: "Anodized Aluminum, Copper, Glass" },
+                    { label: "Materials", value: "Anodized Aluminum" },
                  ].map((spec) => (
                     <div key={spec.label} className="grid grid-cols-2 py-4">
                        <dt className="font-sans font-medium text-foreground/60">{spec.label}</dt>

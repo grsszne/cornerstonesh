@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 
 export default function PreorderPage() {
   const [email, setEmail] = useState("");
@@ -115,7 +114,6 @@ export default function PreorderPage() {
         </section>
       </main>
 
-      <Footer />
     </div>
   );
 }
