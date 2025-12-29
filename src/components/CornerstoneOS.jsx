@@ -170,6 +170,106 @@ const EMAILS = [
   },
 ];
 
+const NOTES = [
+  {
+    id: 1,
+    title: "Q4 Product Launch Ideas",
+    content: "Key features to highlight:\n- Local-first architecture\n- End-to-end encryption\n- Cross-app intelligence\n- Hardware modularity\n\nTarget messaging: Privacy + Performance",
+    category: "Work",
+    tags: ["Product", "Q4", "Launch"],
+    date: "Dec 28, 2024",
+    color: "blue"
+  },
+  {
+    id: 2,
+    title: "Meeting Notes - Emma Sync",
+    content: "Discussed design system updates:\n- New color tokens approved\n- Component library needs dark mode variants\n- Mobile responsiveness priority\n\nAction items:\n- Update Figma library by end of week\n- Share with engineering team",
+    category: "Work",
+    tags: ["Emma", "Design", "Meeting"],
+    date: "Dec 27, 2024",
+    color: "purple"
+  },
+  {
+    id: 3,
+    title: "Weekend Project Ideas",
+    content: "Things to build:\n1. Personal dashboard for morning routine\n2. Recipe organizer with Fatima's recipes\n3. Photo timeline generator\n4. Habit tracker with analytics",
+    category: "Personal",
+    tags: ["Ideas", "Projects"],
+    date: "Dec 26, 2024",
+    color: "green"
+  },
+  {
+    id: 4,
+    title: "Research: Local AI Models",
+    content: "Interesting models for on-device inference:\n- Llama 3.2 (3B) - good for summarization\n- CLIP - image understanding\n- Whisper - speech recognition\n\nAll can run on consumer hardware with <8GB RAM",
+    category: "Research",
+    tags: ["AI", "ML", "Research"],
+    date: "Dec 24, 2024",
+    color: "orange"
+  },
+  {
+    id: 5,
+    title: "Book Recommendations from Paul",
+    content: "Paul suggested these for product thinking:\n- The Mom Test\n- Inspired (Marty Cagan)\n- Build (Tony Fadell)\n- Working Backwards (Amazon)\n\nStarting with The Mom Test this week.",
+    category: "Personal",
+    tags: ["Books", "Paul", "Learning"],
+    date: "Dec 22, 2024",
+    color: "teal"
+  },
+  {
+    id: 6,
+    title: "Infrastructure Migration Checklist",
+    content: "From Chris's plan:\n☐ Backup all databases\n☐ Set up staging environment\n☐ Test migration scripts\n☐ Schedule downtime window\n☐ Prepare rollback plan\n☐ Monitor metrics post-migration\n\nGo-live: Jan 15, 2025",
+    category: "Work",
+    tags: ["Infrastructure", "Chris", "Migration"],
+    date: "Dec 20, 2024",
+    color: "red"
+  },
+];
+
+const NETWORK_DATA = {
+  nodes: [
+    // People
+    { id: "you", label: "You", type: "person", x: 300, y: 250 },
+    { id: "zane", label: "Zane", type: "person", x: 150, y: 100 },
+    { id: "emma", label: "Emma", type: "person", x: 450, y: 100 },
+    { id: "matthew", label: "Matthew", type: "person", x: 100, y: 250 },
+    { id: "paul", label: "Paul", type: "person", x: 500, y: 250 },
+    { id: "chris", label: "Chris", type: "person", x: 150, y: 400 },
+    { id: "maya", label: "Maya", type: "person", x: 300, y: 450 },
+    { id: "priya", label: "Priya", type: "person", x: 450, y: 400 },
+    { id: "alex", label: "Alex", type: "person", x: 550, y: 350 },
+    { id: "zara", label: "Zara", type: "person", x: 50, y: 350 },
+    
+    // Projects
+    { id: "foundation", label: "Foundation", type: "project", x: 300, y: 150 },
+    { id: "q4launch", label: "Q4 Launch", type: "project", x: 200, y: 300 },
+    { id: "migration", label: "AWS Migration", type: "project", x: 400, y: 300 },
+    { id: "redesign", label: "Mobile Redesign", type: "project", x: 350, y: 200 },
+  ],
+  edges: [
+    // Project relationships
+    { from: "you", to: "foundation", relationship: "leads" },
+    { from: "zane", to: "foundation", relationship: "collaborates" },
+    { from: "emma", to: "redesign", relationship: "owns" },
+    { from: "maya", to: "redesign", relationship: "designs" },
+    { from: "chris", to: "migration", relationship: "leads" },
+    { from: "alex", to: "migration", relationship: "implements" },
+    { from: "priya", to: "q4launch", relationship: "manages" },
+    { from: "matthew", to: "foundation", relationship: "sponsors" },
+    
+    // Team relationships
+    { from: "you", to: "zane", relationship: "works with" },
+    { from: "you", to: "emma", relationship: "works with" },
+    { from: "you", to: "matthew", relationship: "reports to" },
+    { from: "emma", to: "maya", relationship: "manages" },
+    { from: "paul", to: "you", relationship: "advises" },
+    { from: "zara", to: "priya", relationship: "supports" },
+    { from: "alex", to: "chris", relationship: "works with" },
+  ]
+};
+
+
 const FILE_STRUCTURE = [
   {
     name: "Documents",
@@ -215,9 +315,14 @@ const FILE_STRUCTURE = [
 export default function CornerstoneOS() {
   const [activeTab, setActiveTab] = useState("Overview");
   const [selectedEmail, setSelectedEmail] = useState(null);
+  const [selectedNote, setSelectedNote] = useState(null);
+  const [highlightedNode, setHighlightedNode] = useState(null);
   const [windowPosition, setWindowPosition] = useState({ x: 50, y: 50 });
+  const [noteWindowPosition, setNoteWindowPosition] = useState({ x: 100, y: 100 });
   const [isDragging, setIsDragging] = useState(false);
+  const [isDraggingNote, setIsDraggingNote] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [noteDragStart, setNoteDragStart] = useState({ x: 0, y: 0 });
   const [expandedFolders, setExpandedFolders] = useState(["Documents", "Personal"]);
   const [hasDiscoveredTabs, setHasDiscoveredTabs] = useState(false);
 
@@ -261,7 +366,7 @@ export default function CornerstoneOS() {
               </div>
               
               <div className="flex gap-6 overflow-x-auto">
-                  {['Overview', 'Mail', 'Calendar', 'Files', 'Processes'].map((tab, i) => (
+                  {['Overview', 'Mail', 'Calendar', 'Files', 'Notes', 'Network', 'Processes'].map((tab, i) => (
                       <motion.button
                           key={tab}
                           onClick={() => handleTabClick(tab)}
@@ -611,6 +716,191 @@ export default function CornerstoneOS() {
                       />
                   ))}
               </div>
+          </div>
+      )}
+
+      {/* Notes View */}
+      {activeTab === 'Notes' && (
+          <div>
+              <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-serif text-lg">Notes</h3>
+                  <div className="flex gap-2">
+                       {['Work', 'Personal', 'Research'].map(cat => (
+                           <span key={cat} className="text-xs font-sans text-foreground/40 px-2 py-1 rounded-full border border-foreground/10">{cat}</span>
+                       ))}
+                  </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {NOTES.map((note) => (
+                      <div 
+                          key={note.id}
+                          onClick={() => setSelectedNote(note)}
+                          className="p-4 border border-foreground/10 rounded-lg hover:border-foreground/30 transition-all cursor-pointer group bg-background relative overflow-hidden"
+                      >
+                          <div className={`absolute left-0 top-0 bottom-0 w-1 ${
+                              note.color === 'blue' ? 'bg-blue-500/50' : 
+                              note.color === 'purple' ? 'bg-purple-500/50' : 
+                              note.color === 'green' ? 'bg-green-500/50' : 
+                              note.color === 'orange' ? 'bg-orange-500/50' : 
+                              note.color === 'teal' ? 'bg-teal-500/50' : 
+                              'bg-red-500/50'
+                          }`}></div>
+                          <div className="flex justify-between items-start mb-2 pl-3">
+                              <h4 className="font-serif font-medium group-hover:underline decoration-foreground/30 underline-offset-4">{note.title}</h4>
+                              <span className="text-xs text-foreground/40">{note.date}</span>
+                          </div>
+                          <p className="text-sm text-foreground/60 pl-3 line-clamp-3 font-sans whitespace-pre-wrap">{note.content}</p>
+                          <div className="flex gap-2 mt-3 pl-3">
+                              {note.tags.map(tag => (
+                                  <span key={tag} className="text-[10px] uppercase tracking-wider text-foreground/40">{tag}</span>
+                              ))}
+                          </div>
+                      </div>
+                  ))}
+              </div>
+          </div>
+      )}
+
+      {/* Note Window (Draggable) */}
+      {selectedNote && (
+          <div 
+              className="fixed bg-background border-2 border-foreground/20 rounded-lg shadow-2xl z-50"
+              style={{
+                  left: `${noteWindowPosition.x}px`,
+                  top: `${noteWindowPosition.y}px`,
+                  width: '400px',
+                  maxWidth: '90vw'
+              }}
+          >
+              <div 
+                  className="bg-foreground/5 border-b border-foreground/10 px-4 py-3 flex items-center justify-between cursor-move select-none"
+                  onMouseDown={(e) => {
+                      setIsDraggingNote(true);
+                      setNoteDragStart({
+                          x: e.clientX - noteWindowPosition.x,
+                          y: e.clientY - noteWindowPosition.y
+                      });
+                  }}
+                  onMouseMove={(e) => {
+                      if (isDraggingNote) {
+                          setNoteWindowPosition({
+                              x: e.clientX - noteDragStart.x,
+                              y: e.clientY - noteDragStart.y
+                          });
+                      }
+                  }}
+                  onMouseUp={() => setIsDraggingNote(false)}
+                  onMouseLeave={() => setIsDraggingNote(false)}
+              >
+                  <div className="flex items-center gap-2">
+                       <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                       <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                       <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  </div>
+                  <span className="text-sm font-sans font-medium">Notes</span>
+                  <button 
+                      onClick={() => setSelectedNote(null)}
+                      className="hover:bg-foreground/10 p-1 rounded transition-colors"
+                  >
+                      <X className="w-4 h-4" />
+                  </button>
+              </div>
+              <div className="p-6 max-h-[60vh] overflow-y-auto">
+                  <div className="mb-4">
+                      <h3 className="font-serif text-xl mb-2">{selectedNote.title}</h3>
+                      <div className="flex gap-2 mb-4">
+                          <span className={`text-xs px-2 py-0.5 rounded-full border ${
+                              selectedNote.color === 'blue' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' : 
+                              selectedNote.color === 'purple' ? 'bg-purple-500/10 text-purple-500 border-purple-500/20' : 
+                              selectedNote.color === 'green' ? 'bg-green-500/10 text-green-500 border-green-500/20' : 
+                              selectedNote.color === 'orange' ? 'bg-orange-500/10 text-orange-500 border-orange-500/20' : 
+                              selectedNote.color === 'teal' ? 'bg-teal-500/10 text-teal-500 border-teal-500/20' : 
+                              'bg-red-500/10 text-red-500 border-red-500/20'
+                          }`}>
+                              {selectedNote.category}
+                          </span>
+                          <span className="text-xs text-foreground/40 py-0.5">{selectedNote.date}</span>
+                      </div>
+                  </div>
+                  <div className="font-sans text-sm whitespace-pre-wrap leading-relaxed">
+                      {selectedNote.content}
+                  </div>
+              </div>
+          </div>
+      )}
+
+      {/* Network View */}
+      {activeTab === 'Network' && (
+          <div className="h-full min-h-[400px] relative overflow-hidden bg-foreground/[0.02] rounded-lg border border-foreground/5">
+              <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                  {NETWORK_DATA.edges.map((edge, i) => {
+                      const fromNode = NETWORK_DATA.nodes.find(n => n.id === edge.from);
+                      const toNode = NETWORK_DATA.nodes.find(n => n.id === edge.to);
+                      const isHighlighted = highlightedNode && (
+                          highlightedNode.id === edge.from || 
+                          highlightedNode.id === edge.to
+                      );
+                      
+                      return (
+                          <motion.line 
+                              key={i}
+                              x1={fromNode.x}
+                              y1={fromNode.y}
+                              x2={toNode.x}
+                              y2={toNode.y}
+                              stroke="currentColor"
+                              strokeWidth={isHighlighted ? 2 : 1}
+                              className={`text-foreground ${isHighlighted ? 'opacity-60' : 'opacity-10'} transition-opacity duration-300`}
+                              initial={{ pathLength: 0 }}
+                              animate={{ pathLength: 1 }}
+                              transition={{ duration: 1, delay: i * 0.05 }}
+                          />
+                      );
+                  })}
+              </svg>
+              
+              {NETWORK_DATA.nodes.map((node) => {
+                   const isHighlighted = highlightedNode && (
+                       highlightedNode.id === node.id || 
+                       NETWORK_DATA.edges.some(e => 
+                           (e.from === node.id && e.to === highlightedNode.id) ||
+                           (e.to === node.id && e.from === highlightedNode.id)
+                       )
+                   );
+
+                   return (
+                      <motion.div
+                          key={node.id}
+                          className={`absolute w-12 h-12 -ml-6 -mt-6 rounded-full border-2 flex items-center justify-center cursor-pointer transition-all duration-300 z-10 ${
+                              isHighlighted 
+                               ? 'bg-foreground text-background border-transparent scale-110 shadow-lg' 
+                               : 'bg-background border-foreground/20 text-foreground hover:border-foreground hover:scale-105'
+                          }`}
+                          style={{ left: node.x, top: node.y }}
+                          animate={{
+                              x: [0, Math.random() * 4 - 2, 0],
+                              y: [0, Math.random() * 4 - 2, 0],
+                          }}
+                          transition={{
+                              duration: 3 + Math.random() * 2,
+                              repeat: Infinity,
+                              ease: "easeInOut"
+                          }}
+                          onMouseEnter={() => setHighlightedNode(node)}
+                          onMouseLeave={() => setHighlightedNode(null)}
+                      >
+                          <span className="text-[10px] font-bold uppercase tracking-tighter">
+                              {node.label.slice(0, 2)}
+                          </span>
+                          
+                          {/* Label tooltip */}
+                          <div className={`absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-foreground text-background text-xs px-2 py-1 rounded pointer-events-none whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity ${isHighlighted ? 'opacity-100' : ''}`}>
+                              {node.label}
+                              <span className="block text-[8px] opacity-60 uppercase tracking-widest">{node.type}</span>
+                          </div>
+                      </motion.div>
+                   );
+              })}
           </div>
       )}
 

@@ -214,7 +214,7 @@ export default function FoundationBuilder() {
                   Proceed to Checkout
               </button>
               <p className="text-xs text-center mt-4 text-foreground/50">
-                  Estimated shipping: Q3 2024
+                  Estimted Shipping: Q4 2026
               </p>
           </div>
       </div>
