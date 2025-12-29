@@ -176,7 +176,7 @@ export const MODULE_CATEGORIES = {
                 description: "5 Gigabit Ethernet adapter for high-bandwidth networks.",
                 specs: [
                     { label: "Speed", value: "5 Gbps" },
-                    { label: "Interface", value: "PCIe Gen 3 x1" },
+                    { label: "Interface", value: "PCIe Gen 3 x1 or x2" },
                     { label: "Connector", value: "RJ45" },
                     { label: "Standards", value: "IEEE 802.3bz" },
                     { label: "Power", value: "4W" },
@@ -194,7 +194,7 @@ export const MODULE_CATEGORIES = {
                 description: "10 Gigabit Ethernet for professional networking.",
                 specs: [
                     { label: "Speed", value: "10 Gbps" },
-                    { label: "Interface", value: "PCIe Gen 3 x4" },
+                    { label: "Interface", value: "PCIe Gen 3 x2" },
                     { label: "Connector", value: "SFP+" },
                     { label: "Standards", value: "IEEE 802.3ae" },
                     { label: "Power", value: "8W" },

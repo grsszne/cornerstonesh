@@ -82,7 +82,7 @@ export default function FoundationPage() {
                     { label: "Processor", value: "Intel N100 / N305" },
                     { label: "Memory", value: "8GB / 16GB LPDDR5X" },
                     { label: "Storage", value: "1x NVMe (Boot) + 6x Universal Modules" },
-                    { label: "Connectivity", value: "1, 2, 2.5, 5, 10GbE, WiFi 6E modules" },
+                    { label: "Connectivity", value: "1, 2.5, 5, 10GbE, WiFi 6E modules" },
                     { label: "Dimensions", value: "180mm x 89mm x 89mm" },
                     { label: "Weight", value: "1.2kg (Chassis Only)" },
                     { label: "Materials", value: "Anodized Aluminum" },
