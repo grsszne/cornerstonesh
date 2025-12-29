@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import LogoIcon from "./LogoIcon";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,13 +28,21 @@ export default function Navigation() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-          isScrolled ? "bg-background/80 backdrop-blur-md py-4" : "bg-transparent py-6"
+          isScrolled ? "py-4" : "py-6"
         }`}
       >
-        <div className="container-swiss flex justify-between items-center">
+        {/* Background Layer */}
+        <div 
+          className={`absolute inset-0 bg-background/80 backdrop-blur-md border-b border-foreground/5 transition-opacity duration-500 ${
+            isScrolled ? "opacity-100" : "opacity-0 invisible"
+          }`}
+        />
+
+        <div className="container-swiss relative z-10 flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="z-50 group">
-            <span className="font-serif text-2xl font-medium tracking-tight text-foreground group-hover:opacity-70 transition-opacity">
+          <Link href="/" className="z-50 group flex items-center gap-3 text-foreground transition-opacity hover:opacity-70">
+            <LogoIcon className="h-6 w-auto" />
+            <span className="font-serif text-2xl font-medium tracking-tight">
               Cornerstone.
             </span>
           </Link>

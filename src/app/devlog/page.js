@@ -160,7 +160,6 @@ export default function DevlogPage() {
         </section>
       </main>
 
-      <Footer />
     </div>
   );
 }

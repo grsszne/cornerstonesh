@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import { MODULE_CATEGORIES } from "@/lib/modules";
 
 export default function ModulesPage() {
@@ -111,7 +110,6 @@ export default function ModulesPage() {
                 </section>
             </main>
 
-            <Footer />
         </div>
     );
 }

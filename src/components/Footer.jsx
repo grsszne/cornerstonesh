@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import LogoIcon from "./LogoIcon";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -43,7 +44,12 @@ export default function Footer() {
           
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-1">
-            <h2 className="text-xl font-serif font-medium tracking-tight mb-6">Cornerstone.</h2>
+            <Link href="/" className="flex items-center gap-3 mb-6 transition-opacity hover:opacity-70 text-foreground">
+              <LogoIcon className="h-5 w-auto" />
+              <span className="text-xl font-serif font-medium tracking-tight">
+                Cornerstone.
+              </span>
+            </Link>
             <p className="text-sm text-foreground/60 leading-relaxed max-w-xs">
               Precision engineered modular server hardware. Est 2024.
             </p>
