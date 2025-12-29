@@ -44,7 +44,7 @@ export default function Navigation() {
           <Link href="/" className="z-50 group flex items-center gap-3 text-foreground transition-opacity hover:opacity-70">
             <LogoIcon className="h-6 w-auto" />
             <span className="font-serif text-2xl font-medium tracking-tight">
-              Cornerstone.
+              Cornerstone
             </span>
           </Link>
 

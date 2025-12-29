@@ -47,7 +47,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-3 mb-6 transition-opacity hover:opacity-70 text-foreground">
               <LogoIcon className="h-5 w-auto" />
               <span className="text-xl font-serif font-medium tracking-tight">
-                Cornerstone.
+                Cornerstone
               </span>
             </Link>
             <p className="text-sm text-foreground/60 leading-relaxed max-w-xs">
