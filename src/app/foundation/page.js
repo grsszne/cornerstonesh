@@ -18,7 +18,7 @@ export default function FoundationPage() {
       <main className="min-h-screen bg-background text-foreground pt-32 pb-24">
         
         {/* Hero Section */}
-        <section className="container-swiss mb-32 flex flex-col items-center text-center">
+        <section className="container-swiss mb-32 flex flex-col items-center text-center min-h-screen">
             <h1 className="text-6xl md:text-8xl font-serif tracking-tight text-foreground mb-8">
               Foundation.
             </h1>
