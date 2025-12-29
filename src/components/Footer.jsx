@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import AsciiArt from "./AsciiArt";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -25,7 +24,7 @@ export default function Footer() {
       
       if (res.ok) {
         setStatus("success");
-        setMessage("Subscribed!");
+        setMessage("Subscribed");
         setEmail("");
       } else {
         setStatus("error");
@@ -38,88 +37,72 @@ export default function Footer() {
   };
 
   return (
-    <footer className="font-mono text-sm border-t border-black dark:border-white">
-      {/* Newsletter Section */}
-      <div className="bg-black text-white px-4 py-8 relative overflow-hidden">
-        {/* ASCII Background */}
-        <div className="absolute top-0 right-0 pointer-events-none opacity-10">
-          <AsciiArt width={300} height={60} numCircles={50} />
-        </div>
-        
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div>
-              <h2 className="font-sans capitalize font-medium text-xl tracking-tight mb-1">Newsletter</h2>
-              <p className="opacity-60 text-xs">Stay updated on Foundation launch and modules.</p>
-            </div>
-            <form className="flex gap-2" onSubmit={subscribe}>
+    <footer className="bg-background text-foreground pt-24 pb-12 border-t border-muted">
+      <div className="container-swiss">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-16">
+          
+          {/* Brand Column */}
+          <div className="col-span-1 md:col-span-1">
+            <h2 className="text-xl font-serif font-medium tracking-tight mb-6">Cornerstone.</h2>
+            <p className="text-sm text-foreground/60 leading-relaxed max-w-xs">
+              Precision engineered modular server hardware. Est 2024.
+            </p>
+          </div>
+
+          {/* Site Map */}
+          <div>
+            <h3 className="text-sm font-sans font-medium mb-6 text-foreground">Index</h3>
+            <ul className="space-y-4">
+              <li><Link href="/foundation" className="text-sm text-foreground/60 hover:text-foreground transition-colors">Foundation</Link></li>
+              <li><Link href="/foundation/modules" className="text-sm text-foreground/60 hover:text-foreground transition-colors">Modules</Link></li>
+              <li><Link href="/devlog" className="text-sm text-foreground/60 hover:text-foreground transition-colors">Devlog</Link></li>
+              <li><Link href="/about" className="text-sm text-foreground/60 hover:text-foreground transition-colors">About</Link></li>
+            </ul>
+          </div>
+
+          {/* Social / Contact */}
+          <div>
+            <h3 className="text-sm font-sans font-medium mb-6 text-foreground">Connect</h3>
+            <ul className="space-y-4">
+              <li><a href="https://x.com/cornerstone_sh" className="text-sm text-foreground/60 hover:text-foreground transition-colors">Twitter</a></li>
+              <li><a href="https://github.com/cornerstone" className="text-sm text-foreground/60 hover:text-foreground transition-colors">GitHub</a></li>
+              <li><a href="mailto:cornerstone@cornerstone.sh" className="text-sm text-foreground/60 hover:text-foreground transition-colors">Email</a></li>
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h3 className="text-sm font-sans font-medium mb-6 text-foreground">Updates</h3>
+            <form onSubmit={subscribe} className="flex flex-col gap-4">
               <input
                 type="email"
-                placeholder="EMAIL"
+                placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                disabled={status === "loading" || status === "success"}
-                className="bg-transparent border border-white px-4 py-2 placeholder:text-white/40 focus:outline-none focus:bg-white/10 disabled:opacity-50 min-w-[200px]"
+                className="bg-transparent border-b border-foreground/20 py-2 text-sm focus:border-foreground focus:outline-none transition-colors placeholder:text-foreground/30"
               />
               <button
                 type="submit"
                 disabled={status === "loading" || status === "success"}
-                className="bg-white uppercase text-black px-6 py-2 font-medium capitalize hover:bg-cornerstone hover:text-white transition-colors disabled:opacity-50"
+                className="text-sm font-medium text-left text-foreground hover:opacity-70 transition-opacity disabled:opacity-50"
               >
-                {status === "success" ? "OK" : "subscribe"}
+                {status === "loading" ? "Processing..." : status === "success" ? "Subscribed" : "Subscribe →"}
               </button>
+              {message && (
+                <p className={`text-xs ${status === "error" ? "text-red-600" : "text-foreground/60"}`}>
+                  {message}
+                </p>
+              )}
             </form>
           </div>
-          {message && (
-            <p className={`mt-2 text-xs ${status === "error" ? "text-red-400" : "text-green-400"}`}>
-              {message}
-            </p>
-          )}
         </div>
-      </div>
 
-      {/* Resources Section - Cyan */}
-      <div className="bg-cyan-500 text-black px-4 py-6 border-t border-black">
-        <div className="max-w-7xl mx-auto flex flex-wrap gap-x-8 gap-y-2">
-          <span className="font-bold uppercase w-full md:w-auto">Resources:</span>
-          <Link href="/foundation" className="hover:underline">Foundation</Link>
-          <Link href="/foundation/modules" className="hover:underline">Modules</Link>
-          <Link href="/foundation/configurator" className="hover:underline">Configurator</Link>
-          <Link href="/foundation/guide" className="hover:underline">Guide</Link>
-          <Link href="/devlog" className="hover:underline">Devlog</Link>
-        </div>
-      </div>
-
-      {/* Social Section - Green */}
-      <div className="bg-green-500 text-black px-4 py-6 border-t border-black">
-        <div className="max-w-7xl mx-auto flex flex-wrap gap-x-8 gap-y-2">
-          <span className="font-bold uppercase w-full md:w-auto">Social:</span>
-          <a href="https://x.com/cornerstone_sh" target="_blank" rel="noopener noreferrer" className="hover:underline">Twitter</a>
-          <a href="https://www.instagram.com/cornerstone_sh/" target="_blank" rel="noopener noreferrer" className="hover:underline">Instagram</a>
-          <a href="https://www.reddit.com/user/cornerstone_sh/" target="_blank" rel="noopener noreferrer" className="hover:underline">Reddit</a>
-          <a href="mailto:cornerstone@cornerstone.sh" className="hover:underline">Email</a>
-        </div>
-      </div>
-
-      {/* Legal Section - Purple */}
-      <div className="bg-purple-500 text-white px-4 py-6 border-t border-black">
-        <div className="max-w-7xl mx-auto flex flex-wrap gap-x-8 gap-y-2">
-          <span className="font-bold uppercase w-full md:w-auto">Legal:</span>
-          <Link href="/privacy" className="hover:underline">Privacy</Link>
-          <Link href="/terms" className="hover:underline">Terms</Link>
-          <Link href="/sitemap" className="hover:underline">Sitemap</Link>
-        </div>
-      </div>
-
-      {/* Copyright Section */}
-      <div className="bg-black text-white px-4 py-6 border-t border-white/20">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-xl font-medium tracking-tight">Cornerstone</span>
-          </div>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 text-xs opacity-60">
-            <span>© {new Date().getFullYear()} Cornerstone. All rights reserved.</span>
-            <span className="font-mono uppercase tracking-wider">Designed for You.</span>
+        {/* Bottom Bar */}
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-foreground/5 text-xs text-foreground/40">
+          <p>© {new Date().getFullYear()} Cornerstone Systems.</p>
+          <div className="flex gap-6 mt-4 md:mt-0">
+            <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
           </div>
         </div>
       </div>
