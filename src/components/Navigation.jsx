@@ -22,6 +22,7 @@ export default function Navigation() {
     { name: "Foundation", href: "/foundation" },
     { name: "Modules", href: "/foundation/modules" },
     { name: "Devlog", href: "/devlog" },
+    { name: "About", href: "/about" },
   ];
 
   return (
