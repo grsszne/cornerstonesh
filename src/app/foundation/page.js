@@ -73,6 +73,81 @@ export default function FoundationPage() {
           </div>
         </section>
 
+        {/* Hardware Modularity */}
+        <section className="bg-muted py-32 mb-32">
+          <div className="container-swiss">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="font-serif text-4xl mb-6 text-foreground">Universal Architecture</h2>
+              <p className="font-sans text-xl text-foreground/70 mb-16 leading-relaxed">
+                Six identical bays. Infinite configurations.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                <div>
+                  <h3 className="font-sans font-medium text-foreground mb-4 uppercase tracking-wider text-sm">The System</h3>
+                  <p className="font-sans text-foreground/70 leading-relaxed mb-4">
+                    Each Foundation unit features six universal module bays, accessible from the chassis front. Hot-swappable by design, these bays accept standardized modules that communicate directly with the PCIe Gen 3.0 backplane.
+                  </p>
+                  <p className="font-sans text-foreground/70 leading-relaxed">
+                    No tools. No reboots. Reconfigure your system as your needs evolve—swap a storage module for network expansion in seconds.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-sans font-medium text-foreground mb-4 uppercase tracking-wider text-sm">Available Modules</h3>
+                  <ul className="space-y-3 font-sans text-foreground/70">
+                    <li className="flex items-start">
+                      <span className="text-foreground/40 mr-3">—</span>
+                      <div>
+                        <span className="text-foreground font-medium">NVMe Storage</span>
+                        <span className="block text-sm mt-1">M.2 2280, up to 8TB per module</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-foreground/40 mr-3">—</span>
+                      <div>
+                        <span className="text-foreground font-medium">Network</span>
+                        <span className="block text-sm mt-1">1GbE, 2.5GbE, 5GbE, 10GbE, WiFi 6E</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-foreground/40 mr-3">—</span>
+                      <div>
+                        <span className="text-foreground font-medium">I/O Expansion</span>
+                        <span className="block text-sm mt-1">USB-C, USB-A, Thunderbolt 4</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-foreground/40 mr-3">—</span>
+                      <div>
+                        <span className="text-foreground font-medium">Future Modules</span>
+                        <span className="block text-sm mt-1">Extensible platform for new capabilities</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="border-t border-foreground/10 pt-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                  <div>
+                    <div className="font-serif text-4xl text-foreground mb-2">6</div>
+                    <div className="font-sans text-sm text-foreground/60 uppercase tracking-wider">Universal Bays</div>
+                  </div>
+                  <div>
+                    <div className="font-serif text-4xl text-foreground mb-2">48TB</div>
+                    <div className="font-sans text-sm text-foreground/60 uppercase tracking-wider">Maximum Storage</div>
+                  </div>
+                  <div>
+                    <div className="font-serif text-4xl text-foreground mb-2">0s</div>
+                    <div className="font-sans text-sm text-foreground/60 uppercase tracking-wider">Downtime to Swap</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Specs Table - Bloomberg Style */}
         <section id="specs" className="container-swiss mb-32 scroll-mt-24">
            <h2 className="font-serif text-4xl mb-12 text-center">Specifications</h2>
