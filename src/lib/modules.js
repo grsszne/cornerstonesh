@@ -26,7 +26,7 @@ export const MODULE_CATEGORIES = {
                 description: "Entry-level NVMe storage with 3200 MB/s read speeds.",
                 specs: [
                     { label: "Capacity", value: "256GB" },
-                    { label: "Interface", value: "PCIe Gen 3 x4" },
+                    { label: "Interface", value: "PCIe Gen 3 x1 or x2" },
                     { label: "Read Speed", value: "3200 MB/s" },
                     { label: "Write Speed", value: "1800 MB/s" },
                     { label: "IOPS (Read)", value: "400K" },
@@ -44,7 +44,7 @@ export const MODULE_CATEGORIES = {
                 description: "High-performance NVMe with enhanced endurance.",
                 specs: [
                     { label: "Capacity", value: "512GB" },
-                    { label: "Interface", value: "PCIe Gen 3 x4" },
+                    { label: "Interface", value: "PCIe Gen 3 x1 or x2" },
                     { label: "Read Speed", value: "3500 MB/s" },
                     { label: "Write Speed", value: "2500 MB/s" },
                     { label: "IOPS (Read)", value: "600K" },
@@ -62,7 +62,7 @@ export const MODULE_CATEGORIES = {
                 description: "1TB of blazing-fast NVMe storage for intensive workloads.",
                 specs: [
                     { label: "Capacity", value: "1TB" },
-                    { label: "Interface", value: "PCIe Gen 3 x4" },
+                    { label: "Interface", value: "PCIe Gen 3 x1 or x2" },
                     { label: "Read Speed", value: "3500 MB/s" },
                     { label: "Write Speed", value: "3000 MB/s" },
                     { label: "IOPS (Read)", value: "680K" },
@@ -80,7 +80,7 @@ export const MODULE_CATEGORIES = {
                 description: "Enterprise-grade 2TB NVMe with superior reliability.",
                 specs: [
                     { label: "Capacity", value: "2TB" },
-                    { label: "Interface", value: "PCIe Gen 3 x4" },
+                    { label: "Interface", value: "PCIe Gen 3 x1 or x2" },
                     { label: "Read Speed", value: "3500 MB/s" },
                     { label: "Write Speed", value: "3200 MB/s" },
                     { label: "IOPS (Read)", value: "700K" },
@@ -98,7 +98,7 @@ export const MODULE_CATEGORIES = {
                 description: "Massive 4TB capacity for data-intensive applications.",
                 specs: [
                     { label: "Capacity", value: "4TB" },
-                    { label: "Interface", value: "PCIe Gen 3 x4" },
+                    { label: "Interface", value: "PCIe Gen 3 x1 or x2" },
                     { label: "Read Speed", value: "3500 MB/s" },
                     { label: "Write Speed", value: "3300 MB/s" },
                     { label: "IOPS (Read)", value: "750K" },
@@ -116,7 +116,7 @@ export const MODULE_CATEGORIES = {
                 description: "Maximum capacity NVMe storage for professional workflows.",
                 specs: [
                     { label: "Capacity", value: "8TB" },
-                    { label: "Interface", value: "PCIe Gen 3 x4" },
+                    { label: "Interface", value: "PCIe Gen 3 x1 or x2" },
                     { label: "Read Speed", value: "3500 MB/s" },
                     { label: "Write Speed", value: "3300 MB/s" },
                     { label: "IOPS (Read)", value: "800K" },
