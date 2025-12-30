@@ -221,23 +221,35 @@ export default function AiSearchDemo() {
         </div>
       </div>
 
-      {/* Thinking State */}
-      <AnimatePresence mode="wait">
-        {phase === "thinking" && (
-          <motion.div
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            className="text-sm font-sans text-foreground/50 mb-4 flex items-center gap-2"
-          >
-            <div className="w-3 h-3 border border-accent/50 border-t-accent rounded-full animate-spin"></div>
-            {scenario.thinking}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Thinking State - Fixed Height Container */}
+      <div className="h-8 mb-4 flex items-center">
+        <AnimatePresence mode="wait">
+          {phase === "thinking" && (
+            <motion.div
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              className="text-sm font-sans text-foreground/50 flex items-center gap-2"
+            >
+              <div className="w-3 h-3 border border-accent/50 border-t-accent rounded-full animate-spin"></div>
+              {scenario.thinking}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       {/* Results */}
-      <div className="min-h-[320px]">
+      <motion.div
+        className="h-[420px]"
+        animate={{
+          y: phase === "results" ? -48 : 0
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 200,
+          damping: 25
+        }}
+      >
         <AnimatePresence mode="wait">
           {phase === "results" && (
             <motion.div
@@ -245,6 +257,7 @@ export default function AiSearchDemo() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ delay: 0.1 }}
               className="space-y-3"
             >
               {scenario.results.map((result, i) => (
@@ -287,7 +300,7 @@ export default function AiSearchDemo() {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
 
       {/* Privacy Footer */}
       <div className="mt-6 pt-4 border-t border-foreground/5 flex items-center justify-center gap-2 text-[10px] text-foreground/40">

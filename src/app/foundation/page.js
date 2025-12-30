@@ -41,10 +41,10 @@ export default function FoundationPage() {
         {/* Hero Section */}
         <section className="container-swiss mb-32 flex flex-col items-center justify-center text-center min-h-screen">
             <h1 className="text-6xl md:text-8xl font-serif tracking-tight text-foreground mb-8">
-              Foundation.
+              Foundation
             </h1>
             <p className="text-xl md:text-2xl font-sans text-foreground/70 max-w-2xl text-balance mb-12 leading-relaxed">
-              The sovereign compute module. Designed for privacy, engineered for longevity, built for you.
+              The sovereign home server and compute solution. Designed for privacy, engineered for longevity, built for you.
             </p>
             <div className="flex gap-4">
               <Link
@@ -294,8 +294,8 @@ export default function FoundationPage() {
         </section>
 
         {/* AI-Powered Search Section */}
-        <section className="bg-muted py-24">
-             <div className="container-swiss">
+        <section className="bg-muted h-screen flex items-center overflow-hidden">
+             <div className="container-swiss w-full py-24">
                  <motion.div
                    className="text-center mb-12"
                    initial={{ opacity: 0, y: 20 }}

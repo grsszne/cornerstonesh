@@ -40,10 +40,10 @@ export default function Footer() {
   return (
     <footer className="bg-background text-foreground pt-24 pb-12 border-t border-muted">
       <div className="container-swiss">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-16">
-          
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-12 mb-16">
+
           {/* Brand Column */}
-          <div className="col-span-1 md:col-span-1">
+          <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-6 transition-opacity hover:opacity-70 text-foreground">
               <LogoIcon className="h-5 w-auto" />
               <span className="text-xl font-serif font-medium tracking-tight">
@@ -51,7 +51,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-foreground/60 leading-relaxed max-w-xs">
-              Precision engineered modular server hardware. Est 2024.
+              Cornerstone is building hardware & software systems for the individual.
             </p>
           </div>
 
