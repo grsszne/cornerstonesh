@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import CornerstoneOS from "@/components/CornerstoneOS";
 import AiSearchDemo from "@/components/AiSearchDemo";
 import ScrollToRef from "@/components/ScrollToRef";
+import ScribbleUnderline from "@/components/ScribbleUnderline";
 import { motion } from "framer-motion";
 import { 
   ShieldCheck, 
@@ -120,6 +121,65 @@ export default function CornerstoneOSPage() {
                     </p>
                 </div>
             </div>
+        </section>
+
+        {/* Alternative OS Options Section */}
+        <section className="bg-muted py-32 mb-32">
+             <div className="container-swiss">
+                 <div className="max-w-4xl mx-auto">
+                     <h2 className="font-serif text-4xl mb-6 text-foreground">Not for you?</h2>
+                     <p className="font-sans text-lg text-foreground/70 mb-16 leading-relaxed">
+                        Foundation is hardware-first. While CornerstoneOS ships as the default experience, you're free to bring your own operating system. Here are some popular alternatives that work well with Foundation's architecture:
+                     </p>
+
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                         <div className="space-y-4">
+                             <h3 className="font-sans text-sm font-medium text-foreground uppercase tracking-wider">NAS-Focused</h3>
+                             <div className="space-y-6">
+                                 <div>
+                                     <h4 className="font-sans font-medium text-foreground mb-1">Unraid</h4>
+                                     <p className="font-sans text-sm text-foreground/60 leading-relaxed">Flexible storage pooling with Docker and VM support.</p>
+                                 </div>
+                                 <div>
+                                     <h4 className="font-sans font-medium text-foreground mb-1">TrueNAS</h4>
+                                     <p className="font-sans text-sm text-foreground/60 leading-relaxed">Enterprise-grade ZFS storage with extensive plugin ecosystem.</p>
+                                 </div>
+                                 <div>
+                                     <h4 className="font-sans font-medium text-foreground mb-1">OpenMediaVault</h4>
+                                     <p className="font-sans text-sm text-foreground/60 leading-relaxed">Lightweight Debian-based NAS solution with web UI.</p>
+                                 </div>
+                             </div>
+                         </div>
+
+                         <div className="space-y-4">
+                             <h3 className="font-sans text-sm font-medium text-foreground uppercase tracking-wider">General Purpose</h3>
+                             <div className="space-y-6">
+                                 <div>
+                                     <h4 className="font-sans font-medium text-foreground mb-1">Proxmox VE</h4>
+                                     <p className="font-sans text-sm text-foreground/60 leading-relaxed">Virtualization platform for running multiple OS instances.</p>
+                                 </div>
+                                 <div>
+                                     <h4 className="font-sans font-medium text-foreground mb-1">Ubuntu Server</h4>
+                                     <p className="font-sans text-sm text-foreground/60 leading-relaxed">Standard Linux server with wide hardware support.</p>
+                                 </div>
+                                 <div>
+                                     <h4 className="font-sans font-medium text-foreground mb-1">Debian</h4>
+                                     <p className="font-sans text-sm text-foreground/60 leading-relaxed">Stable, minimal foundation for custom configurations.</p>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                     <div className="mt-12 pt-8 border-t border-foreground/10">
+                         <p className="font-sans text-sm text-foreground/50 italic">
+                             Foundation's open architecture means you're never locked in. <ScribbleUnderline delay={0.3} color="rgba(255,255,255,0.5)">Install what works for you.</ScribbleUnderline>
+                         </p>
+                         <p className="font-sans text-sm text-foreground/40 mt-4">
+                             The OS boots off an internal 2230 M.2 NVMe SSD, and we're more than willing to install it for you. Just know it hasn't been extensively tested on different operating systems yet.
+                         </p>
+                     </div>
+                 </div>
+             </div>
         </section>
 
         {/* Final CTA */}

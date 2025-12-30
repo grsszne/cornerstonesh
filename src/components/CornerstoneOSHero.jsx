@@ -8,6 +8,7 @@ import {
   ShieldCheck,
 } from "@phosphor-icons/react";
 import IntegrationsDemo from "./IntegrationsDemo";
+import ScribbleUnderline from "./ScribbleUnderline";
 
 export default function CornerstoneOSHero() {
   const [mounted, setMounted] = useState(false);
@@ -38,7 +39,9 @@ export default function CornerstoneOSHero() {
           >
             <h2 className="font-serif text-5xl md:text-7xl leading-[0.95] tracking-tight mb-8">
               The heart of your<br/>
-              <span className="text-foreground/40 font-serif italic">sovereign home.</span>
+              <span className="text-foreground/40 font-serif italic">
+                <ScribbleUnderline delay={0.8} color="rgba(255,255,255,0.5)">sovereign home.</ScribbleUnderline>
+              </span>
             </h2>
 
             <p className="font-sans text-lg text-foreground/60 max-w-md mb-12 leading-relaxed">

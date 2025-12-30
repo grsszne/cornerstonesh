@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MagnifyingGlass, Image, FileText, EnvelopeSimple, CalendarBlank, LockKey } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import ScribbleUnderline from "./ScribbleUnderline";
+import ScribbleCircle from "./ScribbleCircle";
 
 export default function FoundationHero() {
   const [mounted, setMounted] = useState(false);
@@ -28,7 +30,10 @@ export default function FoundationHero() {
               >
                   Modular hardware.<br/>
                   <span className="text-foreground/60">Integrated software.</span><br/>
-                  <span className="text-foreground/30">Completely yours.</span>
+                  <span className="text-foreground/30">
+                    <ScribbleCircle delay={1.5} color="rgba(255,255,255,0.5)">Completely</ScribbleCircle><br/>
+                    <ScribbleCircle delay={1.7} color="rgba(255,255,255,0.5)">yours.</ScribbleCircle>
+                  </span>
               </motion.h1>
 
               <motion.p
