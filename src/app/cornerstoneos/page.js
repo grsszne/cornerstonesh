@@ -374,7 +374,7 @@ export default function CornerstoneOSPage() {
                              Foundation's open architecture means you're never locked in. <ScribbleUnderline delay={0.3} color="rgba(255,255,255,0.5)">Install what works for you.</ScribbleUnderline>
                          </p>
                          <p className="font-sans text-sm text-foreground/40 mt-4">
-                             The OS boots off an internal 2230 M.2 NVMe SSD, and we're more than willing to install it for you. Just know it hasn't been extensively tested on different operating systems yet.
+                             The OS boots off an internal 2230 M.2 NVMe SSD, and we're more than willing to install an OS of your choice for you. Just know it hasn't been extensively tested on different operating systems yet.
                          </p>
                      </div>
                  </div>
