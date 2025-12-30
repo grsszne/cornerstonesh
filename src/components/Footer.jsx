@@ -51,7 +51,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-foreground/60 leading-relaxed max-w-xs">
-              Cornerstone is building hardware & software systems for the individual.
+              Cornerstone is building integrated hardware & software systems for the individual.
             </p>
           </div>
 
