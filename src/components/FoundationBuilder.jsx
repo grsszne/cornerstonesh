@@ -45,23 +45,33 @@ export default function FoundationBuilder() {
   // Calculate Price
   const basePrice = 399;
   let modulePrice = 0;
-  
-  // Custom logic for Ethernet pricing (first one 'free' if it was logic from before, 
-  // but let's simplify for this minimalist version or keep logic if needed. 
-  // Previous logic: "first 1GbE is free". I'll keep it simple: just sum prices.)
-  
+
+  // Check if any networking modules are selected (excluding 1GbE for this check)
+  const networkingModuleIds = MODULE_CATEGORIES.networking.modules.map(m => m.id);
+  const hasOtherNetworkingModule = Object.entries(modules).some(([id, count]) =>
+    networkingModuleIds.includes(id) && id !== 'ethernet-1' && count > 0
+  );
+
+  // Calculate effective price for 1GbE: $0 if first networking module, $70 otherwise
+  const get1GbEPrice = (count) => {
+    if (count === 0) return 0;
+    if (hasOtherNetworkingModule) {
+      // All 1GbE modules cost $70 each if other networking exists
+      return count * 70;
+    } else {
+      // First 1GbE is free, additional ones cost $70
+      return (count - 1) * 70;
+    }
+  };
+
   Object.entries(modules).forEach(([id, count]) => {
     const mod = MODULE_OPTIONS.find(m => m.id === id);
     if (!mod) return;
-    
-    // Legacy pricing logic port
+
     if (id === 'ethernet-1') {
-        // If we want to keep the "First one free" logic:
-        // modulePrice += (count > 0 ? (count - 1) * 65 : 0); 
-        // Or just simplify. Let's assume standard pricing for maturity.
-        modulePrice += count * mod.price;
+      modulePrice += get1GbEPrice(count);
     } else {
-        modulePrice += count * mod.price;
+      modulePrice += count * mod.price;
     }
   });
 
@@ -139,11 +149,18 @@ export default function FoundationBuilder() {
                           <div className="space-y-4">
                               {category.modules.map(mod => {
                                   const count = modules[mod.id] || 0;
+                                  // Calculate display price for 1GbE dynamically
+                                  const displayPrice = mod.id === 'ethernet-1'
+                                    ? (hasOtherNetworkingModule ? 70 : 0)
+                                    : mod.price;
+                                  const priceLabel = mod.id === 'ethernet-1' && !hasOtherNetworkingModule
+                                    ? "Included"
+                                    : `$${displayPrice}`;
                                   return (
                                       <div key={mod.id} className="flex justify-between items-center py-2">
                                           <div>
                                               <div className="font-serif text-lg">{mod.label}</div>
-                                              <div className="font-sans text-sm text-foreground/60">${mod.price}</div>
+                                              <div className="font-sans text-sm text-foreground/60">{priceLabel}</div>
                                           </div>
                                           <div className="flex items-center gap-4">
                                               <button 
@@ -196,10 +213,20 @@ export default function FoundationBuilder() {
                   {Object.entries(modules).map(([id, count]) => {
                       const mod = MODULE_OPTIONS.find(m => m.id === id);
                       if (!mod) return null;
+                      // Calculate price for 1GbE in summary
+                      let itemPrice;
+                      let priceDisplay;
+                      if (id === 'ethernet-1') {
+                        itemPrice = get1GbEPrice(count);
+                        priceDisplay = itemPrice === 0 ? 'Included' : `+$${itemPrice}`;
+                      } else {
+                        itemPrice = count * mod.price;
+                        priceDisplay = `+$${itemPrice}`;
+                      }
                       return (
                           <div key={id} className="flex justify-between pb-2 border-b border-foreground/10">
                               <span className="text-foreground/70">{count}x {mod.label}</span>
-                              <span>+${count * mod.price}</span>
+                              <span>{priceDisplay}</span>
                           </div>
                       )
                   })}

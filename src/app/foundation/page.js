@@ -51,7 +51,7 @@ export default function FoundationPage() {
                 href="/preorder"
                 className="bg-foreground text-background px-8 py-3 text-sm font-sans font-medium rounded-full hover:opacity-90 transition-opacity"
               >
-                Preorder Edition 01
+                Preorder
               </Link>
               <a
                 href="#specs"
