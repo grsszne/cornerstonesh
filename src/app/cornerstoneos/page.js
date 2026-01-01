@@ -393,7 +393,7 @@ export default function CornerstoneOSPage() {
                         href="/preorder"
                         className="bg-foreground text-background px-12 py-4 font-sans font-medium text-sm hover:opacity-90 transition-opacity"
                     >
-                        Preorder Edition 01
+                        Preorder
                     </Link>
                     <Link
                         href="/foundation"

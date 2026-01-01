@@ -79,7 +79,7 @@ export default function PreorderPage() {
                       disabled={status === "loading"}
                       className="w-full bg-foreground text-background py-6 rounded-2xl font-sans font-medium text-lg hover:opacity-90 transition-all active:scale-[0.98] disabled:opacity-50"
                     >
-                      {status === "loading" ? "Processing..." : "Reserve Edition 01"}
+                      {status === "loading" ? "Processing..." : "Reserve Edition"}
                     </button>
                     
                     <p className="text-xs text-foreground/40 font-sans tracking-wide">

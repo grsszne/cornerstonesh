@@ -137,7 +137,7 @@ export const MODULE_CATEGORIES = {
                 score: 10,
                 type: "ethernet",
                 color: "green",
-                description: "1 Gigabit Ethernet adapter with RJ45 connector. First one included, additional ports $65 each.",
+                description: "1 Gigabit Ethernet adapter with RJ45 connector. First one included, additional ports $70 each.",
                 specs: [
                     { label: "Speed", value: "1 Gbps" },
                     { label: "Interface", value: "PCIe Gen 2 x1" },

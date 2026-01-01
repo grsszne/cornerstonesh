@@ -102,7 +102,7 @@ export default function ModulesPage() {
                                   href="/preorder"
                                   className="text-background border-b border-background/20 py-2 hover:border-background transition-colors font-sans font-medium"
                                 >
-                                  Reserve Edition 01
+                                  Reserve Edition
                                 </Link>
                             </div>
                         </div>

@@ -357,15 +357,17 @@ export default function CornerstoneOS() {
         {/* Screen Bezel */}
         <div className="bg-muted border border-foreground/10 rounded-lg overflow-hidden">
           {/* Screen Content */}
-          <div className="p-6 md:p-10">
+          <div className="p-4 sm:p-6 md:p-10">
             {/* Header / Tabs */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 border-b border-foreground/10 pb-4 gap-4">
-              <div className="flex items-center gap-3">
-                   <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                  <span className="font-serif text-lg">foundation-01.local</span>
+            <div className="flex flex-col gap-3 sm:gap-4 mb-6 sm:mb-10 border-b border-foreground/10 pb-3 sm:pb-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 sm:gap-3">
+                     <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <span className="font-serif text-sm sm:text-lg">foundation-01.local</span>
+                </div>
               </div>
-              
-              <div className="flex gap-6 overflow-x-auto">
+
+              <div className="flex gap-3 sm:gap-6 overflow-x-auto pb-1 -mb-1 scrollbar-hide">
                   {['Overview', 'Mail', 'Calendar', 'Files', 'Notes', 'Network', 'Processes'].map((tab, i) => (
                       <motion.button
                           key={tab}
@@ -379,9 +381,9 @@ export default function CornerstoneOS() {
                               repeatDelay: 2,
                               delay: i * 0.1
                           }}
-                          className={`text-sm font-sans transition-colors whitespace-nowrap ${
-                              activeTab === tab 
-                              ? "text-foreground font-medium border-b-2 border-foreground pb-1" 
+                          className={`text-xs sm:text-sm font-sans transition-colors whitespace-nowrap flex-shrink-0 ${
+                              activeTab === tab
+                              ? "text-foreground font-medium border-b-2 border-foreground pb-1"
                               : "text-foreground/40 hover:text-foreground"
                           }`}
                       >
@@ -392,53 +394,53 @@ export default function CornerstoneOS() {
             </div>
 
             {/* Fixed Height Content Container */}
-            <div className="h-[500px] overflow-y-auto pr-2">
+            <div className="h-[350px] sm:h-[400px] md:h-[500px] overflow-y-auto pr-1 sm:pr-2">
 
       {/* Suite Overview Grid */}
       {activeTab === 'Overview' && (
-        <div className="space-y-12">
-            
+        <div className="space-y-6 sm:space-y-12">
+
             {/* KPI Row - Suite Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
                 <div>
-                     <div className="text-xs font-sans text-foreground/40 uppercase tracking-widest mb-2">Drive Usage</div>
-                     <div className="text-2xl font-serif">234 GB <span className="text-sm font-sans text-foreground/40 ml-1">/ 2TB</span></div>
+                     <div className="text-[10px] sm:text-xs font-sans text-foreground/40 uppercase tracking-widest mb-1 sm:mb-2">Drive Usage</div>
+                     <div className="text-lg sm:text-2xl font-serif">234 GB <span className="text-xs sm:text-sm font-sans text-foreground/40 ml-1">/ 2TB</span></div>
                 </div>
                  <div>
-                     <div className="text-xs font-sans text-foreground/40 uppercase tracking-widest mb-2">Inbox</div>
-                     <div className="text-2xl font-serif">4 <span className="text-sm font-sans text-foreground/40 ml-1">unread</span></div>
+                     <div className="text-[10px] sm:text-xs font-sans text-foreground/40 uppercase tracking-widest mb-1 sm:mb-2">Inbox</div>
+                     <div className="text-lg sm:text-2xl font-serif">4 <span className="text-xs sm:text-sm font-sans text-foreground/40 ml-1">unread</span></div>
                 </div>
                  <div>
-                     <div className="text-xs font-sans text-foreground/40 uppercase tracking-widest mb-2">Events Today</div>
-                     <div className="text-2xl font-serif">2 <span className="text-sm font-sans text-foreground/40 ml-1">remaining</span></div>
+                     <div className="text-[10px] sm:text-xs font-sans text-foreground/40 uppercase tracking-widest mb-1 sm:mb-2">Events Today</div>
+                     <div className="text-lg sm:text-2xl font-serif">2 <span className="text-xs sm:text-sm font-sans text-foreground/40 ml-1">remaining</span></div>
                 </div>
                  <div>
-                     <div className="text-xs font-sans text-foreground/40 uppercase tracking-widest mb-2">System</div>
-                     <div className="text-2xl font-serif text-emerald-600">Healthy</div>
+                     <div className="text-[10px] sm:text-xs font-sans text-foreground/40 uppercase tracking-widest mb-1 sm:mb-2">System</div>
+                     <div className="text-lg sm:text-2xl font-serif text-emerald-600">Healthy</div>
                 </div>
             </div>
 
             {/* Main Content Area - Suite App Previews */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16">
+
                 {/* Left: Files & Mail */}
-                <div className="space-y-12">
+                <div className="space-y-6 sm:space-y-12">
                     {/* Files Widget */}
                     <div>
-                        <h3 className="font-serif text-lg mb-6 flex items-center justify-between">
+                        <h3 className="font-serif text-base sm:text-lg mb-3 sm:mb-6 flex items-center justify-between">
                             <span>Recent Files</span>
-                            <span className="text-xs font-sans text-foreground/40 uppercase tracking-widest">Drive</span>
+                            <span className="text-[10px] sm:text-xs font-sans text-foreground/40 uppercase tracking-widest">Drive</span>
                         </h3>
-                        <div className="space-y-2">
+                        <div className="space-y-1 sm:space-y-2">
                              {[
                                 { name: "Project_Alpha_Q3.pdf", size: "2.4 MB", date: "Just now" },
                                 { name: "Site_Assets_Final.zip", size: "142 MB", date: "2h ago" },
                                 { name: "contracts_signed_v2.docx", size: "45 KB", date: "Yesterday" },
                              ].map((file, i) => (
-                                <div key={i} className="flex justify-between items-center py-3 border-b border-foreground/5 hover:bg-foreground/5 px-2 -mx-2 transition-colors cursor-pointer group">
-                                    <span className="text-sm font-sans group-hover:text-foreground/80">{file.name}</span>
-                                    <div className="flex gap-4 text-xs font-sans text-foreground/40 tabular-nums">
-                                        <span>{file.size}</span>
+                                <div key={i} className="flex justify-between items-center py-2 sm:py-3 border-b border-foreground/5 hover:bg-foreground/5 px-2 -mx-2 transition-colors cursor-pointer group">
+                                    <span className="text-xs sm:text-sm font-sans group-hover:text-foreground/80 truncate mr-2">{file.name}</span>
+                                    <div className="flex gap-2 sm:gap-4 text-[10px] sm:text-xs font-sans text-foreground/40 tabular-nums flex-shrink-0">
+                                        <span className="hidden sm:inline">{file.size}</span>
                                         <span>{file.date}</span>
                                     </div>
                                 </div>
@@ -448,21 +450,21 @@ export default function CornerstoneOS() {
 
                     {/* Mail Widget */}
                     <div>
-                         <h3 className="font-serif text-lg mb-6 flex items-center justify-between">
+                         <h3 className="font-serif text-base sm:text-lg mb-3 sm:mb-6 flex items-center justify-between">
                             <span>Unread Mail</span>
-                            <span className="text-xs font-sans text-foreground/40 uppercase tracking-widest">Mail</span>
+                            <span className="text-[10px] sm:text-xs font-sans text-foreground/40 uppercase tracking-widest">Mail</span>
                         </h3>
-                        <div className="space-y-2">
+                        <div className="space-y-1 sm:space-y-2">
                              {[
                                 { from: "Stripe", subject: "Payout scheduled for Dec 29", time: "10:42 AM" },
                                 { from: "GitHub", subject: "[cornerstone] Security alert", time: "09:15 AM" },
                              ].map((mail, i) => (
-                                <div key={i} className="py-3 border-b border-foreground/5 hover:bg-foreground/5 px-2 -mx-2 transition-colors cursor-pointer group">
+                                <div key={i} className="py-2 sm:py-3 border-b border-foreground/5 hover:bg-foreground/5 px-2 -mx-2 transition-colors cursor-pointer group">
                                     <div className="flex justify-between mb-1">
-                                        <span className="text-sm font-medium">{mail.from}</span>
-                                        <span className="text-xs text-foreground/40">{mail.time}</span>
+                                        <span className="text-xs sm:text-sm font-medium">{mail.from}</span>
+                                        <span className="text-[10px] sm:text-xs text-foreground/40">{mail.time}</span>
                                     </div>
-                                    <div className="text-sm text-foreground/70 group-hover:text-foreground">{mail.subject}</div>
+                                    <div className="text-xs sm:text-sm text-foreground/70 group-hover:text-foreground truncate">{mail.subject}</div>
                                 </div>
                              ))}
                         </div>
@@ -470,32 +472,32 @@ export default function CornerstoneOS() {
                 </div>
 
                  {/* Right: Calendar & Network */}
-                 <div className="space-y-12">
+                 <div className="space-y-6 sm:space-y-12">
                      {/* Calendar Widget */}
                      <div>
-                        <h3 className="font-serif text-lg mb-6 flex items-center justify-between">
+                        <h3 className="font-serif text-base sm:text-lg mb-3 sm:mb-6 flex items-center justify-between">
                             <span>Up Next</span>
-                            <span className="text-xs font-sans text-foreground/40 uppercase tracking-widest">Calendar</span>
+                            <span className="text-[10px] sm:text-xs font-sans text-foreground/40 uppercase tracking-widest">Calendar</span>
                         </h3>
-                         <div className="border border-foreground/10 bg-background p-6">
+                         <div className="border border-foreground/10 bg-background p-3 sm:p-6">
                              {/* Mock Day View */}
-                             <div className="text-center mb-6 pb-6 border-b border-foreground/5">
-                                 <div className="text-4xl font-serif">28</div>
-                                 <div className="text-sm font-sans text-foreground/40 uppercase tracking-widest">December, Sunday</div>
+                             <div className="text-center mb-3 sm:mb-6 pb-3 sm:pb-6 border-b border-foreground/5">
+                                 <div className="text-2xl sm:text-4xl font-serif">28</div>
+                                 <div className="text-xs sm:text-sm font-sans text-foreground/40 uppercase tracking-widest">December, Sunday</div>
                              </div>
-                             
-                             <div className="space-y-6">
-                                 <div className="flex gap-4">
-                                     <div className="w-16 text-right text-xs text-foreground/40 pt-1">11:00 AM</div>
-                                     <div className="flex-1 bg-blue-500/10 border-l-2 border-blue-500 p-3">
-                                         <div className="text-sm font-medium text-blue-700 dark:text-blue-300">Design Review</div>
-                                         <div className="text-xs opacity-60">with Engineering Team</div>
+
+                             <div className="space-y-3 sm:space-y-6">
+                                 <div className="flex gap-2 sm:gap-4">
+                                     <div className="w-12 sm:w-16 text-right text-[10px] sm:text-xs text-foreground/40 pt-1">11:00 AM</div>
+                                     <div className="flex-1 bg-blue-500/10 border-l-2 border-blue-500 p-2 sm:p-3">
+                                         <div className="text-xs sm:text-sm font-medium text-blue-700 dark:text-blue-300">Design Review</div>
+                                         <div className="text-[10px] sm:text-xs opacity-60">with Engineering Team</div>
                                      </div>
                                  </div>
-                                  <div className="flex gap-4">
-                                     <div className="w-16 text-right text-xs text-foreground/40 pt-1">02:00 PM</div>
-                                     <div className="p-3">
-                                         <div className="text-sm font-medium text-foreground/40 italic">No events</div>
+                                  <div className="flex gap-2 sm:gap-4">
+                                     <div className="w-12 sm:w-16 text-right text-[10px] sm:text-xs text-foreground/40 pt-1">02:00 PM</div>
+                                     <div className="p-2 sm:p-3">
+                                         <div className="text-xs sm:text-sm font-medium text-foreground/40 italic">No events</div>
                                      </div>
                                  </div>
                              </div>

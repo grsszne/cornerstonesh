@@ -70,9 +70,11 @@ export default function Footer() {
           <div>
             <h3 className="text-sm font-sans font-medium mb-6 text-foreground">Connect</h3>
             <ul className="space-y-4">
+              <li><a href="https://instagram.com/cornerstone_sh" className="text-sm text-foreground/60 hover:text-foreground transition-colors">Instagram</a></li>
+              <li><a href="https://github.com/cornerstonesh" className="text-sm text-foreground/60 hover:text-foreground transition-colors">GitHub</a></li>
+              <li><a href="https://reddit.com/u/cornerstone_sh" className="text-sm text-foreground/60 hover:text-foreground transition-colors">Reddit</a></li>
               <li><a href="https://x.com/cornerstone_sh" className="text-sm text-foreground/60 hover:text-foreground transition-colors">Twitter</a></li>
-              <li><a href="https://github.com/cornerstone" className="text-sm text-foreground/60 hover:text-foreground transition-colors">GitHub</a></li>
-              <li><a href="mailto:cornerstone@cornerstone.sh" className="text-sm text-foreground/60 hover:text-foreground transition-colors">Email</a></li>
+              <li><a href="mailto:cornerstonecomputingservices@gmail.com" className="text-sm text-foreground/60 hover:text-foreground transition-colors">Email</a></li>
             </ul>
           </div>
 
@@ -105,7 +107,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-foreground/5 text-xs text-foreground/40">
-          <p>© {new Date().getFullYear()} Cornerstone Systems.</p>
+          <p>© {new Date().getFullYear()} Cornerstone Integrated.</p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>

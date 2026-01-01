@@ -82,4 +82,14 @@ h6 {
   .hover-opacity:hover {
     opacity: 0.7;
   }
+
+  /* Hide scrollbar for cleaner mobile experience */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

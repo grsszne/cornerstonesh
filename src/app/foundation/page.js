@@ -46,18 +46,19 @@ export default function FoundationPage() {
             <p className="text-xl md:text-2xl font-sans text-foreground/70 max-w-2xl text-balance mb-12 leading-relaxed">
               The sovereign home server and software suite. Designed for privacy, engineered for longevity, built for you.
             </p>
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
               <Link
                 href="/preorder"
-                className="bg-foreground text-background px-8 py-3 text-sm font-sans font-medium rounded-full hover:opacity-90 transition-opacity"
+                className="bg-foreground text-background px-8 py-3 text-sm font-sans font-medium rounded-full hover:opacity-90 transition-opacity text-center"
               >
-                Preorder Edition 01
+                Preorder
               </Link>
               <a
                 href="#specs"
-                className="px-8 py-3 text-sm font-sans font-medium text-foreground border border-foreground/20 rounded-full hover:border-foreground transition-colors"
+                className="px-8 py-3 text-sm font-sans font-medium text-foreground border border-foreground/20 rounded-full hover:border-foreground transition-colors text-center"
               >
-                Technical Specifications
+                <span className="sm:hidden">Specs</span>
+                <span className="hidden sm:inline">Technical Specifications</span>
               </a>
             </div>
         </section>

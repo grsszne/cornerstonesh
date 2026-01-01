@@ -20,10 +20,108 @@ const BOOT_STORAGE_OPTIONS = [
   { label: "4TB NVMe", price: 400 },
 ];
 
+// Fixed order of all module IDs for encoding
+const MODULE_ORDER = [
+  'storage-256', 'storage-512', 'storage-1tb', 'storage-2tb', 'storage-4tb', 'storage-8tb',
+  'ethernet-1', 'ethernet-2.5', 'ethernet-5', 'ethernet-10', 'wifi-6',
+  'usb-c', 'usb-a', 'sd-reader',
+  'ups', 'gpio',
+  'nightlight', 'fan'
+];
+
+// Generate a compact configuration key (e.g., "a3fx9")
+const generateConfigKey = (memoryIndex, bootIndex, modules) => {
+  // Pack config into a BigInt
+  let value = BigInt(memoryIndex);
+  value = value * 5n + BigInt(bootIndex);
+
+  for (const moduleId of MODULE_ORDER) {
+    const count = modules[moduleId] || 0;
+    value = value * 7n + BigInt(count); // 7 allows counts 0-6
+  }
+
+  // Convert to base36 for compact alphanumeric string
+  return value.toString(36).toLowerCase();
+};
+
+// Parse base36 string to BigInt
+const base36ToBigInt = (str) => {
+  const chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+  let result = 0n;
+  for (const char of str.toLowerCase()) {
+    const val = chars.indexOf(char);
+    if (val === -1) return null;
+    result = result * 36n + BigInt(val);
+  }
+  return result;
+};
+
+// Parse a compact configuration key
+const parseConfigKey = (key) => {
+  try {
+    const cleaned = key.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!cleaned) return null;
+
+    let value = base36ToBigInt(cleaned);
+    if (value === null) return null;
+
+    // Unpack modules (in reverse order)
+    const modules = {};
+    for (let i = MODULE_ORDER.length - 1; i >= 0; i--) {
+      const count = Number(value % 7n);
+      if (count > 0) modules[MODULE_ORDER[i]] = count;
+      value = value / 7n;
+    }
+
+    // Unpack boot and memory
+    const bootIndex = Number(value % 5n);
+    value = value / 5n;
+    const memoryIndex = Number(value % 3n);
+
+    if (memoryIndex < 0 || memoryIndex >= MEMORY_OPTIONS.length) return null;
+    if (bootIndex < 0 || bootIndex >= BOOT_STORAGE_OPTIONS.length) return null;
+
+    return { memoryIndex, bootIndex, modules };
+  } catch {
+    return null;
+  }
+};
+
 export default function FoundationBuilder() {
   const [memory, setMemory] = useState(MEMORY_OPTIONS[0]);
   const [bootStorage, setBootStorage] = useState(BOOT_STORAGE_OPTIONS[0]);
   const [modules, setModules] = useState({}); // { moduleId: count }
+  const [configKeyInput, setConfigKeyInput] = useState('');
+  const [copyFeedback, setCopyFeedback] = useState(false);
+
+  // Generate current config key
+  const memoryIndex = MEMORY_OPTIONS.findIndex(m => m.label === memory.label);
+  const bootIndex = BOOT_STORAGE_OPTIONS.findIndex(b => b.label === bootStorage.label);
+  const configKey = generateConfigKey(memoryIndex, bootIndex, modules);
+
+  // Apply a configuration key
+  const applyConfigKey = (key) => {
+    const parsed = parseConfigKey(key);
+    if (parsed) {
+      setMemory(MEMORY_OPTIONS[parsed.memoryIndex]);
+      setBootStorage(BOOT_STORAGE_OPTIONS[parsed.bootIndex]);
+      setModules(parsed.modules);
+      setConfigKeyInput('');
+      return true;
+    }
+    return false;
+  };
+
+  // Copy config key to clipboard
+  const copyConfigKey = async () => {
+    try {
+      await navigator.clipboard.writeText(configKey);
+      setCopyFeedback(true);
+      setTimeout(() => setCopyFeedback(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
 
   const MAX_BAYS = 6;
   const totalModules = Object.values(modules).reduce((a, b) => a + b, 0);
@@ -45,23 +143,33 @@ export default function FoundationBuilder() {
   // Calculate Price
   const basePrice = 399;
   let modulePrice = 0;
-  
-  // Custom logic for Ethernet pricing (first one 'free' if it was logic from before, 
-  // but let's simplify for this minimalist version or keep logic if needed. 
-  // Previous logic: "first 1GbE is free". I'll keep it simple: just sum prices.)
-  
+
+  // Check if any networking modules are selected (excluding 1GbE for this check)
+  const networkingModuleIds = MODULE_CATEGORIES.networking.modules.map(m => m.id);
+  const hasOtherNetworkingModule = Object.entries(modules).some(([id, count]) =>
+    networkingModuleIds.includes(id) && id !== 'ethernet-1' && count > 0
+  );
+
+  // Calculate effective price for 1GbE: $0 if first networking module, $70 otherwise
+  const get1GbEPrice = (count) => {
+    if (count === 0) return 0;
+    if (hasOtherNetworkingModule) {
+      // All 1GbE modules cost $70 each if other networking exists
+      return count * 70;
+    } else {
+      // First 1GbE is free, additional ones cost $70
+      return (count - 1) * 70;
+    }
+  };
+
   Object.entries(modules).forEach(([id, count]) => {
     const mod = MODULE_OPTIONS.find(m => m.id === id);
     if (!mod) return;
-    
-    // Legacy pricing logic port
+
     if (id === 'ethernet-1') {
-        // If we want to keep the "First one free" logic:
-        // modulePrice += (count > 0 ? (count - 1) * 65 : 0); 
-        // Or just simplify. Let's assume standard pricing for maturity.
-        modulePrice += count * mod.price;
+      modulePrice += get1GbEPrice(count);
     } else {
-        modulePrice += count * mod.price;
+      modulePrice += count * mod.price;
     }
   });
 
@@ -139,11 +247,18 @@ export default function FoundationBuilder() {
                           <div className="space-y-4">
                               {category.modules.map(mod => {
                                   const count = modules[mod.id] || 0;
+                                  // Calculate display price for 1GbE dynamically
+                                  const displayPrice = mod.id === 'ethernet-1'
+                                    ? (hasOtherNetworkingModule ? 70 : 0)
+                                    : mod.price;
+                                  const priceLabel = mod.id === 'ethernet-1' && !hasOtherNetworkingModule
+                                    ? "Included"
+                                    : `$${displayPrice}`;
                                   return (
                                       <div key={mod.id} className="flex justify-between items-center py-2">
                                           <div>
                                               <div className="font-serif text-lg">{mod.label}</div>
-                                              <div className="font-sans text-sm text-foreground/60">${mod.price}</div>
+                                              <div className="font-sans text-sm text-foreground/60">{priceLabel}</div>
                                           </div>
                                           <div className="flex items-center gap-4">
                                               <button 
@@ -196,10 +311,20 @@ export default function FoundationBuilder() {
                   {Object.entries(modules).map(([id, count]) => {
                       const mod = MODULE_OPTIONS.find(m => m.id === id);
                       if (!mod) return null;
+                      // Calculate price for 1GbE in summary
+                      let itemPrice;
+                      let priceDisplay;
+                      if (id === 'ethernet-1') {
+                        itemPrice = get1GbEPrice(count);
+                        priceDisplay = itemPrice === 0 ? 'Included' : `+$${itemPrice}`;
+                      } else {
+                        itemPrice = count * mod.price;
+                        priceDisplay = `+$${itemPrice}`;
+                      }
                       return (
                           <div key={id} className="flex justify-between pb-2 border-b border-foreground/10">
                               <span className="text-foreground/70">{count}x {mod.label}</span>
-                              <span>+${count * mod.price}</span>
+                              <span>{priceDisplay}</span>
                           </div>
                       )
                   })}
@@ -216,6 +341,40 @@ export default function FoundationBuilder() {
               <p className="text-xs text-center mt-4 text-foreground/50">
                   Estimted Shipping: Q4 2026
               </p>
+
+              {/* Configuration Key */}
+              <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-foreground/10">
+                  <label className="block text-[10px] sm:text-xs font-sans text-foreground/50 uppercase tracking-widest mb-2 sm:mb-3">Configuration Key</label>
+                  <div className="flex gap-2">
+                      <div className="flex-1 bg-background px-2 sm:px-3 py-2 text-xs sm:text-sm font-sans tracking-widest text-foreground border border-foreground/10 truncate">
+                          {configKey}
+                      </div>
+                      <button
+                          onClick={copyConfigKey}
+                          className="px-2 sm:px-3 py-2 text-[10px] sm:text-xs font-sans border border-foreground/10 hover:border-foreground/30 transition-colors flex-shrink-0"
+                      >
+                          {copyFeedback ? 'Copied!' : 'Copy'}
+                      </button>
+                  </div>
+                  <div className="mt-2 sm:mt-3">
+                      <div className="flex gap-2">
+                          <input
+                              type="text"
+                              value={configKeyInput}
+                              onChange={(e) => setConfigKeyInput(e.target.value)}
+                              placeholder="Paste key..."
+                              className="flex-1 min-w-0 bg-background px-2 sm:px-3 py-2 text-xs sm:text-sm font-sans tracking-widest border border-foreground/10 focus:border-foreground/30 focus:outline-none transition-colors"
+                          />
+                          <button
+                              onClick={() => applyConfigKey(configKeyInput)}
+                              disabled={!configKeyInput.trim()}
+                              className="px-2 sm:px-3 py-2 text-[10px] sm:text-xs font-sans border border-foreground/10 hover:border-foreground/30 disabled:opacity-30 disabled:hover:border-foreground/10 transition-colors flex-shrink-0"
+                          >
+                              Apply
+                          </button>
+                      </div>
+                  </div>
+              </div>
           </div>
       </div>
 
