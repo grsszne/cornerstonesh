@@ -44,7 +44,7 @@ export default function FoundationPage() {
               Foundation
             </h1>
             <p className="text-xl md:text-2xl font-sans text-foreground/70 max-w-2xl text-balance mb-12 leading-relaxed">
-              The sovereign home server and compute solution. Designed for privacy, engineered for longevity, built for you.
+              The sovereign home server and software suite. Designed for privacy, engineered for longevity, built for you.
             </p>
             <div className="flex gap-4">
               <Link
