@@ -101,6 +101,18 @@ export default function Navigation() {
             isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
+          {/* Close Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="absolute top-5 left-6 p-2 text-foreground hover:opacity-70 transition-opacity"
+            aria-label="Close menu"
+          >
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="6" y1="6" x2="24" y2="24" />
+              <line x1="24" y1="6" x2="6" y2="24" />
+            </svg>
+          </button>
+
           <div className="h-full flex flex-col justify-center items-center space-y-8 p-8">
             {navLinks.map((link) => (
               <Link
