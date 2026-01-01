@@ -32,7 +32,7 @@ export default function PrivacyPage() {
                   Privacy Policy
                 </h1>
                 <p className="font-mono text-sm text-black/60 dark:text-white/60 mb-12">
-                  Last Updated: November 27, 2025
+                  Last Updated: January 1, 2026
                 </p>
 
             <div className="space-y-8 font-mono text-sm leading-relaxed">
@@ -87,7 +87,23 @@ export default function PrivacyPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
-                  4. Data Security
+                  4. Foundation Email Client & Google Data
+                </h2>
+                <p className="mb-4">
+                  Foundation contains a self-hosted email client. When you connect your Gmail account:
+                </p>
+                <ul className="list-disc list-inside space-y-2 ml-4">
+                  <li>Your email data is stored on YOUR Foundation server</li>
+                  <li>We (Cornerstone) do NOT have access to your emails</li>
+                  <li>Your OAuth tokens are encrypted and stored locally</li>
+                  <li>No data is sent to our servers except the OAuth callback</li>
+                  <li>You can revoke access anytime via Google Account settings</li>
+                </ul>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
+                  5. Data Security
                 </h2>
                 <p>
                   We implement appropriate technical and organizational measures to protect your personal information. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.
@@ -96,7 +112,7 @@ export default function PrivacyPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
-                  5. Your Rights
+                  6. Your Rights
                 </h2>
                 <p className="mb-4">
                   Depending on your location, you may have the right to:
@@ -112,7 +128,7 @@ export default function PrivacyPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
-                  6. Cookies and Tracking
+                  7. Cookies and Tracking
                 </h2>
                 <p>
                   We use cookies and similar tracking technologies to improve your browsing experience, analyze site traffic, and understand where our visitors are coming from. You can control cookies through your browser settings.
@@ -121,7 +137,7 @@ export default function PrivacyPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
-                  7. Children's Privacy
+                  8. Children's Privacy
                 </h2>
                 <p>
                   Our services are not directed to children under 13. We do not knowingly collect personal information from children under 13.
@@ -130,7 +146,7 @@ export default function PrivacyPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
-                  8. Changes to This Policy
+                  9. Changes to This Policy
                 </h2>
                 <p>
                   We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.
@@ -139,7 +155,7 @@ export default function PrivacyPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
-                  9. Contact Us
+                  10. Contact Us
                 </h2>
                 <p>
                   If you have any questions about this Privacy Policy, please contact us at:

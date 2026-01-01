@@ -32,7 +32,7 @@ export default function TermsPage() {
                   Terms of Service
                 </h1>
                 <p className="font-mono text-sm text-black/60 dark:text-white/60 mb-12">
-                  Last Updated: November 27, 2025
+                  Last Updated: January 1, 2026
                 </p>
 
             <div className="space-y-8 font-mono text-sm leading-relaxed">
@@ -173,7 +173,22 @@ export default function TermsPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
-                  11. Limitation of Liability
+                  11. Foundation Email Client
+                </h2>
+                <div className="space-y-4">
+                  <p>In addition to the standard server features, Foundation includes an optional self-hosted email client. By using this feature, you agree to the following:</p>
+                  <ol className="list-decimal list-inside space-y-2 ml-4">
+                    <li>You agree to use Foundation only with your own email accounts.</li>
+                    <li>You are responsible for securing your Foundation server and maintaining the privacy of your login credentials.</li>
+                    <li>The email client is provided "as-is" without warranty of any kind, either express or implied.</li>
+                    <li>We (Cornerstone) are not liable for any data loss, security issues, or service interruptions related to your self-hosted email setup.</li>
+                  </ol>
+                </div>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
+                  12. Limitation of Liability
                 </h2>
                 <p>
                   To the maximum extent permitted by law, Cornerstone shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our products or services. Our total liability shall not exceed the amount you paid for the product or service.
@@ -182,7 +197,7 @@ export default function TermsPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
-                  12. Indemnification
+                  13. Indemnification
                 </h2>
                 <p>
                   You agree to indemnify and hold Cornerstone harmless from any claims, damages, or expenses arising from your violation of these Terms or your use of our products and services.
@@ -191,7 +206,7 @@ export default function TermsPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
-                  13. Governing Law
+                  14. Governing Law
                 </h2>
                 <p>
                   These Terms shall be governed by and construed in accordance with the laws of [Your State/Country], without regard to its conflict of law provisions.
@@ -200,7 +215,7 @@ export default function TermsPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
-                  14. Changes to Terms
+                  15. Changes to Terms
                 </h2>
                 <p>
                   We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting to this page. Your continued use of our services after changes constitutes acceptance of the modified Terms.
@@ -209,7 +224,7 @@ export default function TermsPage() {
 
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
-                  15. Contact Information
+                  16. Contact Information
                 </h2>
                 <p>
                   For questions about these Terms, please contact us at:
