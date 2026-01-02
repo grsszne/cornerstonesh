@@ -10,7 +10,7 @@ export default function NotFound() {
         <ErrorDisplay
             code="404"
             title="Page Not Found"
-            description="The page you are looking for cannot be found."
+            description="The page you are looking for could not be found."
             action={{
                 label: "Return to Home",
                 href: "/"
