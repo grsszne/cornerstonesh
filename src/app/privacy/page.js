@@ -23,7 +23,7 @@ export default function PrivacyPage() {
               <div className="relative z-10 p-8 md:p-12">
                 <Link 
                   href="/" 
-                  className="inline-flex items-center text-sm font-mono hover:opacity-70 transition-opacity mb-8"
+                  className="inline-flex items-center text-sm  hover:opacity-70 transition-opacity mb-8"
                 >
                   &lt; Back to Home
                 </Link>
@@ -31,11 +31,11 @@ export default function PrivacyPage() {
                 <h1 className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                   Privacy Policy
                 </h1>
-                <p className="font-mono text-sm text-black/60 dark:text-white/60 mb-12">
+                <p className=" text-sm text-black/60 dark:text-white/60 mb-12">
                   Last Updated: January 1, 2026
                 </p>
 
-            <div className="space-y-8 font-mono text-sm leading-relaxed">
+            <div className="space-y-8  text-sm leading-relaxed">
               <section>
                 <h2 className="text-2xl font-bold mb-4 underline decoration-2 decoration-cornerstone underline-offset-4">
                   1. Information We Collect
