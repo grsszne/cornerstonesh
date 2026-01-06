@@ -12,85 +12,163 @@ export async function GET(request) {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Foundation - Authorization Failed</title>
+          <meta charset="utf-8">
+          <title>Authorization Failed</title>
           <style>
-            body { 
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-              text-align: center; 
-              padding: 50px; 
-              background: #000; 
-              color: #fff; 
+            body {
               margin: 0;
+              padding: 0;
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              min-height: 100vh;
             }
-            .error { color: #ff4444; font-size: 48px; margin-bottom: 20px; }
-            h1 { font-size: 32px; margin: 20px 0; }
-            p { color: #999; font-size: 16px; }
+            .container {
+              background: white;
+              padding: 3rem;
+              border-radius: 1rem;
+              box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+              text-align: center;
+              max-width: 400px;
+            }
+            .error-icon {
+              font-size: 4rem;
+              margin-bottom: 1rem;
+            }
+            h1 {
+              color: #e53e3e;
+              margin: 0 0 1rem 0;
+              font-size: 1.5rem;
+            }
+            p {
+              color: #4a5568;
+              margin: 0;
+              line-height: 1.5;
+            }
           </style>
         </head>
         <body>
-          <div class="error">✗</div>
-          <h1>Authorization Failed</h1>
-          <p>Error: ${error}</p>
-          <p>You can close this window and try again.</p>
+          <div class="container">
+            <div class="error-icon">✗</div>
+            <h1>Authorization Failed</h1>
+            <p>There was an error authorizing your account. Please try again.</p>
+          </div>
         </body>
       </html>
     `, {
-      headers: { 'Content-Type': 'text/html' }
+      headers: { 
+        'Content-Type': 'text/html',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      }
     })
   }
   
-  // Validate required parameters
+  // Validate parameters
   if (!code || !state) {
-    return new Response('Missing code or state parameter', { status: 400 })
+    return new Response('Missing code or state parameter', { 
+      status: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      }
+    })
   }
   
-  try {
-    // Store OAuth code in Redis with 5-minute expiry
-    await kv.set(`oauth:${state}`, code, { ex: 300 })
-    
-    console.log(`Stored OAuth code for state: ${state}`)
-    
-    // Return success page
-    return new Response(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Foundation - Authorization Complete</title>
-          <style>
-            body { 
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-              text-align: center; 
-              padding: 50px; 
-              background: #000; 
-              color: #fff; 
-              margin: 0;
+  // Store OAuth code in Redis with 5-minute expiry
+  await kv.set(`oauth:${state}`, code, { ex: 300 })
+  
+  // Return success page with auto-close script
+  return new Response(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <title>Authorization Complete</title>
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+          }
+          .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+          }
+          .checkmark {
+            font-size: 4rem;
+            color: #48bb78;
+            margin-bottom: 1rem;
+            animation: scaleIn 0.5s ease-out;
+          }
+          @keyframes scaleIn {
+            from {
+              transform: scale(0);
             }
-            .success { color: #4ade80; font-size: 64px; margin-bottom: 20px; }
-            h1 { font-size: 32px; margin: 20px 0; font-weight: 600; }
-            p { color: #999; font-size: 16px; line-height: 1.6; }
-            .close-note { margin-top: 40px; font-size: 14px; color: #666; }
-          </style>
-        </head>
-        <body>
-          <div class="success">✓</div>
+            to {
+              transform: scale(1);
+            }
+          }
+          h1 {
+            color: #2d3748;
+            margin: 0 0 1rem 0;
+            font-size: 1.5rem;
+          }
+          p {
+            color: #4a5568;
+            margin: 0;
+            line-height: 1.5;
+          }
+        </style>
+        <script>
+          setTimeout(() => {
+            window.close();
+          }, 2000);
+        </script>
+      </head>
+      <body>
+        <div class="container">
+          <div class="checkmark">✓</div>
           <h1>Authorization Complete</h1>
-          <p>Your Gmail account is being added to Foundation...</p>
-          <p class="close-note">This window will close automatically in 2 seconds</p>
-          <script>
-            setTimeout(() => {
-              window.close();
-              if (!window.closed) {
-                document.body.innerHTML = '<div style="text-align:center;padding:50px;"><h2>You can close this window now</h2></div>';
-              }
-            }, 2000);
-          </script>
-        </body>
-      </html>
-    `, {
-      headers: { 'Content-Type': 'text/html' }
-    })
-  } catch (err) {
-    console.error('Error storing OAuth code:', err)
-    return new Response('Internal server error', { status: 500 })
-  }
+          <p>This window will close automatically...</p>
+          <p style="margin-top: 1rem; font-size: 0.875rem; color: #718096;">
+            If it doesn't close, you can close it manually.
+          </p>
+        </div>
+      </body>
+    </html>
+  `, {
+    headers: { 
+      'Content-Type': 'text/html',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    }
+  })
+}
+
+// Handle OPTIONS for CORS preflight
+export async function OPTIONS(request) {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '86400',
+    }
+  })
 }
