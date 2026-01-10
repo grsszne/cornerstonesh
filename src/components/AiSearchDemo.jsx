@@ -305,7 +305,7 @@ export default function AiSearchDemo() {
       {/* Privacy Footer */}
       <div className="mt-6 pt-4 border-t border-foreground/5 flex items-center justify-center gap-2 text-[10px] text-foreground/40">
         <CloudSlash className="w-3 h-3" />
-        <span>All processing happens locally on your Foundation. Nothing leaves your device.</span>
+        <span>ll processing runs locally on your Foundation. Works with any email provider—Gmail, Outlook, Fastmail, IMAP, and more.</span>
       </div>
     </div>
   );

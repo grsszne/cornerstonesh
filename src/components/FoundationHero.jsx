@@ -42,7 +42,7 @@ export default function FoundationHero() {
                  transition={{ delay: 1 }}
                  className="font-sans text-lg text-foreground/60 max-w-md mb-8"
               >
-                  Premium personal server combined with a local software suite that evolves with you.
+              Premium personal server where email, files, calendar, and notes work together as one system.
               </motion.p>
               
               <motion.div

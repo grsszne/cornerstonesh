@@ -18,6 +18,8 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  if (pathname?.startsWith("/isp")) return null;
+
   const navLinks = [
     { name: "Foundation", href: "/foundation" },
     { name: "Modules", href: "/foundation/modules" },

@@ -44,7 +44,7 @@ export default function FoundationPage() {
               Foundation
             </h1>
             <p className="text-xl md:text-2xl font-sans text-foreground/70 max-w-2xl text-balance mb-12 leading-relaxed">
-              The sovereign home server and software suite. Designed for privacy, engineered for longevity, built for you.
+            Your unified productivity system. Email, files, calendar, and notes that actually work together. On hardware you own.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
               <Link
@@ -97,7 +97,7 @@ export default function FoundationPage() {
                 <motion.div variants={fadeUp} transition={{ duration: 1 }}>
                    <h3 className="font-serif text-2xl mb-4 text-foreground">Logic</h3>
                    <p className="font-sans text-foreground/70 leading-relaxed">
-                     Shipping with CornerstoneOS, a Matter-native environment for total home automation. Local execution ensures your data never leaves the device.
+                   Shipping with CornerstoneOS, an integrated environment where your email, files, calendar, and notes share context. Search once, find everything—all running locally on your hardware.
                    </p>
                 </motion.div>
               </motion.div>
@@ -274,7 +274,7 @@ export default function FoundationPage() {
                >
                    <h2 className="font-serif text-4xl mb-6">Cornerstone OS</h2>
                    <p className="font-sans text-foreground/70 max-w-xl mx-auto mb-6">
-                      A calm, dashboard-centric operating system. No terminals required.
+                   One interface for everything. Email, files, calendar, and notes in a single dashboard. No app switching, no terminals required.
                    </p>
                    <Link
                       href="/cornerstoneos"
@@ -306,7 +306,7 @@ export default function FoundationPage() {
                  >
                      <h2 className="font-serif text-4xl mb-4">Unified Intelligence</h2>
                      <p className="font-sans text-foreground/70 max-w-xl mx-auto">
-                        One search. Every file, email, photo, and password—indexed locally and never leaving your device. Powered by on-device AI that understands context, faces, and relationships.
+                     One search. Every file, email, photo, and password—connected by context, not just keywords. Powered by on-device models that understand relationships between your work, running locally on your hardware.
                      </p>
                  </motion.div>
                  <motion.div

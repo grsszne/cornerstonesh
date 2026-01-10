@@ -40,12 +40,13 @@ export default function CornerstoneOSHero() {
             <h2 className="font-serif text-5xl md:text-7xl leading-[0.95] tracking-tight mb-8">
               The heart of your<br/>
               <span className="text-foreground/40 font-serif italic">
-                <ScribbleUnderline delay={0.8} color="rgba(255,255,255,0.5)">sovereign home.</ScribbleUnderline>
+                <ScribbleUnderline delay={0.8} color="rgba(255,255,255,0.5)">digital</ScribbleUnderline>
+                <ScribbleUnderline delay={1.0} color="rgba(255,255,255,0.5)">workspace.</ScribbleUnderline>
               </span>
             </h2>
 
             <p className="font-sans text-lg text-foreground/60 max-w-md mb-12 leading-relaxed">
-              CornerstoneOS is a calm, dashboard-centric operating system. Built for privacy, optimized for local intelligence, and designed to bring order to your digital life. A software suite that runs locally on your Foundation.
+            CornerstoneOS is a calm, dashboard-centric interface. Optimized for cross-app intelligence, designed to connect your email, files, and calendar in ways traditional systems can't. A software suite that runs locally on your Foundation.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -62,8 +63,8 @@ export default function CornerstoneOSHero() {
           <div className="mt-16 grid grid-cols-2 gap-8">
             <FeatureSmall
               icon={LockKey}
-              title="Local Execution"
-              desc="Your data never leaves the chassis."
+              title="Local Intelligence"
+              desc="Cross-app intelligence runs locally on your Foundation."
             />
             <FeatureSmall
               icon={ShieldCheck}

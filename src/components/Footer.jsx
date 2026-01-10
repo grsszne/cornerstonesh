@@ -2,12 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import LogoIcon from "./LogoIcon";
 
 export default function Footer() {
+  const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
+
+  if (pathname?.startsWith("/isp")) return null;
 
   const subscribe = async (e) => {
     e.preventDefault();
