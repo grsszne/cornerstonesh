@@ -16,7 +16,8 @@ import {
   Brain, 
   MagicWand, 
   CirclesThreePlus,
-  ArrowRight
+  ArrowRight,
+  BookOpenText
 } from "@phosphor-icons/react";
 
 export default function CornerstoneOSPage() {
@@ -39,7 +40,7 @@ export default function CornerstoneOSPage() {
                 <span className="italic">Individual.</span>
               </h1>
               <p className="text-xl md:text-2xl font-sans text-foreground/70 max-w-2xl text-balance mb-12 leading-relaxed">
-                A calm, dashboard-centric operating system that prioritizes local intelligence over cloud convenience.
+              A calm, dashboard-centric operating system where your email, files, and calendar share context—not just storage space.
               </p>
             </motion.div>
         </section>
@@ -63,16 +64,16 @@ export default function CornerstoneOSPage() {
                         <Brain className="w-3 h-3 text-foreground/60" />
                         On-Device Intelligence
                      </div>
-                     <h2 className="font-serif text-4xl md:text-5xl mb-8">Unified Search.<br/>Local Brain.</h2>
+                     <h2 className="font-serif text-4xl md:text-5xl mb-8">Unified Search.<br/>Connected Intelligence.</h2>
                      <p className="font-sans text-lg text-foreground/70 mb-8 leading-relaxed">
-                        CornerstoneOS indexes every file, email, photo, and message locally on your Foundation chassis. Our on-device AI understands context, recognizes faces, and builds relationships between your data—without a single byte ever leaving your home.
+                     CornerstoneOS indexes every file, email, photo, and message on your Foundation locally. Our on-device AI understands relationships between your work—finding the email thread that relates to a document, the meeting that sparked a project, the photo from that client dinner—all connected by context.
                      </p>
                      
                      <div className="space-y-6">
                         <FeatureItem 
-                          icon={ShieldCheck} 
-                          title="Privacy First" 
-                          desc="No telemetry. No tracking. No cloud training. Your data is yours alone."
+                          icon={BookOpenText} 
+                          title="Cross-App Context" 
+                          desc="Search for a project name and find emails, files, calendar events, and notes—all connected intelligently."
                         />
                         <FeatureItem 
                           icon={MagicWand} 
@@ -91,15 +92,15 @@ export default function CornerstoneOSPage() {
 
         {/* Architecture Section */}
         <section className="container-swiss mb-48">
-            <h2 className="font-serif text-4xl text-center mb-24">Built on Sovereignty</h2>
+            <h2 className="font-serif text-4xl text-center mb-24">Built for Integration</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
                 <div className="space-y-6">
                     <div className="w-12 h-12 bg-foreground/5 rounded-2xl flex items-center justify-center">
                         <LockKey className="w-6 h-6 opacity-40" />
                     </div>
-                    <h3 className="font-serif text-2xl">Absolute Privacy</h3>
+                    <h3 className="font-serif text-2xl">Unified Context</h3>
                     <p className="font-sans text-foreground/60 leading-relaxed">
-                        By running applications locally, you eliminate the middleman. Your communications and documents stay where they belong: in your home.
+                    Running locally means your email, files, and calendar can share intelligence without API limits or cloud bottlenecks. Instant search, unlimited context, seamless connections.
                     </p>
                 </div>
                 <div className="space-y-6">

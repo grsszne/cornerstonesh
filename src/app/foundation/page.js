@@ -44,7 +44,7 @@ export default function FoundationPage() {
               Foundation
             </h1>
             <p className="text-xl md:text-2xl font-sans text-foreground/70 max-w-2xl text-balance mb-12 leading-relaxed">
-            Your unified productivity system. Email, files, calendar, and notes that actually work together. On hardware you own.
+            Your home server with integrated productivity software. Email, files, calendar, and notes that actually work together on hardware you own.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
               <Link
