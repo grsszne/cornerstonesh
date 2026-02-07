@@ -1,7 +1,13 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useInView,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 
 // ─── Shared Constants ────────────────────────────────────────────
 
@@ -9,6 +15,243 @@ const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
 };
+
+// ─── Feature 0: Smart Routing Demo ─────────────────────────────
+
+function SmartRoutingDemo() {
+  const [queries, setQueries] = useState([]);
+  const [currentQuery, setCurrentQuery] = useState(null);
+  const [phase, setPhase] = useState("idle");
+
+  const queryScenarios = [
+    {
+      text: "Hi",
+      complexity: "trivial",
+      tokens: 2,
+      route: "Llama 3.2 1B",
+      color: "low",
+      analysis: ["Token count: 2", "Sentiment: greeting", "→ Tier 1"],
+      time: "12ms",
+    },
+    {
+      text: "What's the capital of France?",
+      complexity: "simple",
+      tokens: 8,
+      route: "Mistral 7B",
+      color: "low",
+      analysis: ["Factual lookup", "No reasoning needed", "→ Tier 1"],
+      time: "34ms",
+    },
+    {
+      text: "Explain the Byzantine Generals Problem and its relevance to distributed consensus algorithms",
+      complexity: "complex",
+      tokens: 18,
+      route: "Llama 3.1 70B",
+      color: "high",
+      analysis: ["Multi-step reasoning", "Domain expertise", "→ Tier 3"],
+      time: "287ms",
+    },
+    {
+      text: "Write a Python function to find all prime numbers up to N using the Sieve of Eratosthenes",
+      complexity: "coding",
+      tokens: 21,
+      route: "CodeLlama 34B",
+      color: "medium",
+      analysis: ["Code generation", "Algorithm implementation", "→ Tier 2"],
+      time: "156ms",
+    },
+    {
+      text: "Compare Keynesian vs Austrian economics in context of 2008 crisis",
+      complexity: "analysis",
+      tokens: 16,
+      route: "Qwen 72B",
+      color: "high",
+      analysis: ["Deep analysis", "Multi-domain synthesis", "→ Tier 3"],
+      time: "312ms",
+    },
+    {
+      text: "Thanks!",
+      complexity: "trivial",
+      tokens: 3,
+      route: "Llama 3.2 1B",
+      color: "low",
+      analysis: ["Sentiment: positive", "No computation needed", "→ Tier 1"],
+      time: "9ms",
+    },
+  ];
+
+  useEffect(() => {
+    let cancelled = false;
+    let idx = 0;
+
+    const run = async () => {
+      while (!cancelled) {
+        const scenario = queryScenarios[idx % queryScenarios.length];
+
+        setPhase("analyzing");
+        setCurrentQuery(scenario);
+        await delay(800);
+        if (cancelled) return;
+
+        setPhase("routing");
+        await delay(1000);
+        if (cancelled) return;
+
+        setPhase("processing");
+        await delay(1200);
+        if (cancelled) return;
+
+        setQueries((prev) => [...prev.slice(-4), { ...scenario, id: idx }]);
+        await delay(1800);
+        if (cancelled) return;
+
+        setPhase("idle");
+        setCurrentQuery(null);
+        await delay(600);
+        if (cancelled) return;
+
+        idx++;
+      }
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const getTierColor = (color) => {
+    if (color === "low") return "text-foreground/40 border-foreground/15";
+    if (color === "medium") return "text-foreground/60 border-foreground/20";
+    return "text-foreground border-foreground/30";
+  };
+
+  return (
+    <div className="relative w-full h-full flex flex-col p-6 overflow-hidden select-none">
+      {currentQuery && (
+        <div className="mb-4 space-y-3">
+          <div className="border border-foreground/10 px-3 py-2">
+            <div className="text-[9px] font-sans text-foreground/30 uppercase tracking-wider mb-1">
+              Incoming Query
+            </div>
+            <div className="text-[11px] font-sans text-foreground/70">
+              &ldquo;{currentQuery.text}&rdquo;
+            </div>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {phase === "analyzing" && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="border border-foreground/15 px-3 py-2 bg-foreground/[0.02]"
+              >
+                <div className="text-[9px] font-sans text-foreground/40 uppercase tracking-wider mb-2">
+                  Analyzing...
+                </div>
+                <div className="space-y-1">
+                  {currentQuery.analysis.map((line, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -5 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.15 }}
+                      className="text-[10px] font-mono text-foreground/50"
+                    >
+                      {line}
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {(phase === "routing" || phase === "processing") && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className={`border px-3 py-2 ${getTierColor(currentQuery.color)}`}
+              >
+                <div className="text-[9px] font-sans uppercase tracking-wider mb-1 opacity-60">
+                  Routed To
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="text-[12px] font-sans font-medium">
+                    {currentQuery.route}
+                  </div>
+                  {phase === "processing" && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-[10px] font-sans opacity-60"
+                    >
+                      Processing...
+                    </motion.div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      )}
+
+      <div className="flex-1 flex flex-col justify-end">
+        <div className="text-[10px] font-sans text-foreground/30 uppercase tracking-wider mb-2">
+          Routing Log
+        </div>
+        <div className="space-y-1">
+          <AnimatePresence mode="popLayout">
+            {queries.map((q) => (
+              <motion.div
+                key={q.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="flex items-center gap-2 border border-foreground/10 px-3 py-1.5"
+              >
+                <div className="flex-1 truncate text-[10px] font-sans text-foreground/50">
+                  {q.text}
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <div
+                    className={`text-[9px] font-sans ${
+                      q.color === "low"
+                        ? "text-foreground/30"
+                        : q.color === "medium"
+                          ? "text-foreground/50"
+                          : "text-foreground/70"
+                    }`}
+                  >
+                    {q.route}
+                  </div>
+                  <div className="text-[10px] font-serif text-foreground/40 tabular-nums">
+                    {q.time}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      <div className="mt-4 pt-3 border-t border-foreground/10 flex justify-between">
+        <div>
+          <div className="text-[9px] font-sans text-foreground/30 uppercase tracking-wider">
+            Models Active
+          </div>
+          <div className="text-sm font-serif text-foreground">4 concurrent</div>
+        </div>
+        <div className="text-right">
+          <div className="text-[9px] font-sans text-foreground/30 uppercase tracking-wider">
+            Cost Saved
+          </div>
+          <div className="text-sm font-serif text-foreground">~73%</div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ─── Feature 1: RAG Pipeline Demo ───────────────────────────────
 // Shows B2B2C use case: SMB uploads domain-specific docs so their
@@ -1108,6 +1351,13 @@ function SwapDemo() {
 
 const features = [
   {
+    title: "Smart Routing",
+    subtitle: "Right model, right cost, every time.",
+    description:
+      "Vector analyzes each query in real-time — complexity, domain, and token count — then routes it to the optimal model. Simple questions hit fast 7B models. Complex reasoning goes to 70B+. Code generation uses specialized models. You get the best answer at the lowest cost, automatically.",
+    Demo: SmartRoutingDemo,
+  },
+  {
     title: "Built-In RAG Pipelines",
     subtitle: "Give your product domain expertise that base models don't have.",
     description:
@@ -1144,92 +1394,119 @@ const features = [
   },
 ];
 
-function FeatureCard({ feature, index }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const isEven = index % 2 === 0;
+export default function VectorStack() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const x = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0%", `-${(features.length - 1) * 100}%`],
+  );
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 1, ease: [0.25, 0.4, 0.25, 1] }}
-      className={`grid grid-cols-1 lg:grid-cols-2 gap-0 border border-foreground/10 ${
-        index > 0 ? "mt-16 lg:mt-24" : ""
-      }`}
+    <section
+      ref={containerRef}
+      className="relative bg-muted"
+      style={{ height: `${features.length * 100}vh` }}
     >
-      {/* Text side */}
-      <div
-        className={`p-8 md:p-12 lg:p-16 flex flex-col justify-center ${
-          isEven ? "" : "lg:order-2"
-        }`}
-      >
-        <span className="font-sans text-[10px] text-foreground/30 uppercase tracking-widest mb-4">
-          0{index + 1}
-        </span>
-        <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3 leading-tight">
-          {feature.title}
-        </h3>
-        <p className="font-sans text-sm text-foreground/60 mb-4 leading-relaxed">
-          {feature.subtitle}
-        </p>
-        <p className="font-sans text-sm text-foreground/40 leading-relaxed">
-          {feature.description}
-        </p>
-      </div>
+      {/* Sticky container */}
+      <div className="sticky top-0 h-screen overflow-hidden">
+        <div className="container-swiss h-full flex flex-col">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            className="text-center pt-32 pb-16"
+          >
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-6">
+              Intelligence, built in.
+            </h2>
+            <p className="font-sans text-lg text-foreground/50 max-w-2xl mx-auto leading-relaxed">
+              Vector isn&apos;t just hardware. It&apos;s a complete AI platform
+              — with features that cloud providers charge extra for, included
+              from day one.
+            </p>
+          </motion.div>
 
-      {/* Demo side */}
-      <div
-        className={`relative bg-foreground/[0.02] border-t lg:border-t-0 ${
-          isEven ? "lg:border-l" : "lg:border-r lg:order-1"
-        } border-foreground/10 min-h-[400px] md:min-h-[450px]`}
-      >
-        <feature.Demo />
+          {/* Horizontal scrolling cards */}
+          <div className="flex-1 relative overflow-hidden">
+            <motion.div style={{ x }} className="absolute inset-0 flex h-full">
+              {features.map((feature, i) => (
+                <HorizontalFeatureCard
+                  key={feature.title}
+                  feature={feature}
+                  index={i}
+                  scrollProgress={scrollYProgress}
+                />
+              ))}
+            </motion.div>
+          </div>
+        </div>
       </div>
-    </motion.div>
+    </section>
   );
 }
 
-export default function VectorStack() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+function HorizontalFeatureCard({ feature, index, scrollProgress }) {
+  const isEven = index % 2 === 0;
+
+  const cardStart = index / features.length;
+  const cardEnd = (index + 1) / features.length;
+
+  const opacity = useTransform(
+    scrollProgress,
+    [cardStart - 0.1, cardStart, cardEnd, cardEnd + 0.1],
+    [0.3, 1, 1, 0.3],
+  );
+
+  const scale = useTransform(
+    scrollProgress,
+    [cardStart - 0.1, cardStart, cardEnd, cardEnd + 0.1],
+    [0.9, 1, 1, 0.9],
+  );
 
   return (
-    <section className="py-32 md:py-40 bg-muted">
-      <div className="container-swiss">
-        {/* Header */}
-        <motion.div
-          ref={ref}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={{ visible: { transition: { staggerChildren: 0.3 } } }}
-          className="text-center mb-20 md:mb-28"
+    <motion.div
+      style={{ opacity, scale }}
+      className="min-w-full h-full flex items-center justify-center px-8"
+    >
+      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-0 border border-foreground/10 h-[500px]">
+        {/* Text side */}
+        <div
+          className={`p-8 md:p-12 lg:p-16 flex flex-col justify-center ${
+            isEven ? "" : "lg:order-2"
+          }`}
         >
-          <motion.h2
-            variants={fadeUp}
-            transition={{ duration: 1 }}
-            className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-6"
-          >
-            Intelligence, built in.
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 1 }}
-            className="font-sans text-lg text-foreground/50 max-w-2xl mx-auto leading-relaxed"
-          >
-            Vector isn&apos;t just hardware. It&apos;s a complete AI platform —
-            with features that cloud providers charge extra for, included from
-            day one.
-          </motion.p>
-        </motion.div>
+          <span className="font-sans text-[10px] text-foreground/30 uppercase tracking-widest mb-4">
+            0{index + 1}
+          </span>
+          <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3 leading-tight">
+            {feature.title}
+          </h3>
+          <p className="font-sans text-sm text-foreground/60 mb-4 leading-relaxed">
+            {feature.subtitle}
+          </p>
+          <p className="font-sans text-sm text-foreground/40 leading-relaxed">
+            {feature.description}
+          </p>
+        </div>
 
-        {/* Feature cards */}
-        {features.map((feature, i) => (
-          <FeatureCard key={feature.title} feature={feature} index={i} />
-        ))}
+        {/* Demo side */}
+        <div
+          className={`relative bg-foreground/[0.02] border-t lg:border-t-0 ${
+            isEven ? "lg:border-l" : "lg:border-r lg:order-1"
+          } border-foreground/10`}
+        >
+          <feature.Demo />
+        </div>
       </div>
-    </section>
+    </motion.div>
   );
 }
 
