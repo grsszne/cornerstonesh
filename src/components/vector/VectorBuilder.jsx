@@ -40,7 +40,7 @@ const HARDWARE = {
       vram: 96,
       tops: 4000,
       power: 600,
-      price: 8900,
+      price: 12500,
       cores: 24064,
     },
     {
@@ -49,7 +49,7 @@ const HARDWARE = {
       vram: 32,
       tops: 1800,
       power: 450,
-      price: 2299,
+      price: 2899,
       cores: 16384,
     },
     {
@@ -58,7 +58,7 @@ const HARDWARE = {
       vram: 48,
       tops: 2400,
       power: 300,
-      price: 7200,
+      price: 8900,
       cores: 18176,
     },
   ],
@@ -105,25 +105,25 @@ const HARDWARE = {
     },
   ],
   ram: [
-    { id: "64gb", capacity: 64, ecc: false, price: 480 },
-    { id: "128gb", capacity: 128, ecc: false, price: 980 },
-    { id: "128gb-ecc", capacity: 128, ecc: true, price: 1400 },
-    { id: "256gb-ecc", capacity: 256, ecc: true, price: 3200 },
-    { id: "512gb-ecc", capacity: 512, ecc: true, price: 9800 },
+    { id: "64gb", capacity: 64, ecc: false, price: 580 },
+    { id: "128gb", capacity: 128, ecc: false, price: 1180 },
+    { id: "128gb-ecc", capacity: 128, ecc: true, price: 1680 },
+    { id: "256gb-ecc", capacity: 256, ecc: true, price: 3800 },
+    { id: "512gb-ecc", capacity: 512, ecc: true, price: 11500 },
   ],
   storage: [
-    { id: "2tb", capacity: 2, gen: 4, price: 280 },
-    { id: "4tb", capacity: 4, gen: 4, price: 580 },
-    { id: "8tb", capacity: 8, gen: 4, price: 1200 },
-    { id: "4tb-gen5", capacity: 4, gen: 5, price: 720 },
-    { id: "8tb-gen5", capacity: 8, gen: 5, price: 1480 },
-    { id: "16tb-gen5", capacity: 16, gen: 5, price: 3200 },
+    { id: "2tb", capacity: 2, gen: 4, price: 380 },
+    { id: "4tb", capacity: 4, gen: 4, price: 780 },
+    { id: "8tb", capacity: 8, gen: 4, price: 1600 },
+    { id: "4tb-gen5", capacity: 4, gen: 5, price: 920 },
+    { id: "8tb-gen5", capacity: 8, gen: 5, price: 1880 },
+    { id: "16tb-gen5", capacity: 16, gen: 5, price: 4200 },
   ],
   networking: [
     { id: "1gbe", speed: 1, price: 0 },
-    { id: "10gbe", speed: 10, price: 380 },
-    { id: "25gbe", speed: 25, price: 880 },
-    { id: "100gbe", speed: 100, price: 2400 },
+    { id: "10gbe", speed: 10, price: 450 },
+    { id: "25gbe", speed: 25, price: 1100 },
+    { id: "100gbe", speed: 100, price: 3200 },
   ],
 };
 
@@ -180,13 +180,13 @@ export default function VectorBuilder() {
       ram.price +
       storage.price +
       network.price +
-      2800; // Base system cost (case, PSU, mobo, cooling, assembly)
+      4800; // Base system cost (enterprise case, redundant PSU, server mobo, liquid cooling, assembly, testing)
 
     const totalPrice = nodePrice * config.nodeCount;
 
-    // Clustering costs (switch + cabling for multi-node)
+    // Clustering costs (enterprise switch + fiber cabling + rack infrastructure for multi-node)
     const clusteringCost =
-      config.nodeCount > 1 ? 2500 + (config.nodeCount - 1) * 400 : 0;
+      config.nodeCount > 1 ? 8500 + (config.nodeCount - 1) * 1200 : 0;
     const totalPriceWithClustering = totalPrice + clusteringCost;
 
     const modelCapacity = estimateModelCapacity(totalVRAM);
@@ -664,11 +664,12 @@ export default function VectorBuilder() {
                       Base System
                     </span>
                     <span className="font-sans text-sm text-foreground tabular-nums">
-                      $2,800
+                      $4,800
                     </span>
                   </div>
                   <div className="font-sans text-xs text-foreground/30 mt-1">
-                    Case, PSU, mobo, cooling, assembly
+                    Enterprise chassis, redundant PSU, server mobo, liquid
+                    cooling
                   </div>
                 </div>
                 {config.nodeCount > 1 && (

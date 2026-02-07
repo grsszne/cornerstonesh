@@ -1413,8 +1413,21 @@ export default function VectorStack() {
       className="relative bg-muted"
       style={{ height: `${features.length * 100}vh` }}
     >
+      {/* Snap points */}
+      {features.map((_, i) => (
+        <div
+          key={`snap-${i}`}
+          className="absolute w-full snap-start snap-always"
+          style={{
+            height: "100vh",
+            top: `${i * 100}vh`,
+            pointerEvents: "none",
+          }}
+        />
+      ))}
+
       {/* Sticky container */}
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="sticky top-0 h-screen overflow-hidden snap-y snap-mandatory">
         <div className="container-swiss h-full flex flex-col">
           {/* Header */}
           <motion.div
@@ -1446,6 +1459,34 @@ export default function VectorStack() {
                 />
               ))}
             </motion.div>
+
+            {/* Progress Dots */}
+            <div className="absolute top-4 left-8 flex gap-2 z-10">
+              {features.map((_, i) => {
+                const dotStart = i / features.length;
+                const dotEnd = (i + 1) / features.length;
+
+                const dotOpacity = useTransform(
+                  scrollYProgress,
+                  [dotStart - 0.05, dotStart, dotEnd, dotEnd + 0.05],
+                  [0.2, 1, 1, 0.2],
+                );
+
+                const dotScale = useTransform(
+                  scrollYProgress,
+                  [dotStart - 0.05, dotStart, dotEnd, dotEnd + 0.05],
+                  [0.8, 1, 1, 0.8],
+                );
+
+                return (
+                  <motion.div
+                    key={i}
+                    style={{ opacity: dotOpacity, scale: dotScale }}
+                    className="w-2 h-2 rounded-full bg-foreground/30"
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
