@@ -105,6 +105,7 @@ const HARDWARE = {
     },
   ],
   ram: [
+    { id: "byo", capacity: 0, ecc: false, price: 0, byo: true },
     { id: "64gb", capacity: 64, ecc: false, price: 580 },
     { id: "128gb", capacity: 128, ecc: false, price: 1180 },
     { id: "128gb-ecc", capacity: 128, ecc: true, price: 1680 },
@@ -184,18 +185,12 @@ export default function VectorBuilder() {
 
     const totalPrice = nodePrice * config.nodeCount;
 
-    // Clustering costs (enterprise switch + fiber cabling + rack infrastructure for multi-node)
-    const clusteringCost =
+    // Infrastructure costs (load balancer, switch, cabling, rack for multi-node)
+    const infrastructureCost =
       config.nodeCount > 1 ? 8500 + (config.nodeCount - 1) * 1200 : 0;
-    const totalPriceWithClustering = totalPrice + clusteringCost;
+    const totalPriceWithInfrastructure = totalPrice + infrastructureCost;
 
     const modelCapacity = estimateModelCapacity(totalVRAM);
-
-    // Determine clustering software based on configuration
-    const clusteringSoftware =
-      config.nodeCount > 1
-        ? "vLLM + Ray (tensor + pipeline parallelism)"
-        : "vLLM (tensor parallelism)";
 
     return {
       gpu,
@@ -211,10 +206,9 @@ export default function VectorBuilder() {
       totalPower,
       nodePrice,
       totalPrice,
-      clusteringCost,
-      totalPriceWithClustering,
+      infrastructureCost,
+      totalPriceWithInfrastructure,
       modelCapacity,
-      clusteringSoftware,
     };
   }, [config]);
 
@@ -364,11 +358,25 @@ export default function VectorBuilder() {
               >
                 {HARDWARE.ram.map((ram) => (
                   <option key={ram.id} value={ram.id}>
-                    {ram.capacity}GB DDR5 {ram.ecc ? "ECC" : ""} — $
-                    {ram.price.toLocaleString()}
+                    {ram.byo
+                      ? "Bring Your Own RAM — $0"
+                      : `${ram.capacity}GB DDR5 ${ram.ecc ? "ECC" : ""} — $${ram.price.toLocaleString()}`}
                   </option>
                 ))}
               </select>
+              {config.ramId === "byo" && (
+                <div className="mt-3 p-3 border border-foreground/20 bg-foreground/5">
+                  <p className="font-sans text-xs text-foreground/60 leading-relaxed">
+                    <strong className="text-foreground">
+                      Using your own RAM?
+                    </strong>{" "}
+                    We recommend DDR5 ECC for production deployments. Ensure
+                    compatibility with your selected CPU and motherboard.
+                    Minimum 128GB recommended for 70B+ models. Consider
+                    potential KV cache overflow. DDR5 required.
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Storage Selection */}
@@ -441,22 +449,22 @@ export default function VectorBuilder() {
               </select>
             </div>
 
-            {/* Node Clustering */}
+            {/* Node Count */}
             <div className="border border-foreground/10 p-6 bg-muted">
               <div className="flex items-center mb-4">
                 <label className="font-sans text-sm text-foreground/40 uppercase tracking-wider">
-                  Cluster Nodes
+                  Parallel Nodes
                 </label>
                 <Tooltip
                   content={
                     <>
                       <strong className="text-foreground">
-                        Enables massive models.
+                        Scale throughput.
                       </strong>{" "}
-                      Multi-node clusters use pipeline parallelism to split
-                      model layers across machines. Essential for 100B+ models.
-                      Adds complexity but enables horizontal scaling. Single
-                      node simpler for most workloads.
+                      Multiple independent nodes process separate inference
+                      requests in parallel. 2 nodes = 2× throughput, 3 nodes =
+                      3× throughput. Perfect for high-concurrency workloads.
+                      Each node runs its own models independently.
                     </>
                   }
                 />
@@ -478,14 +486,13 @@ export default function VectorBuilder() {
               </div>
               <div className="font-sans text-xs text-foreground/40 leading-relaxed">
                 {config.nodeCount === 1 ? (
-                  <>
-                    Single node with tensor parallelism across GPUs using vLLM
-                  </>
+                  <>Single node handles all inference requests</>
                 ) : (
                   <>
-                    Multi-node cluster with {specs.totalGPUs} total GPUs using
-                    Ray + vLLM for tensor and pipeline parallelism. Includes
-                    network switch and cabling.
+                    {config.nodeCount} independent nodes with {specs.totalGPUs}{" "}
+                    total GPUs. Load balancer distributes requests for{" "}
+                    {config.nodeCount}× parallel throughput. Includes network
+                    switch and cabling.
                   </>
                 )}
               </div>
@@ -505,7 +512,7 @@ export default function VectorBuilder() {
                 Total System Cost
               </div>
               <div className="font-serif text-5xl text-foreground mb-1 tabular-nums">
-                ${specs.totalPriceWithClustering.toLocaleString()}
+                ${specs.totalPriceWithInfrastructure.toLocaleString()}
               </div>
               <div className="font-sans text-sm text-foreground/30">
                 {config.nodeCount > 1
@@ -515,8 +522,8 @@ export default function VectorBuilder() {
               {config.nodeCount > 1 && (
                 <div className="mt-3 pt-3 border-t border-foreground/10 text-xs text-foreground/40">
                   ${specs.nodePrice.toLocaleString()} per node ×{" "}
-                  {config.nodeCount} + ${specs.clusteringCost.toLocaleString()}{" "}
-                  infrastructure
+                  {config.nodeCount} + $
+                  {specs.infrastructureCost.toLocaleString()} infrastructure
                 </div>
               )}
             </div>
@@ -592,19 +599,19 @@ export default function VectorBuilder() {
                 </div>
               </div>
 
-              {/* Clustering Software */}
+              {/* Load Balancing */}
               {config.nodeCount > 1 && (
                 <div className="border-t border-foreground/10 p-6">
                   <div className="font-sans text-xs text-foreground/30 uppercase tracking-wider mb-3">
-                    Clustering Software
+                    Load Balancing
                   </div>
                   <div className="font-serif text-lg text-foreground mb-2">
-                    {specs.clusteringSoftware}
+                    HAProxy + Health Checks
                   </div>
                   <div className="font-sans text-xs text-foreground/30 leading-relaxed">
-                    Ray orchestrates multi-node communication while vLLM handles
-                    efficient model serving with automatic tensor and pipeline
-                    parallelism across {specs.totalGPUs} GPUs.
+                    Intelligent load balancer distributes incoming requests
+                    across {config.nodeCount} nodes. Automatic failover, health
+                    monitoring, and request queuing for optimal throughput.
                   </div>
                 </div>
               )}
@@ -634,10 +641,14 @@ export default function VectorBuilder() {
                 </div>
                 <div className="flex justify-between items-start">
                   <span className="font-sans text-sm text-foreground/50">
-                    {specs.ram.capacity}GB DDR5 {specs.ram.ecc ? "ECC" : ""}
+                    {specs.ram.byo
+                      ? "RAM (Bring Your Own)"
+                      : `${specs.ram.capacity}GB DDR5 ${specs.ram.ecc ? "ECC" : ""}`}
                   </span>
                   <span className="font-sans text-sm text-foreground tabular-nums">
-                    ${specs.ram.price.toLocaleString()}
+                    {specs.ram.price > 0
+                      ? `$${specs.ram.price.toLocaleString()}`
+                      : "—"}
                   </span>
                 </div>
                 <div className="flex justify-between items-start">
@@ -697,7 +708,7 @@ export default function VectorBuilder() {
                         Cluster Infrastructure
                       </span>
                       <span className="font-sans text-sm text-foreground tabular-nums">
-                        ${specs.clusteringCost.toLocaleString()}
+                        ${specs.infrastructureCost.toLocaleString()}
                       </span>
                     </div>
                     <div className="font-sans text-xs text-foreground/30 mt-1">
@@ -751,23 +762,21 @@ export default function VectorBuilder() {
               switches for maximum inter-GPU bandwidth.
             </p>
             <p>
-              <strong className="text-foreground/70">
-                Clustering Software:
-              </strong>{" "}
-              Multi-node systems include pre-configured Ray + vLLM stack for
-              distributed inference. Ray provides orchestration and fault
-              tolerance while vLLM automatically handles tensor parallelism
-              (within nodes) and pipeline parallelism (across nodes). Supports
-              dynamic batching and continuous batching for optimal throughput.
+              <strong className="text-foreground/70">Load Balancing:</strong>{" "}
+              Multi-node systems include HAProxy load balancer with health
+              checks, automatic failover, and intelligent request distribution.
+              Each node runs independently, processing separate inference
+              requests in parallel for linear throughput scaling (2 nodes = 2×
+              capacity, 3 nodes = 3× capacity).
             </p>
             <p>
               <strong className="text-foreground/70">
                 Network Infrastructure:
               </strong>{" "}
-              Clustered configurations include enterprise switches with full
+              Multi-node configurations include enterprise switches with full
               non-blocking bandwidth, CAT8 or fiber cabling (depending on
-              speed), and rack mounting hardware. 100GbE recommended for
-              clusters with 4+ GPUs per node.
+              speed), and rack mounting hardware. 10GbE sufficient for most
+              deployments; 25GbE or 100GbE for ultra-high concurrency workloads.
             </p>
             <p>
               <strong className="text-foreground/70">Warranty:</strong> 3-year

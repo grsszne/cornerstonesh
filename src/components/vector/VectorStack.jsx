@@ -16,7 +16,213 @@ const fadeUp = {
   visible: { opacity: 1, y: 0 },
 };
 
-// ─── Feature 0: Smart Routing Demo ─────────────────────────────
+// ─── Feature 0: Smart Delegation Demo ──────────────────────────
+
+function SmartDelegationDemo() {
+  const [queue, setQueue] = useState([]);
+  const [nodes, setNodes] = useState([
+    { id: 1, status: "idle", request: null },
+    { id: 2, status: "idle", request: null },
+    { id: 3, status: "idle", request: null },
+  ]);
+  const requestId = useRef(0);
+
+  const requests = [
+    { text: "Translate document to Spanish", time: 2800 },
+    { text: "Summarize Q4 earnings", time: 1200 },
+    { text: "Generate product description", time: 1800 },
+    { text: "Code review for PR #142", time: 3200 },
+    { text: "Draft customer email", time: 1400 },
+    { text: "Analyze sentiment of reviews", time: 2100 },
+  ];
+
+  useEffect(() => {
+    let cancelled = false;
+    let reqIdx = 0;
+
+    const run = async () => {
+      while (!cancelled) {
+        // Add new request to queue and delegate in one update
+        setQueue((currentQueue) => {
+          let updatedQueue = [...currentQueue];
+
+          // Add new request
+          if (Math.random() > 0.3) {
+            const req = requests[reqIdx % requests.length];
+            requestId.current++;
+            const newReq = {
+              id: requestId.current,
+              text: req.text,
+              time: req.time,
+              status: "queued",
+            };
+            updatedQueue.push(newReq);
+            reqIdx++;
+          }
+
+          // Delegate queued requests to idle nodes
+          if (updatedQueue.length > 0) {
+            setNodes((currentNodes) => {
+              const updatedNodes = [...currentNodes];
+              let modified = false;
+
+              currentNodes.forEach((node, idx) => {
+                if (node.status === "idle" && updatedQueue.length > 0) {
+                  const request = updatedQueue.shift();
+                  modified = true;
+                  updatedNodes[idx] = {
+                    ...node,
+                    status: "processing",
+                    request,
+                  };
+
+                  // Complete after request time
+                  setTimeout(() => {
+                    setNodes((n) =>
+                      n.map((nd) =>
+                        nd.id === node.id
+                          ? { ...nd, status: "idle", request: null }
+                          : nd,
+                      ),
+                    );
+                  }, request.time);
+                }
+              });
+
+              return modified ? updatedNodes : currentNodes;
+            });
+          }
+
+          return updatedQueue;
+        });
+
+        await delay(800);
+        if (cancelled) return;
+      }
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return (
+    <div className="relative w-full h-full flex flex-col p-6 overflow-hidden select-none">
+      {/* Queue */}
+      <div className="mb-3">
+        <div className="font-sans text-[10px] text-foreground/30 uppercase tracking-wider mb-2">
+          Request Queue
+        </div>
+        <div className="border border-foreground/10 p-2 h-[70px] overflow-hidden">
+          {queue.length === 0 ? (
+            <div className="text-[10px] font-sans text-foreground/20 italic">
+              Queue empty
+            </div>
+          ) : (
+            <div className="space-y-1">
+              <AnimatePresence mode="popLayout">
+                {queue.slice(0, 2).map((req) => (
+                  <motion.div
+                    key={req.id}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    className="text-[10px] font-sans text-foreground/50 flex items-center gap-2 truncate"
+                  >
+                    <div className="w-1 h-1 rounded-full bg-foreground/30 shrink-0" />
+                    <span className="truncate">{req.text}</span>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+              {queue.length > 2 && (
+                <div className="text-[9px] font-sans text-foreground/20">
+                  +{queue.length - 2} more in queue
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Nodes */}
+      <div className="flex-1 overflow-hidden">
+        <div className="font-sans text-[10px] text-foreground/30 uppercase tracking-wider mb-2">
+          Processing Nodes
+        </div>
+        <div className="space-y-2">
+          {nodes.map((node) => (
+            <div
+              key={node.id}
+              className={`border p-2 transition-colors h-[68px] flex flex-col ${
+                node.status === "processing"
+                  ? "border-foreground/20 bg-foreground/5"
+                  : "border-foreground/10"
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="font-sans text-[10px] text-foreground/40">
+                  Node {node.id}
+                </span>
+                <span
+                  className={`font-sans text-[9px] uppercase tracking-wider ${
+                    node.status === "processing"
+                      ? "text-foreground/70"
+                      : "text-foreground/20"
+                  }`}
+                >
+                  {node.status}
+                </span>
+              </div>
+              <div className="flex-1 flex flex-col justify-center">
+                {node.request ? (
+                  <div>
+                    <div className="text-[10px] font-sans text-foreground/70 truncate mb-1">
+                      {node.request.text}
+                    </div>
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{
+                        duration: node.request.time / 1000,
+                        ease: "linear",
+                      }}
+                      className="h-[2px] bg-foreground/20"
+                    />
+                  </div>
+                ) : (
+                  <div className="text-[10px] font-sans text-foreground/20 italic">
+                    Waiting for requests...
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="mt-4 pt-3 border-t border-foreground/10 flex justify-between">
+        <div>
+          <div className="text-[9px] font-sans text-foreground/30 uppercase tracking-wider">
+            Active Nodes
+          </div>
+          <div className="text-sm font-serif text-foreground">
+            {nodes.filter((n) => n.status === "processing").length}/3
+          </div>
+        </div>
+        <div className="text-right">
+          <div className="text-[9px] font-sans text-foreground/30 uppercase tracking-wider">
+            Throughput
+          </div>
+          <div className="text-sm font-serif text-foreground">3× parallel</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Feature 1: Smart Routing Demo ─────────────────────────────
 
 function SmartRoutingDemo() {
   const [queries, setQueries] = useState([]);
@@ -1179,7 +1385,7 @@ function SwapDemo() {
   const [phase, setPhase] = useState("before"); // before, highlight, typing, after, done
   const [typedUrl, setTypedUrl] = useState("");
 
-  const targetUrl = "http://vector.local/v1";
+  const targetUrl = "api.yourcompany.com/v1/";
   const lines = {
     before: [
       { text: "from openai import OpenAI", dim: true },
@@ -1359,7 +1565,8 @@ const features = [
   },
   {
     title: "Built-In RAG Pipelines",
-    subtitle: "Give your product domain expertise that base models don't have.",
+    subtitle:
+      "Give your software domain expertise that base models can't match.",
     description:
       "You know your niche — California tenant law, pediatric dosing tables, municipal zoning codes. Upload your domain documents to Vector and every API call your app makes automatically retrieves the most relevant context before generating a response. No vector database to manage, no pipeline to build. Your users get expert-level answers instead of generic ones.",
     Demo: RAGDemo,
@@ -1386,6 +1593,13 @@ const features = [
     Demo: ArenaDemo,
   },
   {
+    title: "Smart Delegation",
+    subtitle: "Scale throughput. Process in parallel.",
+    description:
+      "Add nodes to scale horizontally — each node processes different requests simultaneously. Your queue gets distributed automatically across available nodes. 3 nodes = 3× throughput. Perfect for high-concurrency workloads where requests pile up faster than a single node can handle.",
+    Demo: SmartDelegationDemo,
+  },
+  {
     title: "One-Line Integration",
     subtitle: "Change your base_url. Keep everything else.",
     description:
@@ -1409,6 +1623,7 @@ export default function VectorStack() {
 
   return (
     <section
+      id="stack"
       ref={containerRef}
       className="relative bg-muted"
       style={{ height: `${features.length * 100}vh` }}
