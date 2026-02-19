@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server';
 import { kv } from '@vercel/kv';
 
-const SUBDOMAIN_RE = /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/;
+const SUBDOMAIN_RE = /^[a-z0-9][a-z0-9-]{2,61}[a-z0-9]$/; // min 4 chars
 const RESERVED = new Set(['www', 'api', 'mail', 'admin', 'foundation', 'app', 'static', 'assets']);
+const BLOCKED = new Set([
+  'fuck', 'shit', 'cunt', 'cock', 'dick', 'pussy', 'ass', 'asshole',
+  'bitch', 'bastard', 'whore', 'slut', 'nigger', 'nigga', 'faggot',
+  'fag', 'retard', 'tranny', 'kike', 'spic', 'chink', 'wetback',
+  'porn', 'sex', 'nude', 'naked', 'xxx', 'anal', 'cum', 'dildo',
+  'rape', 'kill', 'murder', 'hitler', 'nazi',
+]);
 
 function validateApiKey(request) {
   const key = request.headers.get('x-api-key') || request.headers.get('authorization')?.replace('Bearer ', '');
@@ -23,13 +30,17 @@ export async function POST(request) {
 
     if (!subdomain || !SUBDOMAIN_RE.test(subdomain)) {
       return NextResponse.json(
-        { error: 'Invalid subdomain. Use lowercase letters, numbers, and hyphens only (max 63 chars).' },
+        { error: 'Invalid subdomain. Use lowercase letters, numbers, and hyphens only (4–63 chars).' },
         { status: 400 }
       );
     }
 
     if (RESERVED.has(subdomain)) {
       return NextResponse.json({ error: `"${subdomain}" is a reserved subdomain.` }, { status: 400 });
+    }
+
+    if (BLOCKED.has(subdomain) || [...BLOCKED].some(w => subdomain.includes(w))) {
+      return NextResponse.json({ error: `"${subdomain}" is not allowed.` }, { status: 400 });
     }
 
     if (!tunnel_url || !tunnel_url.startsWith('https://')) {
@@ -72,8 +83,9 @@ export async function GET(request) {
     return NextResponse.json({ error: 'Provide ?subdomain= to check availability' }, { status: 400 });
   }
 
-  if (!SUBDOMAIN_RE.test(subdomain) || RESERVED.has(subdomain)) {
-    return NextResponse.json({ available: false, reason: 'invalid or reserved' });
+  const isBlocked = BLOCKED.has(subdomain) || [...BLOCKED].some(w => subdomain.includes(w));
+  if (!SUBDOMAIN_RE.test(subdomain) || RESERVED.has(subdomain) || isBlocked) {
+    return NextResponse.json({ available: false, reason: 'invalid, reserved, or not allowed' });
   }
 
   const existing = await kv.get(`tunnel:${subdomain}`);
