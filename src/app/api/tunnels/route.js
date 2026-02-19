@@ -36,7 +36,7 @@ async function createCloudflareDNS(subdomain, tunnelUuid) {
     },
     body: JSON.stringify({
       type: 'CNAME',
-      name: `${subdomain}.foundation`,
+      name: `${subdomain}-foundation`,
       content: `${tunnelUuid}.cfargotunnel.com`,
       proxied: true,
       ttl: 1,
@@ -101,7 +101,7 @@ export async function POST(request) {
     return NextResponse.json({
       success: true,
       subdomain,
-      public_url: `https://${subdomain}.foundation.cornerstone.sh`,
+      public_url: `https://${subdomain}-foundation.cornerstone.sh`,
       registered_at: entry.registered_at,
     });
   } catch (err) {
