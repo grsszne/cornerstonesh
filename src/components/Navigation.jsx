@@ -22,6 +22,7 @@ export default function Navigation() {
 
   const navLinks = [
     { name: "Foundation", href: "/foundation" },
+    { name: "Arc", href: "/arc" },
     { name: "Modules", href: "/foundation/modules" },
     { name: "Devlog", href: "/devlog" },
     { name: "About", href: "/about" },
