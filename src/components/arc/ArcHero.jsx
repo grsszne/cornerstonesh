@@ -5,68 +5,73 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 /* ═══════════════════════════════════════════════════════════════════
+   ARC DARK-MODE DESIGN TOKENS (hardcoded — this is a marketing site)
+   ═══════════════════════════════════════════════════════════════════ */
+
+const T = {
+  surfacePage: "#0A0A0A",
+  surfaceCard: "#141414",
+  surfaceRaised: "#1A1A1A",
+  textPrimary: "#EBEBEB",
+  textSecondary: "#5A5A5A",
+  textTertiary: "#333333",
+  borderSubtle: "#1E1E1E",
+  borderDefault: "#2C2C2C",
+  statusHealthy: "#5BBF80",
+  statusWarning: "#E5A84D",
+  statusError: "#E74C3C",
+  providerOpenai: "#D0D0D0",
+  providerAnthropic: "#C0392B",
+  providerGoogle: "#70AAA8",
+};
+
+/* Earthy palette — dark mode values from Arc */
+const SWATCH = {
+  clay:  { bg: "rgba(139, 94, 60, 0.18)",  fg: "#C08860" },
+  moss:  { bg: "rgba(74, 103, 65, 0.18)",  fg: "#7AAA6A" },
+  ochre: { bg: "rgba(122, 98, 48, 0.18)",  fg: "#BCA060" },
+  dusk:  { bg: "rgba(107, 79, 79, 0.18)",  fg: "#B08080" },
+  slate: { bg: "rgba(77, 98, 96, 0.18)",   fg: "#70AAA8" },
+  mauve: { bg: "rgba(107, 85, 112, 0.18)", fg: "#B090B8" },
+  pine:  { bg: "rgba(74, 103, 65, 0.18)",  fg: "#80B890" },
+  stone: { bg: "rgba(100, 100, 95, 0.15)", fg: "#909088" },
+  sand:  { bg: "rgba(122, 110, 90, 0.18)", fg: "#B0A080" },
+};
+
+/* ═══════════════════════════════════════════════════════════════════
    DATA
    ═══════════════════════════════════════════════════════════════════ */
 
-const MODELS = [
-  { name: "gpt-4o", provider: "OpenAI" },
-  { name: "gpt-4o-mini", provider: "OpenAI" },
-  { name: "claude-sonnet-4", provider: "Anthropic" },
-  { name: "claude-3-haiku", provider: "Anthropic" },
-  { name: "gpt-4-turbo", provider: "OpenAI" },
-  { name: "claude-opus-4", provider: "Anthropic" },
-  { name: "gemini-2.0-flash", provider: "Google" },
-  { name: "gemini-1.5-pro", provider: "Google" },
+const ROUTE_DEFS = [
+  { name: "classify", color: "clay" },
+  { name: "chat", color: "moss" },
+  { name: "summarize", color: "ochre" },
+  { name: "extract", color: "dusk" },
+  { name: "embed", color: "slate" },
+  { name: "search", color: "mauve" },
+  { name: "generate", color: "pine" },
+  { name: "analyze", color: "sand" },
+  { name: "Direct", color: "stone" },
 ];
 
-const ROUTES = ["/chat", "/classify", "/summarize", "/extract", "/embed", "/search", "/generate", "/analyze"];
-
-const STATUS_TYPES = [
-  { label: "200", color: "#5BBF80", weight: 55 },
-  { label: "CACHED", color: "#70AAA8", weight: 18 },
-  { label: "REROUTED", color: "#E5A84D", weight: 10 },
-  { label: "SHADOW", color: "#B090B8", weight: 8 },
-  { label: "FAILOVER", color: "#E5A84D", weight: 5 },
-  { label: "200", color: "#5BBF80", weight: 4 },
+const MODELS = [
+  { name: "gpt-4o", provider: "openai" },
+  { name: "gpt-4o-mini", provider: "openai" },
+  { name: "claude-sonnet-4", provider: "anthropic" },
+  { name: "claude-3-haiku", provider: "anthropic" },
+  { name: "gpt-4-turbo", provider: "openai" },
+  { name: "claude-opus-4", provider: "anthropic" },
+  { name: "gemini-2.0-flash", provider: "google" },
+  { name: "gemini-1.5-pro", provider: "google" },
 ];
 
 const INSIGHTS = [
-  {
-    type: "reroute",
-    icon: "↻",
-    color: "#E5A84D",
-    text: "Rerouted /classify — OpenAI latency spike detected → Anthropic (0 downtime)",
-  },
-  {
-    type: "cache",
-    icon: "◆",
-    color: "#70AAA8",
-    text: "Semantic cache hit on /embed — identical query detected, saved 340ms",
-  },
-  {
-    type: "shadow",
-    icon: "◉",
-    color: "#B090B8",
-    text: "Shadow test: Claude Haiku scored 98.7% vs GPT-4o on /classify — recommend switch",
-  },
-  {
-    type: "optimize",
-    icon: "▲",
-    color: "#5BBF80",
-    text: "Recommendation: /summarize → GPT-4o-mini ($310/mo savings, 98.4% quality match)",
-  },
-  {
-    type: "failover",
-    icon: "⚡",
-    color: "#E5A84D",
-    text: "Provider failover: OpenAI 503 → Anthropic Claude Sonnet (automatic, 0 dropped)",
-  },
-  {
-    type: "rate-limit",
-    icon: "◈",
-    color: "#C08860",
-    text: "Rate limit approaching on /chat (87/100 RPM) — adaptive throttling engaged",
-  },
+  { icon: "↻", color: T.statusWarning, text: "Rerouted /classify — OpenAI latency spike detected → Anthropic (0 downtime)" },
+  { icon: "◆", color: SWATCH.slate.fg, text: "Semantic cache hit on /embed — identical query detected, saved 340ms" },
+  { icon: "◉", color: SWATCH.mauve.fg, text: "Shadow test: Claude Haiku scored 98.7% vs GPT-4o on /classify — recommend switch" },
+  { icon: "▲", color: T.statusHealthy, text: "Recommendation: /summarize → GPT-4o-mini ($310/mo savings, 98.4% quality match)" },
+  { icon: "⚡", color: T.statusWarning, text: "Provider failover: OpenAI 503 → Anthropic Claude Sonnet (automatic, 0 dropped)" },
+  { icon: "◈", color: SWATCH.clay.fg, text: "Rate limit approaching on /chat (87/100 RPM) — adaptive throttling engaged" },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -74,41 +79,59 @@ const INSIGHTS = [
    ═══════════════════════════════════════════════════════════════════ */
 
 let _id = 0;
+const hex = () => Math.floor(Math.random() * 16).toString(16);
+const fakeUuid = () => Array.from({ length: 8 }, hex).join("");
 
-function pickWeighted(items) {
-  const total = items.reduce((s, i) => s + i.weight, 0);
-  let r = Math.random() * total;
-  for (const item of items) {
-    r -= item.weight;
-    if (r <= 0) return item;
-  }
-  return items[0];
-}
-
-function generateRequest() {
+function generateRequest(ageMs = 0) {
   const model = MODELS[Math.floor(Math.random() * MODELS.length)];
-  const route = ROUTES[Math.floor(Math.random() * ROUTES.length)];
-  const status = pickWeighted(STATUS_TYPES);
+  const route = ROUTE_DEFS[Math.floor(Math.random() * ROUTE_DEFS.length)];
   const tokens = Math.floor(Math.random() * 3800) + 120;
   const cost = tokens * (Math.random() * 0.004 + 0.0005);
-  const latency = Math.floor(Math.random() * 450) + 60;
-  const now = new Date();
-  const time = [now.getHours(), now.getMinutes(), now.getSeconds()]
-    .map((n) => String(n).padStart(2, "0"))
-    .join(":");
+  const latency = Math.floor(Math.random() * 480) + 60;
+  const cacheHit = Math.random() < 0.22;
+  const isShadow = Math.random() < 0.12;
+
+  // status
+  let statusCode = 200;
+  const r = Math.random();
+  if (r > 0.94) statusCode = 429;
+  else if (r > 0.92) statusCode = 500;
 
   return {
     id: ++_id,
-    time,
+    reqId: fakeUuid(),
+    ageMs,
     route,
     model: model.name,
     provider: model.provider,
     tokens,
-    cost: cost.toFixed(4),
+    cost,
     latency,
-    statusLabel: status.label,
-    statusColor: status.color,
+    cacheHit,
+    statusCode,
+    isShadow,
   };
+}
+
+function formatAge(ms) {
+  if (ms < 5000) return "just now";
+  const s = Math.floor(ms / 1000);
+  if (s < 60) return `${s}s ago`;
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}m ago`;
+  return `${Math.floor(m / 60)}h ago`;
+}
+
+function providerDotColor(provider) {
+  if (provider === "anthropic") return T.providerAnthropic;
+  if (provider === "google") return T.providerGoogle;
+  return T.providerOpenai;
+}
+
+function statusColor(code) {
+  if (code === 200) return T.statusHealthy;
+  if (code === 429) return T.statusWarning;
+  return T.statusError;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -116,130 +139,219 @@ function generateRequest() {
    ═══════════════════════════════════════════════════════════════════ */
 
 function SmoothCounter({ value, prefix = "", suffix = "", decimals = 0 }) {
-  const displayRef = useRef(0);
+  const cur = useRef(0);
   const [display, setDisplay] = useState(0);
-  const rafRef = useRef(null);
+  const raf = useRef(null);
 
   useEffect(() => {
     const step = () => {
-      const diff = value - displayRef.current;
+      const diff = value - cur.current;
       if (Math.abs(diff) < (decimals > 0 ? 0.01 : 0.5)) {
-        displayRef.current = value;
+        cur.current = value;
         setDisplay(value);
         return;
       }
-      displayRef.current += diff * 0.08;
-      setDisplay(displayRef.current);
-      rafRef.current = requestAnimationFrame(step);
+      cur.current += diff * 0.08;
+      setDisplay(cur.current);
+      raf.current = requestAnimationFrame(step);
     };
-    rafRef.current = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(rafRef.current);
+    raf.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf.current);
   }, [value, decimals]);
 
-  const formatted = display.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return <span>{prefix}{formatted}{suffix}</span>;
+  return (
+    <span>
+      {prefix}
+      {display.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+      {suffix}
+    </span>
+  );
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   REQUEST FEED ROW
+   ROUTE PILL — replicates Arc's UseCasePill exactly
    ═══════════════════════════════════════════════════════════════════ */
 
-function FeedRow({ req }) {
+function RoutePill({ name, color }) {
+  const s = SWATCH[color] || SWATCH.stone;
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 4,
+        padding: "2px 7px",
+        borderRadius: 4,
+        background: s.bg,
+        fontSize: 10,
+        letterSpacing: "0.04em",
+        color: s.fg,
+        whiteSpace: "nowrap",
+        fontFamily: "'JetBrains Mono', monospace",
+      }}
+    >
+      <span
+        style={{
+          width: 4,
+          height: 4,
+          borderRadius: "50%",
+          background: s.fg,
+          flexShrink: 0,
+        }}
+      />
+      {name}
+    </span>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TABLE ROW — matches Arc's real log table
+   ═══════════════════════════════════════════════════════════════════ */
+
+const COL_TEMPLATE = "68px 56px auto 1fr 42px 42px 56px 56px 56px";
+const CELL = { padding: "9px 12px" };
+const MONO = { fontFamily: "'JetBrains Mono', monospace" };
+
+function LogRow({ req, elapsed }) {
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, x: -12 }}
+      initial={{ opacity: 0, x: -6 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+      exit={{ opacity: 0, height: 0, overflow: "hidden" }}
+      transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
       style={{
         display: "grid",
-        gridTemplateColumns: "54px 72px 1fr 52px 58px 48px 68px",
+        gridTemplateColumns: COL_TEMPLATE,
         alignItems: "center",
-        gap: 0,
-        padding: "6px 12px",
-        borderBottom: "1px solid rgba(235, 235, 235, 0.03)",
-        fontFamily: "'JetBrains Mono', monospace",
-        fontSize: 10.5,
-        lineHeight: 1,
+        borderBottom: `1px solid ${T.borderSubtle}`,
+        cursor: "pointer",
+        transition: "background 60ms ease",
       }}
+      onMouseEnter={(e) => (e.currentTarget.style.background = T.surfaceRaised)}
+      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
     >
+      {/* Request ID */}
+      <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textTertiary, whiteSpace: "nowrap", overflow: "hidden" }}>
+        {req.reqId}…
+        {req.isShadow && (
+          <span
+            style={{
+              marginLeft: 5,
+              fontSize: 8.5,
+              letterSpacing: "0.08em",
+              padding: "1px 5px",
+              borderRadius: 3,
+              color: T.statusWarning,
+              border: `1px solid rgba(229, 168, 77, 0.35)`,
+              background: "rgba(229, 168, 77, 0.08)",
+              verticalAlign: "middle",
+              textTransform: "uppercase",
+            }}
+          >
+            shadow
+          </span>
+        )}
+      </div>
+
       {/* Time */}
-      <span style={{ color: "rgba(235, 235, 235, 0.2)" }}>{req.time}</span>
+      <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textTertiary }}>
+        {formatAge(elapsed + req.ageMs)}
+      </div>
+
       {/* Route */}
-      <span style={{ color: "rgba(235, 235, 235, 0.55)", fontWeight: 500 }}>{req.route}</span>
+      <div style={CELL}>
+        <RoutePill name={req.route.name} color={req.route.color} />
+      </div>
+
       {/* Model */}
-      <span style={{ color: "rgba(235, 235, 235, 0.35)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-        {req.model}
-      </span>
-      {/* Tokens */}
-      <span style={{ color: "rgba(235, 235, 235, 0.2)", textAlign: "right" }}>
-        {req.tokens.toLocaleString()}
-      </span>
-      {/* Cost */}
-      <span style={{ color: "rgba(235, 235, 235, 0.25)", textAlign: "right" }}>
-        ${req.cost}
-      </span>
-      {/* Latency */}
-      <span style={{ color: "rgba(235, 235, 235, 0.2)", textAlign: "right" }}>
-        {req.latency}ms
-      </span>
-      {/* Status */}
-      <span
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 4,
-          justifyContent: "flex-end",
-        }}
-      >
+      <div style={{ ...CELL, display: "flex", alignItems: "center", gap: 6, overflow: "hidden" }}>
         <span
           style={{
             width: 5,
             height: 5,
             borderRadius: "50%",
-            background: req.statusColor,
-            opacity: 0.8,
+            background: providerDotColor(req.provider),
             flexShrink: 0,
           }}
         />
-        <span style={{ color: req.statusColor, opacity: 0.7, fontSize: 9, letterSpacing: "0.03em" }}>
-          {req.statusLabel}
+        <span style={{ ...MONO, fontSize: 11, color: T.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {req.model}
         </span>
-      </span>
+      </div>
+
+      {/* Cache */}
+      <div style={{ ...CELL, textAlign: "center" }}>
+        <span
+          style={{
+            ...MONO,
+            fontSize: 9.5,
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            color: req.cacheHit ? T.statusHealthy : T.textTertiary,
+          }}
+        >
+          {req.cacheHit ? "Hit" : "Miss"}
+        </span>
+      </div>
+
+      {/* Status */}
+      <div style={{ ...CELL, textAlign: "center" }}>
+        <span style={{ ...MONO, fontSize: 10, fontWeight: 500, color: statusColor(req.statusCode) }}>
+          {req.statusCode}
+        </span>
+      </div>
+
+      {/* Latency */}
+      <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textSecondary, textAlign: "right" }}>
+        {req.latency.toLocaleString()}ms
+      </div>
+
+      {/* Tokens */}
+      <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textTertiary, textAlign: "right" }}>
+        {req.tokens.toLocaleString()}
+      </div>
+
+      {/* Cost */}
+      <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textSecondary, textAlign: "right" }}>
+        ${req.cost.toFixed(4)}
+      </div>
     </motion.div>
   );
 }
 
-/* Mobile-friendly minimal row */
-function FeedRowMobile({ req }) {
+/* Mobile row — compact */
+function LogRowMobile({ req, elapsed }) {
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, x: -8 }}
+      initial={{ opacity: 0, x: -6 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+      exit={{ opacity: 0, height: 0, overflow: "hidden" }}
+      transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
       style={{
-        display: "flex",
+        display: "grid",
+        gridTemplateColumns: "auto 1fr 36px 48px",
         alignItems: "center",
-        justifyContent: "space-between",
-        gap: 8,
-        padding: "6px 10px",
-        borderBottom: "1px solid rgba(235, 235, 235, 0.03)",
-        fontFamily: "'JetBrains Mono', monospace",
-        fontSize: 10,
-        lineHeight: 1,
+        gap: 0,
+        borderBottom: `1px solid ${T.borderSubtle}`,
       }}
     >
-      <span style={{ color: "rgba(235, 235, 235, 0.5)", fontWeight: 500, minWidth: 56 }}>{req.route}</span>
-      <span style={{ color: "rgba(235, 235, 235, 0.3)", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-        {req.model}
-      </span>
-      <span style={{ display: "inline-flex", alignItems: "center", gap: 3, flexShrink: 0 }}>
-        <span style={{ width: 4, height: 4, borderRadius: "50%", background: req.statusColor, opacity: 0.8 }} />
-        <span style={{ color: req.statusColor, opacity: 0.7, fontSize: 8.5 }}>{req.statusLabel}</span>
-      </span>
+      <div style={{ padding: "8px 10px" }}>
+        <RoutePill name={req.route.name} color={req.route.color} />
+      </div>
+      <div style={{ padding: "8px 6px", display: "flex", alignItems: "center", gap: 5, overflow: "hidden" }}>
+        <span style={{ width: 4, height: 4, borderRadius: "50%", background: providerDotColor(req.provider), flexShrink: 0 }} />
+        <span style={{ ...MONO, fontSize: 10, color: T.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {req.model}
+        </span>
+      </div>
+      <div style={{ ...MONO, fontSize: 9.5, fontWeight: 500, color: statusColor(req.statusCode), textAlign: "center", padding: "8px 4px" }}>
+        {req.statusCode}
+      </div>
+      <div style={{ ...MONO, fontSize: 10, color: T.textSecondary, textAlign: "right", padding: "8px 10px" }}>
+        ${req.cost.toFixed(3)}
+      </div>
     </motion.div>
   );
 }
@@ -248,32 +360,36 @@ function FeedRowMobile({ req }) {
    OPERATIONS PANEL
    ═══════════════════════════════════════════════════════════════════ */
 
-function OperationsPanel({ requests: reqCount, cacheRate, latencyOverhead, providers }) {
+function OperationsPanel({ reqCount, cacheRate, latencyOverhead, providerCount }) {
   const [feed, setFeed] = useState([]);
   const [insightIdx, setInsightIdx] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const startRef = useRef(Date.now());
 
-  // Detect mobile
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 640);
+    const check = () => setIsMobile(window.innerWidth < 720);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Seed initial rows with staggered ages
+  useEffect(() => {
+    const initial = [];
+    for (let i = 0; i < 7; i++) {
+      initial.push(generateRequest(i * 8000 + Math.random() * 4000));
+    }
+    setFeed(initial);
+  }, []);
+
   // Feed ticker
   useEffect(() => {
-    // Seed initial rows
-    const initial = Array.from({ length: 6 }, () => generateRequest());
-    setFeed(initial);
-
     const interval = setInterval(() => {
       setFeed((prev) => {
-        const next = [generateRequest(), ...prev];
+        const next = [generateRequest(0), ...prev];
         return next.slice(0, 9);
       });
-    }, 1200 + Math.random() * 600);
-
+    }, 1400 + Math.random() * 800);
     return () => clearInterval(interval);
   }, []);
 
@@ -285,8 +401,15 @@ function OperationsPanel({ requests: reqCount, cacheRate, latencyOverhead, provi
     return () => clearInterval(interval);
   }, []);
 
+  // Elapsed time for relative timestamps
+  const [elapsed, setElapsed] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => setElapsed(Date.now() - startRef.current), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const insight = INSIGHTS[insightIdx];
-  const Row = isMobile ? FeedRowMobile : FeedRow;
+  const Row = isMobile ? LogRowMobile : LogRow;
 
   return (
     <motion.div
@@ -295,156 +418,157 @@ function OperationsPanel({ requests: reqCount, cacheRate, latencyOverhead, provi
       transition={{ duration: 0.8, delay: 1.0, ease: [0.23, 1, 0.32, 1] }}
       style={{
         width: "100%",
-        maxWidth: 780,
-        borderRadius: 10,
-        border: "1px solid rgba(235, 235, 235, 0.06)",
-        background: "rgba(20, 20, 20, 0.7)",
-        backdropFilter: "blur(24px)",
-        WebkitBackdropFilter: "blur(24px)",
+        maxWidth: 880,
+        borderRadius: 6,
+        border: `1px solid ${T.borderDefault}`,
+        background: T.surfaceCard,
         overflow: "hidden",
       }}
     >
-      {/* ── Header ── */}
+      {/* ── Header bar ── */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           padding: "10px 14px",
-          borderBottom: "1px solid rgba(235, 235, 235, 0.05)",
+          borderBottom: `1px solid ${T.borderDefault}`,
+          background: T.surfaceCard,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span
             style={{
               width: 6,
               height: 6,
               borderRadius: "50%",
-              background: "#5BBF80",
-              boxShadow: "0 0 8px rgba(91, 191, 128, 0.4)",
+              background: T.statusHealthy,
+              boxShadow: `0 0 8px rgba(91, 191, 128, 0.4)`,
               animation: "arc-pulse 2s ease-in-out infinite",
             }}
           />
-          <span
-            style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 9.5,
-              color: "rgba(235, 235, 235, 0.4)",
-              textTransform: "uppercase",
-              letterSpacing: "0.12em",
-            }}
-          >
-            Live — Arc Operations
+          <span style={{ ...MONO, fontSize: 15, fontWeight: 300, letterSpacing: "-0.02em", color: T.textPrimary }}>
+            Logs
+          </span>
+          <span style={{ ...MONO, fontSize: 11, color: T.textTertiary, marginLeft: 2 }}>
+            <SmoothCounter value={reqCount} /> requests
           </span>
         </div>
-        <span
-          style={{
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: 9,
-            color: "rgba(235, 235, 235, 0.15)",
-          }}
-        >
-          arc.cornerstone.sh
-        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span
+            style={{
+              ...MONO,
+              fontSize: 10,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              padding: "5px 12px",
+              background: "transparent",
+              border: `1px solid ${T.borderDefault}`,
+              borderRadius: 4,
+              color: T.textSecondary,
+            }}
+          >
+            Export CSV
+          </span>
+        </div>
       </div>
 
-      {/* ── Stats row ── */}
+      {/* ── Stats strip ── */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
-          borderBottom: "1px solid rgba(235, 235, 235, 0.05)",
+          borderBottom: `1px solid ${T.borderDefault}`,
         }}
       >
         {[
-          { label: "Requests", value: <SmoothCounter value={reqCount} />, color: "#EBEBEB" },
-          { label: "Cache hit", value: <SmoothCounter value={cacheRate} suffix="%" decimals={1} />, color: "#70AAA8" },
-          { label: "Overhead", value: <SmoothCounter value={latencyOverhead} suffix="ms" decimals={1} />, color: "#EBEBEB" },
-          { label: "Providers", value: <span>{providers}</span>, color: "#EBEBEB" },
+          { label: "Requests", value: <SmoothCounter value={reqCount} />, color: T.textPrimary },
+          { label: "Cache Hit Rate", value: <SmoothCounter value={cacheRate} suffix="%" decimals={1} />, color: SWATCH.slate.fg },
+          { label: "Latency Overhead", value: <SmoothCounter value={latencyOverhead} suffix="ms" decimals={1} />, color: T.textPrimary },
+          { label: "Providers", value: <span>{providerCount}</span>, color: T.textPrimary },
         ].map((s, i) => (
           <div
             key={i}
             style={{
               padding: isMobile ? "10px 8px" : "12px 14px",
-              borderRight: i < 3 ? "1px solid rgba(235, 235, 235, 0.04)" : "none",
+              borderRight: i < 3 ? `1px solid ${T.borderSubtle}` : "none",
             }}
           >
-            <div
-              style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 8.5,
-                color: "rgba(235, 235, 235, 0.25)",
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                marginBottom: 4,
-              }}
-            >
+            <div style={{ ...MONO, fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: T.textTertiary, marginBottom: 4 }}>
               {s.label}
             </div>
-            <div
-              style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: isMobile ? 15 : 18,
-                color: s.color,
-                fontWeight: 500,
-                fontVariantNumeric: "tabular-nums",
-              }}
-            >
+            <div style={{ ...MONO, fontSize: isMobile ? 15 : 18, color: s.color, fontWeight: 300, fontVariantNumeric: "tabular-nums" }}>
               {s.value}
             </div>
           </div>
         ))}
       </div>
 
-      {/* ── Column headers (desktop only) ── */}
+      {/* ── Column headers (desktop) ── */}
       {!isMobile && (
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "54px 72px 1fr 52px 58px 48px 68px",
-            padding: "6px 12px",
-            borderBottom: "1px solid rgba(235, 235, 235, 0.04)",
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: 8.5,
-            color: "rgba(235, 235, 235, 0.15)",
-            textTransform: "uppercase",
-            letterSpacing: "0.08em",
+            gridTemplateColumns: COL_TEMPLATE,
+            borderBottom: `1px solid ${T.borderDefault}`,
+            background: T.surfaceCard,
           }}
         >
-          <span>Time</span>
-          <span>Route</span>
-          <span>Model</span>
-          <span style={{ textAlign: "right" }}>Tokens</span>
-          <span style={{ textAlign: "right" }}>Cost</span>
-          <span style={{ textAlign: "right" }}>Latency</span>
-          <span style={{ textAlign: "right" }}>Status</span>
+          {[
+            { label: "Request ID", align: "left" },
+            { label: "Time", align: "left" },
+            { label: "Route", align: "left" },
+            { label: "Model", align: "left" },
+            { label: "Cache", align: "center" },
+            { label: "Status", align: "center" },
+            { label: "Latency", align: "right" },
+            { label: "Tokens", align: "right" },
+            { label: "Cost", align: "right" },
+          ].map((h) => (
+            <div
+              key={h.label}
+              style={{
+                ...MONO,
+                padding: "10px 12px",
+                textAlign: h.align,
+                fontSize: 9,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: T.textTertiary,
+                fontWeight: 400,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {h.label}
+            </div>
+          ))}
         </div>
       )}
 
       {/* ── Request feed ── */}
       <div
         style={{
-          height: isMobile ? 180 : 230,
+          height: isMobile ? 200 : 270,
           overflow: "hidden",
           position: "relative",
         }}
       >
-        {/* Fade-out gradient at bottom */}
+        {/* Fade at bottom */}
         <div
           style={{
             position: "absolute",
             bottom: 0,
             left: 0,
             right: 0,
-            height: 48,
-            background: "linear-gradient(to top, rgba(20, 20, 20, 0.95), transparent)",
+            height: 56,
+            background: `linear-gradient(to top, ${T.surfaceCard}, transparent)`,
             pointerEvents: "none",
             zIndex: 2,
           }}
         />
         <AnimatePresence initial={false}>
           {feed.map((req) => (
-            <Row key={req.id} req={req} />
+            <Row key={req.id} req={req} elapsed={elapsed} />
           ))}
         </AnimatePresence>
       </div>
@@ -452,7 +576,7 @@ function OperationsPanel({ requests: reqCount, cacheRate, latencyOverhead, provi
       {/* ── Insight bar ── */}
       <div
         style={{
-          borderTop: "1px solid rgba(235, 235, 235, 0.05)",
+          borderTop: `1px solid ${T.borderDefault}`,
           padding: "9px 14px",
           display: "flex",
           alignItems: "center",
@@ -472,17 +596,13 @@ function OperationsPanel({ requests: reqCount, cacheRate, latencyOverhead, provi
               display: "flex",
               alignItems: "center",
               gap: 8,
-              fontFamily: "'JetBrains Mono', monospace",
+              ...MONO,
               fontSize: isMobile ? 9 : 10,
               lineHeight: 1.4,
             }}
           >
-            <span style={{ color: insight.color, fontSize: 11, flexShrink: 0 }}>
-              {insight.icon}
-            </span>
-            <span style={{ color: "rgba(235, 235, 235, 0.4)" }}>
-              {insight.text}
-            </span>
+            <span style={{ color: insight.color, fontSize: 11, flexShrink: 0 }}>{insight.icon}</span>
+            <span style={{ color: T.textSecondary }}>{insight.text}</span>
           </motion.div>
         </AnimatePresence>
       </div>
@@ -491,7 +611,7 @@ function OperationsPanel({ requests: reqCount, cacheRate, latencyOverhead, provi
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   GRID BACKGROUND — subtle drifting dots
+   GRID BACKGROUND
    ═══════════════════════════════════════════════════════════════════ */
 
 function GridBackground() {
@@ -526,7 +646,7 @@ function GridBackground() {
 
       const spacing = 48;
       const cx = w * 0.5;
-      const cy = h * 0.55;
+      const cy = h * 0.5;
 
       for (let x = spacing / 2; x < w; x += spacing) {
         for (let y = spacing / 2; y < h; y += spacing) {
@@ -536,18 +656,15 @@ function GridBackground() {
           const maxDist = Math.sqrt(cx * cx + cy * cy);
           const falloff = 1 - Math.min(dist / maxDist, 1);
           const pulse = Math.sin(now * 0.0008 - dist * 0.006) * 0.5 + 0.5;
-          const alpha = (0.015 + pulse * 0.025) * falloff;
-
+          const alpha = (0.012 + pulse * 0.02) * falloff;
           ctx.fillStyle = `rgba(235, 235, 235, ${alpha})`;
           ctx.beginPath();
           ctx.arc(x, y, 0.7, 0, Math.PI * 2);
           ctx.fill();
         }
       }
-
       raf = requestAnimationFrame(draw);
     };
-
     raf = requestAnimationFrame(draw);
     return () => {
       cancelAnimationFrame(raf);
@@ -578,16 +695,15 @@ function CodeDiffStrip() {
         margin: "0 auto",
         borderRadius: 6,
         overflow: "hidden",
-        border: "1px solid rgba(235, 235, 235, 0.05)",
+        border: `1px solid ${T.borderDefault}`,
       }}
     >
-      {/* Old line */}
       <div
         style={{
           padding: "10px 14px",
           background: "rgba(192, 57, 43, 0.04)",
-          borderBottom: "1px solid rgba(235, 235, 235, 0.04)",
-          fontFamily: "'JetBrains Mono', monospace",
+          borderBottom: `1px solid ${T.borderSubtle}`,
+          ...MONO,
           fontSize: 11,
           display: "flex",
           alignItems: "center",
@@ -595,19 +711,18 @@ function CodeDiffStrip() {
         }}
       >
         <span style={{ color: "rgba(192, 57, 43, 0.45)", fontWeight: 700, flexShrink: 0 }}>−</span>
-        <span style={{ color: "rgba(235, 235, 235, 0.2)" }}>
+        <span style={{ color: T.textTertiary }}>
           base_url:{" "}
-          <span style={{ color: "rgba(235, 235, 235, 0.3)", textDecoration: "line-through" }}>
+          <span style={{ color: T.textSecondary, textDecoration: "line-through" }}>
             &quot;api.openai.com/v1&quot;
           </span>
         </span>
       </div>
-      {/* New line */}
       <div
         style={{
           padding: "10px 14px",
           background: "rgba(91, 191, 128, 0.03)",
-          fontFamily: "'JetBrains Mono', monospace",
+          ...MONO,
           fontSize: 11,
           display: "flex",
           alignItems: "center",
@@ -615,9 +730,9 @@ function CodeDiffStrip() {
         }}
       >
         <span style={{ color: "rgba(91, 191, 128, 0.6)", fontWeight: 700, flexShrink: 0 }}>+</span>
-        <span style={{ color: "rgba(235, 235, 235, 0.2)" }}>
+        <span style={{ color: T.textTertiary }}>
           base_url:{" "}
-          <span style={{ color: "#EBEBEB" }}>&quot;arc.cornerstone.sh/v1&quot;</span>
+          <span style={{ color: T.textPrimary }}>&quot;arc.cornerstone.sh/v1&quot;</span>
         </span>
       </div>
     </motion.div>
@@ -634,11 +749,8 @@ export default function ArcHero() {
   const [cacheRate, setCacheRate] = useState(0);
   const [latency, setLatency] = useState(0);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => setMounted(true), []);
 
-  // Counter tick
   useEffect(() => {
     if (!mounted) return;
     const interval = setInterval(() => {
@@ -658,7 +770,7 @@ export default function ArcHero() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: "#0A0A0A",
+        background: T.surfacePage,
         overflow: "hidden",
         padding: "0 20px",
       }}
@@ -669,20 +781,17 @@ export default function ArcHero() {
           position: "absolute",
           inset: 0,
           pointerEvents: "none",
-          background:
-            "radial-gradient(ellipse 70% 50% at 50% 60%, rgba(192, 57, 43, 0.04) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse 70% 50% at 50% 60%, rgba(192, 57, 43, 0.035) 0%, transparent 70%)",
         }}
       />
 
-      {/* Grid dots */}
       {mounted && <GridBackground />}
 
-      {/* Content */}
       <div
         style={{
           position: "relative",
           zIndex: 10,
-          maxWidth: 900,
+          maxWidth: 920,
           width: "100%",
           display: "flex",
           flexDirection: "column",
@@ -700,7 +809,7 @@ export default function ArcHero() {
             fontFamily: "'Ronzino', serif",
             fontSize: "clamp(2.6rem, 7vw, 5rem)",
             fontWeight: 400,
-            color: "#EBEBEB",
+            color: T.textPrimary,
             textAlign: "center",
             lineHeight: 1.05,
             letterSpacing: "-0.025em",
@@ -710,7 +819,7 @@ export default function ArcHero() {
         >
           One endpoint.
           <br />
-          <span style={{ color: "rgba(235, 235, 235, 0.25)" }}>Every provider.</span>
+          <span style={{ color: T.textTertiary }}>Every provider.</span>
         </motion.h1>
 
         {/* ── Subhead ── */}
@@ -721,7 +830,7 @@ export default function ArcHero() {
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: "clamp(13px, 1.6vw, 15px)",
-            color: "rgba(235, 235, 235, 0.35)",
+            color: T.textSecondary,
             textAlign: "center",
             maxWidth: 540,
             lineHeight: 1.65,
@@ -738,13 +847,7 @@ export default function ArcHero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.9 }}
-          style={{
-            display: "flex",
-            gap: 12,
-            marginBottom: 48,
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}
+          style={{ display: "flex", gap: 12, marginBottom: 48, flexWrap: "wrap", justifyContent: "center" }}
         >
           <Link
             href="https://arc.cornerstone.sh"
@@ -752,8 +855,8 @@ export default function ArcHero() {
               display: "inline-flex",
               alignItems: "center",
               padding: "10px 28px",
-              background: "#EBEBEB",
-              color: "#0A0A0A",
+              background: T.textPrimary,
+              color: T.surfacePage,
               borderRadius: 999,
               fontFamily: "'Inter', sans-serif",
               fontSize: 13,
@@ -772,8 +875,8 @@ export default function ArcHero() {
               display: "inline-flex",
               alignItems: "center",
               padding: "10px 28px",
-              border: "1px solid rgba(235, 235, 235, 0.12)",
-              color: "rgba(235, 235, 235, 0.5)",
+              border: `1px solid ${T.borderDefault}`,
+              color: T.textSecondary,
               borderRadius: 999,
               fontFamily: "'Inter', sans-serif",
               fontSize: 13,
@@ -782,12 +885,12 @@ export default function ArcHero() {
               transition: "border-color 0.2s, color 0.2s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "rgba(235, 235, 235, 0.25)";
-              e.currentTarget.style.color = "rgba(235, 235, 235, 0.7)";
+              e.currentTarget.style.borderColor = T.borderDefault;
+              e.currentTarget.style.color = T.textPrimary;
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(235, 235, 235, 0.12)";
-              e.currentTarget.style.color = "rgba(235, 235, 235, 0.5)";
+              e.currentTarget.style.borderColor = T.borderDefault;
+              e.currentTarget.style.color = T.textSecondary;
             }}
           >
             See it in action ↓
@@ -797,20 +900,17 @@ export default function ArcHero() {
         {/* ── Operations panel ── */}
         {mounted && (
           <OperationsPanel
-            requests={requests}
+            reqCount={requests}
             cacheRate={cacheRate}
             latencyOverhead={latency}
-            providers={3}
+            providerCount={3}
           />
         )}
 
-        {/* ── Spacer ── */}
         <div style={{ height: 32 }} />
 
-        {/* ── Code diff ── */}
         <CodeDiffStrip />
 
-        {/* ── Label ── */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -818,7 +918,7 @@ export default function ArcHero() {
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: 12,
-            color: "rgba(235, 235, 235, 0.2)",
+            color: T.textTertiary,
             marginTop: 10,
             textAlign: "center",
           }}
@@ -827,29 +927,18 @@ export default function ArcHero() {
         </motion.p>
       </div>
 
-      {/* ── Scroll chevron ── */}
+      {/* Scroll chevron */}
       <motion.div
-        style={{
-          position: "absolute",
-          bottom: 24,
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}
+        style={{ position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)" }}
         animate={{ opacity: [0, 0.3, 0] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
       >
-        <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="rgba(235,235,235,0.5)" strokeWidth="1.5" strokeLinecap="round">
+        <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke={T.textSecondary} strokeWidth="1.5" strokeLinecap="round">
           <path d="M2 2l6 6 6-6" />
         </svg>
       </motion.div>
 
-      {/* Pulse keyframe */}
-      <style>{`
-        @keyframes arc-pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
-        }
-      `}</style>
+      <style>{`@keyframes arc-pulse { 0%,100% { opacity:1 } 50% { opacity:0.4 } }`}</style>
     </section>
   );
 }
