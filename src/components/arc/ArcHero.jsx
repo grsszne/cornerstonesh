@@ -184,10 +184,10 @@ function RoutePill({ name, color }) {
         borderRadius: 4,
         background: s.bg,
         fontSize: 10,
-        letterSpacing: "0.04em",
+        letterSpacing: "0.02em",
         color: s.fg,
         whiteSpace: "nowrap",
-        fontFamily: "'JetBrains Mono', monospace",
+        fontFamily: "'Inter', sans-serif",
       }}
     >
       <span
@@ -210,6 +210,8 @@ function RoutePill({ name, color }) {
 
 const COL_TEMPLATE = "68px 56px auto 1fr 42px 42px 56px 56px 56px";
 const CELL = { padding: "9px 12px" };
+const SANS = { fontFamily: "'Inter', sans-serif" };
+// Monospace only for actual code-like data: hashes, costs, token counts
 const MONO = { fontFamily: "'JetBrains Mono', monospace" };
 
 function LogRow({ req, elapsed }) {
@@ -231,7 +233,7 @@ function LogRow({ req, elapsed }) {
       onMouseEnter={(e) => (e.currentTarget.style.background = T.surfaceRaised)}
       onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
     >
-      {/* Request ID */}
+      {/* Request ID — monospace because it's a hash */}
       <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textTertiary, whiteSpace: "nowrap", overflow: "hidden" }}>
         {req.reqId}…
         {req.isShadow && (
@@ -239,7 +241,7 @@ function LogRow({ req, elapsed }) {
             style={{
               marginLeft: 5,
               fontSize: 8.5,
-              letterSpacing: "0.08em",
+              letterSpacing: "0.06em",
               padding: "1px 5px",
               borderRadius: 3,
               color: T.statusWarning,
@@ -247,6 +249,7 @@ function LogRow({ req, elapsed }) {
               background: "rgba(229, 168, 77, 0.08)",
               verticalAlign: "middle",
               textTransform: "uppercase",
+              fontFamily: "'Inter', sans-serif",
             }}
           >
             shadow
@@ -254,8 +257,8 @@ function LogRow({ req, elapsed }) {
         )}
       </div>
 
-      {/* Time */}
-      <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textTertiary }}>
+      {/* Time — regular text */}
+      <div style={{ ...CELL, ...SANS, fontSize: 11, color: T.textTertiary }}>
         {formatAge(elapsed + req.ageMs)}
       </div>
 
@@ -264,55 +267,39 @@ function LogRow({ req, elapsed }) {
         <RoutePill name={req.route.name} color={req.route.color} />
       </div>
 
-      {/* Model */}
+      {/* Model — regular text */}
       <div style={{ ...CELL, display: "flex", alignItems: "center", gap: 6, overflow: "hidden" }}>
-        <span
-          style={{
-            width: 5,
-            height: 5,
-            borderRadius: "50%",
-            background: providerDotColor(req.provider),
-            flexShrink: 0,
-          }}
-        />
-        <span style={{ ...MONO, fontSize: 11, color: T.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <span style={{ width: 5, height: 5, borderRadius: "50%", background: providerDotColor(req.provider), flexShrink: 0 }} />
+        <span style={{ ...SANS, fontSize: 11, color: T.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {req.model}
         </span>
       </div>
 
-      {/* Cache */}
+      {/* Cache — regular text */}
       <div style={{ ...CELL, textAlign: "center" }}>
-        <span
-          style={{
-            ...MONO,
-            fontSize: 9.5,
-            letterSpacing: "0.06em",
-            textTransform: "uppercase",
-            color: req.cacheHit ? T.statusHealthy : T.textTertiary,
-          }}
-        >
+        <span style={{ ...SANS, fontSize: 11, color: req.cacheHit ? T.statusHealthy : T.textTertiary }}>
           {req.cacheHit ? "Hit" : "Miss"}
         </span>
       </div>
 
-      {/* Status */}
+      {/* Status — regular text */}
       <div style={{ ...CELL, textAlign: "center" }}>
-        <span style={{ ...MONO, fontSize: 10, fontWeight: 500, color: statusColor(req.statusCode) }}>
+        <span style={{ ...SANS, fontSize: 11, fontWeight: 500, color: statusColor(req.statusCode) }}>
           {req.statusCode}
         </span>
       </div>
 
-      {/* Latency */}
+      {/* Latency — monospace, it's a measurement */}
       <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textSecondary, textAlign: "right" }}>
-        {req.latency.toLocaleString()}ms
+        {req.latency}ms
       </div>
 
-      {/* Tokens */}
+      {/* Tokens — monospace, it's a count */}
       <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textTertiary, textAlign: "right" }}>
         {req.tokens.toLocaleString()}
       </div>
 
-      {/* Cost */}
+      {/* Cost — monospace, it's a precise number */}
       <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textSecondary, textAlign: "right" }}>
         ${req.cost.toFixed(4)}
       </div>
@@ -447,17 +434,17 @@ function OperationsPanel({ reqCount, cacheRate, latencyOverhead, providerCount }
               animation: "arc-pulse 2s ease-in-out infinite",
             }}
           />
-          <span style={{ ...MONO, fontSize: 15, fontWeight: 300, letterSpacing: "-0.02em", color: T.textPrimary }}>
+          <span style={{ fontFamily: "'Ronzino', serif", fontSize: 15, fontWeight: 400, letterSpacing: "-0.02em", color: T.textPrimary }}>
             Logs
           </span>
-          <span style={{ ...MONO, fontSize: 11, color: T.textTertiary, marginLeft: 2 }}>
+          <span style={{ ...SANS, fontSize: 11, color: T.textTertiary, marginLeft: 2 }}>
             <SmoothCounter value={reqCount} /> requests
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span
             style={{
-              ...MONO,
+              ...SANS,
               fontSize: 10,
               letterSpacing: "0.06em",
               textTransform: "uppercase",
@@ -494,10 +481,10 @@ function OperationsPanel({ reqCount, cacheRate, latencyOverhead, providerCount }
               borderRight: i < 3 ? `1px solid ${T.borderSubtle}` : "none",
             }}
           >
-            <div style={{ ...MONO, fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: T.textTertiary, marginBottom: 4 }}>
+            <div style={{ ...SANS, fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: T.textTertiary, marginBottom: 4 }}>
               {s.label}
             </div>
-            <div style={{ ...MONO, fontSize: isMobile ? 15 : 18, color: s.color, fontWeight: 300, fontVariantNumeric: "tabular-nums" }}>
+            <div style={{ ...SANS, fontSize: isMobile ? 15 : 18, color: s.color, fontWeight: 400, fontVariantNumeric: "tabular-nums" }}>
               {s.value}
             </div>
           </div>
@@ -528,14 +515,14 @@ function OperationsPanel({ reqCount, cacheRate, latencyOverhead, providerCount }
             <div
               key={h.label}
               style={{
-                ...MONO,
+                ...SANS,
                 padding: "10px 12px",
                 textAlign: h.align,
                 fontSize: 9,
-                letterSpacing: "0.12em",
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: T.textTertiary,
-                fontWeight: 400,
+                fontWeight: 500,
                 whiteSpace: "nowrap",
               }}
             >
@@ -596,8 +583,8 @@ function OperationsPanel({ reqCount, cacheRate, latencyOverhead, providerCount }
               display: "flex",
               alignItems: "center",
               gap: 8,
-              ...MONO,
-              fontSize: isMobile ? 9 : 10,
+              ...SANS,
+              fontSize: isMobile ? 10 : 11,
               lineHeight: 1.4,
             }}
           >
@@ -817,9 +804,9 @@ export default function ArcHero() {
             maxWidth: 720,
           }}
         >
-          One endpoint.
+          We watch every
           <br />
-          <span style={{ color: T.textTertiary }}>Every provider.</span>
+          <span style={{ color: T.textTertiary }}>AI call. Then we fix it.</span>
         </motion.h1>
 
         {/* ── Subhead ── */}
