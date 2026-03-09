@@ -1,223 +1,502 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 /* ═══════════════════════════════════════════════════════════════════
-   CONSTANTS & DATA
+   DATA
    ═══════════════════════════════════════════════════════════════════ */
 
 const MODELS = [
-  { name: "gpt-4o", provider: "OpenAI", color: "#EBEBEB" },
-  { name: "gpt-4o-mini", provider: "OpenAI", color: "#EBEBEB" },
-  { name: "claude-3.5-sonnet", provider: "Anthropic", color: "#D4A27F" },
-  { name: "claude-3-haiku", provider: "Anthropic", color: "#D4A27F" },
-  { name: "gpt-4-turbo", provider: "OpenAI", color: "#EBEBEB" },
-  { name: "claude-opus-4", provider: "Anthropic", color: "#D4A27F" },
-  { name: "gemini-1.5-pro", provider: "Google", color: "#8BAAA8" },
-  { name: "gemini-2.0-flash", provider: "Google", color: "#8BAAA8" },
-];
-
-const PROVIDERS = [
-  { name: "OpenAI", y: 0.22, color: "#EBEBEB" },
-  { name: "Anthropic", y: 0.50, color: "#D4A27F" },
-  { name: "Google", y: 0.78, color: "#8BAAA8" },
+  { name: "gpt-4o", provider: "OpenAI" },
+  { name: "gpt-4o-mini", provider: "OpenAI" },
+  { name: "claude-sonnet-4", provider: "Anthropic" },
+  { name: "claude-3-haiku", provider: "Anthropic" },
+  { name: "gpt-4-turbo", provider: "OpenAI" },
+  { name: "claude-opus-4", provider: "Anthropic" },
+  { name: "gemini-2.0-flash", provider: "Google" },
+  { name: "gemini-1.5-pro", provider: "Google" },
 ];
 
 const ROUTES = ["/chat", "/classify", "/summarize", "/extract", "/embed", "/search", "/generate", "/analyze"];
 
-const RECOMMENDATIONS = [
+const STATUS_TYPES = [
+  { label: "200", color: "#5BBF80", weight: 55 },
+  { label: "CACHED", color: "#70AAA8", weight: 18 },
+  { label: "REROUTED", color: "#E5A84D", weight: 10 },
+  { label: "SHADOW", color: "#B090B8", weight: 8 },
+  { label: "FAILOVER", color: "#E5A84D", weight: 5 },
+  { label: "200", color: "#5BBF80", weight: 4 },
+];
+
+const INSIGHTS = [
   {
-    route: "/classify",
-    from: "GPT-4o",
-    to: "Claude 3 Haiku",
-    savings: "$420/mo",
-    quality: "99.2%",
+    type: "reroute",
+    icon: "↻",
+    color: "#E5A84D",
+    text: "Rerouted /classify — OpenAI latency spike detected → Anthropic (0 downtime)",
   },
   {
-    route: "/summarize",
-    from: "Claude 3.5 Sonnet",
-    to: "GPT-4o-mini",
-    savings: "$310/mo",
-    quality: "98.7%",
+    type: "cache",
+    icon: "◆",
+    color: "#70AAA8",
+    text: "Semantic cache hit on /embed — identical query detected, saved 340ms",
   },
   {
-    route: "/extract",
-    from: "GPT-4 Turbo",
-    to: "Gemini 2.0 Flash",
-    savings: "$580/mo",
-    quality: "99.5%",
+    type: "shadow",
+    icon: "◉",
+    color: "#B090B8",
+    text: "Shadow test: Claude Haiku scored 98.7% vs GPT-4o on /classify — recommend switch",
   },
   {
-    route: "/embed",
-    from: "GPT-4o",
-    to: "Claude 3 Haiku",
-    savings: "$195/mo",
-    quality: "97.9%",
+    type: "optimize",
+    icon: "▲",
+    color: "#5BBF80",
+    text: "Recommendation: /summarize → GPT-4o-mini ($310/mo savings, 98.4% quality match)",
   },
   {
-    route: "/search",
-    from: "Claude 3.5 Sonnet",
-    to: "GPT-4o-mini",
-    savings: "$260/mo",
-    quality: "98.3%",
+    type: "failover",
+    icon: "⚡",
+    color: "#E5A84D",
+    text: "Provider failover: OpenAI 503 → Anthropic Claude Sonnet (automatic, 0 dropped)",
+  },
+  {
+    type: "rate-limit",
+    icon: "◈",
+    color: "#C08860",
+    text: "Rate limit approaching on /chat (87/100 RPM) — adaptive throttling engaged",
   },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════
-   SMOOTH COUNTER — interpolated count-up
+   HELPERS
+   ═══════════════════════════════════════════════════════════════════ */
+
+let _id = 0;
+
+function pickWeighted(items) {
+  const total = items.reduce((s, i) => s + i.weight, 0);
+  let r = Math.random() * total;
+  for (const item of items) {
+    r -= item.weight;
+    if (r <= 0) return item;
+  }
+  return items[0];
+}
+
+function generateRequest() {
+  const model = MODELS[Math.floor(Math.random() * MODELS.length)];
+  const route = ROUTES[Math.floor(Math.random() * ROUTES.length)];
+  const status = pickWeighted(STATUS_TYPES);
+  const tokens = Math.floor(Math.random() * 3800) + 120;
+  const cost = tokens * (Math.random() * 0.004 + 0.0005);
+  const latency = Math.floor(Math.random() * 450) + 60;
+  const now = new Date();
+  const time = [now.getHours(), now.getMinutes(), now.getSeconds()]
+    .map((n) => String(n).padStart(2, "0"))
+    .join(":");
+
+  return {
+    id: ++_id,
+    time,
+    route,
+    model: model.name,
+    provider: model.provider,
+    tokens,
+    cost: cost.toFixed(4),
+    latency,
+    statusLabel: status.label,
+    statusColor: status.color,
+  };
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SMOOTH COUNTER
    ═══════════════════════════════════════════════════════════════════ */
 
 function SmoothCounter({ value, prefix = "", suffix = "", decimals = 0 }) {
+  const displayRef = useRef(0);
   const [display, setDisplay] = useState(0);
-  const currentRef = useRef(0);
-  const targetRef = useRef(0);
   const rafRef = useRef(null);
 
   useEffect(() => {
-    targetRef.current = value;
     const step = () => {
-      const diff = targetRef.current - currentRef.current;
+      const diff = value - displayRef.current;
       if (Math.abs(diff) < (decimals > 0 ? 0.01 : 0.5)) {
-        currentRef.current = targetRef.current;
-        setDisplay(targetRef.current);
+        displayRef.current = value;
+        setDisplay(value);
         return;
       }
-      currentRef.current += diff * 0.08;
-      setDisplay(currentRef.current);
+      displayRef.current += diff * 0.08;
+      setDisplay(displayRef.current);
       rafRef.current = requestAnimationFrame(step);
     };
     rafRef.current = requestAnimationFrame(step);
     return () => cancelAnimationFrame(rafRef.current);
   }, [value, decimals]);
 
+  const formatted = display.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return <span>{prefix}{formatted}{suffix}</span>;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   REQUEST FEED ROW
+   ═══════════════════════════════════════════════════════════════════ */
+
+function FeedRow({ req }) {
   return (
-    <span className="font-mono tabular-nums">
-      {prefix}
-      {display.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-      {suffix}
-    </span>
+    <motion.div
+      layout
+      initial={{ opacity: 0, x: -12 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+      style={{
+        display: "grid",
+        gridTemplateColumns: "54px 72px 1fr 52px 58px 48px 68px",
+        alignItems: "center",
+        gap: 0,
+        padding: "6px 12px",
+        borderBottom: "1px solid rgba(235, 235, 235, 0.03)",
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: 10.5,
+        lineHeight: 1,
+      }}
+    >
+      {/* Time */}
+      <span style={{ color: "rgba(235, 235, 235, 0.2)" }}>{req.time}</span>
+      {/* Route */}
+      <span style={{ color: "rgba(235, 235, 235, 0.55)", fontWeight: 500 }}>{req.route}</span>
+      {/* Model */}
+      <span style={{ color: "rgba(235, 235, 235, 0.35)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        {req.model}
+      </span>
+      {/* Tokens */}
+      <span style={{ color: "rgba(235, 235, 235, 0.2)", textAlign: "right" }}>
+        {req.tokens.toLocaleString()}
+      </span>
+      {/* Cost */}
+      <span style={{ color: "rgba(235, 235, 235, 0.25)", textAlign: "right" }}>
+        ${req.cost}
+      </span>
+      {/* Latency */}
+      <span style={{ color: "rgba(235, 235, 235, 0.2)", textAlign: "right" }}>
+        {req.latency}ms
+      </span>
+      {/* Status */}
+      <span
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 4,
+          justifyContent: "flex-end",
+        }}
+      >
+        <span
+          style={{
+            width: 5,
+            height: 5,
+            borderRadius: "50%",
+            background: req.statusColor,
+            opacity: 0.8,
+            flexShrink: 0,
+          }}
+        />
+        <span style={{ color: req.statusColor, opacity: 0.7, fontSize: 9, letterSpacing: "0.03em" }}>
+          {req.statusLabel}
+        </span>
+      </span>
+    </motion.div>
+  );
+}
+
+/* Mobile-friendly minimal row */
+function FeedRowMobile({ req }) {
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, x: -8 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 8,
+        padding: "6px 10px",
+        borderBottom: "1px solid rgba(235, 235, 235, 0.03)",
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: 10,
+        lineHeight: 1,
+      }}
+    >
+      <span style={{ color: "rgba(235, 235, 235, 0.5)", fontWeight: 500, minWidth: 56 }}>{req.route}</span>
+      <span style={{ color: "rgba(235, 235, 235, 0.3)", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        {req.model}
+      </span>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: 3, flexShrink: 0 }}>
+        <span style={{ width: 4, height: 4, borderRadius: "50%", background: req.statusColor, opacity: 0.8 }} />
+        <span style={{ color: req.statusColor, opacity: 0.7, fontSize: 8.5 }}>{req.statusLabel}</span>
+      </span>
+    </motion.div>
   );
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   RECOMMENDATION CARD — slides in from right
+   OPERATIONS PANEL
    ═══════════════════════════════════════════════════════════════════ */
 
-function RecommendationCard({ rec }) {
+function OperationsPanel({ requests: reqCount, cacheRate, latencyOverhead, providers }) {
+  const [feed, setFeed] = useState([]);
+  const [insightIdx, setInsightIdx] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Feed ticker
+  useEffect(() => {
+    // Seed initial rows
+    const initial = Array.from({ length: 6 }, () => generateRequest());
+    setFeed(initial);
+
+    const interval = setInterval(() => {
+      setFeed((prev) => {
+        const next = [generateRequest(), ...prev];
+        return next.slice(0, 9);
+      });
+    }, 1200 + Math.random() * 600);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Insight cycle
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setInsightIdx((i) => (i + 1) % INSIGHTS.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const insight = INSIGHTS[insightIdx];
+  const Row = isMobile ? FeedRowMobile : FeedRow;
+
   return (
     <motion.div
-      initial={{ opacity: 0, x: 40 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 1.0, ease: [0.23, 1, 0.32, 1] }}
       style={{
-        background: "rgba(20, 20, 20, 0.85)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        border: "1px solid rgba(235, 235, 235, 0.08)",
-        borderRadius: 8,
-        padding: "14px 18px",
-        maxWidth: 340,
         width: "100%",
+        maxWidth: 780,
+        borderRadius: 10,
+        border: "1px solid rgba(235, 235, 235, 0.06)",
+        background: "rgba(20, 20, 20, 0.7)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
+        overflow: "hidden",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
-        <div
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: "50%",
-            background: "#5BBF80",
-            boxShadow: "0 0 8px rgba(91, 191, 128, 0.4)",
-          }}
-        />
+      {/* ── Header ── */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "10px 14px",
+          borderBottom: "1px solid rgba(235, 235, 235, 0.05)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: "#5BBF80",
+              boxShadow: "0 0 8px rgba(91, 191, 128, 0.4)",
+              animation: "arc-pulse 2s ease-in-out infinite",
+            }}
+          />
+          <span
+            style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: 9.5,
+              color: "rgba(235, 235, 235, 0.4)",
+              textTransform: "uppercase",
+              letterSpacing: "0.12em",
+            }}
+          >
+            Live — Arc Operations
+          </span>
+        </div>
         <span
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: 10,
-            color: "#5BBF80",
-            letterSpacing: "0.05em",
-            textTransform: "uppercase",
+            fontSize: 9,
+            color: "rgba(235, 235, 235, 0.15)",
           }}
         >
-          Optimization detected
+          arc.cornerstone.sh
         </span>
       </div>
-      <p
+
+      {/* ── Stats row ── */}
+      <div
         style={{
-          fontFamily: "'Inter', sans-serif",
-          fontSize: 12,
-          color: "rgba(235, 235, 235, 0.7)",
-          lineHeight: 1.5,
-          margin: 0,
-          marginBottom: 10,
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          borderBottom: "1px solid rgba(235, 235, 235, 0.05)",
         }}
       >
-        Your <span style={{ color: "#EBEBEB", fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>{rec.route}</span> route
-        could switch from {rec.from} to {rec.to}.
-      </p>
-      <div style={{ display: "flex", gap: 16 }}>
-        <div>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: "rgba(235,235,235,0.35)", marginBottom: 2 }}>
-            Savings
+        {[
+          { label: "Requests", value: <SmoothCounter value={reqCount} />, color: "#EBEBEB" },
+          { label: "Cache hit", value: <SmoothCounter value={cacheRate} suffix="%" decimals={1} />, color: "#70AAA8" },
+          { label: "Overhead", value: <SmoothCounter value={latencyOverhead} suffix="ms" decimals={1} />, color: "#EBEBEB" },
+          { label: "Providers", value: <span>{providers}</span>, color: "#EBEBEB" },
+        ].map((s, i) => (
+          <div
+            key={i}
+            style={{
+              padding: isMobile ? "10px 8px" : "12px 14px",
+              borderRight: i < 3 ? "1px solid rgba(235, 235, 235, 0.04)" : "none",
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 8.5,
+                color: "rgba(235, 235, 235, 0.25)",
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+                marginBottom: 4,
+              }}
+            >
+              {s.label}
+            </div>
+            <div
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: isMobile ? 15 : 18,
+                color: s.color,
+                fontWeight: 500,
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
+              {s.value}
+            </div>
           </div>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: "#5BBF80" }}>{rec.savings}</div>
+        ))}
+      </div>
+
+      {/* ── Column headers (desktop only) ── */}
+      {!isMobile && (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "54px 72px 1fr 52px 58px 48px 68px",
+            padding: "6px 12px",
+            borderBottom: "1px solid rgba(235, 235, 235, 0.04)",
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 8.5,
+            color: "rgba(235, 235, 235, 0.15)",
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
+          }}
+        >
+          <span>Time</span>
+          <span>Route</span>
+          <span>Model</span>
+          <span style={{ textAlign: "right" }}>Tokens</span>
+          <span style={{ textAlign: "right" }}>Cost</span>
+          <span style={{ textAlign: "right" }}>Latency</span>
+          <span style={{ textAlign: "right" }}>Status</span>
         </div>
-        <div>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: "rgba(235,235,235,0.35)", marginBottom: 2 }}>
-            Quality match
-          </div>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: "#EBEBEB" }}>{rec.quality}</div>
-        </div>
+      )}
+
+      {/* ── Request feed ── */}
+      <div
+        style={{
+          height: isMobile ? 180 : 230,
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
+        {/* Fade-out gradient at bottom */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 48,
+            background: "linear-gradient(to top, rgba(20, 20, 20, 0.95), transparent)",
+            pointerEvents: "none",
+            zIndex: 2,
+          }}
+        />
+        <AnimatePresence initial={false}>
+          {feed.map((req) => (
+            <Row key={req.id} req={req} />
+          ))}
+        </AnimatePresence>
+      </div>
+
+      {/* ── Insight bar ── */}
+      <div
+        style={{
+          borderTop: "1px solid rgba(235, 235, 235, 0.05)",
+          padding: "9px 14px",
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          minHeight: 36,
+          overflow: "hidden",
+        }}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={insightIdx}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: isMobile ? 9 : 10,
+              lineHeight: 1.4,
+            }}
+          >
+            <span style={{ color: insight.color, fontSize: 11, flexShrink: 0 }}>
+              {insight.icon}
+            </span>
+            <span style={{ color: "rgba(235, 235, 235, 0.4)" }}>
+              {insight.text}
+            </span>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </motion.div>
   );
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   CANVAS FLOW — request capsules via requestAnimationFrame
+   GRID BACKGROUND — subtle drifting dots
    ═══════════════════════════════════════════════════════════════════ */
 
-function useRequestFlow(canvasRef, containerRef) {
-  const capsulesRef = useRef([]);
-  const frameRef = useRef(null);
-  const lastSpawnRef = useRef(0);
-  const dprRef = useRef(1);
-
-  // Pulse ripples from the Arc node
-  const ripplesRef = useRef([]);
-
-  const spawnCapsule = useCallback(() => {
-    const model = MODELS[Math.floor(Math.random() * MODELS.length)];
-    const provider = PROVIDERS.find((p) => p.name === model.provider);
-    const route = ROUTES[Math.floor(Math.random() * ROUTES.length)];
-    const tokens = Math.floor(Math.random() * 3000) + 200;
-    const cost = (tokens * (Math.random() * 0.003 + 0.001)).toFixed(4);
-    const isRateLimit = Math.random() < 0.06;
-    const speed = 0.3 + Math.random() * 0.5;
-
-    capsulesRef.current.push({
-      model: model.name,
-      route,
-      tokens,
-      cost,
-      color: isRateLimit ? "#E5A84D" : model.color,
-      status: isRateLimit ? 429 : 200,
-      providerY: provider.y,
-      providerColor: provider.color,
-      // Phase: 0 = moving right to arc, 1 = at arc, 2 = fanning to provider
-      phase: 0,
-      x: 0,
-      y: 0.5,
-      speed,
-      arcX: 0.42,
-      arcPause: 0,
-      opacity: 0,
-      targetY: provider.y + (Math.random() - 0.5) * 0.06,
-    });
-  }, []);
+function GridBackground() {
+  const canvasRef = useRef(null);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -225,12 +504,12 @@ function useRequestFlow(canvasRef, containerRef) {
     if (!canvas || !container) return;
 
     const ctx = canvas.getContext("2d");
-    dprRef.current = window.devicePixelRatio || 1;
+    let dpr = window.devicePixelRatio || 1;
+    let raf;
 
     const resize = () => {
       const rect = container.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      dprRef.current = dpr;
+      dpr = window.devicePixelRatio || 1;
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
       canvas.style.width = rect.width + "px";
@@ -241,241 +520,46 @@ function useRequestFlow(canvasRef, containerRef) {
     window.addEventListener("resize", resize);
 
     const draw = (now) => {
-      const w = canvas.width / dprRef.current;
-      const h = canvas.height / dprRef.current;
+      const w = canvas.width / dpr;
+      const h = canvas.height / dpr;
       ctx.clearRect(0, 0, w, h);
 
-      // ── Draw grid dots ──
-      const spacing = 40;
-      const arcCx = w * 0.42;
-      const arcCy = h * 0.5;
+      const spacing = 48;
+      const cx = w * 0.5;
+      const cy = h * 0.55;
+
       for (let x = spacing / 2; x < w; x += spacing) {
         for (let y = spacing / 2; y < h; y += spacing) {
-          const dx = x - arcCx;
-          const dy = y - arcCy;
+          const dx = x - cx;
+          const dy = y - cy;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const pulse = Math.sin(now * 0.001 - dist * 0.008) * 0.5 + 0.5;
-          const alpha = 0.03 + pulse * 0.04;
+          const maxDist = Math.sqrt(cx * cx + cy * cy);
+          const falloff = 1 - Math.min(dist / maxDist, 1);
+          const pulse = Math.sin(now * 0.0008 - dist * 0.006) * 0.5 + 0.5;
+          const alpha = (0.015 + pulse * 0.025) * falloff;
+
           ctx.fillStyle = `rgba(235, 235, 235, ${alpha})`;
           ctx.beginPath();
-          ctx.arc(x, y, 0.8, 0, Math.PI * 2);
+          ctx.arc(x, y, 0.7, 0, Math.PI * 2);
           ctx.fill();
         }
       }
 
-      // ── Draw node labels ──
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
-      // "Your App" — left side
-      const appX = w * 0.08;
-      const appY = h * 0.5;
-      ctx.fillStyle = "rgba(235, 235, 235, 0.25)";
-      ctx.font = "500 11px 'JetBrains Mono', monospace";
-      ctx.fillText("Your App", appX, appY - 24);
-      // App node box
-      ctx.strokeStyle = "rgba(235, 235, 235, 0.1)";
-      ctx.lineWidth = 1;
-      roundRect(ctx, appX - 36, appY - 14, 72, 28, 4);
-      ctx.stroke();
-      ctx.fillStyle = "rgba(235, 235, 235, 0.03)";
-      ctx.fill();
-      ctx.fillStyle = "rgba(235, 235, 235, 0.5)";
-      ctx.font = "11px 'JetBrains Mono', monospace";
-      ctx.fillText("POST /v1", appX, appY);
-
-      // "Arc" — center node
-      const arcR = 28;
-      // Glow rings
-      const ringPulse = Math.sin(now * 0.002) * 0.5 + 0.5;
-      ctx.strokeStyle = `rgba(192, 57, 43, ${0.08 + ringPulse * 0.06})`;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(arcCx, arcCy, arcR + 8, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.strokeStyle = `rgba(192, 57, 43, ${0.04 + ringPulse * 0.03})`;
-      ctx.beginPath();
-      ctx.arc(arcCx, arcCy, arcR + 16, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Arc circle
-      ctx.beginPath();
-      ctx.arc(arcCx, arcCy, arcR, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(192, 57, 43, 0.08)";
-      ctx.fill();
-      ctx.strokeStyle = "rgba(192, 57, 43, 0.35)";
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-      ctx.fillStyle = "#EBEBEB";
-      ctx.font = "400 16px 'Ronzino', serif";
-      ctx.fillText("Arc", arcCx, arcCy + 1);
-
-      // Provider nodes — right side
-      PROVIDERS.forEach((p) => {
-        const px = w * 0.82;
-        const py = h * p.y;
-        ctx.strokeStyle = `${p.color}15`;
-        ctx.lineWidth = 1;
-        roundRect(ctx, px - 48, py - 14, 96, 28, 4);
-        ctx.stroke();
-        ctx.fillStyle = `${p.color}08`;
-        ctx.fill();
-        ctx.fillStyle = `${p.color}80`;
-        ctx.font = "11px 'JetBrains Mono', monospace";
-        ctx.fillText(p.name, px, py + 1);
-      });
-
-      // ── Draw connection lines (dashed, faint) ──
-      ctx.setLineDash([3, 5]);
-      ctx.strokeStyle = "rgba(235, 235, 235, 0.06)";
-      ctx.lineWidth = 1;
-
-      // App → Arc
-      ctx.beginPath();
-      ctx.moveTo(appX + 36, appY);
-      ctx.lineTo(arcCx - arcR, arcCy);
-      ctx.stroke();
-
-      // Arc → Providers
-      PROVIDERS.forEach((p) => {
-        const px = w * 0.82;
-        const py = h * p.y;
-        ctx.beginPath();
-        ctx.moveTo(arcCx + arcR, arcCy);
-        ctx.lineTo(px - 48, py);
-        ctx.stroke();
-      });
-      ctx.setLineDash([]);
-
-      // ── Ripples from arc ──
-      ripplesRef.current = ripplesRef.current.filter((r) => r.opacity > 0.01);
-      ripplesRef.current.forEach((r) => {
-        r.radius += 0.8;
-        r.opacity *= 0.985;
-        ctx.beginPath();
-        ctx.arc(arcCx, arcCy, r.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(192, 57, 43, ${r.opacity})`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-      });
-
-      // ── Spawn new capsules ──
-      if (now - lastSpawnRef.current > 300 + Math.random() * 400) {
-        spawnCapsule();
-        lastSpawnRef.current = now;
-      }
-
-      // ── Update & draw capsules ──
-      capsulesRef.current = capsulesRef.current.filter((c) => c.opacity > -0.5);
-
-      capsulesRef.current.forEach((c) => {
-        const dt = 1;
-
-        if (c.phase === 0) {
-          // Moving toward Arc node
-          c.x += c.speed * 0.008 * dt;
-          c.opacity = Math.min(1, c.opacity + 0.06);
-          if (c.x >= c.arcX - 0.04) {
-            c.phase = 1;
-            c.arcPause = 0;
-            // Spawn a ripple
-            ripplesRef.current.push({ radius: arcR, opacity: 0.15 });
-          }
-        } else if (c.phase === 1) {
-          // Brief pause at Arc
-          c.arcPause += 1;
-          c.x = c.arcX;
-          if (c.arcPause > 12) {
-            c.phase = 2;
-          }
-        } else if (c.phase === 2) {
-          // Fan out to provider
-          c.x += c.speed * 0.008 * dt;
-          // Lerp y toward target
-          c.y += (c.targetY - c.y) * 0.06;
-          if (c.x > 1.05) {
-            c.opacity -= 0.1;
-          }
-        }
-
-        if (c.opacity <= 0) return;
-
-        const cx = c.x * w;
-        const cy = c.y * h;
-
-        // Capsule glow trail
-        const grad = ctx.createLinearGradient(cx - 30, cy, cx, cy);
-        grad.addColorStop(0, "transparent");
-        grad.addColorStop(1, c.status === 429 ? "rgba(229, 168, 77, 0.15)" : `rgba(235, 235, 235, 0.06)`);
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.moveTo(cx - 30, cy - 3);
-        ctx.lineTo(cx, cy - 3);
-        ctx.lineTo(cx, cy + 3);
-        ctx.lineTo(cx - 30, cy + 3);
-        ctx.fill();
-
-        // Capsule dot
-        ctx.beginPath();
-        ctx.arc(cx, cy, c.status === 429 ? 3 : 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = c.color + (c.status === 429 ? "cc" : "88");
-        ctx.globalAlpha = c.opacity;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-
-        // Label — only show for phase 0 & 1, large screens
-        if (w > 600 && c.phase < 2 && c.opacity > 0.5) {
-          ctx.globalAlpha = c.opacity * 0.6;
-          ctx.fillStyle = c.color;
-          ctx.font = "9px 'JetBrains Mono', monospace";
-          ctx.textAlign = "left";
-
-          // Model name
-          const labelParts = c.model.length > 12 ? c.model.slice(0, 12) + "…" : c.model;
-          ctx.fillText(labelParts, cx + 8, cy - 2);
-
-          // Token + cost
-          ctx.fillStyle = "rgba(235, 235, 235, 0.3)";
-          ctx.fillText(`${c.tokens}tk · $${c.cost}`, cx + 8, cy + 9);
-
-          ctx.textAlign = "center";
-          ctx.globalAlpha = 1;
-        }
-
-        // Rate-limit flash
-        if (c.status === 429 && c.phase === 1) {
-          ctx.globalAlpha = 0.3;
-          ctx.fillStyle = "#E5A84D";
-          ctx.font = "bold 8px 'JetBrains Mono', monospace";
-          ctx.fillText("429 → reroute", cx, cy - 14);
-          ctx.globalAlpha = 1;
-        }
-      });
-
-      frameRef.current = requestAnimationFrame(draw);
+      raf = requestAnimationFrame(draw);
     };
 
-    frameRef.current = requestAnimationFrame(draw);
+    raf = requestAnimationFrame(draw);
     return () => {
-      cancelAnimationFrame(frameRef.current);
+      cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
     };
-  }, [spawnCapsule]);
-}
+  }, []);
 
-/* helper: rounded rect path */
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.arcTo(x + w, y, x + w, y + r, r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
-  ctx.lineTo(x + r, y + h);
-  ctx.arcTo(x, y + h, x, y + h - r, r);
-  ctx.lineTo(x, y + r);
-  ctx.arcTo(x, y, x + r, y, r);
-  ctx.closePath();
+  return (
+    <div ref={containerRef} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+      <canvas ref={canvasRef} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} />
+    </div>
+  );
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -485,29 +569,24 @@ function roundRect(ctx, x, y, w, h, r) {
 function CodeDiffStrip() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 2.4 }}
+      transition={{ duration: 0.7, delay: 1.6 }}
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 0,
         width: "100%",
-        maxWidth: 720,
+        maxWidth: 620,
         margin: "0 auto",
         borderRadius: 6,
         overflow: "hidden",
-        border: "1px solid rgba(235, 235, 235, 0.06)",
+        border: "1px solid rgba(235, 235, 235, 0.05)",
       }}
     >
-      {/* Old */}
+      {/* Old line */}
       <div
         style={{
-          flex: 1,
-          padding: "12px 16px",
+          padding: "10px 14px",
           background: "rgba(192, 57, 43, 0.04)",
-          borderRight: "1px solid rgba(235, 235, 235, 0.06)",
+          borderBottom: "1px solid rgba(235, 235, 235, 0.04)",
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: 11,
           display: "flex",
@@ -515,17 +594,19 @@ function CodeDiffStrip() {
           gap: 8,
         }}
       >
-        <span style={{ color: "rgba(192, 57, 43, 0.5)", fontWeight: 700 }}>−</span>
-        <span style={{ color: "rgba(235, 235, 235, 0.25)" }}>
-          base_url: <span style={{ color: "rgba(235, 235, 235, 0.35)", textDecoration: "line-through" }}>"api.openai.com/v1"</span>
+        <span style={{ color: "rgba(192, 57, 43, 0.45)", fontWeight: 700, flexShrink: 0 }}>−</span>
+        <span style={{ color: "rgba(235, 235, 235, 0.2)" }}>
+          base_url:{" "}
+          <span style={{ color: "rgba(235, 235, 235, 0.3)", textDecoration: "line-through" }}>
+            &quot;api.openai.com/v1&quot;
+          </span>
         </span>
       </div>
-      {/* New */}
+      {/* New line */}
       <div
         style={{
-          flex: 1,
-          padding: "12px 16px",
-          background: "rgba(91, 191, 128, 0.04)",
+          padding: "10px 14px",
+          background: "rgba(91, 191, 128, 0.03)",
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: 11,
           display: "flex",
@@ -533,9 +614,10 @@ function CodeDiffStrip() {
           gap: 8,
         }}
       >
-        <span style={{ color: "rgba(91, 191, 128, 0.7)", fontWeight: 700 }}>+</span>
-        <span style={{ color: "rgba(235, 235, 235, 0.35)" }}>
-          base_url: <span style={{ color: "#EBEBEB" }}>"arc.cornerstone.sh/v1"</span>
+        <span style={{ color: "rgba(91, 191, 128, 0.6)", fontWeight: 700, flexShrink: 0 }}>+</span>
+        <span style={{ color: "rgba(235, 235, 235, 0.2)" }}>
+          base_url:{" "}
+          <span style={{ color: "#EBEBEB" }}>&quot;arc.cornerstone.sh/v1&quot;</span>
         </span>
       </div>
     </motion.div>
@@ -543,53 +625,28 @@ function CodeDiffStrip() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   HERO — main export
+   HERO
    ═══════════════════════════════════════════════════════════════════ */
 
 export default function ArcHero() {
-  const canvasRef = useRef(null);
-  const containerRef = useRef(null);
   const [mounted, setMounted] = useState(false);
-  const [recIdx, setRecIdx] = useState(-1);
-  const [showRec, setShowRec] = useState(false);
-
-  // Live counters
   const [requests, setRequests] = useState(0);
-  const [costSaved, setCostSaved] = useState(0);
+  const [cacheRate, setCacheRate] = useState(0);
   const [latency, setLatency] = useState(0);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Canvas flow
-  useRequestFlow(canvasRef, containerRef);
-
   // Counter tick
   useEffect(() => {
     if (!mounted) return;
     const interval = setInterval(() => {
-      setRequests((r) => r + Math.floor(Math.random() * 4) + 1);
-      setCostSaved((c) => c + Math.random() * 0.08 + 0.01);
+      setRequests((r) => r + Math.floor(Math.random() * 5) + 1);
+      setCacheRate(() => 28 + Math.random() * 14);
       setLatency(() => 8 + Math.random() * 9);
-    }, 800);
+    }, 900);
     return () => clearInterval(interval);
-  }, [mounted]);
-
-  // Recommendation cycle: show for 5s every 9s
-  useEffect(() => {
-    if (!mounted) return;
-    let timeout;
-    const cycle = () => {
-      setRecIdx((i) => (i + 1) % RECOMMENDATIONS.length);
-      setShowRec(true);
-      timeout = setTimeout(() => {
-        setShowRec(false);
-        timeout = setTimeout(cycle, 4000);
-      }, 5000);
-    };
-    timeout = setTimeout(cycle, 6000);
-    return () => clearTimeout(timeout);
   }, [mounted]);
 
   return (
@@ -603,44 +660,24 @@ export default function ArcHero() {
         justifyContent: "center",
         background: "#0A0A0A",
         overflow: "hidden",
-        padding: "0 24px",
+        padding: "0 20px",
       }}
     >
-      {/* ── Radial glow from Arc center ── */}
+      {/* Radial glow */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           pointerEvents: "none",
           background:
-            "radial-gradient(ellipse 60% 50% at 42% 55%, rgba(192, 57, 43, 0.06) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 50% at 50% 60%, rgba(192, 57, 43, 0.04) 0%, transparent 70%)",
         }}
       />
 
-      {/* ── Canvas: flow viz + grid ── */}
-      <div
-        ref={containerRef}
-        style={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-        }}
-      >
-        {mounted && (
-          <canvas
-            ref={canvasRef}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-            }}
-          />
-        )}
-      </div>
+      {/* Grid dots */}
+      {mounted && <GridBackground />}
 
-      {/* ── Content layer ── */}
+      {/* Content */}
       <div
         style={{
           position: "relative",
@@ -651,100 +688,56 @@ export default function ArcHero() {
           flexDirection: "column",
           alignItems: "center",
           paddingTop: 120,
-          paddingBottom: 48,
+          paddingBottom: 56,
         }}
       >
-        {/* ── Live counters ── */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          style={{
-            display: "flex",
-            gap: 32,
-            marginBottom: 40,
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}
-        >
-          {[
-            { label: "Requests routed", val: <SmoothCounter value={requests} />, mono: true },
-            { label: "Cost saved", val: <SmoothCounter value={costSaved} prefix="$" decimals={2} />, green: true },
-            { label: "Latency added", val: <SmoothCounter value={latency} suffix="ms" decimals={1} />, mono: true },
-          ].map((s, i) => (
-            <div key={i} style={{ textAlign: "center", minWidth: 120 }}>
-              <div
-                style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: 10,
-                  color: "rgba(235, 235, 235, 0.3)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.1em",
-                  marginBottom: 4,
-                }}
-              >
-                {s.label}
-              </div>
-              <div
-                style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: 22,
-                  color: s.green ? "#5BBF80" : "#EBEBEB",
-                  fontWeight: 500,
-                }}
-              >
-                {s.val}
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
         {/* ── Headline ── */}
         <motion.h1
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
           style={{
             fontFamily: "'Ronzino', serif",
-            fontSize: "clamp(2.4rem, 6vw, 4.5rem)",
+            fontSize: "clamp(2.6rem, 7vw, 5rem)",
             fontWeight: 400,
             color: "#EBEBEB",
             textAlign: "center",
-            lineHeight: 1.08,
-            letterSpacing: "-0.02em",
-            marginBottom: 16,
-            maxWidth: 700,
+            lineHeight: 1.05,
+            letterSpacing: "-0.025em",
+            marginBottom: 20,
+            maxWidth: 720,
           }}
         >
-          Your AI calls are expensive.
+          One endpoint.
           <br />
-          <span style={{ color: "rgba(235, 235, 235, 0.3)" }}>We fix that.</span>
+          <span style={{ color: "rgba(235, 235, 235, 0.25)" }}>Every provider.</span>
         </motion.h1>
 
         {/* ── Subhead ── */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 15,
+            fontSize: "clamp(13px, 1.6vw, 15px)",
             color: "rgba(235, 235, 235, 0.35)",
             textAlign: "center",
-            maxWidth: 520,
-            lineHeight: 1.6,
-            marginBottom: 32,
+            maxWidth: 540,
+            lineHeight: 1.65,
+            marginBottom: 36,
           }}
         >
-          Arc is a managed proxy for LLM APIs. One endpoint. Every provider.
-          Proactive optimization.
+          Arc is a managed proxy for LLM APIs that doesn&apos;t just observe — it optimizes.
+          Change one line of code to get cost tracking, multi-provider routing,
+          and proactive recommendations that cut your inference bill.
         </motion.p>
 
         {/* ── CTAs ── */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.2 }}
+          transition={{ duration: 0.5, delay: 0.9 }}
           style={{
             display: "flex",
             gap: 12,
@@ -758,7 +751,6 @@ export default function ArcHero() {
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: 6,
               padding: "10px 28px",
               background: "#EBEBEB",
               color: "#0A0A0A",
@@ -772,17 +764,16 @@ export default function ArcHero() {
             onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
-            Start 14-day trial →
+            Start free →
           </Link>
           <a
             href="#how-it-works"
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: 6,
               padding: "10px 28px",
-              border: "1px solid rgba(235, 235, 235, 0.15)",
-              color: "rgba(235, 235, 235, 0.6)",
+              border: "1px solid rgba(235, 235, 235, 0.12)",
+              color: "rgba(235, 235, 235, 0.5)",
               borderRadius: 999,
               fontFamily: "'Inter', sans-serif",
               fontSize: 13,
@@ -791,47 +782,43 @@ export default function ArcHero() {
               transition: "border-color 0.2s, color 0.2s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "rgba(235, 235, 235, 0.3)";
-              e.currentTarget.style.color = "rgba(235, 235, 235, 0.8)";
+              e.currentTarget.style.borderColor = "rgba(235, 235, 235, 0.25)";
+              e.currentTarget.style.color = "rgba(235, 235, 235, 0.7)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(235, 235, 235, 0.15)";
-              e.currentTarget.style.color = "rgba(235, 235, 235, 0.6)";
+              e.currentTarget.style.borderColor = "rgba(235, 235, 235, 0.12)";
+              e.currentTarget.style.color = "rgba(235, 235, 235, 0.5)";
             }}
           >
             See it in action ↓
           </a>
         </motion.div>
 
-        {/* ── Recommendation card — absolute overlay on right ── */}
-        <div
-          style={{
-            position: "fixed",
-            bottom: 100,
-            right: 32,
-            zIndex: 20,
-            pointerEvents: "none",
-          }}
-        >
-          <AnimatePresence mode="wait">
-            {showRec && recIdx >= 0 && (
-              <RecommendationCard key={recIdx} rec={RECOMMENDATIONS[recIdx]} />
-            )}
-          </AnimatePresence>
-        </div>
+        {/* ── Operations panel ── */}
+        {mounted && (
+          <OperationsPanel
+            requests={requests}
+            cacheRate={cacheRate}
+            latencyOverhead={latency}
+            providers={3}
+          />
+        )}
 
-        {/* ── Code diff strip ── */}
+        {/* ── Spacer ── */}
+        <div style={{ height: 32 }} />
+
+        {/* ── Code diff ── */}
         <CodeDiffStrip />
 
-        {/* ── "That's it. One line." ── */}
+        {/* ── Label ── */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 2.8 }}
+          transition={{ duration: 0.5, delay: 2.0 }}
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: 12,
-            color: "rgba(235, 235, 235, 0.25)",
+            color: "rgba(235, 235, 235, 0.2)",
             marginTop: 10,
             textAlign: "center",
           }}
@@ -840,30 +827,29 @@ export default function ArcHero() {
         </motion.p>
       </div>
 
-      {/* ── Scroll indicator ── */}
+      {/* ── Scroll chevron ── */}
       <motion.div
         style={{
           position: "absolute",
-          bottom: 28,
+          bottom: 24,
           left: "50%",
           transform: "translateX(-50%)",
         }}
         animate={{ opacity: [0, 0.3, 0] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
       >
-        <svg
-          width="16"
-          height="10"
-          viewBox="0 0 16 10"
-          fill="none"
-          stroke="rgba(235, 235, 235, 0.5)"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
+        <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke="rgba(235,235,235,0.5)" strokeWidth="1.5" strokeLinecap="round">
           <path d="M2 2l6 6 6-6" />
         </svg>
       </motion.div>
+
+      {/* Pulse keyframe */}
+      <style>{`
+        @keyframes arc-pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+      `}</style>
     </section>
   );
 }
