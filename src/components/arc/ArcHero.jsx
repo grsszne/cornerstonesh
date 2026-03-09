@@ -804,9 +804,9 @@ export default function ArcHero() {
             maxWidth: 720,
           }}
         >
-          We watch every
+          Arc sees every call.
           <br />
-          <span style={{ color: T.textTertiary }}>AI call. Then we fix it.</span>
+          <span style={{ color: T.textTertiary }}>Then it fixes it.</span>
         </motion.h1>
 
         {/* ── Subhead ── */}
