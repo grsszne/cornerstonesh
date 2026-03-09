@@ -18,6 +18,33 @@
     --accent: #cc2222;
     --muted: #f5f5f7;
     --border-color: #e5e5e5;
+
+    /* ── Arc design tokens — light mode ── */
+    --arc-surface-page:   #F8F8F8;
+    --arc-surface-card:   #FFFFFF;
+    --arc-surface-raised: #F2F2F2;
+    --arc-text-primary:   #111111;
+    --arc-text-secondary: #888888;
+    --arc-text-tertiary:  #BBBBBB;
+    --arc-border-subtle:  #E8E8E8;
+    --arc-border-default: #D8D8D8;
+    --arc-status-healthy: #4AA06D;
+    --arc-status-warning: #D4923A;
+    --arc-status-error:   #C0392B;
+    --arc-provider-openai:     #111111;
+    --arc-provider-anthropic:  #C0392B;
+    --arc-provider-google:     #2E5E5C;
+    --arc-dot-rgb: 17, 17, 17;
+
+    --arc-clay-bg:  #F0E6DC; --arc-clay-fg:  #8B4A28;
+    --arc-moss-bg:  #DCE8D8; --arc-moss-fg:  #3A6830;
+    --arc-ochre-bg: #EDE4D0; --arc-ochre-fg: #8A6020;
+    --arc-dusk-bg:  #E8D8D8; --arc-dusk-fg:  #8A3E3E;
+    --arc-slate-bg: #D8E4E2; --arc-slate-fg: #2E5E5C;
+    --arc-mauve-bg: #E8DCEC; --arc-mauve-fg: #6A4870;
+    --arc-pine-bg:  #DCE8DC; --arc-pine-fg:  #2A6840;
+    --arc-stone-bg: #E6E4E0; --arc-stone-fg: #6B6860;
+    --arc-sand-bg:  #E8E2D4; --arc-sand-fg:  #7A5A3A;
 }
 
 @theme inline {
@@ -39,6 +66,33 @@
         --foreground: #f5f5f7;
         --muted: #1a1a1a;
         --border-color: #333333;
+
+        /* ── Arc design tokens — dark mode ── */
+        --arc-surface-page:   #0A0A0A;
+        --arc-surface-card:   #141414;
+        --arc-surface-raised: #1A1A1A;
+        --arc-text-primary:   #EBEBEB;
+        --arc-text-secondary: #5A5A5A;
+        --arc-text-tertiary:  #333333;
+        --arc-border-subtle:  #1E1E1E;
+        --arc-border-default: #2C2C2C;
+        --arc-status-healthy: #5BBF80;
+        --arc-status-warning: #E5A84D;
+        --arc-status-error:   #E74C3C;
+        --arc-provider-openai:    #D0D0D0;
+        --arc-provider-anthropic: #C0392B;
+        --arc-provider-google:    #70AAA8;
+        --arc-dot-rgb: 235, 235, 235;
+
+        --arc-clay-bg:  rgba(139, 94, 60, 0.18);  --arc-clay-fg:  #C08860;
+        --arc-moss-bg:  rgba(74, 103, 65, 0.18);  --arc-moss-fg:  #7AAA6A;
+        --arc-ochre-bg: rgba(122, 98, 48, 0.18);  --arc-ochre-fg: #BCA060;
+        --arc-dusk-bg:  rgba(107, 79, 79, 0.18);  --arc-dusk-fg:  #B08080;
+        --arc-slate-bg: rgba(77, 98, 96, 0.18);   --arc-slate-fg: #70AAA8;
+        --arc-mauve-bg: rgba(107, 85, 112, 0.18); --arc-mauve-fg: #B090B8;
+        --arc-pine-bg:  rgba(74, 103, 65, 0.18);  --arc-pine-fg:  #80B890;
+        --arc-stone-bg: rgba(100, 100, 95, 0.15); --arc-stone-fg: #909088;
+        --arc-sand-bg:  rgba(122, 110, 90, 0.18); --arc-sand-fg:  #B0A080;
     }
 }
 

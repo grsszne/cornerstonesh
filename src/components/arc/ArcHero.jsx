@@ -5,37 +5,36 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 /* ═══════════════════════════════════════════════════════════════════
-   ARC DARK-MODE DESIGN TOKENS (hardcoded — this is a marketing site)
+   ARC DESIGN TOKENS — CSS variable references (light/dark via globals.css)
    ═══════════════════════════════════════════════════════════════════ */
 
 const T = {
-  surfacePage: "#0A0A0A",
-  surfaceCard: "#141414",
-  surfaceRaised: "#1A1A1A",
-  textPrimary: "#EBEBEB",
-  textSecondary: "#5A5A5A",
-  textTertiary: "#333333",
-  borderSubtle: "#1E1E1E",
-  borderDefault: "#2C2C2C",
-  statusHealthy: "#5BBF80",
-  statusWarning: "#E5A84D",
-  statusError: "#E74C3C",
-  providerOpenai: "#D0D0D0",
-  providerAnthropic: "#C0392B",
-  providerGoogle: "#70AAA8",
+  surfacePage:       "var(--arc-surface-page)",
+  surfaceCard:       "var(--arc-surface-card)",
+  surfaceRaised:     "var(--arc-surface-raised)",
+  textPrimary:       "var(--arc-text-primary)",
+  textSecondary:     "var(--arc-text-secondary)",
+  textTertiary:      "var(--arc-text-tertiary)",
+  borderSubtle:      "var(--arc-border-subtle)",
+  borderDefault:     "var(--arc-border-default)",
+  statusHealthy:     "var(--arc-status-healthy)",
+  statusWarning:     "var(--arc-status-warning)",
+  statusError:       "var(--arc-status-error)",
+  providerOpenai:    "var(--arc-provider-openai)",
+  providerAnthropic: "var(--arc-provider-anthropic)",
+  providerGoogle:    "var(--arc-provider-google)",
 };
 
-/* Earthy palette — dark mode values from Arc */
 const SWATCH = {
-  clay:  { bg: "rgba(139, 94, 60, 0.18)",  fg: "#C08860" },
-  moss:  { bg: "rgba(74, 103, 65, 0.18)",  fg: "#7AAA6A" },
-  ochre: { bg: "rgba(122, 98, 48, 0.18)",  fg: "#BCA060" },
-  dusk:  { bg: "rgba(107, 79, 79, 0.18)",  fg: "#B08080" },
-  slate: { bg: "rgba(77, 98, 96, 0.18)",   fg: "#70AAA8" },
-  mauve: { bg: "rgba(107, 85, 112, 0.18)", fg: "#B090B8" },
-  pine:  { bg: "rgba(74, 103, 65, 0.18)",  fg: "#80B890" },
-  stone: { bg: "rgba(100, 100, 95, 0.15)", fg: "#909088" },
-  sand:  { bg: "rgba(122, 110, 90, 0.18)", fg: "#B0A080" },
+  clay:  { bg: "var(--arc-clay-bg)",  fg: "var(--arc-clay-fg)"  },
+  moss:  { bg: "var(--arc-moss-bg)",  fg: "var(--arc-moss-fg)"  },
+  ochre: { bg: "var(--arc-ochre-bg)", fg: "var(--arc-ochre-fg)" },
+  dusk:  { bg: "var(--arc-dusk-bg)",  fg: "var(--arc-dusk-fg)"  },
+  slate: { bg: "var(--arc-slate-bg)", fg: "var(--arc-slate-fg)" },
+  mauve: { bg: "var(--arc-mauve-bg)", fg: "var(--arc-mauve-fg)" },
+  pine:  { bg: "var(--arc-pine-bg)",  fg: "var(--arc-pine-fg)"  },
+  stone: { bg: "var(--arc-stone-bg)", fg: "var(--arc-stone-fg)" },
+  sand:  { bg: "var(--arc-sand-bg)",  fg: "var(--arc-sand-fg)"  },
 };
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -66,12 +65,12 @@ const MODELS = [
 ];
 
 const INSIGHTS = [
-  { icon: "↻", color: T.statusWarning, text: "Rerouted /classify — OpenAI latency spike detected → Anthropic (0 downtime)" },
-  { icon: "◆", color: SWATCH.slate.fg, text: "Semantic cache hit on /embed — identical query detected, saved 340ms" },
-  { icon: "◉", color: SWATCH.mauve.fg, text: "Shadow test: Claude Haiku scored 98.7% vs GPT-4o on /classify — recommend switch" },
-  { icon: "▲", color: T.statusHealthy, text: "Recommendation: /summarize → GPT-4o-mini ($310/mo savings, 98.4% quality match)" },
-  { icon: "⚡", color: T.statusWarning, text: "Provider failover: OpenAI 503 → Anthropic Claude Sonnet (automatic, 0 dropped)" },
-  { icon: "◈", color: SWATCH.clay.fg, text: "Rate limit approaching on /chat (87/100 RPM) — adaptive throttling engaged" },
+  { icon: "↻", color: "var(--arc-status-warning)", text: "Rerouted /classify — OpenAI latency spike detected → Anthropic (0 downtime)" },
+  { icon: "◆", color: "var(--arc-slate-fg)",       text: "Semantic cache hit on /embed — identical query detected, saved 340ms" },
+  { icon: "◉", color: "var(--arc-mauve-fg)",       text: "Shadow test: Claude Haiku scored 98.7% vs GPT-4o on /classify — recommend switch" },
+  { icon: "▲", color: "var(--arc-status-healthy)", text: "Recommendation: /summarize → GPT-4o-mini ($310/mo savings, 98.4% quality match)" },
+  { icon: "⚡", color: "var(--arc-status-warning)", text: "Provider failover: OpenAI 503 → Anthropic Claude Sonnet (automatic, 0 dropped)" },
+  { icon: "◈", color: "var(--arc-clay-fg)",        text: "Rate limit approaching on /chat (87/100 RPM) — adaptive throttling engaged" },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -245,8 +244,8 @@ function LogRow({ req, elapsed }) {
               padding: "1px 5px",
               borderRadius: 3,
               color: T.statusWarning,
-              border: `1px solid rgba(229, 168, 77, 0.35)`,
-              background: "rgba(229, 168, 77, 0.08)",
+              border: "1px solid color-mix(in srgb, var(--arc-status-warning) 35%, transparent)",
+              background: "color-mix(in srgb, var(--arc-status-warning) 8%, transparent)",
               verticalAlign: "middle",
               textTransform: "uppercase",
               fontFamily: "'Inter', sans-serif",
@@ -430,7 +429,7 @@ function OperationsPanel({ reqCount, cacheRate, latencyOverhead, providerCount }
               height: 6,
               borderRadius: "50%",
               background: T.statusHealthy,
-              boxShadow: `0 0 8px rgba(91, 191, 128, 0.4)`,
+              boxShadow: "0 0 8px color-mix(in srgb, var(--arc-status-healthy) 40%, transparent)",
               animation: "arc-pulse 2s ease-in-out infinite",
             }}
           />
@@ -613,6 +612,13 @@ function GridBackground() {
     const ctx = canvas.getContext("2d");
     let dpr = window.devicePixelRatio || 1;
     let raf;
+    // Read dot RGB from CSS variable so it adapts to light/dark mode
+    const readDotRgb = () =>
+      getComputedStyle(document.documentElement).getPropertyValue("--arc-dot-rgb").trim() || "17, 17, 17";
+    let dotRgb = readDotRgb();
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const onSchemeChange = () => { dotRgb = readDotRgb(); };
+    mq.addEventListener("change", onSchemeChange);
 
     const resize = () => {
       const rect = container.getBoundingClientRect();
@@ -644,7 +650,7 @@ function GridBackground() {
           const falloff = 1 - Math.min(dist / maxDist, 1);
           const pulse = Math.sin(now * 0.0008 - dist * 0.006) * 0.5 + 0.5;
           const alpha = (0.012 + pulse * 0.02) * falloff;
-          ctx.fillStyle = `rgba(235, 235, 235, ${alpha})`;
+          ctx.fillStyle = `rgba(${dotRgb}, ${alpha})`;
           ctx.beginPath();
           ctx.arc(x, y, 0.7, 0, Math.PI * 2);
           ctx.fill();
@@ -656,6 +662,7 @@ function GridBackground() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      mq.removeEventListener("change", onSchemeChange);
     };
   }, []);
 
@@ -688,7 +695,7 @@ function CodeDiffStrip() {
       <div
         style={{
           padding: "10px 14px",
-          background: "rgba(192, 57, 43, 0.04)",
+          background: "color-mix(in srgb, var(--arc-status-error) 4%, transparent)",
           borderBottom: `1px solid ${T.borderSubtle}`,
           ...MONO,
           fontSize: 11,
@@ -697,7 +704,7 @@ function CodeDiffStrip() {
           gap: 8,
         }}
       >
-        <span style={{ color: "rgba(192, 57, 43, 0.45)", fontWeight: 700, flexShrink: 0 }}>−</span>
+        <span style={{ color: "color-mix(in srgb, var(--arc-status-error) 50%, transparent)", fontWeight: 700, flexShrink: 0 }}>−</span>
         <span style={{ color: T.textTertiary }}>
           base_url:{" "}
           <span style={{ color: T.textSecondary, textDecoration: "line-through" }}>
@@ -708,7 +715,7 @@ function CodeDiffStrip() {
       <div
         style={{
           padding: "10px 14px",
-          background: "rgba(91, 191, 128, 0.03)",
+          background: "color-mix(in srgb, var(--arc-status-healthy) 3%, transparent)",
           ...MONO,
           fontSize: 11,
           display: "flex",
@@ -716,7 +723,7 @@ function CodeDiffStrip() {
           gap: 8,
         }}
       >
-        <span style={{ color: "rgba(91, 191, 128, 0.6)", fontWeight: 700, flexShrink: 0 }}>+</span>
+        <span style={{ color: "color-mix(in srgb, var(--arc-status-healthy) 60%, transparent)", fontWeight: 700, flexShrink: 0 }}>+</span>
         <span style={{ color: T.textTertiary }}>
           base_url:{" "}
           <span style={{ color: T.textPrimary }}>&quot;arc.cornerstone.sh/v1&quot;</span>
@@ -768,7 +775,7 @@ export default function ArcHero() {
           position: "absolute",
           inset: 0,
           pointerEvents: "none",
-          background: "radial-gradient(ellipse 70% 50% at 50% 60%, rgba(192, 57, 43, 0.035) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse 70% 50% at 50% 60%, color-mix(in srgb, var(--arc-status-error) 4%, transparent) 0%, transparent 70%)",
         }}
       />
 
