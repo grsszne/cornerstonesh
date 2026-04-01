@@ -1,43 +1,28 @@
 import ArcHero from "@/components/arc/ArcHero";
-import ArcProblem from "@/components/arc/ArcProblem";
-import ArcHowItWorks from "@/components/arc/ArcHowItWorks";
-import ArcShadowMode from "@/components/arc/ArcShadowMode";
-import ArcAutoTune from "@/components/arc/ArcAutoTune";
-import ArcAskData from "@/components/arc/ArcAskData";
-import ArcBenchmarks from "@/components/arc/ArcBenchmarks";
-import ArcReliability from "@/components/arc/ArcReliability";
+import ArcProblemSolution from "@/components/arc/ArcProblemSolution";
+import ArcBentoGrid from "@/components/arc/ArcBentoGrid";
+import ArcStartupEconomics from "@/components/arc/ArcStartupEconomics";
+import ArcCorePrimitives from "@/components/arc/ArcCorePrimitives";
+import ArcDeepDive from "@/components/arc/ArcDeepDive";
 import ArcPricing from "@/components/arc/ArcPricing";
-import ArcFooterCTA from "@/components/arc/ArcFooterCTA";
+import ArcCTA from "@/components/arc/ArcCTA";
 
 export const metadata = {
-  title: "Arc — Your AI Stack, Optimized | Cornerstone",
-  description:
-    "Arc sits between your app and your AI providers. It watches every request, runs silent experiments, and tells you exactly what to change.",
-  keywords: [
-    "Arc",
-    "AI operations",
-    "AI observability",
-    "model comparison",
-    "shadow testing",
-    "AI routing",
-    "LLM monitoring",
-    "Cornerstone",
-  ],
+  title: "Arc — Single Proxy for AI | Cornerstone",
+  description: "Stop managing AI providers. Simply point to Arc.",
 };
 
 export default function ArcPage() {
   return (
-    <main className="-mt-[72px]">
+    <main className="bg-[var(--arc-surface-page)] text-[var(--arc-text-primary)] selection:bg-[var(--arc-text-primary)] selection:text-[var(--arc-surface-page)] font-sans antialiased">
       <ArcHero />
-      <ArcProblem />
-      <ArcHowItWorks />
-      <ArcShadowMode />
-      <ArcAutoTune />
-      <ArcAskData />
-      <ArcBenchmarks />
-      <ArcReliability />
+      <ArcProblemSolution />
+      <ArcBentoGrid />
+      <ArcStartupEconomics />
+      <ArcCorePrimitives />
+      <ArcDeepDive />
       <ArcPricing />
-      <ArcFooterCTA />
+      <ArcCTA />
     </main>
   );
 }

@@ -5,12 +5,22 @@ import { motion, useInView } from "framer-motion";
 
 const spring = { type: "spring", stiffness: 80, damping: 20, mass: 1 };
 
-function CountUp({ target, prefix = "", suffix = "", decimals = 0, active, duration = 1200 }) {
+function CountUp({
+  target,
+  prefix = "",
+  suffix = "",
+  decimals = 0,
+  active,
+  duration = 1200,
+}) {
   const [value, setValue] = useState(0);
   const frameRef = useRef(null);
 
   useEffect(() => {
-    if (!active) { setValue(0); return; }
+    if (!active) {
+      setValue(0);
+      return;
+    }
     const start = performance.now();
     const tick = (now) => {
       const elapsed = now - start;
@@ -20,16 +30,33 @@ function CountUp({ target, prefix = "", suffix = "", decimals = 0, active, durat
       if (progress < 1) frameRef.current = requestAnimationFrame(tick);
     };
     frameRef.current = requestAnimationFrame(tick);
-    return () => { if (frameRef.current) cancelAnimationFrame(frameRef.current); };
+    return () => {
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    };
   }, [active, target, duration]);
 
-  const formatted = decimals > 0 ? value.toFixed(decimals) : Math.round(value).toLocaleString();
-  return <>{prefix}{formatted}{suffix}</>;
+  const formatted =
+    decimals > 0 ? value.toFixed(decimals) : Math.round(value).toLocaleString();
+  return (
+    <>
+      {prefix}
+      {formatted}
+      {suffix}
+    </>
+  );
 }
 
 function FrameChrome({ title, children }) {
   return (
-    <div className="border border-foreground/[0.08] bg-foreground/[0.02] overflow-hidden">
+    <div
+      className="border border-foreground/[0.08] overflow-hidden rounded-lg"
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0.15) 100%)",
+        boxShadow:
+          "inset 0 1px 3px rgba(0,0,0,0.3), inset 0 0 20px rgba(0,0,0,0.08), 0 0 0 1px rgba(255,255,255,0.02)",
+      }}
+    >
       <div className="flex items-center gap-2 px-5 py-3 border-b border-foreground/[0.06]">
         <div className="flex gap-1.5">
           <div className="w-2 h-2 rounded-full bg-foreground/10" />
@@ -63,7 +90,10 @@ function ObserveFrame() {
     { label: "Complexity", value: "Low" },
     { label: "Similar to", value: "847 previous requests" },
     { label: "Cache eligible", value: "Yes (92% similarity)" },
-    { label: "Overprovisioned", value: "Yes \u2014 this task doesn\u2019t need a frontier model" },
+    {
+      label: "Overprovisioned",
+      value: "Yes \u2014 this task doesn\u2019t need a frontier model",
+    },
   ];
 
   return (
@@ -73,10 +103,12 @@ function ObserveFrame() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ ...spring }}
       >
-        <FrameChrome title="cortex \u2014 observe">
+        <FrameChrome title={"cortex \u2014 observe"}>
           {/* Request metadata */}
           <div className="mb-6">
-            <div className="font-sans text-sm text-foreground/50 font-medium mb-4">Request #4,847</div>
+            <div className="font-sans text-sm text-foreground/50 font-medium mb-4">
+              Request #4,847
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 { label: "Model", value: "GPT-4o" },
@@ -88,7 +120,9 @@ function ObserveFrame() {
                   <div className="font-sans text-[10px] text-foreground/25 uppercase tracking-wider mb-1">
                     {item.label}
                   </div>
-                  <div className="font-mono text-[13px] text-foreground/50">{item.value}</div>
+                  <div className="font-mono text-[13px] text-foreground/50">
+                    {item.value}
+                  </div>
                 </div>
               ))}
             </div>
@@ -119,7 +153,9 @@ function ObserveFrame() {
                   <span className="font-mono text-[12px] text-foreground/50">
                     {line.value}
                     {line.extra && (
-                      <span className="text-foreground/25 ml-1">{line.extra}</span>
+                      <span className="text-foreground/25 ml-1">
+                        {line.extra}
+                      </span>
                     )}
                   </span>
                 </motion.div>
@@ -152,11 +188,13 @@ function ExperimentFrame() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ ...spring }}
       >
-        <FrameChrome title="cortex \u2014 experiment">
+        <FrameChrome title={"cortex \u2014 experiment"}>
           {/* Test header */}
           <div className="flex items-center justify-between mb-6">
             <div>
-              <div className="font-sans text-sm text-foreground/50 font-medium">Shadow Test #12</div>
+              <div className="font-sans text-sm text-foreground/50 font-medium">
+                Shadow Test #12
+              </div>
               <div className="font-mono text-[11px] text-foreground/25 mt-1">
                 Formatting tasks &middot; GPT-4o vs GPT-4o-mini
               </div>
@@ -167,7 +205,9 @@ function ExperimentFrame() {
               transition={{ duration: 2, repeat: Infinity }}
             >
               <div className="w-1.5 h-1.5 rounded-full bg-green-500/60" />
-              <span className="font-mono text-[10px] text-green-500/50 uppercase tracking-wider">Running</span>
+              <span className="font-mono text-[10px] text-green-500/50 uppercase tracking-wider">
+                Running
+              </span>
             </motion.div>
           </div>
 
@@ -175,44 +215,75 @@ function ExperimentFrame() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {/* Primary */}
             <div className="border border-foreground/[0.06] p-4">
-              <div className="font-sans text-xs text-foreground/25 uppercase tracking-wider mb-1">Primary</div>
-              <div className="font-mono text-sm text-foreground/50 mb-4">GPT-4o</div>
+              <div className="font-sans text-xs text-foreground/25 uppercase tracking-wider mb-1">
+                Primary
+              </div>
+              <div className="font-mono text-sm text-foreground/50 mb-4">
+                GPT-4o
+              </div>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="font-mono text-[11px] text-foreground/25">Avg latency</span>
+                  <span className="font-mono text-[11px] text-foreground/25">
+                    Avg latency
+                  </span>
                   <span className="font-mono text-[12px] text-foreground/40 tabular-nums">
                     <CountUp target={310} suffix="ms" active={active} />
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-mono text-[11px] text-foreground/25">Avg cost</span>
-                  <span className="font-mono text-[12px] text-foreground/40 tabular-nums">$0.008</span>
+                  <span className="font-mono text-[11px] text-foreground/25">
+                    Avg cost
+                  </span>
+                  <span className="font-mono text-[12px] text-foreground/40 tabular-nums">
+                    $0.008
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-mono text-[11px] text-foreground/25">Quality</span>
-                  <span className="font-mono text-[12px] text-foreground/25">&mdash;</span>
+                  <span className="font-mono text-[11px] text-foreground/25">
+                    Quality
+                  </span>
+                  <span className="font-mono text-[12px] text-foreground/25">
+                    &mdash;
+                  </span>
                 </div>
               </div>
             </div>
             {/* Shadow */}
             <div className="border border-foreground/[0.06] p-4">
-              <div className="font-sans text-xs text-foreground/25 uppercase tracking-wider mb-1">Shadow</div>
-              <div className="font-mono text-sm text-foreground/50 mb-4">GPT-4o-mini</div>
+              <div className="font-sans text-xs text-foreground/25 uppercase tracking-wider mb-1">
+                Shadow
+              </div>
+              <div className="font-mono text-sm text-foreground/50 mb-4">
+                GPT-4o-mini
+              </div>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="font-mono text-[11px] text-foreground/25">Avg latency</span>
+                  <span className="font-mono text-[11px] text-foreground/25">
+                    Avg latency
+                  </span>
                   <span className="font-mono text-[12px] text-foreground/40 tabular-nums">
                     <CountUp target={140} suffix="ms" active={active} />
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-mono text-[11px] text-foreground/25">Avg cost</span>
-                  <span className="font-mono text-[12px] text-foreground/40 tabular-nums">$0.0003</span>
+                  <span className="font-mono text-[11px] text-foreground/25">
+                    Avg cost
+                  </span>
+                  <span className="font-mono text-[12px] text-foreground/40 tabular-nums">
+                    $0.0003
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-mono text-[11px] text-foreground/25">Quality match</span>
+                  <span className="font-mono text-[11px] text-foreground/25">
+                    Quality match
+                  </span>
                   <span className="font-mono text-[12px] text-foreground/50 tabular-nums">
-                    <CountUp target={98.7} suffix="%" decimals={1} active={active} />
+                    <CountUp
+                      target={98.7}
+                      suffix="%"
+                      decimals={1}
+                      active={active}
+                    />
                   </span>
                 </div>
               </div>
@@ -222,7 +293,9 @@ function ExperimentFrame() {
           {/* Progress bar */}
           <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-sans text-[10px] text-foreground/25 uppercase tracking-wider">Progress</span>
+              <span className="font-sans text-[10px] text-foreground/25 uppercase tracking-wider">
+                Progress
+              </span>
               <span className="font-mono text-[11px] text-foreground/25 tabular-nums">
                 <CountUp target={847} active={active} duration={2000} /> / 1,000
               </span>
@@ -238,8 +311,8 @@ function ExperimentFrame() {
           </div>
 
           <p className="font-sans text-xs text-foreground/20 leading-relaxed">
-            Your application only sees the primary response.
-            The shadow test is invisible to your users.
+            Your application only sees the primary response. The shadow test is
+            invisible to your users.
           </p>
         </FrameChrome>
       </motion.div>
@@ -267,7 +340,7 @@ function ActFrame() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ ...spring }}
       >
-        <FrameChrome title="cortex \u2014 routing">
+        <FrameChrome title={"cortex \u2014 routing"}>
           {/* Enabled header */}
           <div className="flex items-center gap-2 mb-6">
             <span className="text-green-500/70 text-sm">&#10003;</span>
@@ -284,7 +357,9 @@ function ActFrame() {
           {/* Before / After */}
           <div className="grid grid-cols-2 gap-8 mb-6">
             <div>
-              <div className="font-sans text-[10px] text-foreground/25 uppercase tracking-wider mb-2">Before</div>
+              <div className="font-sans text-[10px] text-foreground/25 uppercase tracking-wider mb-2">
+                Before
+              </div>
               <motion.div
                 className="font-mono text-2xl md:text-3xl text-foreground/30 tabular-nums"
                 initial={{ opacity: 1 }}
@@ -293,10 +368,14 @@ function ActFrame() {
               >
                 $1,729<span className="text-sm text-foreground/15">/mo</span>
               </motion.div>
-              <div className="font-mono text-[12px] text-foreground/20 mt-1">312ms avg</div>
+              <div className="font-mono text-[12px] text-foreground/20 mt-1">
+                312ms avg
+              </div>
             </div>
             <div>
-              <div className="font-sans text-[10px] text-foreground/25 uppercase tracking-wider mb-2">After</div>
+              <div className="font-sans text-[10px] text-foreground/25 uppercase tracking-wider mb-2">
+                After
+              </div>
               <motion.div
                 className="font-mono text-2xl md:text-3xl text-foreground tabular-nums"
                 initial={{ opacity: 0 }}
@@ -305,16 +384,25 @@ function ActFrame() {
               >
                 $89<span className="text-sm text-foreground/40">/mo</span>
               </motion.div>
-              <div className="font-mono text-[12px] text-foreground/35 mt-1">140ms avg</div>
+              <div className="font-mono text-[12px] text-foreground/35 mt-1">
+                140ms avg
+              </div>
             </div>
           </div>
 
           {/* Quality bar */}
           <div className="mb-6">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-sans text-[10px] text-foreground/25 uppercase tracking-wider">Quality</span>
+              <span className="font-sans text-[10px] text-foreground/25 uppercase tracking-wider">
+                Quality
+              </span>
               <span className="font-mono text-[12px] text-foreground/40 tabular-nums">
-                <CountUp target={98.7} suffix="%" decimals={1} active={active} />
+                <CountUp
+                  target={98.7}
+                  suffix="%"
+                  decimals={1}
+                  active={active}
+                />
               </span>
             </div>
             <div className="w-full h-1.5 bg-foreground/[0.04] rounded-full overflow-hidden">
@@ -333,7 +421,8 @@ function ActFrame() {
             animate={active ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 1 }}
           >
-            Cortex continues monitoring. If quality drifts below your threshold, routing reverts automatically.
+            Cortex continues monitoring. If quality drifts below your threshold,
+            routing reverts automatically.
           </motion.p>
         </FrameChrome>
       </motion.div>
@@ -343,19 +432,57 @@ function ActFrame() {
 
 /* ─── Section ─── */
 export default function CortexAgent() {
-  const headerRef = useRef(null);
-  const headerInView = useInView(headerRef, { once: true, amount: 0.3 });
+  const introRef = useRef(null);
+  const introInView = useInView(introRef, { once: true, amount: 0.3 });
 
   const frames = [
-    { label: "Observe", subhead: "Every request becomes signal.", Component: ObserveFrame },
-    { label: "Experiment", subhead: "Cortex tests before it recommends.", Component: ExperimentFrame },
-    { label: "Act", subhead: "One click. Cortex handles the rest.", Component: ActFrame },
+    {
+      label: "Observe",
+      subhead: "Every request becomes signal.",
+      Component: ObserveFrame,
+    },
+    {
+      label: "Experiment",
+      subhead: "Cortex tests before it recommends.",
+      Component: ExperimentFrame,
+    },
+    {
+      label: "Act",
+      subhead: "One click. Cortex handles the rest.",
+      Component: ActFrame,
+    },
   ];
 
   return (
     <section className="py-32 md:py-40 bg-background">
       <div className="container-swiss">
         <div className="max-w-3xl mx-auto">
+          {/* Intro */}
+          <div
+            ref={introRef}
+            className="text-center mb-24 md:mb-32 max-w-xl mx-auto"
+          >
+            <motion.h2
+              className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={introInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ ...spring }}
+            >
+              How Cortex thinks.
+            </motion.h2>
+            <motion.p
+              className="font-sans text-base text-foreground/35 leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={introInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Cortex isn&apos;t a rules engine or a dashboard with alerts.
+              It&apos;s an autonomous agent that observes your traffic, designs
+              experiments, validates results, and acts on your behalf.
+              Here&apos;s what happens inside.
+            </motion.p>
+          </div>
+
           {frames.map((frame, i) => (
             <div key={frame.label} className="mb-24 md:mb-32 last:mb-0">
               {/* Frame label */}

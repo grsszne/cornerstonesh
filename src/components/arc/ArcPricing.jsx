@@ -1,145 +1,80 @@
-"use client";
-
-import { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
-import Link from "next/link";
-
-function AnimatedPrice({ active }) {
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    if (!active) { setValue(0); return; }
-    let cancelled = false;
-    const timeout = setTimeout(() => {
-      const duration = 600;
-      const start = performance.now();
-      const tick = () => {
-        if (cancelled) return;
-        const elapsed = performance.now() - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        setValue(Math.round(eased * 29));
-        if (progress < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    }, 400);
-    return () => { cancelled = true; clearTimeout(timeout); };
-  }, [active]);
-
-  return <>${value}</>;
-}
-
 export default function ArcPricing() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section id="pricing" className="py-32 md:py-40 bg-background">
-      <div className="container-swiss" ref={ref}>
-        <div className="max-w-3xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Free */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7 }}
-              className="border border-foreground/10 p-8 md:p-10"
-            >
-              <h3 className="font-serif text-2xl text-foreground mb-2">Free</h3>
-              <div className="font-serif text-4xl text-foreground mb-6">$0</div>
-              <ul className="space-y-3 font-sans text-sm text-foreground/45 mb-8">
-                <li className="flex items-start gap-2">
-                  <span className="text-foreground/20 mt-0.5">—</span>
-                  1,000 requests/month
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-foreground/20 mt-0.5">—</span>
-                  Full logging and analytics
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-foreground/20 mt-0.5">—</span>
-                  Shadow mode
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-foreground/20 mt-0.5">—</span>
-                  Auto-Tune suggestions
-                </li>
-              </ul>
-              <Link
-                href="https://arc.cornerstone.sh"
-                className="inline-block font-sans text-sm text-foreground border border-foreground/15 rounded-full px-6 py-2.5 hover:border-foreground/30 transition-colors"
-              >
-                Get started
-              </Link>
-            </motion.div>
+    <section className="relative w-full py-24 bg-[var(--arc-surface-page)] border-t border-[var(--arc-border-subtle)] z-10 overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
+        
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-sans tracking-tight text-[var(--arc-text-primary)] mb-4 font-light">
+            Simple, predictable pricing.
+          </h2>
+          <p className="text-lg text-[var(--arc-text-secondary)] font-sans font-light">
+            Never pay a variable tax on your AI inference. Just a flat monthly rate.
+          </p>
+        </div>
 
-            {/* Pro */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7 }}
-              className="border border-[#cc2222]/20 p-8 md:p-10 relative"
-              style={{
-                boxShadow: "0 0 40px rgba(204,34,34,0.03)",
-              }}
-            >
-              <h3 className="font-serif text-2xl text-foreground mb-2">Arc Pro</h3>
-              <div className="font-serif text-4xl text-foreground mb-1">
-                <AnimatedPrice active={isInView} />
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={isInView ? { opacity: 1 } : {}}
-                  transition={{ delay: 1.0 }}
-                  className="font-sans text-lg text-foreground/40"
-                >
-                  /mo
-                </motion.span>
-              </div>
-              <div className="h-4" />
-              <ul className="space-y-3 font-sans text-sm text-foreground/45 mb-8">
-                <li className="flex items-start gap-2">
-                  <span className="text-foreground/20 mt-0.5">—</span>
-                  Unlimited requests
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-foreground/20 mt-0.5">—</span>
-                  Everything in free
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-foreground/20 mt-0.5">—</span>
-                  Auto-Tune with one-click apply
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-foreground/20 mt-0.5">—</span>
-                  Chat with your data
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-foreground/20 mt-0.5">—</span>
-                  Benchmark access
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-foreground/20 mt-0.5">—</span>
-                  Priority support
-                </li>
-              </ul>
-              <Link
-                href="https://arc.cornerstone.sh"
-                className="inline-block font-sans text-sm font-medium text-background bg-foreground rounded-full px-6 py-2.5 hover:opacity-90 transition-opacity"
-              >
-                Start free &rarr;
-              </Link>
-            </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[900px] mx-auto">
+          
+          {/* Developer Tier */}
+          <div className="flex flex-col p-8 rounded-2xl border border-[var(--arc-border-subtle)] bg-[var(--arc-surface-card)] hover:border-[var(--arc-border-default)] transition-all">
+            <h3 className="text-xl font-sans font-medium text-[var(--arc-text-primary)] mb-2">Developer</h3>
+            <p className="text-sm text-[var(--arc-text-secondary)] mb-8">Perfect for single founders and side projects.</p>
+            <div className="mb-8">
+              <span className="text-5xl font-sans tracking-tight text-[var(--arc-text-primary)] font-light">$9</span>
+              <span className="text-[var(--arc-text-secondary)] ml-2">/ month</span>
+            </div>
+            
+            <ul className="space-y-4 mb-10 flex-1">
+              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
+                <span className="text-[var(--arc-status-healthy)] mr-3">✓</span> Up to 100,000 requests/month
+              </li>
+              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
+                <span className="text-[var(--arc-status-healthy)] mr-3">✓</span> Standard Routing & Fallbacks
+              </li>
+              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
+                <span className="text-[var(--arc-status-healthy)] mr-3">✓</span> 7-day Log Retention
+              </li>
+              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
+                <span className="text-[var(--arc-status-healthy)] mr-3">✓</span> Community Support
+              </li>
+            </ul>
+            
+            <button className="w-full h-11 rounded-lg border border-[var(--arc-border-strong)] bg-[var(--arc-surface-raised)] text-[var(--arc-text-primary)] font-sans font-medium transition-colors hover:bg-[var(--arc-surface-hover)]">
+              Start Free Trial
+            </button>
           </div>
 
-          {/* Tagline */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="text-center font-sans text-sm text-foreground/30 mt-10"
-          >
-            Start free, upgrade when it earns its keep.
-          </motion.p>
+          {/* Pro Tier */}
+          <div className="flex flex-col p-8 rounded-2xl border border-[var(--arc-text-primary)] bg-[var(--arc-surface-card)] shadow-2xl relative">
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 bg-[var(--arc-text-primary)] text-[var(--arc-surface-page)] rounded-full text-xs font-sans font-medium uppercase tracking-wider">
+              Most Popular
+            </div>
+            <h3 className="text-xl font-sans font-medium text-[var(--arc-text-primary)] mb-2">Pro</h3>
+            <p className="text-sm text-[var(--arc-text-secondary)] mb-8">For scaling startups and production agentic loops.</p>
+            <div className="mb-8">
+              <span className="text-5xl font-sans tracking-tight text-[var(--arc-text-primary)] font-light">$35</span>
+              <span className="text-[var(--arc-text-secondary)] ml-2">/ month</span>
+            </div>
+            
+            <ul className="space-y-4 mb-10 flex-1">
+              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
+                <span className="text-[var(--arc-text-primary)] mr-3">✓</span> Unlimited requests
+              </li>
+              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
+                <span className="text-[var(--arc-text-primary)] mr-3">✓</span> Agent Workflows & Traces
+              </li>
+              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
+                <span className="text-[var(--arc-text-primary)] mr-3">✓</span> Semantic Caching & Shadow Mode
+              </li>
+              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
+                <span className="text-[var(--arc-text-primary)] mr-3">✓</span> 90-day Log Retention
+              </li>
+            </ul>
+            
+            <button className="w-full h-11 rounded-lg bg-[var(--arc-text-primary)] text-[var(--arc-surface-page)] font-sans font-medium transition-opacity hover:opacity-90">
+              Upgrade to Pro
+            </button>
+          </div>
+
         </div>
       </div>
     </section>

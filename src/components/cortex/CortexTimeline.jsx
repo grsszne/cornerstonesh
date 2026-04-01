@@ -10,7 +10,10 @@ function CountUp({ target, prefix = "", suffix = "", active }) {
   const frameRef = useRef(null);
 
   useEffect(() => {
-    if (!active) { setValue(0); return; }
+    if (!active) {
+      setValue(0);
+      return;
+    }
     const start = performance.now();
     const tick = (now) => {
       const elapsed = now - start;
@@ -20,43 +23,62 @@ function CountUp({ target, prefix = "", suffix = "", active }) {
       if (progress < 1) frameRef.current = requestAnimationFrame(tick);
     };
     frameRef.current = requestAnimationFrame(tick);
-    return () => { if (frameRef.current) cancelAnimationFrame(frameRef.current); };
+    return () => {
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    };
   }, [active, target]);
 
-  return <>{prefix}{Math.round(value).toLocaleString()}{suffix}</>;
+  return (
+    <>
+      {prefix}
+      {Math.round(value).toLocaleString()}
+      {suffix}
+    </>
+  );
 }
 
 const months = [
   {
     label: "Month 1",
     title: "First optimizations live",
-    metric: "$780",
-    metricSuffix: " saved this month",
+    metricPrefix: "$",
     metricNum: 780,
+    metricSuffix: "",
+    metricLabel: "saved this month",
+    metricSize: "text-2xl md:text-3xl",
   },
   {
     label: "Month 3",
     title: "Workflows mapped",
-    description: "Your classify \u2192 extract \u2192 reason pipeline is now optimized end-to-end",
-    metric: "34%",
-    metricSuffix: " faster",
+    description:
+      "Your classify \u2192 extract \u2192 reason pipeline is now optimized end-to-end.",
+    metricPrefix: "",
     metricNum: 34,
+    metricSuffix: "%",
+    metricLabel: "faster",
+    metricSize: "text-3xl md:text-4xl",
   },
   {
     label: "Month 6",
     title: "Cross-provider intelligence",
-    description: "Cortex routes each task to the best provider. 3 providers. Zero configuration changes.",
-    metric: "$3,100",
-    metricSuffix: " saved this month",
+    description:
+      "Cortex routes each task to the best provider. 3 providers. Zero configuration changes.",
+    metricPrefix: "$",
     metricNum: 3100,
+    metricSuffix: "",
+    metricLabel: "saved this month",
+    metricSize: "text-4xl md:text-5xl",
   },
   {
     label: "Month 12",
     title: "Unrecognizable from where you started",
-    description: "Semantic caching tuned to your data. Adaptive routing calibrated to your patterns. Anomaly detection that catches provider regressions before your users notice.",
-    metric: "41%",
-    metricSuffix: " total cost reduction",
+    description:
+      "Semantic caching tuned to your data. Adaptive routing calibrated to your patterns. Anomaly detection that catches provider regressions before your users notice.",
+    metricPrefix: "",
     metricNum: 41,
+    metricSuffix: "%",
+    metricLabel: "total cost reduction",
+    metricSize: "text-5xl md:text-6xl",
     featured: true,
   },
 ];
@@ -64,57 +86,69 @@ const months = [
 function TimelineCard({ item, index, isLast }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const isOdd = index % 2 === 1;
 
   return (
     <div ref={ref} className="relative flex items-start gap-6 md:gap-10">
-      {/* Timeline dot */}
-      <div className="relative flex-shrink-0 w-6 flex flex-col items-center">
+      {/* Timeline rail */}
+      <div className="relative flex-shrink-0 w-8 flex flex-col items-center">
+        {/* Dot */}
         <motion.div
-          className={`w-2.5 h-2.5 rounded-full border ${
+          className={`relative z-10 rounded-full ${
             item.featured
-              ? "border-foreground/40 bg-foreground/20"
-              : "border-foreground/20 bg-foreground/[0.06]"
+              ? "w-4 h-4 bg-accent"
+              : "w-3 h-3 border-2 border-foreground/30 bg-background"
           }`}
           initial={{ scale: 0 }}
           animate={isInView ? { scale: 1 } : {}}
           transition={{ ...spring, delay: 0.1 }}
         />
+        {/* Connecting line segment */}
         {!isLast && (
           <motion.div
-            className="w-px bg-foreground/[0.08] flex-1 mt-2"
-            style={{ minHeight: "40px" }}
-            initial={{ scaleY: 0, originY: 0 }}
+            className="w-[2px] bg-foreground/[0.12] flex-1 mt-1"
+            style={{ minHeight: "60px" }}
+            initial={{ scaleY: 0, transformOrigin: "top" }}
             animate={isInView ? { scaleY: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
           />
         )}
       </div>
 
       {/* Card content */}
       <motion.div
-        className={`pb-12 md:pb-16 ${item.featured ? "max-w-lg" : "max-w-md"}`}
-        initial={{ opacity: 0, x: isOdd ? 15 : -15 }}
-        animate={isInView ? { opacity: 1, x: 0 } : {}}
+        className={`pb-16 md:pb-20 ${item.featured ? "max-w-lg" : "max-w-md"}`}
+        initial={{ opacity: 0, y: 12 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ ...spring, delay: 0.15 }}
       >
         <div className="font-mono text-[10px] text-foreground/25 uppercase tracking-[0.15em] mb-2">
           {item.label}
         </div>
-        <div className={`font-sans ${item.featured ? "text-base" : "text-sm"} text-foreground/60 font-medium mb-2`}>
+        <div
+          className={`font-sans ${item.featured ? "text-base" : "text-sm"} text-foreground/60 font-medium mb-3`}
+        >
           {item.title}
         </div>
         {item.description && (
-          <p className="font-sans text-sm text-foreground/30 leading-relaxed mb-3">
+          <p className="font-sans text-sm text-foreground/30 leading-relaxed mb-4">
             {item.description}
           </p>
         )}
-        <div className={`font-mono tabular-nums ${item.featured ? "text-2xl md:text-3xl" : "text-lg"} text-foreground`}>
-          {item.metric.startsWith("$") ? (
-            <><CountUp target={item.metricNum} prefix="$" active={isInView} />{item.metricSuffix}</>
-          ) : (
-            <><CountUp target={item.metricNum} suffix="%" active={isInView} />{item.metricSuffix.replace(/^\d+%/, "")}</>
-          )}
+        {/* Big metric */}
+        <div className="flex items-baseline gap-2">
+          <span
+            className={`font-mono tabular-nums ${item.metricSize} text-accent font-medium tracking-tight`}
+          >
+            <CountUp
+              target={item.metricNum}
+              prefix={item.metricPrefix}
+              suffix={item.metricSuffix}
+              active={isInView}
+            />
+          </span>
+          <span className="font-sans text-sm text-foreground/30">
+            {item.metricLabel}
+          </span>
         </div>
       </motion.div>
     </div>
