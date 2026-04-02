@@ -96,7 +96,7 @@ export default function ArcCorePrimitives() {
             </a>
           </div>
 
-          <div className="text-xl md:text-3xl lg:text-4xl font-sans tracking-tight leading-[1.6] md:leading-[1.6] text-[var(--arc-text-primary)] font-light">
+          <div className="text-xl md:text-3xl lg:text-4xl font-serif tracking-tight leading-[1.6] md:leading-[1.6] text-[var(--arc-text-primary)] font-light">
             {tokens.map((token, index) => {
               // We divide tokens across the 0..1 progress spectrum
               // Using a small window rather than a hard cut-off allows for smooth per-word fading.

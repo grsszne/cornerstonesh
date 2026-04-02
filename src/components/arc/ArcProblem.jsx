@@ -45,7 +45,7 @@ export default function ArcProblem() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.3 + i * 0.08 }}
-                  className={`font-sans leading-relaxed ${
+                  className={`font-serif leading-relaxed ${
                     isEmphasis
                       ? "text-lg md:text-xl text-foreground/70 mt-2"
                       : "text-base md:text-lg text-foreground/45"

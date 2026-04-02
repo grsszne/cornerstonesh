@@ -7,13 +7,13 @@ export default function ArcCTA() {
     <section className="relative w-full py-40 flex items-center justify-center p-6 border-t border-[var(--arc-border-subtle)] bg-[var(--arc-surface-page)] z-10">
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12 text-center space-y-12">
         <h2 
-          className="text-4xl md:text-5xl font-sans tracking-tight leading-tight text-[var(--arc-text-primary)] mb-4"
+          className="text-4xl md:text-5xl font-serif tracking-tight leading-tight text-[var(--arc-text-primary)] mb-4"
           style={{ fontWeight: 300 }}
         >
           Stop managing providers.<br/>
           Start managing AI.
         </h2>
-        <p className="text-lg md:text-xl text-[var(--arc-text-secondary)] font-sans font-light leading-relaxed mb-10">
+        <p className="text-lg md:text-xl text-[var(--arc-text-secondary)] font-serif font-light leading-relaxed mb-10">
           Drop in one API key. Bring order to the chaos.
         </p>
 

@@ -14,10 +14,10 @@ export default function ArcDeepDive() {
           <TreeStructure size={32} weight="duotone" />
         </div>
 
-        <h2 className="text-3xl md:text-5xl font-sans tracking-tight text-[var(--arc-text-primary)] mb-6 font-light text-center max-w-2xl">
+        <h2 className="text-3xl md:text-5xl font-serif tracking-tight text-[var(--arc-text-primary)] mb-6 font-light text-center max-w-2xl">
           Tame the runaway agent wrapper.
         </h2>
-        <p className="text-lg md:text-xl text-[var(--arc-text-secondary)] font-sans font-light text-center max-w-3xl mb-16 leading-relaxed">
+        <p className="text-lg md:text-xl text-[var(--arc-text-secondary)] font-serif font-light text-center max-w-3xl mb-16 leading-relaxed">
           Agentic loops are incredibly powerful. They can also cost $45 in three minutes if a model gets stuck in an infinite tool-call loop. 
           <br/><br/>
           Arc <strong>Workflows</strong> let you group these frantic API calls into unbreachable limits. Set a hard $2.00 cap per trace, and Arc will silently sever the connection the moment reality misbehaves.

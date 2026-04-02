@@ -29,7 +29,7 @@ function SuggestionCard({ suggestion, index, isInView }) {
       transition={{ duration: 0.6, delay: 0.6 + index * 0.12 }}
       className="border border-foreground/10 bg-foreground/[0.02] p-5 md:p-6 hover:translate-y-[-2px] hover:shadow-sm transition-all duration-150"
     >
-      <div className="font-sans text-sm text-foreground/80 mb-3">
+      <div className="font-serif text-sm text-foreground/80 mb-3">
         {suggestion.title}
       </div>
 
@@ -52,10 +52,10 @@ function SuggestionCard({ suggestion, index, isInView }) {
       </div>
 
       <div className="flex items-center justify-between">
-        <span className="font-sans text-xs text-foreground/25">
+        <span className="font-serif text-xs text-foreground/25">
           {suggestion.detail}
         </span>
-        <button className="font-sans text-xs font-medium text-foreground/60 border border-foreground/12 px-3 py-1.5 rounded-full hover:border-foreground/25 hover:scale-[1.02] transition-all duration-150 cursor-default">
+        <button className="font-serif text-xs font-medium text-foreground/60 border border-foreground/12 px-3 py-1.5 rounded-full hover:border-foreground/25 hover:scale-[1.02] transition-all duration-150 cursor-default">
           Apply &rarr;
         </button>
       </div>
@@ -142,7 +142,7 @@ export default function ArcAutoTune() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="max-w-xl mx-auto text-center font-sans text-foreground/45 leading-relaxed mb-16"
+          className="max-w-xl mx-auto text-center font-serif text-foreground/45 leading-relaxed mb-16"
         >
           Arc analyzes your usage patterns continuously and surfaces specific, actionable suggestions. Each one shows the confidence level, the expected impact, and the reasoning. You decide whether to act. Arc does the work.
         </motion.p>

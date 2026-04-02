@@ -42,7 +42,7 @@ export default function ArcFooterCTA() {
         </motion.h2>
 
         <div className="min-h-[60px] mb-10">
-          <p className="font-sans text-base md:text-lg text-foreground/35 leading-relaxed whitespace-pre-line">
+          <p className="font-serif text-base md:text-lg text-foreground/35 leading-relaxed whitespace-pre-line">
             {typed}
           </p>
         </div>
@@ -54,7 +54,7 @@ export default function ArcFooterCTA() {
         >
           <Link
             href="https://arc.cornerstone.sh"
-            className="inline-block bg-foreground text-background rounded-full px-10 py-4 font-sans text-base font-medium hover:opacity-90 transition-opacity"
+            className="inline-block bg-foreground text-background rounded-full px-10 py-4 font-serif text-base font-medium hover:opacity-90 transition-opacity"
           >
             Start free &rarr;
           </Link>
@@ -64,7 +64,7 @@ export default function ArcFooterCTA() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 3.0 }}
-          className="font-sans text-xs text-foreground/20 mt-8"
+          className="font-serif text-xs text-foreground/20 mt-8"
         >
           If Arc doesn&apos;t find something worth acting on in your first week, it probably wasn&apos;t there.
         </motion.p>

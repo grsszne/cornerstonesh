@@ -37,7 +37,7 @@ export default function ArcReliability() {
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="mt-1 shrink-0">
                 <path d="M2 6l3 3 5-5" stroke="#cc2222" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span className="font-sans text-sm text-foreground/50">{item}</span>
+              <span className="font-serif text-sm text-foreground/50">{item}</span>
             </motion.div>
           ))}
         </div>

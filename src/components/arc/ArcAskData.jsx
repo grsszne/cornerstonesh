@@ -78,14 +78,14 @@ export default function ArcAskData() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-lg mx-auto text-center mb-12"
         >
-          <p className="font-sans text-foreground/35 leading-relaxed text-sm">
+          <p className="font-serif text-foreground/35 leading-relaxed text-sm">
             Why did costs spike on Tuesday?
             <br />
             Should I switch my summarization route to Haiku?
             <br />
             Which route is performing worst this week?
           </p>
-          <p className="font-sans text-foreground/50 mt-4 text-sm">
+          <p className="font-serif text-foreground/50 mt-4 text-sm">
             Arc knows your data. Ask in plain English, get a specific answer.
           </p>
         </motion.div>
@@ -133,7 +133,7 @@ export default function ArcAskData() {
             {/* Input bar */}
             <div className="px-4 py-3 flex items-center gap-3">
               <div className="flex-1 relative">
-                <div className={`font-sans text-sm ${typedQ ? "text-foreground/70" : "text-foreground/20"} min-h-[20px]`}>
+                <div className={`font-serif text-sm ${typedQ ? "text-foreground/70" : "text-foreground/20"} min-h-[20px]`}>
                   {typedQ || "Ask Arc anything..."}
                   {phase === "typing-q" && (
                     <span className="inline-block w-[2px] h-[1em] bg-foreground/50 ml-0.5 animate-pulse align-middle" />
@@ -145,7 +145,7 @@ export default function ArcAskData() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
-                    className="font-sans text-xs text-foreground/15 mt-1"
+                    className="font-serif text-xs text-foreground/15 mt-1"
                   >
                     should I switch summarization to haiku?
                   </motion.div>

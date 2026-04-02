@@ -66,7 +66,7 @@ export default function ArcBenchmarks() {
           <h2 className="font-serif text-4xl md:text-5xl text-foreground mb-4">
             Real benchmarks. Real workloads.
           </h2>
-          <p className="font-sans text-foreground/40 max-w-xl mx-auto leading-relaxed">
+          <p className="font-serif text-foreground/40 max-w-xl mx-auto leading-relaxed">
             Arc&apos;s benchmarks come from production traffic across hundreds of real applications — classified by task type, scored blind, updated continuously.
           </p>
         </motion.div>
@@ -81,7 +81,7 @@ export default function ArcBenchmarks() {
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-foreground/10">
-                <th className="text-left font-sans text-xs text-foreground/25 uppercase tracking-wider py-3 pr-4 w-40">
+                <th className="text-left font-serif text-xs text-foreground/25 uppercase tracking-wider py-3 pr-4 w-40">
                   Task
                 </th>
                 {models.map((model, i) => (
@@ -98,7 +98,7 @@ export default function ArcBenchmarks() {
             <tbody>
               {tasks.map((task) => (
                 <tr key={task.name} className="border-b border-foreground/[0.06]">
-                  <td className="font-sans text-sm text-foreground/50 py-3 pr-4">
+                  <td className="font-serif text-sm text-foreground/50 py-3 pr-4">
                     {task.name}
                   </td>
                   {task.scores.map((score, i) => {

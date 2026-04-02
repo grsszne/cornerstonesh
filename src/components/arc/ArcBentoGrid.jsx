@@ -6,10 +6,10 @@ export default function ArcBentoGrid() {
     <section className="relative w-full py-24 bg-[var(--arc-surface-page)] border-t border-[var(--arc-border-subtle)] z-10">
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
         <div className="mb-16 text-center">
-          <h2 className="text-3xl md:text-5xl font-sans tracking-tight text-[var(--arc-text-primary)] mb-6 font-light">
+          <h2 className="text-3xl md:text-5xl font-serif tracking-tight text-[var(--arc-text-primary)] mb-6 font-light">
             Absolute Control. Zero Overhead.
           </h2>
-          <p className="text-lg text-[var(--arc-text-secondary)] font-sans font-light max-w-2xl mx-auto">
+          <p className="text-lg text-[var(--arc-text-secondary)] font-serif font-light max-w-2xl mx-auto">
             Arc is designed like a professional intelligence tool, not a fluffy SaaS app. Dense, data-rich, and built for speed.
           </p>
         </div>
@@ -19,8 +19,8 @@ export default function ArcBentoGrid() {
           {/* Main Logs View (2 columns wide) */}
           <div className="md:col-span-2 rounded-2xl border border-[var(--arc-border-subtle)] bg-[var(--arc-surface-card)] overflow-hidden flex flex-col group relative hover:border-[var(--arc-border-default)] transition-colors">
             <div className="p-8 pb-4 border-b border-[var(--arc-border-subtle)] z-10 bg-[var(--arc-surface-card)] drop-shadow-sm">
-              <h3 className="text-xl text-[var(--arc-text-primary)] font-sans font-medium mb-2">The Universal Ledger</h3>
-              <p className="text-[14px] text-[var(--arc-text-secondary)] font-sans">
+              <h3 className="text-xl text-[var(--arc-text-primary)] font-serif font-medium mb-2">The Universal Ledger</h3>
+              <p className="text-[14px] text-[var(--arc-text-secondary)] font-serif">
                 Every prompt, every token, every cent across OpenAI, Anthropic, and Together—unified in one dense, searchable log. You never have to stitch together billing CSVs again.
               </p>
             </div>
@@ -33,8 +33,8 @@ export default function ArcBentoGrid() {
           {/* Caching Feature */}
           <div className="md:col-span-1 rounded-2xl border border-[var(--arc-border-subtle)] bg-[var(--arc-moss-bg)] overflow-hidden flex flex-col group hover:border-[var(--arc-moss-fg)] transition-colors relative">
             <div className="p-8 pb-4 z-10">
-              <h3 className="text-xl text-[var(--arc-status-healthy)] font-sans font-medium mb-2">Semantic Caching</h3>
-              <p className="text-[14px] text-[var(--arc-text-secondary)] font-sans">
+              <h3 className="text-xl text-[var(--arc-status-healthy)] font-serif font-medium mb-2">Semantic Caching</h3>
+              <p className="text-[14px] text-[var(--arc-text-secondary)] font-serif">
                 Why pay for the same answer twice? Arc detects semantically identical prompts and serves them directly from memory, slashing your latency to 20ms and your cost to $0.
               </p>
             </div>
@@ -53,8 +53,8 @@ export default function ArcBentoGrid() {
           {/* Shadow Testing */}
           <div className="md:col-span-3 rounded-2xl border border-[var(--arc-border-subtle)] bg-[var(--arc-surface-card)] overflow-hidden flex flex-col md:flex-row group hover:border-[var(--arc-border-default)] transition-colors">
             <div className="p-8 md:w-1/3 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[var(--arc-border-subtle)] bg-[var(--arc-surface-card)] z-10">
-              <h3 className="text-xl text-[var(--arc-status-warning)] font-sans font-medium mb-2">Risk-Free Shadow Testing</h3>
-              <p className="text-[14px] text-[var(--arc-text-secondary)] font-sans mb-6">
+              <h3 className="text-xl text-[var(--arc-status-warning)] font-serif font-medium mb-2">Risk-Free Shadow Testing</h3>
+              <p className="text-[14px] text-[var(--arc-text-secondary)] font-serif mb-6">
                 Anthropic drops a cheaper model that claims GPT-4 level intelligence. Don&apos;t guess. Prove it.<br/><br/>
                 Route 10% of your real production traffic to the new model invisibly. Arc evaluates the responses in parallel for accuracy and length, giving you a definitive win-rate before you flip the switch.
               </p>

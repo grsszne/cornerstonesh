@@ -10,10 +10,10 @@ export default function ArcStartupEconomics() {
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--arc-slate-bg)] text-[var(--arc-slate-fg)] rounded-full font-mono text-[10px] uppercase tracking-wider mb-6">
             <RocketLaunch weight="fill" /> Build fast, scale cheap
           </div>
-          <h2 className="text-3xl md:text-5xl font-sans tracking-tight leading-tight text-[var(--arc-text-primary)] mb-6 font-light">
+          <h2 className="text-3xl md:text-5xl font-serif tracking-tight leading-tight text-[var(--arc-text-primary)] mb-6 font-light">
             Don&apos;t get locked into a massive OpenAI bill.
           </h2>
-          <p className="text-lg md:text-xl text-[var(--arc-text-secondary)] font-sans font-light leading-relaxed">
+          <p className="text-lg md:text-xl text-[var(--arc-text-secondary)] font-serif font-light leading-relaxed">
             When building an MVP, you need the smartest model available to prove the concept. <span className="text-[var(--arc-text-primary)]">But when thousands of users hit your app, GPT-4o will bankrupt you.</span>
             <br/><br/>
             With Arc, you simply use Auto-Tune to gracefully degrade your internal routes to faster, cheaper models—saving 90% on inference without pushing a single code change.

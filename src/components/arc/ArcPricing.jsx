@@ -4,10 +4,10 @@ export default function ArcPricing() {
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
         
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-sans tracking-tight text-[var(--arc-text-primary)] mb-4 font-light">
+          <h2 className="text-3xl md:text-5xl font-serif tracking-tight text-[var(--arc-text-primary)] mb-4 font-light">
             Simple, predictable pricing.
           </h2>
-          <p className="text-lg text-[var(--arc-text-secondary)] font-sans font-light">
+          <p className="text-lg text-[var(--arc-text-secondary)] font-serif font-light">
             Never pay a variable tax on your AI inference. Just a flat monthly rate.
           </p>
         </div>
