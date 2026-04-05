@@ -13,6 +13,7 @@ import { T } from "./arcTokens";
  */
 export default function ArcVideoPlaceholder({
   label = "Video",
+  src = null,
   maxWidth = 980,
   aspectRatio = "16 / 9",
 }) {
@@ -34,9 +35,28 @@ export default function ArcVideoPlaceholder({
         letterSpacing: "0.02em",
         color: T.textTertiary,
         textTransform: "lowercase",
+        overflow: "hidden",
+        position: "relative",
+        boxShadow: src ? "0 20px 50px rgba(0,0,0,0.2)" : "none",
       }}
     >
-      {label}
+      {src ? (
+        <video
+          src={src}
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+          }}
+        />
+      ) : (
+        label
+      )}
     </div>
   );
 }

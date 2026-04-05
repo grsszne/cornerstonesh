@@ -72,7 +72,12 @@ export default function ArcHero() {
           padding: "0 clamp(0px, 2vw, 24px)",
         }}
       >
-        <ArcVideoPlaceholder label="product overview" maxWidth={1040} />
+        <ArcVideoPlaceholder 
+          src="/img/demo1.mp4" 
+          label="product overview" 
+          maxWidth={1000} 
+          aspectRatio="16 / 11"
+        />
       </div>
     </section>
   );
