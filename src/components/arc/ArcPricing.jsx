@@ -1,82 +1,262 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import Link from "next/link";
+import { T, TYPE, SECTION, SWATCH } from "./arcTokens";
+
+const PLANS = [
+  {
+    name: "Free",
+    price: "$0",
+    period: null,
+    tagline: "For evaluating Arc on a real workload.",
+    features: [
+      "1,000 requests / month",
+      "Full logging & analytics",
+      "Shadow mode",
+      "Auto-tune suggestions",
+      "Community support",
+    ],
+    cta: "Get started",
+    ctaStyle: "ghost",
+    highlighted: false,
+  },
+  {
+    name: "Pro",
+    price: "$29",
+    period: "/ month",
+    tagline: "For teams shipping AI features in production.",
+    features: [
+      "Unlimited requests",
+      "Everything in Free",
+      "One-click auto-tune apply",
+      "Ask-your-data chat",
+      "Benchmark access",
+      "Priority support",
+    ],
+    cta: "Start free",
+    ctaStyle: "primary",
+    highlighted: true,
+  },
+];
+
 export default function ArcPricing() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-120px" });
+
   return (
-    <section className="relative w-full py-24 bg-[var(--arc-surface-page)] border-t border-[var(--arc-border-subtle)] z-10 overflow-hidden">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
-        
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-serif tracking-tight text-[var(--arc-text-primary)] mb-4 font-light">
-            Simple, predictable pricing.
-          </h2>
-          <p className="text-lg text-[var(--arc-text-secondary)] font-serif font-light">
-            Never pay a variable tax on your AI inference. Just a flat monthly rate.
-          </p>
+    <section id="pricing" style={SECTION.wrap}>
+      <div style={SECTION.inner} ref={ref}>
+        {/* Header */}
+        <div style={{ maxWidth: 720, marginBottom: 72, textAlign: "center", margin: "0 auto 72px" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 28 }}
+          >
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: SWATCH.ochre.fg }} />
+            <span style={{ ...TYPE.eyebrow, color: T.textSecondary }}>Pricing</span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 14 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            style={{ ...TYPE.displayL, color: T.textPrimary, margin: 0, marginBottom: 20 }}
+          >
+            Start free.{" "}
+            <span style={{ color: T.textSecondary, fontStyle: "italic" }}>
+              Upgrade when it pays for itself.
+            </span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            style={{ ...TYPE.bodyLg, color: T.textSecondary, margin: "0 auto", maxWidth: 540 }}
+          >
+            No credit card for Free. No lock-in at any tier. Cancel in one click.
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[900px] mx-auto">
-          
-          {/* Developer Tier */}
-          <div className="flex flex-col p-8 rounded-2xl border border-[var(--arc-border-subtle)] bg-[var(--arc-surface-card)] hover:border-[var(--arc-border-default)] transition-all">
-            <h3 className="text-xl font-sans font-medium text-[var(--arc-text-primary)] mb-2">Developer</h3>
-            <p className="text-sm text-[var(--arc-text-secondary)] mb-8">Perfect for single founders and side projects.</p>
-            <div className="mb-8">
-              <span className="text-5xl font-sans tracking-tight text-[var(--arc-text-primary)] font-light">$9</span>
-              <span className="text-[var(--arc-text-secondary)] ml-2">/ month</span>
-            </div>
-            
-            <ul className="space-y-4 mb-10 flex-1">
-              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
-                <span className="text-[var(--arc-status-healthy)] mr-3">✓</span> Up to 100,000 requests/month
-              </li>
-              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
-                <span className="text-[var(--arc-status-healthy)] mr-3">✓</span> Standard Routing & Fallbacks
-              </li>
-              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
-                <span className="text-[var(--arc-status-healthy)] mr-3">✓</span> 7-day Log Retention
-              </li>
-              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
-                <span className="text-[var(--arc-status-healthy)] mr-3">✓</span> Community Support
-              </li>
-            </ul>
-            
-            <button className="w-full h-11 rounded-lg border border-[var(--arc-border-strong)] bg-[var(--arc-surface-raised)] text-[var(--arc-text-primary)] font-sans font-medium transition-colors hover:bg-[var(--arc-surface-hover)]">
-              Start Free Trial
-            </button>
-          </div>
+        {/* Plans */}
+        <div
+          className="arc-pricing-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+            gap: 18,
+            maxWidth: 820,
+            margin: "0 auto",
+          }}
+        >
+          {PLANS.map((plan, i) => (
+            <motion.div
+              key={plan.name}
+              initial={{ opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.3 + i * 0.15 }}
+              style={{
+                background: plan.highlighted ? T.surfaceCard : T.surfaceCard,
+                border: `1px solid ${plan.highlighted ? T.textPrimary : T.borderDefault}`,
+                borderRadius: 6,
+                padding: "36px 32px",
+                fontFamily: "'Ronzino', Georgia, serif",
+                position: "relative",
+              }}
+            >
+              {plan.highlighted && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -1,
+                    right: 18,
+                    transform: "translateY(-50%)",
+                    background: T.textPrimary,
+                    color: T.surfacePage,
+                    padding: "4px 10px",
+                    borderRadius: 3,
+                    fontSize: 9,
+                    fontWeight: 500,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Most popular
+                </div>
+              )}
 
-          {/* Pro Tier */}
-          <div className="flex flex-col p-8 rounded-2xl border border-[var(--arc-text-primary)] bg-[var(--arc-surface-card)] shadow-2xl relative">
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 bg-[var(--arc-text-primary)] text-[var(--arc-surface-page)] rounded-full text-xs font-sans font-medium uppercase tracking-wider">
-              Most Popular
-            </div>
-            <h3 className="text-xl font-sans font-medium text-[var(--arc-text-primary)] mb-2">Pro</h3>
-            <p className="text-sm text-[var(--arc-text-secondary)] mb-8">For scaling startups and production agentic loops.</p>
-            <div className="mb-8">
-              <span className="text-5xl font-sans tracking-tight text-[var(--arc-text-primary)] font-light">$35</span>
-              <span className="text-[var(--arc-text-secondary)] ml-2">/ month</span>
-            </div>
-            
-            <ul className="space-y-4 mb-10 flex-1">
-              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
-                <span className="text-[var(--arc-text-primary)] mr-3">✓</span> Unlimited requests
-              </li>
-              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
-                <span className="text-[var(--arc-text-primary)] mr-3">✓</span> Agent Workflows & Traces
-              </li>
-              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
-                <span className="text-[var(--arc-text-primary)] mr-3">✓</span> Semantic Caching & Shadow Mode
-              </li>
-              <li className="flex items-center text-[15px] text-[var(--arc-text-secondary)] font-sans">
-                <span className="text-[var(--arc-text-primary)] mr-3">✓</span> 90-day Log Retention
-              </li>
-            </ul>
-            
-            <button className="w-full h-11 rounded-lg bg-[var(--arc-text-primary)] text-[var(--arc-surface-page)] font-sans font-medium transition-opacity hover:opacity-90">
-              Upgrade to Pro
-            </button>
-          </div>
+              {/* Plan name */}
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+                <span
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    background: plan.highlighted ? T.textPrimary : T.textTertiary,
+                  }}
+                />
+                <span style={{ ...TYPE.eyebrow, color: T.textSecondary }}>{plan.name}</span>
+              </div>
 
+              {/* Price */}
+              <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 12 }}>
+                <span
+                  style={{
+                    fontSize: 56,
+                    fontWeight: 300,
+                    letterSpacing: "-0.03em",
+                    color: T.textPrimary,
+                    lineHeight: 1,
+                  }}
+                >
+                  {plan.price}
+                </span>
+                {plan.period && (
+                  <span style={{ fontSize: 14, color: T.textTertiary }}>{plan.period}</span>
+                )}
+              </div>
+              <div style={{ fontSize: 13, color: T.textSecondary, marginBottom: 28, lineHeight: 1.5 }}>
+                {plan.tagline}
+              </div>
+
+              {/* Divider */}
+              <div style={{ height: 1, background: T.borderSubtle, marginBottom: 24 }} />
+
+              {/* Features */}
+              <ul style={{ margin: 0, marginBottom: 32, padding: 0, listStyle: "none" }}>
+                {plan.features.map((f, fi) => (
+                  <li
+                    key={fi}
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: 12,
+                      padding: "9px 0",
+                      fontSize: 13,
+                      color: T.textSecondary,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    <svg
+                      width="10"
+                      height="10"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke={T.textPrimary}
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{ marginTop: 5, flexShrink: 0 }}
+                    >
+                      <path d="M2 6l3 3 5-5" />
+                    </svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              {/* CTA */}
+              <Link
+                href="https://arc.cornerstone.sh"
+                style={{
+                  display: "block",
+                  textAlign: "center",
+                  padding: "13px 20px",
+                  fontSize: 11,
+                  fontWeight: 500,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  borderRadius: 4,
+                  textDecoration: "none",
+                  fontFamily: "'Ronzino', Georgia, serif",
+                  transition: "opacity 120ms ease, background 120ms ease",
+                  ...(plan.ctaStyle === "primary"
+                    ? {
+                        background: T.textPrimary,
+                        color: T.surfacePage,
+                        border: "none",
+                      }
+                    : {
+                        background: "transparent",
+                        color: T.textPrimary,
+                        border: `1px solid ${T.borderDefault}`,
+                      }),
+                }}
+              >
+                {plan.cta} →
+              </Link>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Tagline */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.9 }}
+          style={{
+            textAlign: "center",
+            fontSize: 12,
+            color: T.textTertiary,
+            marginTop: 40,
+            fontStyle: "italic",
+          }}
+        >
+          Scale & Enterprise tiers available — <Link href="mailto:hi@cornerstone.sh" style={{ color: T.textSecondary, textDecoration: "underline", textDecorationColor: T.borderDefault, textUnderlineOffset: 3 }}>talk to us</Link>.
+        </motion.p>
       </div>
+
+      <style>{`
+        @media (max-width: 720px) {
+          .arc-pricing-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

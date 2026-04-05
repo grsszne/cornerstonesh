@@ -2,62 +2,132 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { T, TYPE, SECTION, SWATCH, pillStyle, dotStyle } from "./arcTokens";
 
-const suggestions = [
+const SUGGESTIONS = [
   {
-    title: "Switch summarization route to haiku-4.5",
-    detail: "71% win rate over 847 comparisons · $18/mo savings",
+    route: { name: "summarize", color: "ochre" },
+    title: "Switch to claude-haiku-4.5",
+    detail: "71% win rate over 847 comparisons",
+    impact: "-$318/mo",
     confidence: 94,
+    applyLabel: "Apply",
   },
   {
-    title: "Enable caching on classification route",
+    route: { name: "classify", color: "clay" },
+    title: "Enable semantic cache",
     detail: "Low variance responses, high repeat rate",
+    impact: "-$142/mo",
     confidence: 87,
+    applyLabel: "Apply",
   },
   {
-    title: "Add fallback to search route",
-    detail: "Error rate 2.3%, above 1% threshold",
+    route: { name: "search", color: "mauve" },
+    title: "Add Anthropic fallback",
+    detail: "Error rate 2.3% — above threshold",
+    impact: "99.9% SLA",
     confidence: 91,
+    applyLabel: "Apply",
   },
 ];
 
-function SuggestionCard({ suggestion, index, isInView }) {
+function SuggestionCard({ s, index, isInView }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.6 + index * 0.12 }}
-      className="border border-foreground/10 bg-foreground/[0.02] p-5 md:p-6 hover:translate-y-[-2px] hover:shadow-sm transition-all duration-150"
+      transition={{ duration: 0.65, delay: 0.25 + index * 0.12 }}
+      style={{
+        background: T.surfaceCard,
+        border: `1px solid ${T.borderDefault}`,
+        borderRadius: 6,
+        padding: "20px 22px",
+        fontFamily: "'Ronzino', Georgia, serif",
+        transition: "border-color 140ms ease, transform 140ms ease",
+      }}
+      whileHover={{ y: -2 }}
     >
-      <div className="font-serif text-sm text-foreground/80 mb-3">
-        {suggestion.title}
+      {/* top row: route pill + impact */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+        <span style={pillStyle(s.route.color, "md")}>
+          <span style={dotStyle(s.route.color, 5)} />
+          {s.route.name}
+        </span>
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: 500,
+            letterSpacing: "0.04em",
+            color: s.impact.startsWith("-") ? T.statusHealthy : T.textSecondary,
+          }}
+        >
+          {s.impact}
+        </span>
       </div>
 
-      <div className="flex items-center justify-between mb-2">
-        <span className="font-mono text-[10px] text-foreground/30 uppercase tracking-wider">
-          Confidence
-        </span>
-        <span className="font-mono text-[11px] text-foreground/50">
-          {suggestion.confidence}%
-        </span>
+      {/* title */}
+      <div
+        style={{
+          fontSize: 16,
+          fontWeight: 400,
+          letterSpacing: "-0.008em",
+          color: T.textPrimary,
+          marginBottom: 6,
+          lineHeight: 1.35,
+        }}
+      >
+        {s.title}
+      </div>
+      <div style={{ fontSize: 12.5, color: T.textTertiary, marginBottom: 20, lineHeight: 1.5 }}>
+        {s.detail}
       </div>
 
-      <div className="h-1 bg-foreground/[0.06] rounded-full overflow-hidden mb-3">
-        <motion.div
-          className="h-full bg-foreground/20 rounded-full"
-          initial={{ width: 0 }}
-          animate={isInView ? { width: `${suggestion.confidence}%` } : {}}
-          transition={{ duration: 0.6, delay: 0.9 + index * 0.15, ease: "easeOut" }}
-        />
+      {/* Confidence meter */}
+      <div style={{ marginBottom: 18 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+          <span style={{ ...TYPE.metaLabel, color: T.textTertiary }}>Confidence</span>
+          <span style={{ fontSize: 11, color: T.textSecondary }}>{s.confidence}%</span>
+        </div>
+        <div
+          style={{
+            height: 3,
+            background: T.surfaceRaised,
+            borderRadius: 2,
+            overflow: "hidden",
+          }}
+        >
+          <motion.div
+            initial={{ width: 0 }}
+            animate={isInView ? { width: `${s.confidence}%` } : {}}
+            transition={{ duration: 0.9, delay: 0.5 + index * 0.12, ease: [0.23, 1, 0.32, 1] }}
+            style={{
+              height: "100%",
+              background: T.textPrimary,
+            }}
+          />
+        </div>
       </div>
 
-      <div className="flex items-center justify-between">
-        <span className="font-serif text-xs text-foreground/25">
-          {suggestion.detail}
-        </span>
-        <button className="font-serif text-xs font-medium text-foreground/60 border border-foreground/12 px-3 py-1.5 rounded-full hover:border-foreground/25 hover:scale-[1.02] transition-all duration-150 cursor-default">
-          Apply &rarr;
+      {/* actions */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <button
+          style={{
+            fontSize: 10,
+            fontWeight: 500,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            padding: "7px 14px",
+            background: T.textPrimary,
+            color: T.surfacePage,
+            border: "none",
+            borderRadius: 3,
+            cursor: "pointer",
+            fontFamily: "'Ronzino', Georgia, serif",
+          }}
+        >
+          {s.applyLabel}
         </button>
+        <span style={{ ...TYPE.metaLabel, color: T.textTertiary }}>Dismiss</span>
       </div>
     </motion.div>
   );
@@ -65,95 +135,76 @@ function SuggestionCard({ suggestion, index, isInView }) {
 
 export default function ArcAutoTune() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
-    <section className="py-32 md:py-44 bg-background">
-      <div className="container-swiss" ref={ref}>
-        {/* Headline */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
-          <h2 className="font-serif text-4xl md:text-5xl text-foreground leading-tight">
-            <span className="text-foreground/35">Other tools tell you what happened.</span>
+    <section style={SECTION.wrap}>
+      <div style={SECTION.inner} ref={ref}>
+        {/* Header row */}
+        <div style={{ maxWidth: 760, marginBottom: 72 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28 }}
+          >
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: "50%",
+                background: SWATCH.moss.fg,
+              }}
+            />
+            <span style={{ ...TYPE.eyebrow, color: T.textSecondary }}>Auto-tune</span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 14 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            style={{ ...TYPE.displayL, color: T.textPrimary, margin: 0, marginBottom: 24 }}
+          >
+            Arc reads your traffic.
             <br />
-            Arc tells you what to do.
-          </h2>
-        </motion.div>
+            <span style={{ color: T.textSecondary, fontStyle: "italic" }}>
+              Then tells you what to change.
+            </span>
+          </motion.h2>
 
-        {/* Before / After */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="max-w-3xl mx-auto mb-16"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-foreground/[0.06]">
-            {/* Left: generic dashboard (blurry) */}
-            <div className="bg-background p-8 text-center relative overflow-hidden">
-              <div className="absolute inset-0 backdrop-blur-[1px]" />
-              <div className="relative z-10">
-                <div className="font-sans text-xs text-foreground/20 uppercase tracking-wider mb-4">Every other tool</div>
-                <div className="space-y-3 opacity-30">
-                  <div className="h-2 bg-foreground/10 rounded w-full" />
-                  <div className="h-2 bg-foreground/10 rounded w-3/4" />
-                  <div className="h-8 bg-foreground/[0.06] rounded mt-4" />
-                  <div className="flex gap-2 mt-3">
-                    <div className="h-6 bg-foreground/[0.05] rounded flex-1" />
-                    <div className="h-6 bg-foreground/[0.05] rounded flex-1" />
-                    <div className="h-6 bg-foreground/[0.05] rounded flex-1" />
-                  </div>
-                  <div className="h-2 bg-foreground/10 rounded w-1/2 mx-auto mt-3" />
-                </div>
-                <p className="font-sans text-xs text-foreground/20 mt-4 italic">Charts. Dashboards. Now what?</p>
-              </div>
-            </div>
-
-            {/* Right: Arc suggestion (sharp) */}
-            <motion.div
-              className="bg-background p-8 text-center"
-              animate={isInView ? { scale: 1.02 } : {}}
-              transition={{ duration: 0.6, delay: 0.8 }}
-            >
-              <div className="font-sans text-xs text-foreground/40 uppercase tracking-wider mb-4">Arc</div>
-              <div className="border border-foreground/10 p-4 text-left">
-                <div className="font-sans text-xs text-foreground/30 uppercase tracking-wider mb-1">Suggestion</div>
-                <div className="font-sans text-sm text-foreground/80 mb-2">Switch to haiku-4.5</div>
-                <div className="h-1 bg-foreground/[0.06] rounded-full overflow-hidden mb-2">
-                  <motion.div
-                    className="h-full bg-[#cc2222]/30 rounded-full"
-                    initial={{ width: 0 }}
-                    animate={isInView ? { width: "94%" } : {}}
-                    transition={{ duration: 0.8, delay: 1.0 }}
-                  />
-                </div>
-                <div className="font-mono text-[10px] text-foreground/25">94% confidence · one click</div>
-              </div>
-              <p className="font-sans text-xs text-foreground/35 mt-4">Specific. Actionable. Done.</p>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Body */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="max-w-xl mx-auto text-center font-serif text-foreground/45 leading-relaxed mb-16"
-        >
-          Arc analyzes your usage patterns continuously and surfaces specific, actionable suggestions. Each one shows the confidence level, the expected impact, and the reasoning. You decide whether to act. Arc does the work.
-        </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            style={{ ...TYPE.bodyLg, color: T.textSecondary, margin: 0, maxWidth: 600 }}
+          >
+            Every suggestion is grounded in your own requests — never generic best practices.
+            Apply with one click, or roll back if it doesn&apos;t stick.
+          </motion.p>
+        </div>
 
         {/* Suggestion cards */}
-        <div className="max-w-2xl mx-auto space-y-4">
-          {suggestions.map((s, i) => (
-            <SuggestionCard key={i} suggestion={s} index={i} isInView={isInView} />
+        <div
+          className="arc-autotune-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 18,
+          }}
+        >
+          {SUGGESTIONS.map((s, i) => (
+            <SuggestionCard key={i} s={s} index={i} isInView={isInView} />
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .arc-autotune-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

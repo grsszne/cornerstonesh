@@ -1,425 +1,91 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { T, SWATCH, TYPE, pillStyle, dotStyle } from "./arcTokens";
 
 /* ═══════════════════════════════════════════════════════════════════
-   ARC DESIGN TOKENS — CSS variable references (light/dark via globals.css)
+   DATA — mirrors Arc's real dashboard
    ═══════════════════════════════════════════════════════════════════ */
 
-const T = {
-  surfacePage:       "var(--arc-surface-page)",
-  surfaceCard:       "var(--arc-surface-card)",
-  surfaceRaised:     "var(--arc-surface-raised)",
-  textPrimary:       "var(--arc-text-primary)",
-  textSecondary:     "var(--arc-text-secondary)",
-  textTertiary:      "var(--arc-text-tertiary)",
-  borderSubtle:      "var(--arc-border-subtle)",
-  borderDefault:     "var(--arc-border-default)",
-  statusHealthy:     "var(--arc-status-healthy)",
-  statusWarning:     "var(--arc-status-warning)",
-  statusError:       "var(--arc-status-error)",
-  providerOpenai:    "var(--arc-provider-openai)",
-  providerAnthropic: "var(--arc-provider-anthropic)",
-  providerGoogle:    "var(--arc-provider-google)",
-};
-
-const SWATCH = {
-  clay:  { bg: "var(--arc-clay-bg)",  fg: "var(--arc-clay-fg)"  },
-  moss:  { bg: "var(--arc-moss-bg)",  fg: "var(--arc-moss-fg)"  },
-  ochre: { bg: "var(--arc-ochre-bg)", fg: "var(--arc-ochre-fg)" },
-  dusk:  { bg: "var(--arc-dusk-bg)",  fg: "var(--arc-dusk-fg)"  },
-  slate: { bg: "var(--arc-slate-bg)", fg: "var(--arc-slate-fg)" },
-  mauve: { bg: "var(--arc-mauve-bg)", fg: "var(--arc-mauve-fg)" },
-  pine:  { bg: "var(--arc-pine-bg)",  fg: "var(--arc-pine-fg)"  },
-  stone: { bg: "var(--arc-stone-bg)", fg: "var(--arc-stone-fg)" },
-  sand:  { bg: "var(--arc-sand-bg)",  fg: "var(--arc-sand-fg)"  },
-};
-
-/* ═══════════════════════════════════════════════════════════════════
-   DATA
-   ═══════════════════════════════════════════════════════════════════ */
-
-const ROUTE_DEFS = [
-  { name: "classify", color: "clay" },
-  { name: "chat", color: "moss" },
-  { name: "summarize", color: "ochre" },
-  { name: "extract", color: "dusk" },
-  { name: "embed", color: "slate" },
-  { name: "search", color: "mauve" },
-  { name: "generate", color: "pine" },
-  { name: "analyze", color: "sand" },
-  { name: "Direct", color: "stone" },
+const ROUTE_POOL = [
+  { name: "classify",  color: "clay",  model: "gpt-4o-mini",      prov: "openai" },
+  { name: "chat",      color: "moss",  model: "claude-sonnet-4",  prov: "anthropic" },
+  { name: "summarize", color: "ochre", model: "gpt-4o",           prov: "openai" },
+  { name: "extract",   color: "dusk",  model: "claude-haiku",     prov: "anthropic" },
+  { name: "embed",     color: "slate", model: "text-embed-3",     prov: "openai" },
+  { name: "search",    color: "mauve", model: "gemini-2.0-flash", prov: "google" },
+  { name: "generate",  color: "pine",  model: "claude-opus-4",    prov: "anthropic" },
+  { name: "analyze",   color: "sand",  model: "gpt-4-turbo",      prov: "openai" },
 ];
 
-const MODELS = [
-  { name: "gpt-4o", provider: "openai" },
-  { name: "gpt-4o-mini", provider: "openai" },
-  { name: "claude-sonnet-4", provider: "anthropic" },
-  { name: "claude-3-haiku", provider: "anthropic" },
-  { name: "gpt-4-turbo", provider: "openai" },
-  { name: "claude-opus-4", provider: "anthropic" },
-  { name: "gemini-2.0-flash", provider: "google" },
-  { name: "gemini-1.5-pro", provider: "google" },
-];
-
-const INSIGHTS = [
-  { icon: "↻", color: "var(--arc-status-warning)", text: "Rerouted /classify — OpenAI latency spike detected → Anthropic (0 downtime)" },
-  { icon: "◆", color: "var(--arc-slate-fg)",       text: "Semantic cache hit on /embed — identical query detected, saved 340ms" },
-  { icon: "◉", color: "var(--arc-mauve-fg)",       text: "Shadow test: Claude Haiku scored 98.7% vs GPT-4o on /classify — recommend switch" },
-  { icon: "▲", color: "var(--arc-status-healthy)", text: "Recommendation: /summarize → GPT-4o-mini ($310/mo savings, 98.4% quality match)" },
-  { icon: "⚡", color: "var(--arc-status-warning)", text: "Provider failover: OpenAI 503 → Anthropic Claude Sonnet (automatic, 0 dropped)" },
-  { icon: "◈", color: "var(--arc-clay-fg)",        text: "Rate limit approaching on /chat (87/100 RPM) — adaptive throttling engaged" },
-];
-
-/* ═══════════════════════════════════════════════════════════════════
-   HELPERS
-   ═══════════════════════════════════════════════════════════════════ */
-
-let _id = 0;
-const hex = () => Math.floor(Math.random() * 16).toString(16);
-const fakeUuid = () => Array.from({ length: 8 }, hex).join("");
-
-function generateRequest(ageMs = 0) {
-  const model = MODELS[Math.floor(Math.random() * MODELS.length)];
-  const route = ROUTE_DEFS[Math.floor(Math.random() * ROUTE_DEFS.length)];
-  const tokens = Math.floor(Math.random() * 3800) + 120;
-  const cost = tokens * (Math.random() * 0.004 + 0.0005);
-  const latency = Math.floor(Math.random() * 480) + 60;
-  const cacheHit = Math.random() < 0.22;
-  const isShadow = Math.random() < 0.12;
-
-  // status
-  let statusCode = 200;
-  const r = Math.random();
-  if (r > 0.94) statusCode = 429;
-  else if (r > 0.92) statusCode = 500;
-
-  return {
-    id: ++_id,
-    reqId: fakeUuid(),
-    ageMs,
-    route,
-    model: model.name,
-    provider: model.provider,
-    tokens,
-    cost,
-    latency,
-    cacheHit,
-    statusCode,
-    isShadow,
-  };
-}
-
-function formatAge(ms) {
-  if (ms < 5000) return "just now";
-  const s = Math.floor(ms / 1000);
-  if (s < 60) return `${s}s ago`;
-  const m = Math.floor(s / 60);
-  if (m < 60) return `${m}m ago`;
-  return `${Math.floor(m / 60)}h ago`;
-}
-
-function providerDotColor(provider) {
-  if (provider === "anthropic") return T.providerAnthropic;
-  if (provider === "google") return T.providerGoogle;
+function providerDot(prov) {
+  if (prov === "anthropic") return T.providerAnthropic;
+  if (prov === "google")    return T.providerGoogle;
   return T.providerOpenai;
 }
 
-function statusColor(code) {
-  if (code === 200) return T.statusHealthy;
-  if (code === 429) return T.statusWarning;
-  return T.statusError;
+const hex = () => Math.floor(Math.random() * 16).toString(16);
+const shortId = () => Array.from({ length: 6 }, hex).join("");
+
+let _seq = 0;
+function makeReq() {
+  const r = ROUTE_POOL[Math.floor(Math.random() * ROUTE_POOL.length)];
+  const tokens = Math.floor(Math.random() * 3600) + 140;
+  const latency = Math.floor(Math.random() * 420) + 70;
+  const cost = tokens * (Math.random() * 0.003 + 0.0006);
+  const rand = Math.random();
+  const status = rand > 0.95 ? 429 : rand > 0.93 ? 500 : 200;
+  return {
+    id: ++_seq,
+    reqId: shortId(),
+    route: r,
+    tokens,
+    latency,
+    cost,
+    status,
+    cacheHit: Math.random() < 0.24,
+  };
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SMOOTH COUNTER
+   LIVE LOG PANEL — mini Arc dashboard card
    ═══════════════════════════════════════════════════════════════════ */
 
-function SmoothCounter({ value, prefix = "", suffix = "", decimals = 0 }) {
-  const cur = useRef(0);
-  const [display, setDisplay] = useState(0);
-  const raf = useRef(null);
+function LiveLogPanel() {
+  const [rows, setRows] = useState(() => Array.from({ length: 7 }, makeReq));
+  const [tick, setTick] = useState(0);
 
-  useEffect(() => {
-    const step = () => {
-      const diff = value - cur.current;
-      if (Math.abs(diff) < (decimals > 0 ? 0.01 : 0.5)) {
-        cur.current = value;
-        setDisplay(value);
-        return;
-      }
-      cur.current += diff * 0.08;
-      setDisplay(cur.current);
-      raf.current = requestAnimationFrame(step);
-    };
-    raf.current = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf.current);
-  }, [value, decimals]);
-
-  return (
-    <span>
-      {prefix}
-      {display.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-      {suffix}
-    </span>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   ROUTE PILL — replicates Arc's UseCasePill exactly
-   ═══════════════════════════════════════════════════════════════════ */
-
-function RoutePill({ name, color }) {
-  const s = SWATCH[color] || SWATCH.stone;
-  return (
-    <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 4,
-        padding: "2px 7px",
-        borderRadius: 4,
-        background: s.bg,
-        fontSize: 10,
-        letterSpacing: "0.02em",
-        color: s.fg,
-        whiteSpace: "nowrap",
-        fontFamily: "'Inter', sans-serif",
-      }}
-    >
-      <span
-        style={{
-          width: 4,
-          height: 4,
-          borderRadius: "50%",
-          background: s.fg,
-          flexShrink: 0,
-        }}
-      />
-      {name}
-    </span>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   TABLE ROW — matches Arc's real log table
-   ═══════════════════════════════════════════════════════════════════ */
-
-const COL_TEMPLATE = "68px 56px auto 1fr 42px 42px 56px 56px 56px";
-const CELL = { padding: "9px 12px" };
-const SANS = { fontFamily: "'Inter', sans-serif" };
-// Monospace only for actual code-like data: hashes, costs, token counts
-const MONO = { fontFamily: "'JetBrains Mono', monospace" };
-
-function LogRow({ req, elapsed }) {
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, x: -6 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, height: 0, overflow: "hidden" }}
-      transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
-      style={{
-        display: "grid",
-        gridTemplateColumns: COL_TEMPLATE,
-        alignItems: "center",
-        borderBottom: `1px solid ${T.borderSubtle}`,
-        cursor: "pointer",
-        transition: "background 60ms ease",
-      }}
-      onMouseEnter={(e) => (e.currentTarget.style.background = T.surfaceRaised)}
-      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-    >
-      {/* Request ID — monospace because it's a hash */}
-      <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textTertiary, whiteSpace: "nowrap", overflow: "hidden" }}>
-        {req.reqId}…
-        {req.isShadow && (
-          <span
-            style={{
-              marginLeft: 5,
-              fontSize: 8.5,
-              letterSpacing: "0.06em",
-              padding: "1px 5px",
-              borderRadius: 3,
-              color: T.statusWarning,
-              border: "1px solid color-mix(in srgb, var(--arc-status-warning) 35%, transparent)",
-              background: "color-mix(in srgb, var(--arc-status-warning) 8%, transparent)",
-              verticalAlign: "middle",
-              textTransform: "uppercase",
-              fontFamily: "'Inter', sans-serif",
-            }}
-          >
-            shadow
-          </span>
-        )}
-      </div>
-
-      {/* Time — regular text */}
-      <div style={{ ...CELL, ...SANS, fontSize: 11, color: T.textTertiary }}>
-        {formatAge(elapsed + req.ageMs)}
-      </div>
-
-      {/* Route */}
-      <div style={CELL}>
-        <RoutePill name={req.route.name} color={req.route.color} />
-      </div>
-
-      {/* Model — regular text */}
-      <div style={{ ...CELL, display: "flex", alignItems: "center", gap: 6, overflow: "hidden" }}>
-        <span style={{ width: 5, height: 5, borderRadius: "50%", background: providerDotColor(req.provider), flexShrink: 0 }} />
-        <span style={{ ...SANS, fontSize: 11, color: T.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-          {req.model}
-        </span>
-      </div>
-
-      {/* Cache — regular text */}
-      <div style={{ ...CELL, textAlign: "center" }}>
-        <span style={{ ...SANS, fontSize: 11, color: req.cacheHit ? T.statusHealthy : T.textTertiary }}>
-          {req.cacheHit ? "Hit" : "Miss"}
-        </span>
-      </div>
-
-      {/* Status — regular text */}
-      <div style={{ ...CELL, textAlign: "center" }}>
-        <span style={{ ...SANS, fontSize: 11, fontWeight: 500, color: statusColor(req.statusCode) }}>
-          {req.statusCode}
-        </span>
-      </div>
-
-      {/* Latency — monospace, it's a measurement */}
-      <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textSecondary, textAlign: "right" }}>
-        {req.latency}ms
-      </div>
-
-      {/* Tokens — monospace, it's a count */}
-      <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textTertiary, textAlign: "right" }}>
-        {req.tokens.toLocaleString()}
-      </div>
-
-      {/* Cost — monospace, it's a precise number */}
-      <div style={{ ...CELL, ...MONO, fontSize: 11, color: T.textSecondary, textAlign: "right" }}>
-        ${req.cost.toFixed(4)}
-      </div>
-    </motion.div>
-  );
-}
-
-/* Mobile row — compact */
-function LogRowMobile({ req, elapsed }) {
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, x: -6 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, height: 0, overflow: "hidden" }}
-      transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
-      style={{
-        display: "grid",
-        gridTemplateColumns: "auto 1fr 36px 48px",
-        alignItems: "center",
-        gap: 0,
-        borderBottom: `1px solid ${T.borderSubtle}`,
-      }}
-    >
-      <div style={{ padding: "8px 10px" }}>
-        <RoutePill name={req.route.name} color={req.route.color} />
-      </div>
-      <div style={{ padding: "8px 6px", display: "flex", alignItems: "center", gap: 5, overflow: "hidden" }}>
-        <span style={{ width: 4, height: 4, borderRadius: "50%", background: providerDotColor(req.provider), flexShrink: 0 }} />
-        <span style={{ ...MONO, fontSize: 10, color: T.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-          {req.model}
-        </span>
-      </div>
-      <div style={{ ...MONO, fontSize: 9.5, fontWeight: 500, color: statusColor(req.statusCode), textAlign: "center", padding: "8px 4px" }}>
-        {req.statusCode}
-      </div>
-      <div style={{ ...MONO, fontSize: 10, color: T.textSecondary, textAlign: "right", padding: "8px 10px" }}>
-        ${req.cost.toFixed(3)}
-      </div>
-    </motion.div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   OPERATIONS PANEL
-   ═══════════════════════════════════════════════════════════════════ */
-
-function OperationsPanel({ reqCount, cacheRate, latencyOverhead, providerCount }) {
-  const [feed, setFeed] = useState([]);
-  const [insightIdx, setInsightIdx] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const startRef = useRef(Date.now());
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 720);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  // Seed initial rows with staggered ages
-  useEffect(() => {
-    const initial = [];
-    for (let i = 0; i < 7; i++) {
-      initial.push(generateRequest(i * 8000 + Math.random() * 4000));
-    }
-    setFeed(initial);
-  }, []);
-
-  // Feed ticker
   useEffect(() => {
     const interval = setInterval(() => {
-      setFeed((prev) => {
-        const next = [generateRequest(0), ...prev];
-        return next.slice(0, 9);
-      });
-    }, 1400 + Math.random() * 800);
+      setRows((prev) => [makeReq(), ...prev].slice(0, 7));
+      setTick((t) => t + 1);
+    }, 1900);
     return () => clearInterval(interval);
   }, []);
 
-  // Insight cycle
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setInsightIdx((i) => (i + 1) % INSIGHTS.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Elapsed time for relative timestamps
-  const [elapsed, setElapsed] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => setElapsed(Date.now() - startRef.current), 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const insight = INSIGHTS[insightIdx];
-  const Row = isMobile ? LogRowMobile : LogRow;
+  const statusColor = (s) =>
+    s === 200 ? T.statusHealthy : s === 429 ? T.statusWarning : T.statusError;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 1.0, ease: [0.23, 1, 0.32, 1] }}
+    <div
       style={{
-        width: "100%",
-        maxWidth: 880,
-        borderRadius: 6,
-        border: `1px solid ${T.borderDefault}`,
         background: T.surfaceCard,
+        border: `1px solid ${T.borderDefault}`,
+        borderRadius: 6,
         overflow: "hidden",
+        fontFamily: "'Ronzino', Georgia, serif",
       }}
     >
-      {/* ── Header bar ── */}
+      {/* Card header */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "10px 14px",
-          borderBottom: `1px solid ${T.borderDefault}`,
-          background: T.surfaceCard,
+          padding: "14px 18px",
+          borderBottom: `1px solid ${T.borderSubtle}`,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -429,307 +95,153 @@ function OperationsPanel({ reqCount, cacheRate, latencyOverhead, providerCount }
               height: 6,
               borderRadius: "50%",
               background: T.statusHealthy,
-              boxShadow: "0 0 8px color-mix(in srgb, var(--arc-status-healthy) 40%, transparent)",
+              boxShadow: `0 0 0 3px color-mix(in srgb, var(--arc-status-healthy) 18%, transparent)`,
               animation: "arc-pulse 2s ease-in-out infinite",
             }}
           />
-          <span style={{ fontFamily: "'Ronzino', serif", fontSize: 15, fontWeight: 400, letterSpacing: "-0.02em", color: T.textPrimary }}>
-            Logs
-          </span>
-          <span style={{ ...SANS, fontSize: 11, color: T.textTertiary, marginLeft: 2 }}>
-            <SmoothCounter value={reqCount} /> requests
-          </span>
+          <span style={{ ...TYPE.eyebrow, color: T.textSecondary }}>Live requests</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span
-            style={{
-              ...SANS,
-              fontSize: 10,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              padding: "5px 12px",
-              background: "transparent",
-              border: `1px solid ${T.borderDefault}`,
-              borderRadius: 4,
-              color: T.textSecondary,
-            }}
-          >
-            Export CSV
-          </span>
-        </div>
+        <span style={{ ...TYPE.metaLabel, color: T.textTertiary }}>
+          arc.cornerstone.sh/v1
+        </span>
       </div>
 
-      {/* ── Stats strip ── */}
+      {/* Column headers */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          borderBottom: `1px solid ${T.borderDefault}`,
+          gridTemplateColumns: "54px 1fr 82px 54px 64px",
+          alignItems: "center",
+          padding: "9px 18px",
+          borderBottom: `1px solid ${T.borderSubtle}`,
+          background: T.surfaceCard,
         }}
       >
-        {[
-          { label: "Requests", value: <SmoothCounter value={reqCount} />, color: T.textPrimary },
-          { label: "Cache Hit Rate", value: <SmoothCounter value={cacheRate} suffix="%" decimals={1} />, color: SWATCH.slate.fg },
-          { label: "Latency Overhead", value: <SmoothCounter value={latencyOverhead} suffix="ms" decimals={1} />, color: T.textPrimary },
-          { label: "Providers", value: <span>{providerCount}</span>, color: T.textPrimary },
-        ].map((s, i) => (
-          <div
-            key={i}
+        {["id", "route", "model", "lat", "cost"].map((h, i) => (
+          <span
+            key={h}
             style={{
-              padding: isMobile ? "10px 8px" : "12px 14px",
-              borderRight: i < 3 ? `1px solid ${T.borderSubtle}` : "none",
+              ...TYPE.metaLabel,
+              color: T.textTertiary,
+              textAlign: i >= 3 ? "right" : "left",
             }}
           >
-            <div style={{ ...SANS, fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: T.textTertiary, marginBottom: 4 }}>
-              {s.label}
-            </div>
-            <div style={{ ...SANS, fontSize: isMobile ? 15 : 18, color: s.color, fontWeight: 400, fontVariantNumeric: "tabular-nums" }}>
-              {s.value}
-            </div>
-          </div>
+            {h}
+          </span>
         ))}
       </div>
 
-      {/* ── Column headers (desktop) ── */}
-      {!isMobile && (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: COL_TEMPLATE,
-            borderBottom: `1px solid ${T.borderDefault}`,
-            background: T.surfaceCard,
-          }}
-        >
-          {[
-            { label: "Request ID", align: "left" },
-            { label: "Time", align: "left" },
-            { label: "Route", align: "left" },
-            { label: "Model", align: "left" },
-            { label: "Cache", align: "center" },
-            { label: "Status", align: "center" },
-            { label: "Latency", align: "right" },
-            { label: "Tokens", align: "right" },
-            { label: "Cost", align: "right" },
-          ].map((h) => (
-            <div
-              key={h.label}
+      {/* Rows */}
+      <div style={{ minHeight: 350 }}>
+        <AnimatePresence initial={false}>
+          {rows.map((r) => (
+            <motion.div
+              key={r.id}
+              layout
+              initial={{ opacity: 0, x: -6, height: 0 }}
+              animate={{ opacity: 1, x: 0, height: "auto" }}
+              exit={{ opacity: 0, height: 0, overflow: "hidden" }}
+              transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
               style={{
-                ...SANS,
-                padding: "10px 12px",
-                textAlign: h.align,
-                fontSize: 9,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: T.textTertiary,
-                fontWeight: 500,
-                whiteSpace: "nowrap",
+                display: "grid",
+                gridTemplateColumns: "54px 1fr 82px 54px 64px",
+                alignItems: "center",
+                padding: "11px 18px",
+                borderBottom: `1px solid ${T.borderSubtle}`,
               }}
             >
-              {h.label}
-            </div>
-          ))}
-        </div>
-      )}
+              {/* id */}
+              <span style={{ fontSize: 10.5, color: T.textTertiary, letterSpacing: "0.02em" }}>
+                {r.reqId}
+              </span>
 
-      {/* ── Request feed ── */}
-      <div
-        style={{
-          height: isMobile ? 200 : 270,
-          overflow: "hidden",
-          position: "relative",
-        }}
-      >
-        {/* Fade at bottom */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 56,
-            background: `linear-gradient(to top, ${T.surfaceCard}, transparent)`,
-            pointerEvents: "none",
-            zIndex: 2,
-          }}
-        />
-        <AnimatePresence initial={false}>
-          {feed.map((req) => (
-            <Row key={req.id} req={req} elapsed={elapsed} />
+              {/* route pill */}
+              <div style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
+                <span style={pillStyle(r.route.color)}>
+                  <span style={{ ...dotStyle(r.route.color) }} />
+                  {r.route.name}
+                </span>
+                {r.cacheHit && (
+                  <span
+                    style={{
+                      fontSize: 9,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      color: T.statusHealthy,
+                    }}
+                  >
+                    cache
+                  </span>
+                )}
+              </div>
+
+              {/* model */}
+              <div style={{ display: "flex", alignItems: "center", gap: 6, minWidth: 0 }}>
+                <span
+                  style={{
+                    width: 5,
+                    height: 5,
+                    borderRadius: "50%",
+                    background: providerDot(r.route.prov),
+                    flexShrink: 0,
+                  }}
+                />
+                <span
+                  style={{
+                    fontSize: 10.5,
+                    color: T.textSecondary,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {r.route.model}
+                </span>
+              </div>
+
+              {/* latency */}
+              <span
+                style={{
+                  fontSize: 10.5,
+                  color: T.textSecondary,
+                  textAlign: "right",
+                }}
+              >
+                {r.latency}ms
+              </span>
+
+              {/* cost */}
+              <span
+                style={{
+                  fontSize: 10.5,
+                  color: r.status === 200 ? T.textSecondary : statusColor(r.status),
+                  textAlign: "right",
+                }}
+              >
+                ${r.cost.toFixed(3)}
+              </span>
+            </motion.div>
           ))}
         </AnimatePresence>
       </div>
 
-      {/* ── Insight bar ── */}
+      {/* Footer strip */}
       <div
         style={{
-          borderTop: `1px solid ${T.borderDefault}`,
-          padding: "9px 14px",
           display: "flex",
           alignItems: "center",
-          gap: 8,
-          minHeight: 36,
-          overflow: "hidden",
+          justifyContent: "space-between",
+          padding: "10px 18px",
+          background: T.surfaceRaised,
+          borderTop: `1px solid ${T.borderSubtle}`,
         }}
       >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={insightIdx}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3 }}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              ...SANS,
-              fontSize: isMobile ? 10 : 11,
-              lineHeight: 1.4,
-            }}
-          >
-            <span style={{ color: insight.color, fontSize: 11, flexShrink: 0 }}>{insight.icon}</span>
-            <span style={{ color: T.textSecondary }}>{insight.text}</span>
-          </motion.div>
-        </AnimatePresence>
+        <span style={{ ...TYPE.metaLabel, color: T.textTertiary }}>
+          12,847 req/min · 7 routes
+        </span>
+        <span style={{ ...TYPE.metaLabel, color: T.statusHealthy }}>● healthy</span>
       </div>
-    </motion.div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   GRID BACKGROUND
-   ═══════════════════════════════════════════════════════════════════ */
-
-function GridBackground() {
-  const canvasRef = useRef(null);
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
-
-    const ctx = canvas.getContext("2d");
-    let dpr = window.devicePixelRatio || 1;
-    let raf;
-    // Read dot RGB from CSS variable so it adapts to light/dark mode
-    const readDotRgb = () =>
-      getComputedStyle(document.documentElement).getPropertyValue("--arc-dot-rgb").trim() || "17, 17, 17";
-    let dotRgb = readDotRgb();
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const onSchemeChange = () => { dotRgb = readDotRgb(); };
-    mq.addEventListener("change", onSchemeChange);
-
-    const resize = () => {
-      const rect = container.getBoundingClientRect();
-      dpr = window.devicePixelRatio || 1;
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      canvas.style.width = rect.width + "px";
-      canvas.style.height = rect.height + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const draw = (now) => {
-      const w = canvas.width / dpr;
-      const h = canvas.height / dpr;
-      ctx.clearRect(0, 0, w, h);
-
-      const spacing = 48;
-      const cx = w * 0.5;
-      const cy = h * 0.5;
-
-      for (let x = spacing / 2; x < w; x += spacing) {
-        for (let y = spacing / 2; y < h; y += spacing) {
-          const dx = x - cx;
-          const dy = y - cy;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = Math.sqrt(cx * cx + cy * cy);
-          const falloff = 1 - Math.min(dist / maxDist, 1);
-          const pulse = Math.sin(now * 0.0008 - dist * 0.006) * 0.5 + 0.5;
-          const alpha = (0.012 + pulse * 0.02) * falloff;
-          ctx.fillStyle = `rgba(${dotRgb}, ${alpha})`;
-          ctx.beginPath();
-          ctx.arc(x, y, 0.7, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-      raf = requestAnimationFrame(draw);
-    };
-    raf = requestAnimationFrame(draw);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-      mq.removeEventListener("change", onSchemeChange);
-    };
-  }, []);
-
-  return (
-    <div ref={containerRef} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-      <canvas ref={canvasRef} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} />
     </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   CODE DIFF STRIP
-   ═══════════════════════════════════════════════════════════════════ */
-
-function CodeDiffStrip() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 1.6 }}
-      style={{
-        width: "100%",
-        maxWidth: 620,
-        margin: "0 auto",
-        borderRadius: 6,
-        overflow: "hidden",
-        border: `1px solid ${T.borderDefault}`,
-      }}
-    >
-      <div
-        style={{
-          padding: "10px 14px",
-          background: "color-mix(in srgb, var(--arc-status-error) 4%, transparent)",
-          borderBottom: `1px solid ${T.borderSubtle}`,
-          ...MONO,
-          fontSize: 11,
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-        }}
-      >
-        <span style={{ color: "color-mix(in srgb, var(--arc-status-error) 50%, transparent)", fontWeight: 700, flexShrink: 0 }}>−</span>
-        <span style={{ color: T.textTertiary }}>
-          base_url:{" "}
-          <span style={{ color: T.textSecondary, textDecoration: "line-through" }}>
-            &quot;api.openai.com/v1&quot;
-          </span>
-        </span>
-      </div>
-      <div
-        style={{
-          padding: "10px 14px",
-          background: "color-mix(in srgb, var(--arc-status-healthy) 3%, transparent)",
-          ...MONO,
-          fontSize: 11,
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-        }}
-      >
-        <span style={{ color: "color-mix(in srgb, var(--arc-status-healthy) 60%, transparent)", fontWeight: 700, flexShrink: 0 }}>+</span>
-        <span style={{ color: T.textTertiary }}>
-          base_url:{" "}
-          <span style={{ color: T.textPrimary }}>&quot;arc.cornerstone.sh/v1&quot;</span>
-        </span>
-      </div>
-    </motion.div>
   );
 }
 
@@ -738,201 +250,197 @@ function CodeDiffStrip() {
    ═══════════════════════════════════════════════════════════════════ */
 
 export default function ArcHero() {
-  const [mounted, setMounted] = useState(false);
-  const [requests, setRequests] = useState(0);
-  const [cacheRate, setCacheRate] = useState(0);
-  const [latency, setLatency] = useState(0);
-
-  useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    const interval = setInterval(() => {
-      setRequests((r) => r + Math.floor(Math.random() * 5) + 1);
-      setCacheRate(() => 28 + Math.random() * 14);
-      setLatency(() => 8 + Math.random() * 9);
-    }, 900);
-    return () => clearInterval(interval);
-  }, [mounted]);
-
   return (
     <section
       style={{
-        position: "relative",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
         background: T.surfacePage,
+        color: T.textPrimary,
+        fontFamily: "'Ronzino', Georgia, serif",
+        paddingTop: 120,
+        paddingBottom: "clamp(80px, 10vw, 140px)",
+        position: "relative",
         overflow: "hidden",
-        padding: "0 20px",
       }}
     >
-      {/* Radial glow */}
+      {/* pulse keyframes */}
+      <style>{`
+        @keyframes arc-pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.45; }
+        }
+        @keyframes arc-fade-up {
+          from { opacity: 0; transform: translateY(14px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+
       <div
         style={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-          background: "radial-gradient(ellipse 70% 50% at 50% 60%, color-mix(in srgb, var(--arc-status-error) 4%, transparent) 0%, transparent 70%)",
-        }}
-      />
-
-      {mounted && <GridBackground />}
-
-      <div
-        style={{
-          position: "relative",
-          zIndex: 10,
-          maxWidth: 920,
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
+          maxWidth: 1220,
+          margin: "0 auto",
+          padding: "0 clamp(24px, 5vw, 56px)",
+          display: "grid",
+          gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 0.95fr)",
+          gap: "clamp(40px, 6vw, 88px)",
           alignItems: "center",
-          paddingTop: 120,
-          paddingBottom: 56,
         }}
+        className="arc-hero-grid"
       >
-        {/* ── Headline ── */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          style={{
-            fontFamily: "'Ronzino', serif",
-            fontSize: "clamp(2.6rem, 7vw, 5rem)",
-            fontWeight: 400,
-            color: T.textPrimary,
-            textAlign: "center",
-            lineHeight: 1.05,
-            letterSpacing: "-0.025em",
-            marginBottom: 20,
-            maxWidth: 720,
-          }}
-        >
-          Arc sees every call.
-          <br />
-          <span style={{ color: T.textTertiary }}>Then it fixes it.</span>
-        </motion.h1>
+        {/* LEFT — text */}
+        <div style={{ animation: "arc-fade-up 0.9s ease-out both" }}>
+          {/* eyebrow */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 32 }}>
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: "50%",
+                background: T.textPrimary,
+                display: "inline-block",
+              }}
+            />
+            <span style={{ ...TYPE.eyebrow, color: T.textSecondary }}>
+              Arc — AI operations proxy
+            </span>
+          </div>
 
-        {/* ── Subhead ── */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "clamp(13px, 1.6vw, 15px)",
-            color: T.textSecondary,
-            textAlign: "center",
-            maxWidth: 540,
-            lineHeight: 1.65,
-            marginBottom: 36,
-          }}
-        >
-          Arc is a managed proxy for LLM APIs that doesn&apos;t just observe — it optimizes.
-          Change one line of code to get cost tracking, multi-provider routing,
-          and proactive recommendations that cut your inference bill.
-        </motion.p>
-
-        {/* ── CTAs ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.9 }}
-          style={{ display: "flex", gap: 12, marginBottom: 48, flexWrap: "wrap", justifyContent: "center" }}
-        >
-          <Link
-            href="https://arc.cornerstone.sh"
+          {/* headline */}
+          <h1
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              padding: "10px 28px",
-              background: T.textPrimary,
-              color: T.surfacePage,
-              borderRadius: 999,
-              fontFamily: "'Inter', sans-serif",
-              fontSize: 13,
-              fontWeight: 500,
-              textDecoration: "none",
-              transition: "opacity 0.2s",
+              ...TYPE.displayXL,
+              color: T.textPrimary,
+              margin: 0,
+              marginBottom: 28,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
-            Start free →
-          </Link>
-          <a
-            href="#how-it-works"
+            Your AI stack,
+            <br />
+            <span style={{ color: T.textSecondary, fontStyle: "italic" }}>observed.</span>
+          </h1>
+
+          {/* body */}
+          <p
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              padding: "10px 28px",
-              border: `1px solid ${T.borderDefault}`,
+              ...TYPE.bodyLg,
               color: T.textSecondary,
-              borderRadius: 999,
-              fontFamily: "'Inter', sans-serif",
-              fontSize: 13,
-              fontWeight: 500,
-              textDecoration: "none",
-              transition: "border-color 0.2s, color 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = T.borderDefault;
-              e.currentTarget.style.color = T.textPrimary;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = T.borderDefault;
-              e.currentTarget.style.color = T.textSecondary;
+              maxWidth: 520,
+              margin: 0,
+              marginBottom: 40,
             }}
           >
-            See it in action ↓
-          </a>
-        </motion.div>
+            Arc sits between your app and your AI providers. One endpoint for every model.
+            Every request logged, routed, and tuned — without a line of infrastructure code.
+          </p>
 
-        {/* ── Operations panel ── */}
-        {mounted && (
-          <OperationsPanel
-            reqCount={requests}
-            cacheRate={cacheRate}
-            latencyOverhead={latency}
-            providerCount={3}
-          />
-        )}
+          {/* CTAs */}
+          <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+            <Link
+              href="https://arc.cornerstone.sh"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "13px 22px",
+                background: T.textPrimary,
+                color: T.surfacePage,
+                border: "none",
+                borderRadius: 4,
+                fontFamily: "'Ronzino', Georgia, serif",
+                fontSize: 12,
+                fontWeight: 500,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                cursor: "pointer",
+                transition: "opacity 120ms ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+            >
+              Start free
+              <span style={{ opacity: 0.6 }}>→</span>
+            </Link>
 
-        <div style={{ height: 32 }} />
+            <Link
+              href="#how-it-works"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "13px 22px",
+                background: "transparent",
+                color: T.textPrimary,
+                border: `1px solid ${T.borderDefault}`,
+                borderRadius: 4,
+                fontFamily: "'Ronzino', Georgia, serif",
+                fontSize: 12,
+                fontWeight: 500,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                transition: "border-color 120ms ease, background 120ms ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "var(--arc-text-secondary)";
+                e.currentTarget.style.background = T.surfaceRaised;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "var(--arc-border-default)";
+                e.currentTarget.style.background = "transparent";
+              }}
+            >
+              See how it works
+            </Link>
+          </div>
 
-        <CodeDiffStrip />
+          {/* stats strip */}
+          <div
+            style={{
+              marginTop: 56,
+              paddingTop: 24,
+              borderTop: `1px solid ${T.borderSubtle}`,
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: 24,
+            }}
+          >
+            {[
+              { value: "<2ms", label: "Proxy overhead" },
+              { value: "9", label: "Providers" },
+              { value: "$0", label: "Dev tier" },
+            ].map((s) => (
+              <div key={s.label}>
+                <div
+                  style={{
+                    fontSize: 24,
+                    fontWeight: 300,
+                    letterSpacing: "-0.02em",
+                    color: T.textPrimary,
+                    marginBottom: 4,
+                  }}
+                >
+                  {s.value}
+                </div>
+                <div style={{ ...TYPE.metaLabel, color: T.textTertiary }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 2.0 }}
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: 12,
-            color: T.textTertiary,
-            marginTop: 10,
-            textAlign: "center",
-          }}
-        >
-          That&apos;s it. One line.
-        </motion.p>
+        {/* RIGHT — live log panel */}
+        <div style={{ animation: "arc-fade-up 1.1s ease-out 0.15s both" }}>
+          <LiveLogPanel />
+        </div>
       </div>
 
-      {/* Scroll chevron */}
-      <motion.div
-        style={{ position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)" }}
-        animate={{ opacity: [0, 0.3, 0] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <svg width="16" height="10" viewBox="0 0 16 10" fill="none" stroke={T.textSecondary} strokeWidth="1.5" strokeLinecap="round">
-          <path d="M2 2l6 6 6-6" />
-        </svg>
-      </motion.div>
-
-      <style>{`@keyframes arc-pulse { 0%,100% { opacity:1 } 50% { opacity:0.4 } }`}</style>
+      {/* mobile layout adjustment */}
+      <style>{`
+        @media (max-width: 900px) {
+          .arc-hero-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

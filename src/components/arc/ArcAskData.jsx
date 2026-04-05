@@ -1,169 +1,262 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { T, TYPE, SECTION, SWATCH, pillStyle, dotStyle } from "./arcTokens";
 
-const question = "why did costs spike on tuesday?";
-const answer = `Route \`customer-support\` jumped from 340 to 890 requests between 2–6am. Average prompt tokens also increased from 420 to 1,840 — likely a context window change in your app.`;
+const QUESTION = "Why did costs spike on Tuesday?";
+const ANSWER_PARTS = [
+  "Route ",
+  { pill: { name: "customer-support", color: "clay" } },
+  " jumped from ",
+  { em: "340" },
+  " to ",
+  { em: "890" },
+  " requests between 2–6am. Average prompt tokens also increased from ",
+  { em: "420" },
+  " to ",
+  { em: "1,840" },
+  " — likely a context window change in your app.",
+];
+
+function typewriter(fullText, onUpdate, speed = 22) {
+  let i = 0;
+  let cancelled = false;
+  const tick = () => {
+    if (cancelled) return;
+    i++;
+    onUpdate(fullText.slice(0, i));
+    if (i < fullText.length) setTimeout(tick, speed);
+  };
+  tick();
+  return () => {
+    cancelled = true;
+  };
+}
 
 export default function ArcAskData() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [phase, setPhase] = useState("idle");
+  const isInView = useInView(ref, { once: true, margin: "-120px" });
   const [typedQ, setTypedQ] = useState("");
-  const [typedA, setTypedA] = useState("");
-  const [showGhost, setShowGhost] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
     if (!isInView) return;
-    let cancelled = false;
-    const delay = (ms) => new Promise((r) => setTimeout(r, ms));
-
-    const run = async () => {
-      await delay(800);
-      if (cancelled) return;
-      setPhase("typing-q");
-
-      // Type question
-      for (let i = 0; i <= question.length; i++) {
-        if (cancelled) return;
-        setTypedQ(question.slice(0, i));
-        await delay(45);
-      }
-
-      await delay(300);
-      if (cancelled) return;
-      setPhase("enter");
-      await delay(400);
-      if (cancelled) return;
-      setPhase("drawer");
-      await delay(400);
-      if (cancelled) return;
-      setPhase("typing-a");
-
-      // Type answer
-      for (let i = 0; i <= answer.length; i++) {
-        if (cancelled) return;
-        setTypedA(answer.slice(0, i));
-        await delay(15);
-      }
-
-      await delay(600);
-      if (cancelled) return;
-      setPhase("done");
-      setShowGhost(true);
+    const to1 = setTimeout(() => {
+      const stop = typewriter(QUESTION, setTypedQ, 32);
+      return stop;
+    }, 600);
+    const to2 = setTimeout(() => setShowAnswer(true), 600 + QUESTION.length * 32 + 400);
+    return () => {
+      clearTimeout(to1);
+      clearTimeout(to2);
     };
-    run();
-    return () => { cancelled = true; };
   }, [isInView]);
 
   return (
-    <section className="py-32 md:py-40 bg-muted">
-      <div className="container-swiss" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+    <section style={SECTION.wrap}>
+      <div style={SECTION.inner} ref={ref}>
+        <div
+          className="arc-feature-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 1fr)",
+            gap: "clamp(40px, 6vw, 96px)",
+            alignItems: "center",
+          }}
         >
-          <h2 className="font-serif text-3xl md:text-4xl text-foreground/60">
-            Just ask.
-          </h2>
-        </motion.div>
-
-        {/* Body */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="max-w-lg mx-auto text-center mb-12"
-        >
-          <p className="font-serif text-foreground/35 leading-relaxed text-sm">
-            Why did costs spike on Tuesday?
-            <br />
-            Should I switch my summarization route to Haiku?
-            <br />
-            Which route is performing worst this week?
-          </p>
-          <p className="font-serif text-foreground/50 mt-4 text-sm">
-            Arc knows your data. Ask in plain English, get a specific answer.
-          </p>
-        </motion.div>
-
-        {/* Chat mockup */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="max-w-lg mx-auto"
-        >
-          <div className="border border-foreground/[0.08] bg-background overflow-hidden">
-            {/* Browser chrome */}
-            <div className="flex items-center gap-2 px-4 py-2.5 border-b border-foreground/[0.06]">
-              <div className="flex gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-foreground/10" />
-                <div className="w-2 h-2 rounded-full bg-foreground/10" />
-                <div className="w-2 h-2 rounded-full bg-foreground/10" />
+          {/* LEFT — chat panel (put first for emphasis) */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            <div
+              style={{
+                background: T.surfaceCard,
+                border: `1px solid ${T.borderDefault}`,
+                borderRadius: 6,
+                fontFamily: "'Ronzino', Georgia, serif",
+                overflow: "hidden",
+              }}
+            >
+              {/* Header */}
+              <div
+                style={{
+                  padding: "14px 18px",
+                  borderBottom: `1px solid ${T.borderSubtle}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke={T.textSecondary} strokeWidth="1.4">
+                    <circle cx="7" cy="7" r="5" />
+                    <path d="M11 11l3 3" />
+                  </svg>
+                  <span style={{ ...TYPE.eyebrow, color: T.textSecondary }}>Ask your data</span>
+                </div>
+                <span style={{ ...TYPE.metaLabel, color: T.textTertiary }}>last 7 days</span>
               </div>
-              <span className="font-mono text-[10px] text-foreground/15 ml-2">arc.cornerstone.sh</span>
-            </div>
 
-            {/* Drawer area */}
-            <AnimatePresence>
-              {(phase === "drawer" || phase === "typing-a" || phase === "done") && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="border-b border-foreground/[0.06] overflow-hidden"
+              {/* Question */}
+              <div
+                style={{
+                  padding: "20px 18px 14px",
+                  borderBottom: `1px solid ${T.borderSubtle}`,
+                }}
+              >
+                <div style={{ ...TYPE.metaLabel, color: T.textTertiary, marginBottom: 8 }}>
+                  You
+                </div>
+                <div
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 400,
+                    letterSpacing: "-0.008em",
+                    color: T.textPrimary,
+                    minHeight: 28,
+                  }}
                 >
-                  <div className="px-5 py-5">
-                    <div className="font-mono text-[10px] text-foreground/20 uppercase tracking-wider mb-3">Arc</div>
-                    <div className="font-sans text-sm text-foreground/60 leading-relaxed whitespace-pre-wrap">
-                      {typedA}
-                      {phase === "typing-a" && (
-                        <span className="inline-block w-[2px] h-[1em] bg-foreground/40 ml-0.5 animate-pulse align-middle" />
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Input bar */}
-            <div className="px-4 py-3 flex items-center gap-3">
-              <div className="flex-1 relative">
-                <div className={`font-serif text-sm ${typedQ ? "text-foreground/70" : "text-foreground/20"} min-h-[20px]`}>
-                  {typedQ || "Ask Arc anything..."}
-                  {phase === "typing-q" && (
-                    <span className="inline-block w-[2px] h-[1em] bg-foreground/50 ml-0.5 animate-pulse align-middle" />
+                  {typedQ}
+                  {typedQ.length < QUESTION.length && (
+                    <span
+                      style={{
+                        display: "inline-block",
+                        width: 2,
+                        height: "0.95em",
+                        background: T.textPrimary,
+                        marginLeft: 2,
+                        verticalAlign: "middle",
+                        animation: "arc-blink 1s steps(2) infinite",
+                      }}
+                    />
                   )}
                 </div>
-                {/* Ghost suggestion */}
-                {showGhost && (
+              </div>
+
+              {/* Answer */}
+              <div style={{ padding: "20px 18px 22px", minHeight: 170 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+                  <span
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background: T.textPrimary,
+                      opacity: showAnswer ? 1 : 0.3,
+                      animation: showAnswer ? "none" : "arc-pulse 1.4s ease-in-out infinite",
+                    }}
+                  />
+                  <span style={{ ...TYPE.metaLabel, color: T.textTertiary }}>Arc</span>
+                </div>
+
+                {showAnswer ? (
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3, duration: 0.5 }}
-                    className="font-serif text-xs text-foreground/15 mt-1"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    style={{
+                      fontSize: 14,
+                      lineHeight: 1.65,
+                      color: T.textSecondary,
+                    }}
                   >
-                    should I switch summarization to haiku?
+                    {ANSWER_PARTS.map((part, i) => {
+                      if (typeof part === "string") return <span key={i}>{part}</span>;
+                      if (part.pill) {
+                        return (
+                          <span key={i} style={{ margin: "0 2px", verticalAlign: "middle" }}>
+                            <span style={pillStyle(part.pill.color)}>
+                              <span style={dotStyle(part.pill.color)} />
+                              {part.pill.name}
+                            </span>
+                          </span>
+                        );
+                      }
+                      if (part.em)
+                        return (
+                          <span key={i} style={{ color: T.textPrimary, fontWeight: 500 }}>
+                            {part.em}
+                          </span>
+                        );
+                      return null;
+                    })}
                   </motion.div>
+                ) : (
+                  <div style={{ fontSize: 13, color: T.textTertiary, fontStyle: "italic" }}>
+                    analyzing 14,293 requests…
+                  </div>
                 )}
               </div>
-              <motion.div
-                animate={phase === "enter" ? { scale: [1, 0.95, 1], borderColor: ["rgba(204,34,34,0.3)", "rgba(204,34,34,0)"] } : {}}
-                transition={{ duration: 0.3 }}
-                className="w-6 h-6 border border-foreground/10 rounded flex items-center justify-center"
+
+              {/* Footer */}
+              <div
+                style={{
+                  padding: "10px 18px",
+                  background: T.surfaceRaised,
+                  borderTop: `1px solid ${T.borderSubtle}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
               >
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="var(--foreground)" strokeOpacity="0.3" strokeWidth="1.2">
-                  <path d="M5 1v8M1 5l4 4 4-4" />
-                </svg>
-              </motion.div>
+                <span style={{ ...TYPE.metaLabel, color: T.textTertiary }}>
+                  grounded in your traffic
+                </span>
+                <span style={{ ...TYPE.metaLabel, color: T.textTertiary }}>2.4s</span>
+              </div>
             </div>
-          </div>
-        </motion.div>
+
+            <style>{`
+              @keyframes arc-blink {
+                50% { opacity: 0; }
+              }
+            `}</style>
+          </motion.div>
+
+          {/* RIGHT — text */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28 }}>
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  background: SWATCH.slate.fg,
+                }}
+              />
+              <span style={{ ...TYPE.eyebrow, color: T.textSecondary }}>Ask your data</span>
+            </div>
+
+            <h2 style={{ ...TYPE.displayM, color: T.textPrimary, margin: 0, marginBottom: 24 }}>
+              Every question,
+              <br />
+              <span style={{ color: T.textSecondary, fontStyle: "italic" }}>
+                answered by your traffic.
+              </span>
+            </h2>
+
+            <p style={{ ...TYPE.bodyLg, color: T.textSecondary, margin: 0, maxWidth: 480 }}>
+              No more SQL, no more dashboards. Ask Arc anything about your AI spend, latency,
+              or quality — and get an answer grounded in your actual requests.
+            </p>
+          </motion.div>
+        </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .arc-feature-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
