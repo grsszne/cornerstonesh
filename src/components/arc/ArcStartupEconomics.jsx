@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { T, TYPE, SECTION } from "./arcTokens";
+import ArcVideoPlaceholder from "./ArcVideoPlaceholder";
 
 export default function ArcStartupEconomics() {
   const ref = useRef(null);
@@ -53,6 +54,15 @@ export default function ArcStartupEconomics() {
         >
           Swap with one click. Roll back with another.
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          style={{ marginTop: 80 }}
+        >
+          <ArcVideoPlaceholder label="auto-tune" />
+        </motion.div>
       </div>
     </section>
   );

@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { T, TYPE, SECTION } from "./arcTokens";
+import ArcVideoPlaceholder from "./ArcVideoPlaceholder";
 
 const ITEMS = [
   {
@@ -42,6 +43,15 @@ export default function ArcBentoGrid() {
         >
           One endpoint. Every model.
         </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          style={{ marginBottom: 80 }}
+        >
+          <ArcVideoPlaceholder label="dashboard" />
+        </motion.div>
 
         <div style={{ textAlign: "left", maxWidth: 760, margin: "0 auto" }}>
           {ITEMS.map((item, i) => (

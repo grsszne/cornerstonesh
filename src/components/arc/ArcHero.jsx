@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { T, TYPE, BUTTON } from "./arcTokens";
+import ArcVideoPlaceholder from "./ArcVideoPlaceholder";
 
 export default function ArcHero() {
   return (
@@ -62,6 +63,16 @@ export default function ArcHero() {
             See how it works
           </Link>
         </div>
+      </div>
+
+      <div
+        style={{
+          maxWidth: 1120,
+          margin: "clamp(80px, 10vw, 120px) auto 0",
+          padding: "0 clamp(0px, 2vw, 24px)",
+        }}
+      >
+        <ArcVideoPlaceholder label="product overview" maxWidth={1040} />
       </div>
     </section>
   );
