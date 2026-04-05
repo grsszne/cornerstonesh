@@ -7,29 +7,29 @@ import { T, TYPE, SECTION, BUTTON } from "./arcTokens";
 
 const PLANS = [
   {
-    name: "Free",
-    price: "$0",
+    name: "Developer",
+    price: "$9",
+    period: "/ month",
     features: [
-      "1,000 requests / month",
-      "Full logging & analytics",
-      "Shadow mode",
-      "Auto-tune suggestions",
+      "Up to 100,000 requests / month",
+      "Standard routing & fallbacks",
+      "7-day log retention",
+      "Community support",
     ],
-    cta: "Get started",
+    cta: "Start free trial",
     primary: false,
   },
   {
     name: "Pro",
-    price: "$29",
+    price: "$35",
     period: "/ month",
     features: [
       "Unlimited requests",
-      "Everything in Free",
-      "One-click auto-tune",
-      "Ask-your-data chat",
-      "Benchmark access",
+      "Agent workflows & traces",
+      "Semantic caching & shadow mode",
+      "90-day log retention",
     ],
-    cta: "Start free",
+    cta: "Upgrade to Pro",
     primary: true,
   },
 ];

@@ -32,7 +32,7 @@ export default function ArcCTA() {
             maxWidth: 860,
           }}
         >
-          Your first insight is free.
+          Stop managing providers. Start managing AI.
         </motion.h2>
 
         <motion.div
