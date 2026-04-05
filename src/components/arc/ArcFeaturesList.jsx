@@ -2,42 +2,49 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import { T, TYPE, SECTION } from "./arcTokens";
 import ArcVideoPlaceholder from "./ArcVideoPlaceholder";
 
 /* ─── Tier 1: Must-show features ─── */
 const TIER_1 = [
   {
+    slug: "proxy",
     headline: "One endpoint for every model provider.",
     body: "Swap your base URL, keep your app code the same, and route requests through Arc. OpenAI, Anthropic, Together, Mistral — one integration for all of them.",
     why: "No migration. No vendor lock-in. Works with your stack today.",
     video: "proxy endpoint",
   },
   {
+    slug: "routes",
     headline: "Give each AI feature its own controls.",
     body: "Chat, extraction, support replies, search answers — each one gets its own route with its own models, fallbacks, memory, and rollout strategy.",
     why: "Stop hardcoding model choices in random places. Treat every AI feature like a managed product surface.",
     video: "routes",
   },
   {
+    slug: "logs",
     headline: "See every request in one place.",
     body: "Track which route ran, which model handled it, what it cost, how long it took, and what happened — across every provider.",
     why: "No more flying blind. Debug failures, compare providers, and understand costs without stitching together five dashboards.",
     video: "request log",
   },
   {
+    slug: "rollouts",
     headline: "Roll out model changes gradually.",
     body: "Shift traffic from one model to another over hours or days instead of flipping everything at once. Pause, adjust, or roll back whenever you want.",
     why: "Changing live model behavior is scary. Gradual rollouts make experimentation safer and migration controllable.",
     video: "gradual rollout",
   },
   {
+    slug: "shadow-testing",
     headline: "Try a new model without risking production.",
     body: "Mirror live traffic to a candidate model and compare behavior, latency, and cost — before you switch over.",
     why: "Improve your AI without gambling on real users. See the win rate before you commit.",
     video: "shadow testing",
   },
   {
+    slug: "workflows",
     headline: "Keep AI workflows from running away.",
     body: "Set hard limits on multi-step workflows so agents cannot burn time, tokens, or money without control. Inspect traces step by step when something goes wrong.",
     why: "Agentic loops are powerful — and expensive when they loop. Arc cuts the connection before reality misbehaves.",
@@ -48,18 +55,22 @@ const TIER_1 = [
 /* ─── Tier 2: Strong secondary features ─── */
 const TIER_2 = [
   {
+    slug: "memory",
     headline: "Give your app shared long-term memory.",
     body: "Attach multiple routes to a memory pool and fetch relevant user context by end-user ID. Control when memory is written, summarized, and compacted.",
   },
   {
+    slug: "caching",
     headline: "Avoid paying twice for the same intent.",
     body: "Cache repeated or semantically similar requests to cut latency and inference cost automatically.",
   },
   {
+    slug: "smart-routing",
     headline: "Use the expensive model only when you need it.",
     body: "Route simple work to cheaper models and reserve stronger models for harder requests — automatically.",
   },
   {
+    slug: "fallbacks",
     headline: "Set a primary model — and never stop at one.",
     body: "Define fallback chains and routing rules so a route stays available when a provider fails or a model underperforms.",
   },
@@ -145,7 +156,29 @@ function FeatureBlock({ feature, index }) {
           </p>
         </Reveal>
 
-        <Reveal delay={0.25} style={{ width: "100%" }}>
+        <Reveal delay={0.22}>
+          <Link
+            href={`/arc/${feature.slug}`}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontSize: 15,
+              color: T.textPrimary,
+              textDecoration: "none",
+              borderBottom: `1px solid ${T.borderDefault}`,
+              paddingBottom: 2,
+              marginBottom: 56,
+              transition: "border-color 150ms ease",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = T.textPrimary)}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = T.borderDefault)}
+          >
+            Learn more <span aria-hidden>→</span>
+          </Link>
+        </Reveal>
+
+        <Reveal delay={0.28} style={{ width: "100%" }}>
           <ArcVideoPlaceholder label={feature.video} />
         </Reveal>
       </div>
@@ -269,11 +302,26 @@ export default function ArcFeaturesList() {
                     fontSize: 15,
                     color: T.textSecondary,
                     lineHeight: 1.55,
-                    margin: 0,
+                    margin: "0 0 16px",
                   }}
                 >
                   {item.body}
                 </p>
+                <Link
+                  href={`/arc/${item.slug}`}
+                  style={{
+                    fontSize: 14,
+                    color: T.textTertiary,
+                    textDecoration: "none",
+                    borderBottom: `1px solid ${T.borderSubtle}`,
+                    paddingBottom: 1,
+                    transition: "color 150ms ease, border-color 150ms ease",
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = T.textPrimary; e.currentTarget.style.borderColor = T.textPrimary; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = T.textTertiary; e.currentTarget.style.borderColor = T.borderSubtle; }}
+                >
+                  Learn more →
+                </Link>
               </Reveal>
             ))}
           </div>
