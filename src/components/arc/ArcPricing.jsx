@@ -8,14 +8,9 @@ import { T, TYPE, SECTION, BUTTON } from "./arcTokens";
 const PLANS = [
   {
     name: "Developer",
-    price: "$9",
+    price: "$19",
     period: "/ month",
-    features: [
-      "Up to 100,000 requests / month",
-      "Standard routing & fallbacks",
-      "7-day log retention",
-      "Community support",
-    ],
+    description: "For solo builders and serious side projects. Includes core Arc functionality for one user: projects, routes, logs, routing/fallbacks, and the essentials needed to run AI features through Arc without extra team collaboration or advanced production controls.",
     cta: "Start free trial",
     primary: false,
   },
@@ -23,12 +18,7 @@ const PLANS = [
     name: "Pro",
     price: "$35",
     period: "/ month",
-    features: [
-      "Unlimited requests",
-      "Agent workflows & traces",
-      "Semantic caching & shadow mode",
-      "90-day log retention",
-    ],
+    description: "For small teams and more serious production use. Includes everything in Developer, plus up to 4 members, advanced capabilities like memory, smarter routing, richer trace views, and stronger operational tooling for managing and evolving AI features with more control.",
     cta: "Upgrade to Pro",
     primary: true,
   },
@@ -106,21 +96,17 @@ export default function ArcPricing() {
                 )}
               </div>
 
-              <ul style={{ margin: 0, marginBottom: 48, padding: 0, listStyle: "none", textAlign: "center" }}>
-                {plan.features.map((f, fi) => (
-                  <li
-                    key={fi}
-                    style={{
-                      padding: "10px 0",
-                      fontSize: 15,
-                      color: T.textSecondary,
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    {f}
-                  </li>
-                ))}
-              </ul>
+              <div
+                style={{
+                  marginBottom: 48,
+                  fontSize: 15,
+                  color: T.textSecondary,
+                  lineHeight: 1.6,
+                  textAlign: "center",
+                }}
+              >
+                {plan.description}
+              </div>
 
               <Link
                 href="https://arc.cornerstone.sh"
