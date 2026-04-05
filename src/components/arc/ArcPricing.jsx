@@ -48,8 +48,7 @@ export default function ArcPricing() {
           style={{
             ...TYPE.displayL,
             color: T.textPrimary,
-            margin: 0,
-            marginBottom: 80,
+            margin: "0 auto 80px",
             maxWidth: 820,
           }}
         >
@@ -76,6 +75,7 @@ export default function ArcPricing() {
                 padding: "56px 48px",
                 borderLeft: i === 0 ? "none" : `1px solid ${T.borderSubtle}`,
                 fontFamily: "'Ronzino', Georgia, serif",
+                textAlign: "center",
               }}
               className="arc-pricing-cell"
             >
@@ -89,7 +89,7 @@ export default function ArcPricing() {
                 {plan.name}
               </div>
 
-              <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 48 }}>
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: 8, marginBottom: 48 }}>
                 <span
                   style={{
                     fontSize: 72,
@@ -106,7 +106,7 @@ export default function ArcPricing() {
                 )}
               </div>
 
-              <ul style={{ margin: 0, marginBottom: 48, padding: 0, listStyle: "none" }}>
+              <ul style={{ margin: 0, marginBottom: 48, padding: 0, listStyle: "none", textAlign: "center" }}>
                 {plan.features.map((f, fi) => (
                   <li
                     key={fi}

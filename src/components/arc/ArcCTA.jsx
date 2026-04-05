@@ -1,59 +1,68 @@
 "use client";
-import { CaretRight } from "@phosphor-icons/react";
+
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import Link from "next/link";
+import { T, TYPE, BUTTON } from "./arcTokens";
 
 export default function ArcCTA() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-120px" });
+
   return (
-    <section className="relative w-full py-40 flex items-center justify-center p-6 border-t border-[var(--arc-border-subtle)] bg-[var(--arc-surface-page)] z-10">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-12 text-center space-y-12">
-        <h2 
-          className="text-4xl md:text-5xl font-serif tracking-tight leading-tight text-[var(--arc-text-primary)] mb-4"
-          style={{ fontWeight: 300 }}
+    <section
+      ref={ref}
+      style={{
+        background: T.surfacePage,
+        color: T.textPrimary,
+        fontFamily: "'Ronzino', Georgia, serif",
+        padding: "clamp(160px, 20vw, 260px) clamp(24px, 5vw, 56px)",
+        textAlign: "center",
+      }}
+    >
+      <div style={{ maxWidth: 920, margin: "0 auto" }}>
+        <motion.h2
+          initial={{ opacity: 0, y: 14 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.9 }}
+          style={{
+            ...TYPE.displayXL,
+            color: T.textPrimary,
+            margin: "0 auto 48px",
+            maxWidth: 860,
+          }}
         >
-          Stop managing providers.<br/>
-          Start managing AI.
-        </h2>
-        <p className="text-lg md:text-xl text-[var(--arc-text-secondary)] font-serif font-light leading-relaxed mb-10">
-          Drop in one API key. Bring order to the chaos.
-        </p>
+          Your first insight is free.
+        </motion.h2>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/arc" className="group">
-            <button className="font-mono flex items-center justify-center gap-2" style={{
-              fontSize: '11px',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              padding: '12px 24px',
-              background: 'var(--arc-text-primary)',
-              color: 'var(--arc-surface-page)',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontWeight: 500,
-            }}>
-              Start Free Trial
-              <CaretRight weight="bold" className="group-hover:translate-x-1 transition-transform" />
-            </button>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          style={{
+            display: "flex",
+            gap: 12,
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
+          <Link
+            href="https://arc.cornerstone.sh"
+            style={BUTTON.primary}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
+            Start free
           </Link>
-
-          <Link href="/contact" className="group">
-            <button className="font-mono flex items-center justify-center gap-2" style={{
-              fontSize: '11px',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'var(--arc-text-tertiary)',
-              background: 'none',
-              border: '1px solid var(--arc-border-subtle)',
-              borderRadius: '4px',
-              padding: '12px 24px',
-              cursor: 'pointer',
-              fontWeight: 500,
-              transition: 'all 150ms ease',
-            }}>
-              Book a Demo
-            </button>
+          <Link
+            href="/contact"
+            style={BUTTON.ghost}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = T.textSecondary)}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = T.borderDefault)}
+          >
+            Talk to us
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
